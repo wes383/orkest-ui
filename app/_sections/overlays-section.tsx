@@ -69,6 +69,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { useT } from "@/components/language-provider";
 
 export function OverlaysSection() {
@@ -121,8 +122,10 @@ export function OverlaysSection() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="modal-due">{t("overlays.dueTime")}</Label>
-                    <Input id="modal-due" type="datetime-local" />
+                    <Label className="mb-1.5 block">
+                      {t("overlays.dueTime")}
+                    </Label>
+                    <DateTimePicker aria-label={t("overlays.dueTime")} />
                   </div>
                 </div>
               </div>

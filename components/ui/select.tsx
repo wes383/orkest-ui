@@ -72,13 +72,16 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-dropdown max-h-80 min-w-[8rem] overflow-hidden rounded-lg border border-border bg-surface text-foreground shadow-pop p-1",
+        "relative max-h-80 min-w-[8rem] overflow-hidden rounded-lg border border-border bg-surface text-foreground shadow-pop p-1",
         // Use Radix data-state to drive a pure opacity animation.
         // Keyframe animations (with translateY) + data-[side]:translate-y-1 are avoided
         // because CSS transform overrides Radix's transform-based content positioning,
         // causing position glitches on open (content starts flush against the trigger
         // then shifts down to its correct position).
         "data-[state=open]:animate-fade-in data-[state=closed]:animate-none",
+        // !important: override z-dropdown (40) when rendered inside a Dialog
+        // (z-modal=60) so the select content appears above the modal.
+        "!z-[100]",
         className
       )}
       position={position}

@@ -196,6 +196,15 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
       : internalValue;
 
     const [open, setOpen] = React.useState(false);
+    const triggerRef = React.useRef<HTMLDivElement>(null);
+    const [dialogContainer, setDialogContainer] =
+      React.useState<HTMLElement | null>(null);
+
+    React.useEffect(() => {
+      setDialogContainer(
+        triggerRef.current?.closest('[role="dialog"]') as HTMLElement | null
+      );
+    }, []);
 
     const finalShortcuts =
       shortcuts === undefined
@@ -280,6 +289,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div
+            ref={triggerRef}
             className={cn(
               "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base cursor-pointer",
               "border-border focus-within:border-border-strong",
@@ -325,6 +335,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
         </PopoverTrigger>
         <PopoverContent
           align="start"
+          container={dialogContainer}
           className={cn("w-auto p-0", contentClassName)}
         >
           <div className="flex">

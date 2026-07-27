@@ -120,6 +120,15 @@ export const DateTimePicker = React.forwardRef<
     const use12Hour = use12HourProp ?? auto12Hour;
 
     const [open, setOpen] = React.useState(false);
+    const triggerRef = React.useRef<HTMLDivElement>(null);
+    const [dialogContainer, setDialogContainer] =
+      React.useState<HTMLElement | null>(null);
+
+    React.useEffect(() => {
+      setDialogContainer(
+        triggerRef.current?.closest('[role="dialog"]') as HTMLElement | null
+      );
+    }, []);
 
     // Draft state: edit date/time locally, commit only on "OK".
     const [draftDate, setDraftDate] = React.useState<Date | undefined>(
@@ -241,6 +250,7 @@ export const DateTimePicker = React.forwardRef<
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div
+            ref={triggerRef}
             className={cn(
               "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base cursor-pointer",
               "border-border focus-within:border-border-strong",
@@ -275,7 +285,11 @@ export const DateTimePicker = React.forwardRef<
             </span>
           </div>
         </PopoverTrigger>
-        <PopoverContent align="start" className="w-auto p-0">
+        <PopoverContent
+          align="start"
+          container={dialogContainer}
+          className="w-auto p-0"
+        >
           <div className="flex flex-col sm:flex-row">
             <div>
               <Calendar
