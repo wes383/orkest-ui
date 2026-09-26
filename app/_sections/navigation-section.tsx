@@ -12,6 +12,8 @@ import {
   StepSeparator,
 } from "@/components/ui/steps";
 import { Button } from "@/components/ui/button";
+import { Menu, MenuLabel, MenuItem, MenuDivider } from "@/components/ui/menu";
+import { Edit, Copy, Archive, Trash } from "lucide-react";
 import { useT } from "@/components/language-provider";
 
 const STEP_TOTAL = 4;
@@ -104,6 +106,33 @@ export function NavigationSection() {
               {current === STEP_TOTAL - 1 ? t("navigation.finish") : t("navigation.next")}
             </Button>
           </div>
+        </Panel>
+
+        <Panel>
+          <SubsectionLabel>{t("navigation.menu")}</SubsectionLabel>
+          <p className="text-xs text-foreground-subtle mb-3">
+            {t("navigation.menuHint")}
+          </p>
+          <Menu className="w-56">
+            <MenuLabel>{t("navigation.menuGroup")}</MenuLabel>
+            <MenuItem>
+              <Edit className="h-4 w-4" />
+              {t("navigation.menuEdit")}
+            </MenuItem>
+            <MenuItem>
+              <Copy className="h-4 w-4" />
+              {t("navigation.menuDuplicate")}
+            </MenuItem>
+            <MenuItem>
+              <Archive className="h-4 w-4" />
+              {t("navigation.menuArchive")}
+            </MenuItem>
+            <MenuDivider />
+            <MenuItem variant="danger">
+              <Trash className="h-4 w-4" />
+              {t("navigation.menuDelete")}
+            </MenuItem>
+          </Menu>
         </Panel>
       </Stack>
     </Section>

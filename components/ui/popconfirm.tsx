@@ -115,3 +115,10 @@ export const PopconfirmDescription = React.forwardRef<
   />
 ));
 PopconfirmDescription.displayName = "PopconfirmDescription";
+
+export {
+  Popconfirm,
+  PopconfirmTrigger,
+  PopconfirmAnchor,
+  PopconfirmContent,
+};

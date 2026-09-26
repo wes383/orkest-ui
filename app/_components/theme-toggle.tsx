@@ -13,8 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
 import { languages, type Lang } from "@/lib/i18n";
 
 export function ThemeToggle() {
@@ -119,32 +117,5 @@ export function LanguageToggle() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-}
-
-export function CommandPaletteButton() {
-  const t = useT();
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      className={cn("gap-2")}
-      aria-label={t("commandPalette.ariaLabel")}
-      onClick={() =>
-        toast.info(t("commandPalette.title"), {
-          description: t("commandPalette.description"),
-        })
-      }
-    >
-      <span className="text-foreground-muted">
-        {t("commandPalette.searchPlaceholder")}
-      </span>
-      <kbd
-        className="inline-flex items-center justify-center min-w-[1.5rem] px-1.5 py-0.5 bg-hover-bg-strong border border-border rounded-sm font-mono text-xs text-foreground-muted"
-        aria-hidden="true"
-      >
-        ⌘K
-      </kbd>
-    </Button>
   );
 }

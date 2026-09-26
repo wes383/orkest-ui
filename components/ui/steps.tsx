@@ -102,6 +102,7 @@ export const Steps = React.forwardRef<HTMLDivElement, StepsProps>(
       <StepsContext.Provider value={contextValue}>
         <div
           ref={ref}
+          role="list"
           className={cn(
             "flex",
             orientation === "horizontal" ? "flex-row items-start" : "flex-col items-stretch",
@@ -135,6 +136,8 @@ export const Step = React.forwardRef<HTMLDivElement, StepProps>(
     return (
       <div
         ref={ref}
+        role="listitem"
+        aria-current={state === "active" ? "step" : undefined}
         data-state={state}
         data-index={index}
         className={cn(

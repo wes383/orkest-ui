@@ -19,6 +19,21 @@ const FOCUSABLE_SELECTOR = [
 ].join(",");
 
 /**
+ * Visibility check that also handles `position: fixed` elements, which
+ * `offsetParent` alone would wrongly report as invisible.
+ */
+function isVisible(node: HTMLElement): boolean {
+  if (typeof node.checkVisibility === "function") {
+    return node.checkVisibility({ checkVisibilityCSS: true, checkOpacity: true });
+  }
+  // Fallback for older browsers.
+  if (node.offsetParent !== null) return true;
+  if (node.getClientRects().length === 0) return false;
+  const style = window.getComputedStyle(node);
+  return style.visibility !== "hidden" && style.display !== "none";
+}
+
+/**
  * useFocusTrap — when `active`, traps keyboard focus inside `ref`.
  * Tab/Shift+Tab cycle through focusable descendants only.
  *
@@ -41,7 +56,7 @@ export function useFocusTrap(
       (node) =>
         !node.hasAttribute("disabled") &&
         node.getAttribute("aria-hidden") !== "true" &&
-        node.offsetParent !== null
+        isVisible(node)
     );
   }, [ref]);
 

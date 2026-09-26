@@ -40,7 +40,9 @@ export function useControllableState<T>(
 
   // Keep latest onChange in a ref to avoid stale closures / re-renders.
   const onChangeRef = React.useRef(onChange);
-  onChangeRef.current = onChange;
+  React.useEffect(() => {
+    onChangeRef.current = onChange;
+  });
 
   const value = isControlled ? valueProp : uncontrolledValue;
 

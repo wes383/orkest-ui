@@ -3,15 +3,17 @@
 import * as React from "react";
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/components/language-provider";
 
 type StrengthLevel = 0 | 1 | 2 | 3 | 4;
 
-const STRENGTH_LABELS: Record<StrengthLevel, string> = {
-  0: "Too weak",
-  1: "Weak",
-  2: "Fair",
-  3: "Good",
-  4: "Strong",
+/** Dictionary keys per strength level. */
+const STRENGTH_LABEL_KEYS: Record<StrengthLevel, string> = {
+  0: "passwordStrength.tooWeak",
+  1: "passwordStrength.weak",
+  2: "passwordStrength.fair",
+  3: "passwordStrength.good",
+  4: "passwordStrength.strong",
 };
 
 const ACTIVE_SEGMENT_COLORS: Record<StrengthLevel, string> = {
@@ -31,16 +33,19 @@ const LABEL_TEXT_COLORS: Record<StrengthLevel, string> = {
 };
 
 interface Requirement {
-  label: string;
+  labelKey: string;
   test: (pw: string) => boolean;
 }
 
 const REQUIREMENTS: Requirement[] = [
-  { label: "At least 8 characters", test: (pw) => pw.length >= 8 },
-  { label: "Lowercase letter", test: (pw) => /[a-z]/.test(pw) },
-  { label: "Uppercase letter", test: (pw) => /[A-Z]/.test(pw) },
-  { label: "Number", test: (pw) => /\d/.test(pw) },
-  { label: "Special character", test: (pw) => /[^a-zA-Z0-9]/.test(pw) },
+  { labelKey: "passwordStrength.reqLength", test: (pw) => pw.length >= 8 },
+  { labelKey: "passwordStrength.reqLowercase", test: (pw) => /[a-z]/.test(pw) },
+  { labelKey: "passwordStrength.reqUppercase", test: (pw) => /[A-Z]/.test(pw) },
+  { labelKey: "passwordStrength.reqNumber", test: (pw) => /\d/.test(pw) },
+  {
+    labelKey: "passwordStrength.reqSpecial",
+    test: (pw) => /[^a-zA-Z0-9]/.test(pw),
+  },
 ];
 
 function computeStrength(pw: string): StrengthLevel {
@@ -62,6 +67,7 @@ export interface PasswordStrengthProps
 
 const PasswordStrength = React.forwardRef<HTMLDivElement, PasswordStrengthProps>(
   ({ className, password, showChecklist = false, ...props }, ref) => {
+    const t = useT();
     const strength = computeStrength(password);
 
     return (
@@ -87,16 +93,16 @@ const PasswordStrength = React.forwardRef<HTMLDivElement, PasswordStrengthProps>
             )}
             aria-live="polite"
           >
-            {STRENGTH_LABELS[strength]}
+            {t(STRENGTH_LABEL_KEYS[strength])}
           </span>
         </div>
         {showChecklist && (
-          <ul className="space-y-1" aria-label="Password requirements">
+          <ul className="space-y-1" aria-label={t("passwordStrength.requirements")}>
             {REQUIREMENTS.map((req) => {
               const passed = req.test(password);
               return (
                 <li
-                  key={req.label}
+                  key={req.labelKey}
                   className="flex items-center gap-2 text-xs"
                 >
                   {passed ? (
@@ -117,7 +123,7 @@ const PasswordStrength = React.forwardRef<HTMLDivElement, PasswordStrengthProps>
                         : "text-foreground-subtle"
                     )}
                   >
-                    {req.label}
+                    {t(req.labelKey)}
                   </span>
                 </li>
               );

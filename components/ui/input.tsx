@@ -161,7 +161,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             heightClass
           )}
           aria-label={ariaLabel}
-          tabIndex={-1}
         >
           {show ? (
             <EyeOff className="h-4 w-4" aria-hidden="true" />

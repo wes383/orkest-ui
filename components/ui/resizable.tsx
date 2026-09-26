@@ -16,6 +16,11 @@ export type ResizablePanelGroupProps = React.ComponentProps<
   typeof ResizablePanelGroupPrimitive
 >;
 
+/**
+ * Panel group. The underlying primitive writes `height: 100%` as an inline
+ * style, which outranks any height utility placed on this component — set the
+ * height on a wrapper element (or pass `style`) instead.
+ */
 export function ResizablePanelGroup({
   className,
   ...props

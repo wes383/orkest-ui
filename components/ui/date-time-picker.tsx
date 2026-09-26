@@ -10,9 +10,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { WheelPicker, type WheelPickerItem } from "@/components/ui/wheel-picker";
+import { WheelPicker } from "@/components/ui/wheel-picker";
+import {
+  PickerTrigger,
+  useControllableState,
+  useDefault12Hour,
+  usePopoverContainer,
+  normalizeMinuteStep,
+  resolveHour,
+  buildHourItems,
+  buildMinuteItems,
+  PERIOD_ITEMS,
+} from "@/components/ui/picker-shared";
 import { useT } from "@/components/language-provider";
-import { cn } from "@/lib/utils";
 
 export interface DateTimePickerProps {
   value?: string;
@@ -22,7 +32,7 @@ export interface DateTimePickerProps {
   maxDate?: Date;
   /** Must evenly divide 60. @default 1 */
   minuteStep?: number;
-  /** Override 12-hour detection; defaults to navigator.language. */
+  /** Override 12-hour detection; defaults to the browser language. */
   use12Hour?: boolean;
   placeholder?: string;
   size?: "sm" | "md" | "lg";
@@ -38,22 +48,6 @@ function isoToDate(iso: string | undefined): Date | undefined {
   if (!iso) return undefined;
   const d = new Date(iso);
   return Number.isNaN(d.getTime()) ? undefined : d;
-}
-
-// Detect 12-hour default from browser language only (not OS locale).
-function detectDefault12Hour(): boolean {
-  if (typeof navigator === "undefined") return false;
-  const lang = (navigator.language || "").toLowerCase();
-  return (
-    lang.startsWith("en") ||
-    lang.startsWith("es") ||
-    lang.startsWith("ar") ||
-    lang.startsWith("hi") ||
-    lang.startsWith("pt") ||
-    lang.startsWith("ms") ||
-    lang.startsWith("fil") ||
-    lang.startsWith("sw")
-  );
 }
 
 function formatDisplay(date: Date | undefined, use12Hour: boolean): string {
@@ -73,11 +67,6 @@ function formatDisplay(date: Date | undefined, use12Hour: boolean): string {
   }).format(date);
 }
 
-function resolveHour(hour12: number, isPM: boolean): number {
-  if (hour12 === 12) return isPM ? 12 : 0;
-  return isPM ? hour12 + 12 : hour12;
-}
-
 export const DateTimePicker = React.forwardRef<
   HTMLInputElement,
   DateTimePickerProps
@@ -89,7 +78,7 @@ export const DateTimePicker = React.forwardRef<
       onChange,
       minDate,
       maxDate,
-      minuteStep = 1,
+      minuteStep: minuteStepProp = 1,
       use12Hour: use12HourProp,
       placeholder,
       size = "md",
@@ -99,36 +88,21 @@ export const DateTimePicker = React.forwardRef<
     },
     ref
   ) => {
-    if (minuteStep <= 0 || 60 % minuteStep !== 0) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          `[DateTimePicker] minuteStep must evenly divide 60, got ${minuteStep}, falling back to 1.`
-        );
-      }
-      minuteStep = 1;
-    }
+    const minuteStep = normalizeMinuteStep("DateTimePicker", minuteStepProp);
 
-    const isControlled = valueProp !== undefined;
-    const [internalValue, setInternalValue] = React.useState<string | undefined>(
-      defaultValue
-    );
-    const valueIso = isControlled ? valueProp : internalValue;
+    const [valueIso, setValue] = useControllableState<string | undefined>({
+      value: valueProp,
+      defaultValue: defaultValue,
+      onChange,
+    });
     const valueDate = isoToDate(valueIso);
     const t = useT();
 
-    const [auto12Hour] = React.useState(detectDefault12Hour);
+    const auto12Hour = useDefault12Hour();
     const use12Hour = use12HourProp ?? auto12Hour;
 
     const [open, setOpen] = React.useState(false);
-    const triggerRef = React.useRef<HTMLDivElement>(null);
-    const [dialogContainer, setDialogContainer] =
-      React.useState<HTMLElement | null>(null);
-
-    React.useEffect(() => {
-      setDialogContainer(
-        triggerRef.current?.closest('[role="dialog"]') as HTMLElement | null
-      );
-    }, []);
+    const { triggerRef, container } = usePopoverContainer();
 
     // Draft state: edit date/time locally, commit only on "OK".
     const [draftDate, setDraftDate] = React.useState<Date | undefined>(
@@ -150,14 +124,6 @@ export const DateTimePicker = React.forwardRef<
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
-    const commit = React.useCallback(
-      (nextIso: string | undefined) => {
-        if (!isControlled) setInternalValue(nextIso);
-        onChange?.(nextIso);
-      },
-      [isControlled, onChange]
-    );
-
     const handleConfirm = React.useCallback(() => {
       if (!draftDate) {
         setOpen(false);
@@ -165,15 +131,15 @@ export const DateTimePicker = React.forwardRef<
       }
       const merged = new Date(draftDate);
       merged.setHours(draftHour, draftMinute, 0, 0);
-      commit(merged.toISOString());
+      setValue(merged.toISOString());
       setOpen(false);
-    }, [draftDate, draftHour, draftMinute, commit]);
+    }, [draftDate, draftHour, draftMinute, setValue]);
 
     const handleClear = React.useCallback(() => {
-      commit(undefined);
+      setValue(undefined);
       setDraftDate(undefined);
       setOpen(false);
-    }, [commit]);
+    }, [setValue]);
 
     const disabledConfig = React.useMemo(() => {
       type DayPickerProps = React.ComponentProps<typeof DayPicker>;
@@ -185,33 +151,10 @@ export const DateTimePicker = React.forwardRef<
       return m as unknown as Matcher;
     }, [minDate, maxDate]);
 
-    const hourItems: WheelPickerItem[] = React.useMemo(() => {
-      const arr: WheelPickerItem[] = [];
-      const max = use12Hour ? 12 : 23;
-      const start = use12Hour ? 1 : 0;
-      for (let h = start; h <= max; h++) {
-        arr.push({
-          value: h,
-          label: use12Hour ? String(h) : String(h).padStart(2, "0"),
-        });
-      }
-      return arr;
-    }, [use12Hour]);
-
-    const minuteItems: WheelPickerItem[] = React.useMemo(() => {
-      const arr: WheelPickerItem[] = [];
-      for (let m = 0; m < 60; m += minuteStep) {
-        arr.push({ value: m, label: String(m).padStart(2, "0") });
-      }
-      return arr;
-    }, [minuteStep]);
-
-    const periodItems: WheelPickerItem[] = React.useMemo(
-      () => [
-        { value: "AM", label: "AM" },
-        { value: "PM", label: "PM" },
-      ],
-      []
+    const hourItems = React.useMemo(() => buildHourItems(use12Hour), [use12Hour]);
+    const minuteItems = React.useMemo(
+      () => buildMinuteItems(minuteStep),
+      [minuteStep]
     );
 
     const hour12 = draftHour === 0 ? 12 : draftHour > 12 ? draftHour - 12 : draftHour;
@@ -243,51 +186,27 @@ export const DateTimePicker = React.forwardRef<
     );
 
     const displayValue = formatDisplay(valueDate, use12Hour);
-    const heightClass =
-      size === "sm" ? "h-10" : size === "lg" ? "h-14" : "h-12";
 
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <div
+          <PickerTrigger
             ref={triggerRef}
-            className={cn(
-              "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base cursor-pointer",
-              "border-border focus-within:border-border-strong",
-              disabled && "bg-hover-bg cursor-not-allowed opacity-60",
-              heightClass,
-              className
-            )}
-            tabIndex={disabled ? -1 : 0}
-            role="combobox"
-            aria-expanded={open}
-            aria-haspopup="dialog"
+            inputRef={ref}
+            value={valueIso ?? ""}
+            icon={<CalendarIcon />}
+            displayValue={displayValue}
+            placeholder={placeholder || "—"}
+            size={size}
+            disabled={disabled}
+            open={open}
             aria-label={ariaLabel}
-            aria-disabled={disabled || undefined}
-          >
-            <input
-              ref={ref}
-              type="hidden"
-              value={valueIso ?? ""}
-              disabled={disabled}
-            />
-            <CalendarIcon
-              className="pointer-events-none absolute left-3 h-4 w-4 text-foreground-subtle"
-              aria-hidden="true"
-            />
-            <span
-              className={cn(
-                "pl-10 pr-3 flex-1 truncate",
-                !displayValue && "text-foreground-subtle"
-              )}
-            >
-              {displayValue || placeholder || "—"}
-            </span>
-          </div>
+            className={className}
+          />
         </PopoverTrigger>
         <PopoverContent
           align="start"
-          container={dialogContainer}
+          container={container}
           className="w-auto p-0"
         >
           <div className="flex flex-col sm:flex-row">
@@ -328,7 +247,7 @@ export const DateTimePicker = React.forwardRef<
                 {use12Hour && (
                   <WheelPicker
                     aria-label="AM / PM"
-                    items={periodItems}
+                    items={PERIOD_ITEMS}
                     value={isPM ? "PM" : "AM"}
                     onChange={handlePeriodChange}
                     itemHeight={ITEM_HEIGHT}

@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/components/language-provider";
 
 export interface PaginationProps
   extends React.ComponentPropsWithoutRef<"nav"> {}
@@ -114,17 +117,20 @@ export interface PaginationPreviousProps
 export const PaginationPrevious = React.forwardRef<
   HTMLAnchorElement | HTMLButtonElement,
   PaginationPreviousProps
->(({ className, children = "Previous", ...props }, ref) => (
-  <PaginationLink
-    ref={ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>}
-    aria-label="Go to previous page"
-    className={cn("gap-1.5", className)}
-    {...props}
-  >
-    <ChevronLeft className="h-4 w-4" />
-    <span>{children}</span>
-  </PaginationLink>
-));
+>(({ className, children, ...props }, ref) => {
+  const t = useT();
+  return (
+    <PaginationLink
+      ref={ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>}
+      aria-label={t("pagination.gotoPrevious")}
+      className={cn("gap-1.5", className)}
+      {...props}
+    >
+      <ChevronLeft className="h-4 w-4" />
+      <span>{children ?? t("pagination.previous")}</span>
+    </PaginationLink>
+  );
+});
 PaginationPrevious.displayName = "PaginationPrevious";
 
 export interface PaginationNextProps
@@ -135,17 +141,20 @@ export interface PaginationNextProps
 export const PaginationNext = React.forwardRef<
   HTMLAnchorElement | HTMLButtonElement,
   PaginationNextProps
->(({ className, children = "Next", ...props }, ref) => (
-  <PaginationLink
-    ref={ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>}
-    aria-label="Go to next page"
-    className={cn("gap-1.5", className)}
-    {...props}
-  >
-    <span>{children}</span>
-    <ChevronRight className="h-4 w-4" />
-  </PaginationLink>
-));
+>(({ className, children, ...props }, ref) => {
+  const t = useT();
+  return (
+    <PaginationLink
+      ref={ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>}
+      aria-label={t("pagination.gotoNext")}
+      className={cn("gap-1.5", className)}
+      {...props}
+    >
+      <span>{children ?? t("pagination.next")}</span>
+      <ChevronRight className="h-4 w-4" />
+    </PaginationLink>
+  );
+});
 PaginationNext.displayName = "PaginationNext";
 
 export interface PaginationEllipsisProps
@@ -154,18 +163,21 @@ export interface PaginationEllipsisProps
 export const PaginationEllipsis = React.forwardRef<
   HTMLSpanElement,
   PaginationEllipsisProps
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    aria-hidden="true"
-    className={cn(
-      "flex h-9 min-w-9 items-center justify-center text-foreground-subtle",
-      className
-    )}
-    {...props}
-  >
-    <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More pages</span>
-  </span>
-));
+>(({ className, ...props }, ref) => {
+  const t = useT();
+  return (
+    <span
+      ref={ref}
+      aria-hidden="true"
+      className={cn(
+        "flex h-9 min-w-9 items-center justify-center text-foreground-subtle",
+        className
+      )}
+      {...props}
+    >
+      <MoreHorizontal className="h-4 w-4" />
+      <span className="sr-only">{t("pagination.morePages")}</span>
+    </span>
+  );
+});
 PaginationEllipsis.displayName = "PaginationEllipsis";

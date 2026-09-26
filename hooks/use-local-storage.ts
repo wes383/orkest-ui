@@ -11,7 +11,9 @@ export interface UseLocalStorageOptions {
  * useLocalStorage — SSR-safe persistent state backed by `window.localStorage`.
  *
  * Reads happen on mount (not during render) to avoid hydration mismatches.
- * Cross-tab sync is enabled by default via the `storage` event.
+ * Writes happen synchronously in `set` (never inside a state updater, so
+ * StrictMode double-invocation cannot write twice). Cross-tab sync is enabled
+ * by default via the `storage` event.
  *
  * @example
  * const [name, setName, remove] = useLocalStorage("name", "Anonymous");
@@ -25,33 +27,32 @@ export function useLocalStorage<T>(
 
   // Start with the initial value during SSR & first paint.
   const [value, setValue] = React.useState<T>(initialValue);
-  const didRead = React.useRef(false);
-
+  // Mirror of the latest value so functional updates chain correctly even
+  // when several `set` calls happen in the same tick.
+  const valueRef = React.useRef(value);
   React.useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(key);
-      if (raw !== null) setValue(JSON.parse(raw) as T);
-    } catch {
-      // ignore parse / availability errors
-    }
-    didRead.current = true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+    valueRef.current = value;
+  });
+
+  const write = React.useCallback((next: T) => {
+    valueRef.current = next;
+    setValue(next);
+  }, []);
 
   const set = React.useCallback(
     (next: T | ((prev: T) => T)) => {
-      setValue((prev) => {
-        const resolved =
-          typeof next === "function" ? (next as (p: T) => T)(prev) : next;
-        try {
-          window.localStorage.setItem(key, JSON.stringify(resolved));
-        } catch {
-          // ignore write errors (quota, private mode, etc.)
-        }
-        return resolved;
-      });
+      const resolved =
+        typeof next === "function"
+          ? (next as (p: T) => T)(valueRef.current)
+          : next;
+      write(resolved);
+      try {
+        window.localStorage.setItem(key, JSON.stringify(resolved));
+      } catch {
+        // ignore write errors (quota, private mode, etc.)
+      }
     },
-    [key]
+    [key, write]
   );
 
   const remove = React.useCallback(() => {
@@ -60,9 +61,19 @@ export function useLocalStorage<T>(
     } catch {
       // ignore
     }
-    setValue(initialValue);
+    write(initialValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [key, write]);
+
+  // Read once on mount / key change (never during render, SSR-safe).
+  React.useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(key);
+      if (raw !== null) write(JSON.parse(raw) as T);
+    } catch {
+      // ignore parse / availability errors
+    }
+  }, [key, write]);
 
   React.useEffect(() => {
     if (!syncAcrossTabs) return;
@@ -70,9 +81,9 @@ export function useLocalStorage<T>(
       if (e.key !== key) return;
       try {
         if (e.newValue === null) {
-          setValue(initialValue);
+          write(initialValue);
         } else {
-          setValue(JSON.parse(e.newValue) as T);
+          write(JSON.parse(e.newValue) as T);
         }
       } catch {
         // ignore
@@ -80,10 +91,7 @@ export function useLocalStorage<T>(
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
-  }, [key, initialValue, syncAcrossTabs]);
-
-  // Avoid lint complaints about unread ref.
-  void didRead;
+  }, [key, initialValue, syncAcrossTabs, write]);
 
   return [value, set, remove];
 }

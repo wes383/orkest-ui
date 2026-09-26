@@ -36,6 +36,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the component showcase.
 
+### Development scripts
+
+| Script                  | Purpose                                              |
+| ----------------------- | ---------------------------------------------------- |
+| `npm run typecheck`     | `tsc --noEmit`                                       |
+| `npm run lint`          | ESLint (`eslint-config-next` flat config)            |
+| `npm run check:tokens`  | Verify `lib/tokens.ts` mirrors `app/globals.css`     |
+| `npm run build`         | Production build                                     |
+
+CI (`.github/workflows/ci.yml`) runs all four on every push / PR.
+
 ## Using Components
 
 ### Option 1 — Copy the source

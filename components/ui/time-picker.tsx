@@ -2,22 +2,32 @@
 
 import * as React from "react";
 import { Clock } from "lucide-react";
-import { WheelPicker, type WheelPickerItem } from "@/components/ui/wheel-picker";
+import { WheelPicker } from "@/components/ui/wheel-picker";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  PickerTrigger,
+  useControllableState,
+  useDefault12Hour,
+  usePopoverContainer,
+  normalizeMinuteStep,
+  resolveHour,
+  buildHourItems,
+  buildMinuteItems,
+  PERIOD_ITEMS,
+} from "@/components/ui/picker-shared";
 import { useT } from "@/components/language-provider";
-import { cn } from "@/lib/utils";
 
 /**
  * TimePicker — iOS-style wheel time picker.
  *
- * - Trigger is a read-only input (readonly input + clock icon); click opens a Popover.
+ * - Trigger is a field-style div (role="combobox") + hidden input for forms; click opens a Popover.
  * - Popover contains two WheelPicker columns: hour and minute.
- * - 12/24-hour mode is controlled by the `use12Hour` prop, defaulting to follow `<html lang>`
+ * - 12/24-hour mode is controlled by the `use12Hour` prop, defaulting to the browser language
  *   (`en` → 12-hour + AM/PM column, otherwise → 24-hour).
  * - `minuteStep` controls the minute step (must evenly divide 60), default 1.
  * - Controlled value format: "HH:mm" (24-hour string, consistent with `<input type="time">`).
@@ -42,7 +52,7 @@ export interface TimePickerProps
   onChange?: (value: string) => void;
   /** Minute step; must evenly divide 60. @default 1 */
   minuteStep?: number;
-  /** Whether to use 12-hour mode + AM/PM column. Omit to follow `<html lang>`. */
+  /** Whether to use 12-hour mode + AM/PM column. Omit to follow the browser language. */
   use12Hour?: boolean;
   /** Size variant of the Popover trigger. */
   size?: "sm" | "md" | "lg";
@@ -63,32 +73,6 @@ function parseTime(value: string | undefined): { hour: number; minute: number } 
     hour: Math.max(0, Math.min(23, h)),
     minute: Math.max(0, Math.min(59, min)),
   };
-}
-
-/**
- * Detect whether 12-hour mode should be used by default.
- *
- * Per requirements: judge **only** by the browser's preferred language
- * (`navigator.language`) BCP-47 tag, without considering OS locale settings.
- *
- * - `en-*` / `es-*` / `ar-*` / `hi-*` etc. (languages that conventionally use 12-hour) return true
- * - `zh-*` / `ja-*` / `ko-*` / `de-*` / `fr-*` etc. (languages that conventionally use 24-hour) return false
- *
- * Returns false during SSR (default 24h).
- */
-function detectDefault12Hour(): boolean {
-  if (typeof navigator === "undefined") return false;
-  const lang = (navigator.language || "").toLowerCase();
-  return (
-    lang.startsWith("en") ||
-    lang.startsWith("es") ||
-    lang.startsWith("ar") ||
-    lang.startsWith("hi") ||
-    lang.startsWith("pt") ||
-    lang.startsWith("ms") ||
-    lang.startsWith("fil") ||
-    lang.startsWith("sw")
-  );
 }
 
 /** Format an "HH:mm" string into a display string via Intl.DateTimeFormat. */
@@ -113,73 +97,36 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
       value: valueProp,
       defaultValue,
       onChange,
-      minuteStep = 1,
+      minuteStep: minuteStepProp = 1,
       use12Hour: use12HourProp,
       size = "md",
       disabled,
       placeholder = "HH:mm",
+      "aria-label": ariaLabel,
       ...props
     },
     ref
   ) => {
-    if (minuteStep <= 0 || 60 % minuteStep !== 0) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          `[TimePicker] minuteStep must evenly divide 60, got ${minuteStep}, falling back to 1.`
-        );
-      }
-      minuteStep = 1;
-    }
+    const minuteStep = normalizeMinuteStep("TimePicker", minuteStepProp);
 
-    const isControlled = valueProp !== undefined;
-    const [internalValue, setInternalValue] = React.useState<string>(
-      defaultValue ?? ""
-    );
-    const value = isControlled ? (valueProp as string) : internalValue;
+    const [value, setValue] = useControllableState<string>({
+      value: valueProp,
+      defaultValue: defaultValue ?? "",
+      onChange,
+    });
     const t = useT();
 
-    const [auto12Hour] = React.useState(detectDefault12Hour);
+    const auto12Hour = useDefault12Hour();
     const use12Hour = use12HourProp ?? auto12Hour;
 
     const [open, setOpen] = React.useState(false);
+    const { triggerRef, container } = usePopoverContainer();
     const { hour, minute } = parseTime(value);
 
-    const commit = React.useCallback(
-      (next: string) => {
-        if (!isControlled) setInternalValue(next);
-        onChange?.(next);
-      },
-      [isControlled, onChange]
-    );
-
-    // Controlled value is read directly each render, so no extra sync state is needed.
-    const hourItems: WheelPickerItem[] = React.useMemo(() => {
-      const arr: WheelPickerItem[] = [];
-      const maxHour = use12Hour ? 12 : 23;
-      const startHour = use12Hour ? 1 : 0;
-      for (let h = startHour; h <= maxHour; h++) {
-        arr.push({
-          value: h,
-          label: use12Hour ? String(h) : String(h).padStart(2, "0"),
-        });
-      }
-      return arr;
-    }, [use12Hour]);
-
-    const minuteItems: WheelPickerItem[] = React.useMemo(() => {
-      const arr: WheelPickerItem[] = [];
-      for (let m = 0; m < 60; m += minuteStep) {
-        arr.push({ value: m, label: String(m).padStart(2, "0") });
-      }
-      return arr;
-    }, [minuteStep]);
-
-    const periodItems: WheelPickerItem[] = React.useMemo(
-      () => [
-        { value: "AM", label: "AM" },
-        { value: "PM", label: "PM" },
-      ],
-      []
+    const hourItems = React.useMemo(() => buildHourItems(use12Hour), [use12Hour]);
+    const minuteItems = React.useMemo(
+      () => buildMinuteItems(minuteStep),
+      [minuteStep]
     );
 
     const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
@@ -188,30 +135,22 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
     const handleHourChange = React.useCallback(
       (next: string | number) => {
         const nextH = Number(next);
-        let newHour = nextH;
-        if (use12Hour) {
-          // In 12-hour mode, restore to 24-hour based on AM/PM
-          const isPM = hour >= 12;
-          if (isPM && nextH !== 12) newHour = nextH + 12;
-          else if (!isPM && nextH === 12) newHour = 0;
-          else if (isPM && nextH === 12) newHour = 12;
-          else newHour = nextH;
-        }
-        commit(
+        // In 12-hour mode, restore to 24-hour based on AM/PM
+        const newHour = use12Hour ? resolveHour(nextH, hour >= 12) : nextH;
+        setValue(
           `${String(newHour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`
         );
       },
-      [use12Hour, hour, minute, commit]
+      [use12Hour, hour, minute, setValue]
     );
 
     const handleMinuteChange = React.useCallback(
       (next: string | number) => {
-        const nextMin = Number(next);
-        commit(
-          `${String(hour).padStart(2, "0")}:${String(nextMin).padStart(2, "0")}`
+        setValue(
+          `${String(hour).padStart(2, "0")}:${String(Number(next)).padStart(2, "0")}`
         );
       },
-      [hour, commit]
+      [hour, setValue]
     );
 
     const handlePeriodChange = React.useCallback(
@@ -219,61 +158,36 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
         let newHour = hour;
         if (next === "PM" && hour < 12) newHour = hour + 12;
         else if (next === "AM" && hour >= 12) newHour = hour - 12;
-        commit(
+        setValue(
           `${String(newHour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`
         );
       },
-      [hour, minute, commit]
+      [hour, minute, setValue]
     );
 
     const displayValue = formatDisplay(value, use12Hour);
 
-    const heightClass =
-      size === "sm" ? "h-10" : size === "lg" ? "h-14" : "h-12";
-
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <div
-            className={cn(
-              "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base",
-              "border-border focus-within:border-border-strong",
-              disabled && "bg-hover-bg cursor-not-allowed opacity-60",
-              "cursor-pointer",
-              heightClass,
-              className
-            )}
-            // Make the div behave like an input: focusable and activatable by a label
-            tabIndex={disabled ? -1 : 0}
-            role="combobox"
-            aria-expanded={open}
-            aria-haspopup="dialog"
-            aria-disabled={disabled || undefined}
-          >
-            {/* Hidden real input: carries the form value and name attribute for native form submission */}
-            <input
-              ref={ref}
-              type="hidden"
-              value={value}
-              disabled={disabled}
-              {...props}
-            />
-            <Clock
-              className="pointer-events-none absolute left-3 h-4 w-4 text-foreground-subtle"
-              aria-hidden="true"
-            />
-            <span
-              className={cn(
-                "pl-10 pr-3 flex-1 truncate",
-                !displayValue && "text-foreground-subtle"
-              )}
-            >
-              {displayValue || placeholder}
-            </span>
-          </div>
+          <PickerTrigger
+            ref={triggerRef}
+            inputRef={ref}
+            inputProps={props}
+            value={value}
+            icon={<Clock />}
+            displayValue={displayValue}
+            placeholder={placeholder}
+            size={size}
+            disabled={disabled}
+            open={open}
+            aria-label={ariaLabel}
+            className={className}
+          />
         </PopoverTrigger>
         <PopoverContent
           align="start"
+          container={container}
           className="w-auto p-3"
           // The wheel popover does not need the default padding
         >
@@ -305,7 +219,7 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
             {use12Hour && (
               <WheelPicker
                 aria-label="AM / PM"
-                items={periodItems}
+                items={PERIOD_ITEMS}
                 value={currentPeriod}
                 onChange={handlePeriodChange}
                 itemHeight={ITEM_HEIGHT}

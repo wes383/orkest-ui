@@ -143,3 +143,16 @@ const DrawerDescription = React.forwardRef<
   />
 ));
 DrawerDescription.displayName = "DrawerDescription";
+
+export {
+  Drawer,
+  DrawerTrigger,
+  DrawerPortal,
+  DrawerClose,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+};

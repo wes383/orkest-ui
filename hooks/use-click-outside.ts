@@ -31,7 +31,9 @@ export function useClickOutside(
 
   // Keep latest handler without re-binding listeners.
   const handlerRef = React.useRef(handler);
-  handlerRef.current = handler;
+  React.useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
 
   React.useEffect(() => {
     if (!enabled) return;
@@ -53,6 +55,5 @@ export function useClickOutside(
         document.removeEventListener(evt, listener);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled, events, ignoreRefs, ref]);
 }

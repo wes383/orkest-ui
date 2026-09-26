@@ -61,7 +61,7 @@ function CalendarMonthCaption({
     return arr;
   }, [date, startMonth, endMonth]);
 
-  const monthLabels = React.useMemo(getMonthLabels, []);
+  const monthLabels = React.useMemo(() => getMonthLabels(), []);
   const [monthOpen, setMonthOpen] = React.useState(false);
   const [yearOpen, setYearOpen] = React.useState(false);
 

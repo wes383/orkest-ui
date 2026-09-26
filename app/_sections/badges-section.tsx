@@ -5,6 +5,7 @@ import { Section, Panel, SubsectionLabel, Row, Stack } from "@/app/_components/d
 import { Badge } from "@/components/ui/badge";
 import { Tag } from "@/components/ui/tag";
 import { Chip } from "@/components/ui/chip";
+import { Pill } from "@/components/ui/pill";
 import { useT } from "@/components/language-provider";
 
 export function BadgesSection() {
@@ -64,6 +65,17 @@ export function BadgesSection() {
               <Chip onRemove={() => {}}>{t("badges.react19")}</Chip>
               <Chip onRemove={() => {}}>{t("badges.typescript")}</Chip>
               <Chip>{t("badges.notRemovable")}</Chip>
+            </Row>
+          </div>
+
+          <div>
+            <SubsectionLabel>{t("badges.pill")}</SubsectionLabel>
+            <Row>
+              <Pill color="indigo">{t("forms.orkest")}</Pill>
+              <Pill color="green">{t("badges.completed")}</Pill>
+              <Pill color="orange">{t("badges.syncing")}</Pill>
+              <Pill color="red">{t("forms.urgent")}</Pill>
+              <Pill color="purple">{t("forms.growth")}</Pill>
             </Row>
           </div>
         </Stack>

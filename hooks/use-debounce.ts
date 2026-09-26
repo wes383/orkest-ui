@@ -47,7 +47,9 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
   const { delay = 300, leading = false, trailing = true } = opts;
 
   const callbackRef = React.useRef(callback);
-  callbackRef.current = callback;
+  React.useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
 
   const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const argsRef = React.useRef<Parameters<T> | null>(null);
@@ -70,8 +72,8 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
     }
   }, []);
 
-  const debounced = React.useCallback(
-    (...args: Parameters<T>) => {
+  const debounced = React.useMemo(() => {
+    const fn = ((...args: Parameters<T>) => {
       argsRef.current = args;
       if (leading && !didLeadingCallRef.current) {
         callbackRef.current(...args);
@@ -86,12 +88,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
           didLeadingCallRef.current = false;
         }, delay);
       }
-    },
-    [delay, leading, trailing]
-  ) as T & { cancel: () => void; flush: () => void };
-
-  debounced.cancel = cancel;
-  debounced.flush = flush;
+    }) as T & { cancel: () => void; flush: () => void };
+    fn.cancel = cancel;
+    fn.flush = flush;
+    return fn;
+  }, [delay, leading, trailing, cancel, flush]);
 
   React.useEffect(() => () => cancel(), [cancel]);
 

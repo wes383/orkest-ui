@@ -9,7 +9,12 @@
  * sides must match one-to-one.
  */
 
-export type ThemeMode = "light" | "dark" | "high-contrast" | "dark-high-contrast";
+/**
+ * Theme mode identifiers. Aligned with the `Appearance` union in
+ * components/theme-provider.tsx so JS consumers can index `themes` directly
+ * with an appearance value.
+ */
+export type ThemeMode = "light" | "dark" | "light-hc" | "dark-hc";
 
 export interface ColorToken {
   name: string;
@@ -319,7 +324,7 @@ export const darkTokens: ThemeTokens = {
 /* ── High Contrast (light base) ────────────────────────────── */
 export const highContrastTokens: ThemeTokens = {
   ...lightTokens,
-  mode: "high-contrast",
+  mode: "light-hc",
   colors: {
     ...lightTokens.colors,
     background: "#ffffff",
@@ -358,7 +363,7 @@ export const highContrastTokens: ThemeTokens = {
 /* ── High Contrast (dark base) ─────────────────────────────── */
 export const darkHighContrastTokens: ThemeTokens = {
   ...darkTokens,
-  mode: "dark-high-contrast",
+  mode: "dark-hc",
   colors: {
     ...darkTokens.colors,
     background: "#000000",
@@ -398,8 +403,8 @@ export const darkHighContrastTokens: ThemeTokens = {
 export const themes: Record<ThemeMode, ThemeTokens> = {
   light: lightTokens,
   dark: darkTokens,
-  "high-contrast": highContrastTokens,
-  "dark-high-contrast": darkHighContrastTokens,
+  "light-hc": highContrastTokens,
+  "dark-hc": darkHighContrastTokens,
 };
 
 /**

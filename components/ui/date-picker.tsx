@@ -9,6 +9,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  PickerTrigger,
+  useControllableState,
+  usePopoverContainer,
+} from "@/components/ui/picker-shared";
 import { useT } from "@/components/language-provider";
 import { cn } from "@/lib/utils";
 
@@ -187,24 +192,18 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
   ) => {
     const t = useT();
 
-    const isControlled = valueProp !== undefined;
-    const [internalValue, setInternalValue] = React.useState<
-      Date | DateRange | undefined | null
-    >(defaultValue ?? undefined);
-    const value = isControlled
-      ? (valueProp as Date | DateRange | undefined | null)
-      : internalValue;
+    const [value, setValue] = useControllableState<
+      Date | DateRange | null | undefined
+    >({
+      value: valueProp,
+      defaultValue: defaultValue ?? undefined,
+      onChange: onChange as
+        | ((value: Date | DateRange | null | undefined) => void)
+        | undefined,
+    });
 
     const [open, setOpen] = React.useState(false);
-    const triggerRef = React.useRef<HTMLDivElement>(null);
-    const [dialogContainer, setDialogContainer] =
-      React.useState<HTMLElement | null>(null);
-
-    React.useEffect(() => {
-      setDialogContainer(
-        triggerRef.current?.closest('[role="dialog"]') as HTMLElement | null
-      );
-    }, []);
+    const { triggerRef, container } = usePopoverContainer();
 
     const finalShortcuts =
       shortcuts === undefined
@@ -228,10 +227,9 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
 
     const commit = React.useCallback(
       (next: Date | DateRange | undefined) => {
-        if (!isControlled) setInternalValue(next);
-        onChange?.(next);
+        setValue(next);
       },
-      [isControlled, onChange]
+      [setValue]
     );
 
     const handleDayPickerSelect = React.useCallback(
@@ -262,9 +260,6 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
 
     const displayValue = formatDate(value ?? undefined, mode, t);
 
-    const heightClass =
-      size === "sm" ? "h-10" : size === "lg" ? "h-14" : "h-12";
-
     type DayPickerProps = React.ComponentProps<typeof DayPicker>;
 
     const calendarElement = mode === "single" ? (
@@ -288,54 +283,32 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <div
+          <PickerTrigger
             ref={triggerRef}
-            className={cn(
-              "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base cursor-pointer",
-              "border-border focus-within:border-border-strong",
-              disabled && "bg-hover-bg cursor-not-allowed opacity-60",
-              heightClass,
-              className
-            )}
-            tabIndex={disabled ? -1 : 0}
-            role="combobox"
-            aria-expanded={open}
-            aria-haspopup="dialog"
+            inputRef={ref}
+            value={
+              value
+                ? mode === "single"
+                  ? (value as Date).toISOString()
+                  : JSON.stringify({
+                      from: (value as DateRange).from?.toISOString(),
+                      to: (value as DateRange).to?.toISOString(),
+                    })
+                : ""
+            }
+            icon={<CalendarIcon />}
+            displayValue={displayValue}
+            placeholder={placeholder || t("datePicker.today")}
+            size={size}
+            disabled={disabled}
+            open={open}
             aria-label={ariaLabel}
-            aria-disabled={disabled || undefined}
-          >
-            <input
-              ref={ref}
-              type="hidden"
-              value={
-                value
-                  ? mode === "single"
-                    ? (value as Date).toISOString()
-                    : JSON.stringify({
-                        from: (value as DateRange).from?.toISOString(),
-                        to: (value as DateRange).to?.toISOString(),
-                      })
-                  : ""
-              }
-              disabled={disabled}
-            />
-            <CalendarIcon
-              className="pointer-events-none absolute left-3 h-4 w-4 text-foreground-subtle"
-              aria-hidden="true"
-            />
-            <span
-              className={cn(
-                "pl-10 pr-3 flex-1 truncate",
-                !displayValue && "text-foreground-subtle"
-              )}
-            >
-              {displayValue || placeholder || t("datePicker.today")}
-            </span>
-          </div>
+            className={className}
+          />
         </PopoverTrigger>
         <PopoverContent
           align="start"
-          container={dialogContainer}
+          container={container}
           className={cn("w-auto p-0", contentClassName)}
         >
           <div className="flex">

@@ -5,10 +5,22 @@ import { Section, Panel, SubsectionLabel, Stack, Row } from "@/app/_components/d
 import { Progress, CircularProgress } from "@/components/ui/progress";
 import { Skeleton, SkeletonText, SkeletonCircle } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { useT } from "@/components/language-provider";
 
 export function ProgressSection() {
   const t = useT();
+
+  // Drives the container-scoped LoadingOverlay demo: auto-dismisses so the
+  // loaded state is visible, and can be re-triggered from the button.
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!loading) return;
+    const timer = window.setTimeout(() => setLoading(false), 1500);
+    return () => window.clearTimeout(timer);
+  }, [loading]);
 
   return (
     <Section
@@ -81,6 +93,29 @@ export function ProgressSection() {
             <SkeletonText lines={3} />
           </div>
         </Row>
+      </Panel>
+
+      <Panel className="mt-4">
+        <SubsectionLabel>{t("progress.loadingOverlay")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-3">
+          {t("progress.loadingOverlayHint")}
+        </p>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mb-3"
+          onClick={() => setLoading(true)}
+        >
+          {t("progress.refreshData")}
+        </Button>
+        <div className="relative h-40 overflow-hidden rounded-lg border border-border bg-surface">
+          <div className="p-4 text-sm text-foreground-muted">
+            {t("progress.overlayPanel")}
+          </div>
+          {loading && (
+            <LoadingOverlay container message={t("progress.loadingMessage")} />
+          )}
+        </div>
       </Panel>
     </Section>
   );

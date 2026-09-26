@@ -3,9 +3,12 @@
 import * as React from "react";
 import { Section, Panel, SubsectionLabel, Row, Stack } from "@/app/_components/demo-helpers";
 import { Divider } from "@/components/ui/divider";
+import { Separator } from "@/components/ui/separator";
 import { Kbd } from "@/components/ui/kbd";
 import { Code } from "@/components/ui/typography";
 import { Spinner } from "@/components/ui/spinner";
+import { Icon } from "@/components/ui/icon";
+import { Bell, Search, Settings, Plus } from "lucide-react";
 import { useT } from "@/components/language-provider";
 
 export function MiscSection() {
@@ -45,6 +48,19 @@ export function MiscSection() {
             </div>
           </Row>
 
+          <div>
+            <SubsectionLabel>{t("misc.icon")}</SubsectionLabel>
+            <p className="text-xs text-foreground-subtle mb-3">
+              {t("misc.iconHint")}
+            </p>
+            <Row className="gap-6">
+              <Icon icon={Bell} size="sm" />
+              <Icon icon={Search} size="md" />
+              <Icon icon={Settings} size="lg" />
+              <Icon icon={Plus} size="xl" />
+            </Row>
+          </div>
+
           <Divider label={t("misc.dividerWithLabel")} />
 
           <div>
@@ -52,6 +68,26 @@ export function MiscSection() {
             <div className="text-sm">{t("misc.above")}</div>
             <Divider className="my-6" />
             <div className="text-sm">{t("misc.below")}</div>
+          </div>
+
+          <div>
+            <SubsectionLabel>{t("misc.separator")}</SubsectionLabel>
+            <p className="text-xs text-foreground-subtle mb-3">
+              {t("misc.separatorHint")}
+            </p>
+            <Row className="h-10 justify-center gap-4">
+              <span className="text-sm text-foreground-muted">
+                {t("misc.above")}
+              </span>
+              <Separator orientation="vertical" />
+              <span className="text-sm text-foreground-muted">
+                {t("misc.below")}
+              </span>
+            </Row>
+            <Separator className="my-4" />
+            <p className="text-center text-xs text-foreground-subtle">
+              {t("misc.separatorHint")}
+            </p>
           </div>
         </Stack>
       </Panel>

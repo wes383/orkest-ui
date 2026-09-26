@@ -83,6 +83,9 @@ export function WheelPicker({
   const paddingCount = Math.floor(visibleCount / 2);
   const viewportHeight = itemHeight * visibleCount;
 
+  // Namespace for option ids exposed via aria-activedescendant.
+  const baseId = React.useId();
+
   const selectedIndex = React.useMemo(() => {
     const i = items.findIndex((it) => it.value === value);
     return i < 0 ? 0 : i;
@@ -300,7 +303,7 @@ export function WheelPicker({
         tabIndex={0}
         aria-label={ariaLabel}
         className={cn(
-          "orkest-wheel-picker relative h-full overflow-y-auto overflow-x-hidden rounded-md outline-none z-10",
+          "orkest-wheel-picker scrollbar-none relative h-full overflow-y-auto overflow-x-hidden rounded-md outline-none z-10",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         )}
         style={{
@@ -309,21 +312,19 @@ export function WheelPicker({
           paddingTop: paddingCount * itemHeight,
           paddingBottom: paddingCount * itemHeight,
           scrollSnapType: "y mandatory",
-          // Hide the scrollbar while keeping scroll capability
-          scrollbarWidth: "none",
         }}
         onScroll={handleScroll}
         onKeyDown={handleKeyDown}
+        aria-activedescendant={`${baseId}-opt-${selectedIndex}`}
         {...props}
       >
-        {/* WebKit: hide the scrollbar */}
-        <style>{`
-          .orkest-wheel-picker::-webkit-scrollbar { display: none; }
-        `}</style>
-
         {extendedItems.map((entry, extIdx) => {
           const { item, originalIdx } = entry;
           const isSelected = originalIdx === selectedIndex;
+          // Only the middle copy is exposed to assistive tech; the extra
+          // looping copies are hidden so screen readers see each option once.
+          const isA11yCopy =
+            Math.floor(extIdx / Math.max(items.length, 1)) === MID_OFFSET;
           // Fade based on the distance between this extended index and the equivalent position of selectedIndex in the middle copy
           const middleSelectedExtIdx =
             MID_OFFSET * items.length + selectedIndex;
@@ -334,9 +335,11 @@ export function WheelPicker({
           return (
             <div
               key={`${extIdx}-${item.value}`}
-              role="option"
-              aria-selected={isSelected}
-              aria-disabled={item.disabled || undefined}
+              id={isA11yCopy ? `${baseId}-opt-${originalIdx}` : undefined}
+              role={isA11yCopy ? "option" : "presentation"}
+              aria-hidden={!isA11yCopy || undefined}
+              aria-selected={isA11yCopy ? isSelected : undefined}
+              aria-disabled={isA11yCopy && item.disabled ? true : undefined}
               className={cn(
                 "flex cursor-pointer items-center justify-center text-center text-sm font-medium transition-colors",
                 isSelected ? "text-foreground" : "text-foreground-muted",

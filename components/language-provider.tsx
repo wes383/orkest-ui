@@ -41,7 +41,7 @@ export function LanguageProvider({
     // After client mount, correct once from localStorage (in case it disagrees with the cookie).
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY) as Lang | null;
-      if (stored === "zh" || stored === "en" && stored !== lang) {
+      if ((stored === "zh" || stored === "en") && stored !== lang) {
         setLangState(stored);
       }
     } catch {

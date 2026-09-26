@@ -189,7 +189,12 @@ export const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
         />
         <DialogPrimitive.Content
           className={cn(
-            "fixed left-1/2 top-[20%] z-modal w-full max-w-xl -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-surface shadow-dialog",
+            // Horizontal centering intentionally avoids `left-1/2 -translate-x-1/2`:
+            // the enter animation animates `transform`, which overrides the
+            // `-translate-x-1/2` utility for the animation's duration and makes
+            // the panel appear off-center, then snap to the middle.
+            // `inset-x-0 mx-auto` centers without touching `transform`.
+            "fixed inset-x-0 top-[20%] z-modal mx-auto w-full max-w-xl overflow-hidden rounded-xl border border-border bg-surface shadow-dialog",
             "data-[state=open]:animate-fade-slide-in"
           )}
         >

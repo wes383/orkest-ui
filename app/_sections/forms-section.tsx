@@ -21,10 +21,27 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem, RadioCard } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp";
+import { InputNumber } from "@/components/ui/input-number";
+import { PasswordStrength } from "@/components/ui/password-strength";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { useT } from "@/components/language-provider";
 
 export function FormsSection() {
   const t = useT();
+  const [password, setPassword] = React.useState("Orkest2024!");
+  const rhf = useForm<{ projectName: string; email: string }>({
+    defaultValues: { projectName: "", email: "" },
+    mode: "onTouched",
+  });
 
   return (
     <Section
@@ -91,22 +108,6 @@ export function FormsSection() {
               </Select>
             </div>
             <div>
-              <Label htmlFor="datetime">{t("forms.reminderTime")}</Label>
-              <DateTimePicker aria-label={t("forms.reminderTime")} />
-            </div>
-            <div>
-              <Label>{t("forms.datePicker")}</Label>
-              <DatePicker aria-label={t("forms.datePicker")} />
-            </div>
-            <div>
-              <Label>{t("forms.datePickerRange")}</Label>
-              <DatePicker mode="range" aria-label={t("forms.datePickerRange")} />
-            </div>
-            <div>
-              <Label>{t("forms.timePicker")}</Label>
-              <TimePicker aria-label={t("forms.timePicker")} />
-            </div>
-            <div>
               <Label>{t("forms.focusDuration")}</Label>
               <Slider defaultValue={[25]} max={90} min={5} step={5} />
             </div>
@@ -129,6 +130,33 @@ export function FormsSection() {
           </Stack>
         </Panel>
       </Grid>
+
+      {/* Date & time pickers get their own block: each one opens a popover, so
+          mixing them into the select column made that column hard to scan. */}
+      <Panel className="mb-4">
+        <SubsectionLabel>{t("forms.dateTimePicker")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-4">
+          {t("forms.dateTimePickerHint")}
+        </p>
+        <Grid cols={2}>
+          <div>
+            <Label>{t("forms.reminderTime")}</Label>
+            <DateTimePicker aria-label={t("forms.reminderTime")} />
+          </div>
+          <div>
+            <Label>{t("forms.datePicker")}</Label>
+            <DatePicker aria-label={t("forms.datePicker")} />
+          </div>
+          <div>
+            <Label>{t("forms.datePickerRange")}</Label>
+            <DatePicker mode="range" aria-label={t("forms.datePickerRange")} />
+          </div>
+          <div>
+            <Label>{t("forms.timePicker")}</Label>
+            <TimePicker aria-label={t("forms.timePicker")} />
+          </div>
+        </Grid>
+      </Panel>
 
       <Panel className="mb-4">
         <Grid cols={2}>
@@ -204,6 +232,103 @@ export function FormsSection() {
             </RadioGroup>
           </div>
         </Grid>
+      </Panel>
+
+      <Grid cols={2} className="mt-4">
+        <Panel>
+          <SubsectionLabel>{t("forms.inputNumber")}</SubsectionLabel>
+          <p className="text-xs text-foreground-subtle mb-3">
+            {t("forms.inputNumberHint")}
+          </p>
+          <Stack className="gap-3">
+            <div>
+              <Label className="mb-1.5 block">{t("forms.quantity")}</Label>
+              <InputNumber defaultValue={3} min={1} max={10} />
+            </div>
+            <div>
+              <Label className="mb-1.5 block">{t("forms.focusDuration")}</Label>
+              <InputNumber defaultValue={25} min={5} max={120} step={5} />
+            </div>
+            <div>
+              <Label className="mb-1.5 block">{t("forms.disabled")}</Label>
+              <InputNumber defaultValue={7} disabled />
+            </div>
+          </Stack>
+        </Panel>
+
+        <Panel>
+          <SubsectionLabel>{t("forms.passwordStrength")}</SubsectionLabel>
+          <p className="text-xs text-foreground-subtle mb-3">
+            {t("forms.passwordStrengthHint")}
+          </p>
+          <Stack className="gap-3">
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={t("forms.passwordPlaceholder")}
+              aria-label={t("forms.password")}
+            />
+            <PasswordStrength password={password} showChecklist />
+          </Stack>
+        </Panel>
+      </Grid>
+
+      <Panel className="mt-4">
+        <SubsectionLabel>{t("forms.rhfForm")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-4">
+          {t("forms.rhfFormHint")}
+        </p>
+        <Form {...rhf}>
+          <form
+            onSubmit={rhf.handleSubmit(() => {})}
+            className="max-w-md space-y-4"
+            noValidate
+          >
+            <FormField
+              control={rhf.control}
+              name="projectName"
+              rules={{ required: t("forms.fieldRequired") }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("forms.projectName")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("forms.projectNamePlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={rhf.control}
+              name="email"
+              rules={{
+                required: t("forms.fieldRequired"),
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: t("forms.emailInvalid"),
+                },
+              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("forms.email")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder={t("forms.emailPlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">{t("forms.submit")}</Button>
+          </form>
+        </Form>
       </Panel>
     </Section>
   );

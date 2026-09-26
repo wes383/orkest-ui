@@ -13,6 +13,7 @@ import {
   Info,
   Check,
   Calendar,
+  Search,
 } from "lucide-react";
 import { Section, Panel, SubsectionLabel, Row, Grid, Stack } from "@/app/_components/demo-helpers";
 import { Button } from "@/components/ui/button";
@@ -70,12 +71,41 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+} from "@/components/ui/drawer";
+import {
+  Popconfirm,
+  PopconfirmTrigger,
+  PopconfirmContent,
+  PopconfirmTitle,
+  PopconfirmDescription,
+} from "@/components/ui/popconfirm";
+import {
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+} from "@/components/ui/command";
+import { Kbd } from "@/components/ui/kbd";
 import { useT } from "@/components/language-provider";
 
 export function OverlaysSection() {
   const t = useT();
   const [checkboxVal, setCheckboxVal] = React.useState(true);
   const [radioVal, setRadioVal] = React.useState("created");
+  const [commandOpen, setCommandOpen] = React.useState(false);
 
   return (
     <Section
@@ -315,6 +345,115 @@ export function OverlaysSection() {
           </DropdownMenu>
         </Panel>
       </Grid>
+
+      <Panel className="mt-4">
+        <SubsectionLabel>{t("overlays.drawer")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-3">
+          {t("overlays.drawerHint")}
+        </p>
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline">{t("overlays.openDrawer")}</Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>{t("overlays.drawerTitle")}</DrawerTitle>
+              <DrawerDescription>{t("overlays.drawerBody")}</DrawerDescription>
+            </DrawerHeader>
+            <div className="space-y-4 px-5 pb-4">
+              <div>
+                <Label htmlFor="drawer-title" className="mb-1.5 block">
+                  {t("overlays.titleLabel")}
+                </Label>
+                <Input id="drawer-title" defaultValue={t("overlays.newTask")} />
+              </div>
+              <div>
+                <Label htmlFor="drawer-desc" className="mb-1.5 block">
+                  {t("overlays.descLabel")}
+                </Label>
+                <Textarea
+                  id="drawer-desc"
+                  placeholder={t("overlays.descPlaceholder")}
+                />
+              </div>
+            </div>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button variant="ghost">{t("overlays.cancel")}</Button>
+              </DrawerClose>
+              <Button>{t("overlays.save")}</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </Panel>
+
+      <Panel className="mt-4">
+        <SubsectionLabel>{t("overlays.popconfirm")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-3">
+          {t("overlays.popconfirmHint")}
+        </p>
+        <Popconfirm>
+          <PopconfirmTrigger asChild>
+            <Button variant="danger">{t("overlays.deleteTask")}</Button>
+          </PopconfirmTrigger>
+          <PopconfirmContent
+            destructive
+            confirmText={t("buttons.delete")}
+            cancelText={t("overlays.cancel")}
+          >
+            <PopconfirmTitle>{t("overlays.deleteTask")}</PopconfirmTitle>
+            <PopconfirmDescription>
+              {t("overlays.popconfirmQuestion")}
+            </PopconfirmDescription>
+          </PopconfirmContent>
+        </Popconfirm>
+      </Panel>
+
+      <Panel className="mt-4">
+        <SubsectionLabel>{t("overlays.command")}</SubsectionLabel>
+        <p className="text-xs text-foreground-subtle mb-3">
+          {t("overlays.commandHint")}
+        </p>
+        <Row>
+          <Button variant="outline" onClick={() => setCommandOpen(true)}>
+            {t("overlays.openCommandPalette")}
+          </Button>
+          <span className="inline-flex items-center gap-1">
+            <Kbd>⌘</Kbd>
+            <Kbd>K</Kbd>
+          </span>
+        </Row>
+        <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
+          <CommandInput placeholder={t("overlays.commandPlaceholder")} />
+          <CommandList>
+            <CommandEmpty>{t("overlays.commandNoResults")}</CommandEmpty>
+            <CommandGroup heading={t("overlays.action")}>
+              <CommandItem>
+                <Plus className="h-4 w-4" />
+                {t("overlays.cmdNewTask")}
+                <CommandShortcut>⌘N</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <Search className="h-4 w-4" />
+                {t("overlays.cmdSearchTasks")}
+                <CommandShortcut>⌘F</CommandShortcut>
+              </CommandItem>
+              <CommandItem>
+                <Settings className="h-4 w-4" />
+                {t("overlays.cmdOpenSettings")}
+                <CommandShortcut>⌘,</CommandShortcut>
+              </CommandItem>
+            </CommandGroup>
+            <CommandSeparator />
+            <CommandGroup>
+              <CommandItem>
+                <LogOut className="h-4 w-4" />
+                {t("overlays.cmdLogout")}
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </CommandDialog>
+      </Panel>
     </Section>
   );
 }
