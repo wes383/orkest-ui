@@ -115,10 +115,10 @@ export function MediaSection() {
           </p>
           <Row className="items-start gap-6">
             <div className="rounded-lg border border-border p-4">
-              <QRCode value="https://orkest.ui" size={128} />
+              <QRCode value="https://google.com" size={128} />
             </div>
             <div className="rounded-lg border border-border p-4">
-              <QRCode value="https://orkest.ui/docs" size={96} level="H" />
+              <QRCode value="https://google.com" size={96} level="H" />
             </div>
           </Row>
         </Panel>
