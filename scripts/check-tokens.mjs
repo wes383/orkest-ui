@@ -39,10 +39,14 @@ function extractBlock(source, selectorRegex) {
 }
 
 function parseDeclarations(block) {
+  // Comments may legitimately mention token names ("--red is a pale tint…");
+  // strip them before scanning, or the `--name:` inside a comment is read as
+  // a declaration and its value swallows text up to the next semicolon.
+  const stripped = block.replace(/\/\*[\s\S]*?\*\//g, " ");
   const vars = {};
   const decl = /--([a-zA-Z0-9-]+)\s*:\s*([^;]+);/g;
   let m;
-  while ((m = decl.exec(block)) !== null) {
+  while ((m = decl.exec(stripped)) !== null) {
     vars[`--${m[1]}`] = m[2].trim();
   }
   return vars;
