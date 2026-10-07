@@ -85,10 +85,10 @@ export const dict = {
     typography: {
       title: "字体系统",
       description:
-        "Sans（Inter）用于正文，Display（Manrope）用于标题，Mono（JetBrains Mono）用于代码与数字。完整的字号阶梯、行高与字间距 Token 化管理。",
-      display: "Display / Manrope · 40px · 700",
+        "Sans（Inter）用于正文，Display（Plus Jakarta Sans）用于标题，Mono（JetBrains Mono）用于代码与数字。完整的字号阶梯、行高与字间距 Token 化管理。",
+      display: "Display / Plus Jakarta Sans · 40px · 700",
       displayHeading: "Orkest 编排你的时间",
-      displayFontNote: "Latin: Manrope · 中文: 思源黑体 (Noto Sans SC)",
+      displayFontNote: "Latin: Plus Jakarta Sans · 中文: 思源黑体 (Noto Sans SC)",
       bodyTitle: "Sans / Inter · 24px · 600",
       bodyTagline: "专注当下，规划未来",
       bodyFontNote: "Latin: Inter · 中文: 思源黑体 (Noto Sans SC)",
@@ -630,10 +630,10 @@ export const dict = {
     typography: {
       title: "Typography",
       description:
-        "Sans (Inter) for body, Display (Manrope) for headings, Mono (JetBrains Mono) for code and numerics. Token-driven type scale, line heights, and letter spacing.",
-      display: "Display / Manrope · 40px · 700",
+        "Sans (Inter) for body, Display (Plus Jakarta Sans) for headings, Mono (JetBrains Mono) for code and numerics. Token-driven type scale, line heights, and letter spacing.",
+      display: "Display / Plus Jakarta Sans · 40px · 700",
       displayHeading: "Orkest orchestrate your time",
-      displayFontNote: "Latin: Manrope · CJK: Source Han Sans (Noto Sans SC)",
+      displayFontNote: "Latin: Plus Jakarta Sans · CJK: Source Han Sans (Noto Sans SC)",
       bodyTitle: "Sans / Inter · 24px · 600",
       bodyTagline: "Focus on the present, plan for the future",
       bodyFontNote: "Latin: Inter · CJK: Source Han Sans (Noto Sans SC)",

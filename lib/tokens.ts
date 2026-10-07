@@ -221,7 +221,7 @@ export const lightTokens: ThemeTokens = {
   },
   typography: {
     fontSans: "var(--font-inter, 'Inter'), var(--font-noto-sans-sc, 'Noto Sans SC'), 'Noto Sans JP', ui-sans-serif, system-ui, sans-serif",
-    fontDisplay: "var(--font-manrope, 'Manrope'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-sans-serif, system-ui, sans-serif",
+    fontDisplay: "var(--font-plus-jakarta-sans, 'Plus Jakarta Sans'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-sans-serif, system-ui, sans-serif",
     fontMono: "var(--font-jetbrains-mono, 'JetBrains Mono'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-monospace, 'SFMono-Regular', Menlo, monospace",
     sizes: {
       xs: "12px",

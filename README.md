@@ -4,7 +4,7 @@
 > shadcn/ui style — source is meant to be copied into your project.
 > Built on Radix UI primitives, Tailwind CSS, and lucide-react icons.
 
-**Aesthetic**: warm minimal. Off-white backgrounds, refined neutral foreground, generous pill-shaped radii, low-contrast borders, three carefully paired fonts (Manrope display, Inter body, JetBrains Mono code).
+**Aesthetic**: warm minimal. Off-white backgrounds, refined neutral foreground, generous pill-shaped radii, low-contrast borders, three carefully paired fonts (Plus Jakarta Sans display, Inter body, JetBrains Mono code).
 
 ---
 

@@ -4,7 +4,7 @@
 > shadcn/ui style — source is meant to be copied into your project.
 > Built on Radix UI primitives, Tailwind CSS, and lucide-react icons.
 
-**Aesthetic**: warm minimal. Off-white backgrounds (`#fcfbfa`), refined neutral foreground (`#25242a`), generous pill-shaped radii, low-contrast borders, three carefully paired fonts (Manrope display, Inter body, JetBrains Mono code), and a 19-color project palette paired with five semantic colors.
+**Aesthetic**: warm minimal. Off-white backgrounds (`#fcfbfa`), refined neutral foreground (`#25242a`), generous pill-shaped radii, low-contrast borders, three carefully paired fonts (Plus Jakarta Sans display, Inter body, JetBrains Mono code), and a 19-color project palette paired with five semantic colors.
 
 ---
 
@@ -92,17 +92,17 @@ Use them via Tailwind classes under the `palette` namespace, e.g. `bg-palette-in
 | Token | Latin font | CJK fallback | Usage |
 |---|---|---|---|
 | `--font-sans` | Inter (next/font) | Noto Sans SC | Body, UI text |
-| `--font-display` | Manrope (500–800) | Noto Sans SC | Headings, titles |
+| `--font-display` | Plus Jakarta Sans (500–800) | Noto Sans SC | Headings, titles |
 | `--font-mono` | JetBrains Mono | Noto Sans SC | Code, numbers, kbd |
 
-**CJK font — Source Han Sans (Noto Sans SC)**: loaded via `next/font/google` in [`app/layout.tsx`](file:///d:/FJ/ui-style/orkest-ui/app/layout.tsx) as `--font-noto-sans-sc`, then referenced in all three font stacks in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css). This means Latin glyphs render in Inter / Manrope / JetBrains Mono, while Chinese glyphs uniformly fall back to Noto Sans SC across body, headings, **and code** — including `<Code>`, `kbd`, monospace numerics, and inline code in toasts. Weights loaded: 400 / 500 / 700. `preload: false` + `display: "swap"` to keep large CJK files off the critical path.
+**CJK font — Source Han Sans (Noto Sans SC)**: loaded via `next/font/google` in [`app/layout.tsx`](file:///d:/FJ/ui-style/orkest-ui/app/layout.tsx) as `--font-noto-sans-sc`, then referenced in all three font stacks in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css). This means Latin glyphs render in Inter / Plus Jakarta Sans / JetBrains Mono, while Chinese glyphs uniformly fall back to Noto Sans SC across body, headings, **and code** — including `<Code>`, `kbd`, monospace numerics, and inline code in toasts. Weights loaded: 400 / 500 / 700. `preload: false` + `display: "swap"` to keep large CJK files off the critical path.
 
 **Type scale** (size / line-height):
 `xs` 12/1.5 · `sm` 13/1.5 · `base` 15/1.5 · `lg` 18/1.3 · `xl` 20/1.3 · `2xl` 24/1.1 · `3xl` 28/1.1 · `4xl` 32/1.1 · `5xl` 40/1.1.
 
 **Letter-spacing**: `tight` (-0.02em, headings), `normal` (0), `wide` (0.04em, labels).
 
-**Font weights**: Inter 400/500/600/700, Manrope 500/600/700/800, JetBrains Mono 400/500/600, Noto Sans SC 400/500/700.
+**Font weights**: Inter 400/500/600/700, Plus Jakarta Sans 500/600/700/800, JetBrains Mono 400/500/600, Noto Sans SC 400/500/700.
 
 ```tsx
 import { Heading, Text, Code, Muted, Blockquote } from "@/components/ui/typography";

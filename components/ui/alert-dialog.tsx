@@ -39,7 +39,9 @@ const AlertDialogContent = React.forwardRef<
       <AlertDialogPrimitive.Content
         ref={ref}
         className={cn(
-          "w-full max-w-md bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
+          // `relative` keeps any absolutely positioned child (e.g. an action-
+          // area close button) anchored to the dialog instead of the wrapper.
+          "relative w-full max-w-md bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
           className
         )}
         {...props}

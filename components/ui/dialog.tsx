@@ -47,7 +47,11 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
-          "w-full max-w-lg bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
+          // `relative` is required: it keeps the absolutely positioned close
+          // button anchored to the dialog. Without it, the entry animation's
+          // transform is the only containing block, so the button jumps to the
+          // viewport corner as soon as the animation ends.
+          "relative w-full max-w-lg bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
           className
         )}
         {...props}

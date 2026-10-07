@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import { cookies } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/components/language-provider";
@@ -13,10 +13,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const manrope = Manrope({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
-  variable: "--font-manrope",
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
 });
 
@@ -72,7 +72,7 @@ export default async function RootLayout({
   return (
     <html lang={initialLang === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased`}
         style={{
           fontFamily: "var(--font-sans)",
         }}

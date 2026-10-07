@@ -103,7 +103,7 @@
     /* CJK glyphs uniformly fall back to Source Han Sans (Noto Sans SC),
        loaded via next/font in app/layout.tsx as --font-noto-sans-sc. */
     --font-sans: var(--font-inter, 'Inter'), var(--font-noto-sans-sc, 'Noto Sans SC'), 'Noto Sans JP', ui-sans-serif, system-ui, sans-serif;
-    --font-display: var(--font-manrope, 'Manrope'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-plus-jakarta-sans, 'Plus Jakarta Sans'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-sans-serif, system-ui, sans-serif;
     --font-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), var(--font-noto-sans-sc, 'Noto Sans SC'), ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
     --text-xs: 12px;
