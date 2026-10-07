@@ -4,6 +4,7 @@ import * as React from "react";
 import { DayPicker, useDayPicker } from "react-day-picker";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useDensity, type Density } from "@/components/density-provider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +12,57 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+/** Density tiers for the calendar grid and caption chrome. */
+export type CalendarDensity = Density;
+
+/**
+ * A type alias (not an interface) because DayPicker is generic, so its props
+ * cannot be extended by an interface.
+ */
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  /** Grid density. Falls back to the surrounding density, then to "default". */
+  density?: CalendarDensity;
+};
+
+/**
+ * Lets the caption (rendered by react-day-picker from a `components` override,
+ * so it cannot receive props directly) read the calendar's density.
+ */
+const CalendarDensityContext = React.createContext<CalendarDensity>("default");
 
 const CalendarDropdownMenuContainerContext =
   React.createContext<HTMLElement | null>(null);
+
+/** Day-cell and spacing geometry per density. */
+const calendarSizing = {
+  compact: {
+    shell: "p-1.5",
+    dayButton: "h-7 w-7 text-xs",
+    week: "mt-0.5",
+    captionLabel: "text-xs",
+    navButton: "h-5 w-5",
+    navIcon: "h-3.5 w-3.5",
+    captionTrigger: "gap-0.5 rounded px-0.5 py-px text-xs",
+  },
+  default: {
+    shell: "p-2",
+    dayButton: "h-8 w-8 text-sm",
+    week: "mt-1",
+    captionLabel: "text-sm",
+    navButton: "h-6 w-6",
+    navIcon: "h-4 w-4",
+    captionTrigger: "gap-0.5 rounded px-1 py-0.5 text-sm",
+  },
+  comfortable: {
+    shell: "p-3",
+    dayButton: "h-9 w-9 text-sm",
+    week: "mt-1.5",
+    captionLabel: "text-sm",
+    navButton: "h-7 w-7",
+    navIcon: "h-4 w-4",
+    captionTrigger: "gap-0.5 rounded px-1 py-0.5 text-sm",
+  },
+} as const;
 
 function getMonthLabels(): string[] {
   const lang =
@@ -40,6 +88,8 @@ function CalendarMonthCaption({
   const dropdownMenuContainer = React.useContext(
     CalendarDropdownMenuContainerContext
   );
+  const density = React.useContext(CalendarDensityContext);
+  const sizing = calendarSizing[density];
   const date = calendarMonth.date;
 
   const startMonth = dayPickerProps?.startMonth;
@@ -83,15 +133,16 @@ function CalendarMonthCaption({
           disabled={prevDisabled}
           onClick={() => goToMonth(prevMonth)}
           className={cn(
-            "inline-flex h-6 w-6 items-center justify-center text-foreground-muted transition-colors duration-base",
+            "inline-flex items-center justify-center text-foreground-muted transition-colors duration-base",
+            sizing.navButton,
             "hover:text-foreground",
             "disabled:pointer-events-none disabled:opacity-30"
           )}
         >
-          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+          <ChevronLeft className={sizing.navIcon} aria-hidden="true" />
         </button>
       ) : (
-        <span className="inline-flex h-6 w-6" aria-hidden="true" />
+        <span className={cn("inline-flex", sizing.navButton)} aria-hidden="true" />
       )}
 
       <DropdownMenu open={monthOpen} onOpenChange={setMonthOpen}>
@@ -99,7 +150,8 @@ function CalendarMonthCaption({
           <button
             type="button"
             className={cn(
-              "inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-sm font-medium font-display text-foreground",
+              "inline-flex items-center font-medium font-display text-foreground",
+              sizing.captionTrigger,
               "transition-colors duration-base hover:text-foreground-strong",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             )}
@@ -133,7 +185,8 @@ function CalendarMonthCaption({
           <button
             type="button"
             className={cn(
-              "inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-sm font-medium font-display text-foreground",
+              "inline-flex items-center font-medium font-display text-foreground",
+              sizing.captionTrigger,
               "transition-colors duration-base hover:text-foreground-strong",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             )}
@@ -169,24 +222,39 @@ function CalendarMonthCaption({
           disabled={nextDisabled}
           onClick={() => goToMonth(nextMonth)}
           className={cn(
-            "inline-flex h-6 w-6 items-center justify-center text-foreground-muted transition-colors duration-base",
+            "inline-flex items-center justify-center text-foreground-muted transition-colors duration-base",
+            sizing.navButton,
             "hover:text-foreground",
             "disabled:pointer-events-none disabled:opacity-30"
           )}
         >
-          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          <ChevronRight className={sizing.navIcon} aria-hidden="true" />
         </button>
       ) : (
-        <span className="inline-flex h-6 w-6" aria-hidden="true" />
+        <span className={cn("inline-flex", sizing.navButton)} aria-hidden="true" />
       )}
     </div>
   );
 }
 
 export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
-  ({ className, classNames, showOutsideDays = true, components, ...props }, ref) => {
+  (
+    {
+      className,
+      classNames,
+      showOutsideDays = true,
+      components,
+      density,
+      ...props
+    },
+    ref
+  ) => {
     const [dropdownMenuContainer, setDropdownMenuContainer] =
       React.useState<HTMLDivElement | null>(null);
+
+    const globalDensity = useDensity();
+    const resolvedDensity = density ?? globalDensity;
+    const sizing = calendarSizing[resolvedDensity];
 
     const handleRootRef = React.useCallback(
       (node: HTMLDivElement | null) => {
@@ -201,66 +269,70 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
     );
 
     return (
-      <CalendarDropdownMenuContainerContext.Provider
-        value={dropdownMenuContainer}
-      >
-        <div
-          ref={handleRootRef}
-          className={cn(
-            "rounded-lg border border-border bg-surface p-2 shadow-pop",
-            className
-          )}
+      <CalendarDensityContext.Provider value={resolvedDensity}>
+        <CalendarDropdownMenuContainerContext.Provider
+          value={dropdownMenuContainer}
         >
-          <DayPicker
-            showOutsideDays={showOutsideDays}
-            classNames={{
-              months: "flex flex-col sm:flex-row gap-2",
-              month: "flex flex-col gap-1",
-              month_caption: "px-1",
-              caption_label: "text-sm font-medium font-display",
-              nav: "hidden",
-              button_previous: "hidden",
-              button_next: "hidden",
-              month_grid: "w-full border-collapse",
-              weekdays: "flex",
-              weekday: "flex-1 text-xs font-medium tracking-wide text-foreground-muted text-center py-0.5",
-              week: "flex w-full mt-1",
-              // No overflow-hidden: would clip range_middle connector bars.
-              day: "flex-1 p-0 rounded-md",
-              day_button: cn(
-                "h-8 w-8 mx-auto rounded-md text-sm hover:bg-hover-bg focus:bg-hover-bg transition-colors duration-base ease-out",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                "data-[disabled=true]:opacity-40 data-[disabled=true]:pointer-events-none"
-              ),
-              range_start: "bg-accent text-accent-fg rounded-l-md",
-              range_end: "bg-accent text-accent-fg rounded-r-md",
-              // !important to override selected's !bg-accent (both classes are
-              // applied to middle days in range mode).
-              range_middle: "!bg-accent-muted !text-foreground",
-              hidden: "invisible",
-              outside: "text-foreground-faint",
-              // !important: react-day-picker applies both `today` and `selected`
-              // to the same td when today is selected. Without !important, CSS
-              // source order (not classNames key order) decides the winner.
-              selected: "!bg-accent text-accent-fg rounded-md",
-              today: "bg-hover-bg rounded-md",
-              disabled: "opacity-40 pointer-events-none",
-              ...classNames,
-            }}
-            components={{
-              Nav: () => <></>,
-              MonthCaption: CalendarMonthCaption,
-              Chevron: ({ orientation, ...rest }: { orientation?: "left" | "right" | "up" | "down" } & React.SVGProps<SVGSVGElement>) => {
-                if (orientation === "left") return <ChevronLeft className="h-4 w-4" aria-hidden="true" {...rest} />;
-                if (orientation === "right") return <ChevronRight className="h-4 w-4" aria-hidden="true" {...rest} />;
-                return <ChevronDown className="h-4 w-4" aria-hidden="true" {...rest} />;
-              },
-              ...components,
-            }}
-            {...props}
-          />
-        </div>
-      </CalendarDropdownMenuContainerContext.Provider>
+          <div
+            ref={handleRootRef}
+            className={cn(
+              "rounded-lg border border-border bg-surface shadow-pop",
+              sizing.shell,
+              className
+            )}
+          >
+            <DayPicker
+              showOutsideDays={showOutsideDays}
+              classNames={{
+                months: "flex flex-col sm:flex-row gap-2",
+                month: "flex flex-col gap-1",
+                month_caption: "px-1",
+                caption_label: cn("font-medium font-display", sizing.captionLabel),
+                nav: "hidden",
+                button_previous: "hidden",
+                button_next: "hidden",
+                month_grid: "w-full border-collapse",
+                weekdays: "flex",
+                weekday: "flex-1 text-xs font-medium tracking-wide text-foreground-muted text-center py-0.5",
+                week: cn("flex w-full", sizing.week),
+                // No overflow-hidden: would clip range_middle connector bars.
+                day: "flex-1 p-0 rounded-md",
+                day_button: cn(
+                  "mx-auto rounded-md hover:bg-hover-bg focus:bg-hover-bg transition-colors duration-base ease-out",
+                  sizing.dayButton,
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  "data-[disabled=true]:opacity-40 data-[disabled=true]:pointer-events-none"
+                ),
+                range_start: "bg-accent text-accent-fg rounded-l-md",
+                range_end: "bg-accent text-accent-fg rounded-r-md",
+                // !important to override selected's !bg-accent (both classes are
+                // applied to middle days in range mode).
+                range_middle: "!bg-accent-muted !text-foreground",
+                hidden: "invisible",
+                outside: "text-foreground-faint",
+                // !important: react-day-picker applies both `today` and `selected`
+                // to the same td when today is selected. Without !important, CSS
+                // source order (not classNames key order) decides the winner.
+                selected: "!bg-accent text-accent-fg rounded-md",
+                today: "bg-hover-bg rounded-md",
+                disabled: "opacity-40 pointer-events-none",
+                ...classNames,
+              }}
+              components={{
+                Nav: () => <></>,
+                MonthCaption: CalendarMonthCaption,
+                Chevron: ({ orientation, ...rest }: { orientation?: "left" | "right" | "up" | "down" } & React.SVGProps<SVGSVGElement>) => {
+                  if (orientation === "left") return <ChevronLeft className="h-4 w-4" aria-hidden="true" {...rest} />;
+                  if (orientation === "right") return <ChevronRight className="h-4 w-4" aria-hidden="true" {...rest} />;
+                  return <ChevronDown className="h-4 w-4" aria-hidden="true" {...rest} />;
+                },
+                ...components,
+              }}
+              {...props}
+            />
+          </div>
+        </CalendarDropdownMenuContainerContext.Provider>
+      </CalendarDensityContext.Provider>
     );
   }
 );

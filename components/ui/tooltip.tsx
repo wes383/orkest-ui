@@ -24,7 +24,10 @@ const TooltipContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-tooltip max-w-xs rounded-md bg-foreground px-2.5 py-1 text-xs font-medium leading-tight text-background shadow-pop animate-fade-slide-in",
+        // A surface bubble rather than an inverted one: white in light mode,
+        // near-black in dark. The border and shadow are what keep it from
+        // dissolving into a same-coloured panel underneath.
+        "z-tooltip max-w-xs rounded-md border border-border bg-surface px-2.5 py-1 text-xs font-medium leading-tight text-foreground shadow-md animate-fade-slide-in",
         className
       )}
       {...props}

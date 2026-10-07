@@ -24,9 +24,13 @@ import { useT } from "@/components/language-provider";
 /**
  * Inline SVG data URI — keeps the Image demo self-contained so it renders
  * identically offline and never depends on a remote host.
+ *
+ * The bitmap is deliberately transparent: `Image` paints a gray plate
+ * (`bg-muted`) behind it, so the demo reads as a plain gray block that follows
+ * the active light/dark theme instead of a hard-coded colour.
  */
 const SAMPLE_IMAGE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%236366f1'/%3E%3Ccircle cx='200' cy='120' r='44' fill='%23ffffff' fill-opacity='0.85'/%3E%3Ctext x='200' y='222' fill='%23ffffff' font-family='sans-serif' font-size='22' text-anchor='middle'%3EOrkest%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'/%3E";
 
 export function MediaSection() {
   const t = useT();
@@ -53,7 +57,9 @@ export function MediaSection() {
             <CarouselContent>
               {slides.map((slide, i) => (
                 <CarouselItem key={i}>
-                  <div className="flex h-32 flex-col justify-center rounded-lg border border-border bg-hover-bg px-14 text-center">
+                  {/* `px-14` used to reserve room for the arrows, which were
+                      overlaid on the slide. They now sit outside the track. */}
+                  <div className="flex h-32 flex-col justify-center rounded-lg border border-border bg-hover-bg px-6 text-center">
                     <p className="text-sm font-medium">{slide.title}</p>
                     <p className="mt-1 text-xs text-foreground-muted">
                       {slide.desc}

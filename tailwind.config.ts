@@ -65,6 +65,9 @@ const config: Config = {
           fg: "var(--red-fg)",
           soft: "var(--red-soft)",
           border: "var(--red-border)",
+          solid: "var(--red-solid)",
+          "solid-hover": "var(--red-solid-hover)",
+          "solid-fg": "var(--red-solid-fg)",
         },
         green: {
           DEFAULT: "var(--green)",

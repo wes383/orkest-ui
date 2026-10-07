@@ -35,13 +35,15 @@ export interface DateTimePickerProps {
   /** Override 12-hour detection; defaults to the browser language. */
   use12Hour?: boolean;
   placeholder?: string;
-  size?: "sm" | "md" | "lg";
+  /** Trigger size. Omit to follow the global density tier. */
+  size?: "xs" | "sm" | "md" | "lg";
   disabled?: boolean;
   className?: string;
   "aria-label"?: string;
 }
 
-const ITEM_HEIGHT = 36;
+// Row height follows the WheelPicker density default, so the wheel densifies
+// along with the rest of the UI in compact mode.
 const VISIBLE_COUNT = 5;
 
 function isoToDate(iso: string | undefined): Date | undefined {
@@ -81,7 +83,7 @@ export const DateTimePicker = React.forwardRef<
       minuteStep: minuteStepProp = 1,
       use12Hour: use12HourProp,
       placeholder,
-      size = "md",
+      size,
       disabled,
       className,
       "aria-label": ariaLabel,
@@ -225,7 +227,6 @@ export const DateTimePicker = React.forwardRef<
                   items={hourItems}
                   value={use12Hour ? hour12 : draftHour}
                   onChange={handleHourChange}
-                  itemHeight={ITEM_HEIGHT}
                   visibleCount={VISIBLE_COUNT}
                   className="w-12"
                 />
@@ -240,7 +241,6 @@ export const DateTimePicker = React.forwardRef<
                   items={minuteItems}
                   value={draftMinute}
                   onChange={handleMinuteChange}
-                  itemHeight={ITEM_HEIGHT}
                   visibleCount={VISIBLE_COUNT}
                   className="w-12"
                 />
@@ -250,8 +250,7 @@ export const DateTimePicker = React.forwardRef<
                     items={PERIOD_ITEMS}
                     value={isPM ? "PM" : "AM"}
                     onChange={handlePeriodChange}
-                    itemHeight={ITEM_HEIGHT}
-                    visibleCount={VISIBLE_COUNT}
+                      visibleCount={VISIBLE_COUNT}
                     className="w-14"
                   />
                 )}

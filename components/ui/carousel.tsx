@@ -114,7 +114,25 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
+          /**
+           * Three-track grid: the viewport takes the middle track, the prev/next
+           * buttons get the outer ones. Grid placement is used instead of
+           * `order-*` so the buttons sit on the correct side even though they are
+           * authored *after* <CarouselContent> in the markup.
+           *
+           * Every child pins BOTH its row and its column. Pinning the column
+           * alone is not enough: in the auto-placement algorithm a step back in
+           * column (2 -> 1 for the prev button) bumps the cursor to the next row,
+           * so the buttons would land on a second row instead of sharing the
+           * content's row — and `items-center` then has nothing to center against.
+           */
+          className={cn(
+            "relative grid items-center gap-2",
+            orientation === "horizontal"
+              ? "grid-cols-[auto_minmax(0,1fr)_auto]"
+              : "grid-rows-[auto_minmax(0,1fr)_auto]",
+            className
+          )}
           role="region"
           aria-roledescription="carousel"
           {...props}
@@ -136,7 +154,15 @@ export const CarouselContent = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const { carouselRef, orientation } = useCarousel();
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div
+      ref={carouselRef}
+      className={cn(
+        "min-w-0 overflow-hidden",
+        orientation === "horizontal"
+          ? "col-start-2 row-start-1"
+          : "col-start-1 row-start-2"
+      )}
+    >
       <div
         ref={ref}
         className={cn(
@@ -194,9 +220,10 @@ export const CarouselPrevious = React.forwardRef<
         "inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface border border-border shadow-pop transition-colors duration-base ease-out",
         "hover:bg-hover-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-50",
+        "shrink-0",
         orientation === "horizontal"
-          ? "absolute left-2 top-1/2 -translate-y-1/2"
-          : "absolute top-2 left-1/2 -translate-x-1/2 rotate-90",
+          ? "col-start-1 row-start-1"
+          : "col-start-1 row-start-1 justify-self-center rotate-90",
         className
       )}
       {...props}
@@ -226,9 +253,10 @@ export const CarouselNext = React.forwardRef<
         "inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface border border-border shadow-pop transition-colors duration-base ease-out",
         "hover:bg-hover-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-50",
+        "shrink-0",
         orientation === "horizontal"
-          ? "absolute right-2 top-1/2 -translate-y-1/2"
-          : "absolute bottom-2 left-1/2 -translate-x-1/2 rotate-90",
+          ? "col-start-3 row-start-1"
+          : "col-start-1 row-start-3 justify-self-center rotate-90",
         className
       )}
       {...props}

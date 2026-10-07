@@ -46,7 +46,16 @@ export const LoadingOverlay = React.forwardRef<
       >
         <Spinner size={spinnerSize} />
         {message && (
-          <span className="text-sm font-medium text-background">
+          /**
+           * `text-foreground`, not `text-background`. The scrim under this text
+           * is always a black tint, so the message has to contrast with the
+           * *page*, not with the canvas — and `--background` is that canvas
+           * (#fcfbfa light, #101010 dark), which is near-white in light mode and
+           * near-black in dark mode. Both directions washed the text out.
+           * `--foreground` also happens to match the Spinner's `--accent` head
+           * in all four modes, so the two stay a matched pair.
+           */
+          <span className="text-sm font-medium text-foreground">
             {message}
           </span>
         )}

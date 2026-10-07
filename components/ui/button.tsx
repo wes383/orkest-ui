@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useDensity, type Density } from "@/components/density-provider";
 
 /**
  * Dev-only warning: `asChild + loading` is unsupported because Slot renders
@@ -27,16 +28,18 @@ const buttonVariants = cva(
         default: "bg-accent text-accent-fg hover:bg-accent-hover",
         outline: "bg-surface text-foreground border border-border hover:bg-hover-bg",
         ghost: "bg-transparent text-foreground hover:bg-hover-bg",
-        danger: "bg-red text-white hover:bg-red-fg",
+        danger: "bg-red-solid text-red-solid-fg hover:bg-red-solid-hover",
         subtle: "bg-hover-bg text-foreground hover:bg-hover-bg-strong",
         link: "bg-transparent text-foreground underline-offset-4 hover:underline rounded-none",
       },
       size: {
+        xs: "h-8 px-3 text-xs gap-1.5",
         sm: "h-9 px-4 text-sm",
         md: "h-10 px-5 text-sm",
         lg: "h-12 px-7 text-base",
         icon: "h-10 w-10 p-0",
         "icon-sm": "h-9 w-9 p-0",
+        "icon-xs": "h-8 w-8 p-0",
         fab: "h-[60px] w-[60px] p-0 shadow-fab",
       },
     },
@@ -54,6 +57,16 @@ export interface ButtonProps
   loading?: boolean;
 }
 
+/** Size used when no explicit `size` is given, derived from the global density. */
+const BUTTON_SIZE_FOR_DENSITY: Record<
+  Density,
+  NonNullable<VariantProps<typeof buttonVariants>["size"]>
+> = {
+  compact: "xs",
+  default: "md",
+  comfortable: "lg",
+};
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { className, variant, size, asChild = false, loading = false, children, disabled, ...props },
@@ -61,11 +74,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     warnAsChildLoading(asChild, loading);
 
+    const globalDensity = useDensity();
+    const resolvedSize = size ?? BUTTON_SIZE_FOR_DENSITY[globalDensity];
+
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
         ref={ref}
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size: resolvedSize, className }))}
         {...(!asChild ? { disabled: disabled || loading } : {})}
         {...props}
       >

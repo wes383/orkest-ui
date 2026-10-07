@@ -5,6 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import type { WheelPickerItem } from "@/components/ui/wheel-picker";
 import { useControllableState } from "@/hooks/use-controllable-state";
+import { useDensity, type Density } from "@/components/density-provider";
 
 /**
  * Shared building blocks for field-like pickers (DatePicker / TimePicker /
@@ -14,16 +15,19 @@ import { useControllableState } from "@/hooks/use-controllable-state";
  * Height values correspond one-to-one with inputVariants sizes in input.tsx.
  */
 
-export type PickerSize = "sm" | "md" | "lg";
+export type PickerSize = "xs" | "sm" | "md" | "lg";
 
 const fieldTriggerVariants = cva(
-  "relative flex items-center w-full bg-surface border rounded-lg text-base text-foreground transition-colors duration-base cursor-pointer",
+  "relative flex items-center w-full bg-surface border text-base text-foreground transition-colors duration-base cursor-pointer",
   {
     variants: {
       size: {
-        sm: "h-10",
-        md: "h-12",
-        lg: "h-14",
+        // Radius lives in the size variant so the compact tier (h-8) stays a
+        // rounded rect instead of collapsing into a capsule.
+        xs: "h-8 rounded-md text-xs",
+        sm: "h-10 rounded-lg",
+        md: "h-12 rounded-lg",
+        lg: "h-14 rounded-lg",
       },
       state: {
         default: "border-border focus-within:border-border-strong",
@@ -37,6 +41,86 @@ const fieldTriggerVariants = cva(
   }
 );
 
+/**
+ * Content geometry per trigger size.
+ *
+ * Left and right padding are kept as separate single-purpose classes rather
+ * than one combined `"pl-10 pr-3"` string: the label padding depends on whether
+ * a leading and/or trailing icon is present, and two competing `pr-*` classes
+ * would resolve by stylesheet order instead of by intent. Only `xs` deviates
+ * from the original left-3 / pl-10 geometry, so the other tiers render
+ * unchanged.
+ */
+const PICKER_SLOT: Record<
+  PickerSize,
+  {
+    /** Absolute placement + glyph size for the leading icon. */
+    icon: string;
+    /** Absolute placement + glyph size for the trailing icon. */
+    trailing: string;
+    /** Label left padding when a leading icon is present. */
+    padLeft: string;
+    /** Label left padding when there is no leading icon. */
+    padLeftBare: string;
+    /** Label right padding when there is no trailing icon. */
+    padRight: string;
+    /** Label right padding when a trailing icon is present. */
+    padRightTrailing: string;
+  }
+> = {
+  xs: {
+    icon: "left-2 [&>svg]:h-3.5 [&>svg]:w-3.5",
+    trailing: "right-2 [&>svg]:h-3.5 [&>svg]:w-3.5",
+    padLeft: "pl-7",
+    padLeftBare: "pl-2.5",
+    padRight: "pr-2",
+    padRightTrailing: "pr-7",
+  },
+  sm: {
+    icon: "left-3 [&>svg]:h-4 [&>svg]:w-4",
+    trailing: "right-3 [&>svg]:h-4 [&>svg]:w-4",
+    padLeft: "pl-10",
+    padLeftBare: "pl-3",
+    padRight: "pr-3",
+    padRightTrailing: "pr-9",
+  },
+  md: {
+    icon: "left-3 [&>svg]:h-4 [&>svg]:w-4",
+    trailing: "right-3 [&>svg]:h-4 [&>svg]:w-4",
+    padLeft: "pl-10",
+    padLeftBare: "pl-3",
+    padRight: "pr-3",
+    padRightTrailing: "pr-9",
+  },
+  lg: {
+    icon: "left-3 [&>svg]:h-4 [&>svg]:w-4",
+    trailing: "right-3 [&>svg]:h-4 [&>svg]:w-4",
+    padLeft: "pl-10",
+    padLeftBare: "pl-3",
+    padRight: "pr-3",
+    padRightTrailing: "pr-9",
+  },
+};
+
+/** Size used when no explicit `size` is given, derived from the global density. */
+const PICKER_SIZE_FOR_DENSITY: Record<Density, PickerSize> = {
+  compact: "xs",
+  default: "md",
+  comfortable: "lg",
+};
+
+/**
+ * Resolve the effective trigger size: an explicit `size` wins, otherwise the
+ * global density tier decides. Exported so a consumer that renders its own
+ * popover panel (e.g. Combobox) can match the trigger's corner radius.
+ */
+export function resolvePickerSize(
+  size: PickerSize | undefined,
+  density: Density
+): PickerSize {
+  return size ?? PICKER_SIZE_FOR_DENSITY[density];
+}
+
 export interface PickerTriggerProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
   /** Ref for the hidden input that carries the form value. */
@@ -48,13 +132,21 @@ export interface PickerTriggerProps
   >;
   /** Serialized value carried by the hidden input for native form submission. */
   value?: string;
-  /** Leading icon, rendered at a fixed 16px size. */
-  icon: React.ReactNode;
+  /** Leading icon, rendered at a fixed glyph size per tier. Optional: a
+   * Combobox trigger has no leading icon. */
+  icon?: React.ReactNode;
+  /** Trailing icon (e.g. a chevron). Optional — the pickers have none. */
+  trailingIcon?: React.ReactNode;
   displayValue: string;
   placeholder?: string;
   size?: PickerSize;
   disabled?: boolean;
   open?: boolean;
+  /**
+   * Popup role announced to assistive tech. `"dialog"` suits the calendar /
+   * wheel popovers; a Combobox passes `"listbox"`.
+   */
+  "aria-haspopup"?: React.AriaAttributes["aria-haspopup"];
 }
 
 /**
@@ -68,22 +160,27 @@ export const PickerTrigger = React.forwardRef<HTMLDivElement, PickerTriggerProps
       inputProps,
       value,
       icon,
+      trailingIcon,
       displayValue,
       placeholder,
-      size = "md",
+      size,
       disabled,
       open,
+      "aria-haspopup": ariaHasPopup = "dialog",
       className,
       ...props
     },
     ref
   ) => {
+    const globalDensity = useDensity();
+    const resolvedSize = resolvePickerSize(size, globalDensity);
+    const slot = PICKER_SLOT[resolvedSize];
     return (
       <div
         ref={ref}
         className={cn(
           fieldTriggerVariants({
-            size,
+            size: resolvedSize,
             state: disabled ? "disabled" : "default",
           }),
           className
@@ -92,7 +189,7 @@ export const PickerTrigger = React.forwardRef<HTMLDivElement, PickerTriggerProps
         tabIndex={disabled ? -1 : 0}
         role="combobox"
         aria-expanded={open}
-        aria-haspopup="dialog"
+        aria-haspopup={ariaHasPopup}
         aria-disabled={disabled || undefined}
         {...props}
       >
@@ -103,20 +200,38 @@ export const PickerTrigger = React.forwardRef<HTMLDivElement, PickerTriggerProps
           disabled={disabled}
           {...inputProps}
         />
-        <span
-          className="pointer-events-none absolute left-3 flex items-center justify-center text-foreground-subtle [&>svg]:h-4 [&>svg]:w-4"
-          aria-hidden="true"
-        >
-          {icon}
-        </span>
+        {icon && (
+          <span
+            className={cn(
+              "pointer-events-none absolute flex items-center justify-center text-foreground-subtle",
+              slot.icon
+            )}
+            aria-hidden="true"
+          >
+            {icon}
+          </span>
+        )}
         <span
           className={cn(
-            "pl-10 pr-3 flex-1 truncate",
+            "flex-1 truncate",
+            icon ? slot.padLeft : slot.padLeftBare,
+            trailingIcon ? slot.padRightTrailing : slot.padRight,
             !displayValue && "text-foreground-subtle"
           )}
         >
           {displayValue || placeholder}
         </span>
+        {trailingIcon && (
+          <span
+            className={cn(
+              "pointer-events-none absolute flex items-center justify-center text-foreground-subtle",
+              slot.trailing
+            )}
+            aria-hidden="true"
+          >
+            {trailingIcon}
+          </span>
+        )}
       </div>
     );
   }

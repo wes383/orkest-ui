@@ -1,9 +1,14 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { useDensity, type Density } from "@/components/density-provider";
+
+/** Row density tiers. Aliased to the shared density scale. */
+export type ListDensity = Density;
 
 export interface ListProps extends React.HTMLAttributes<HTMLUListElement> {
-  density?: "compact" | "default" | "comfortable";
+  /** Row density. Falls back to the surrounding density, then to "default". */
+  density?: ListDensity;
 }
 
 const listItemDensity = cva(
@@ -31,9 +36,11 @@ const ListContext = React.createContext<ListContextValue>({
 });
 
 export const List = React.forwardRef<HTMLUListElement, ListProps>(
-  ({ className, density = "default", ...props }, ref) => {
+  ({ className, density, ...props }, ref) => {
+    const globalDensity = useDensity();
+    const resolvedDensity = density ?? globalDensity;
     return (
-      <ListContext.Provider value={{ density }}>
+      <ListContext.Provider value={{ density: resolvedDensity }}>
         <ul
           ref={ref}
           className={cn("flex flex-col gap-1", className)}

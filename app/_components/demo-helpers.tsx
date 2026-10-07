@@ -1,5 +1,13 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { useDensity } from "@/components/density-provider";
+
+/**
+ * Layout helpers for the showcase page only.
+ *
+ * They follow the global density so the header switch visibly reflows the whole
+ * page, not just the components inside it. Not part of the published library.
+ */
 
 export function BrandLogo({ className }: { className?: string }) {
   return (
@@ -29,17 +37,18 @@ export function Section({
   children,
   ...props
 }: SectionProps) {
+  const compact = useDensity() === "compact";
   return (
     <section
       id={id}
-      className={cn("mb-14 scroll-mt-24", className)}
+      className={cn("scroll-mt-24", compact ? "mb-10" : "mb-14", className)}
       {...props}
     >
       <h2 className="font-display text-[28px] font-semibold tracking-tight mb-2">
         {title}
       </h2>
       {description && (
-        <p className="text-sm text-foreground-muted mb-6 max-w-2xl">
+        <p className={cn("text-sm text-foreground-muted max-w-2xl", compact ? "mb-4" : "mb-6")}>
           {description}
         </p>
       )}
@@ -55,10 +64,12 @@ export function SubsectionLabel({
   children: React.ReactNode;
   className?: string;
 }) {
+  const compact = useDensity() === "compact";
   return (
     <span
       className={cn(
-        "inline-block text-[13px] font-medium tracking-wide text-foreground-muted mb-3",
+        "inline-block text-[13px] font-medium tracking-wide text-foreground-muted",
+        compact ? "mb-2" : "mb-3",
         className
       )}
     >
@@ -72,10 +83,12 @@ export function Panel({
   children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const compact = useDensity() === "compact";
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-surface p-6",
+        "rounded-lg border border-border bg-surface",
+        compact ? "p-4" : "p-6",
         className
       )}
       {...props}
@@ -92,10 +105,11 @@ export interface SwatchProps {
 }
 
 export function Swatch({ name, hex, description }: SwatchProps) {
+  const compact = useDensity() === "compact";
   return (
     <div className="overflow-hidden rounded-md border border-border">
       <div
-        className="h-16"
+        className={compact ? "h-12" : "h-16"}
         style={{ backgroundColor: hex }}
         aria-hidden="true"
       />
@@ -119,13 +133,17 @@ export function Grid({
 }: React.HTMLAttributes<HTMLDivElement> & {
   cols?: 2 | 3 | 4;
 }) {
+  const compact = useDensity() === "compact";
   const colMap: Record<number, string> = {
     2: "grid-cols-1 sm:grid-cols-2",
     3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
     4: "grid-cols-2 sm:grid-cols-2 lg:grid-cols-4",
   };
   return (
-    <div className={cn("grid gap-4", colMap[cols], className)} {...props}>
+    <div
+      className={cn("grid", compact ? "gap-3" : "gap-4", colMap[cols], className)}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -136,9 +154,14 @@ export function Row({
   children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const compact = useDensity() === "compact";
   return (
     <div
-      className={cn("flex flex-wrap items-center gap-3", className)}
+      className={cn(
+        "flex flex-wrap items-center",
+        compact ? "gap-2" : "gap-3",
+        className
+      )}
       {...props}
     >
       {children}
@@ -151,8 +174,12 @@ export function Stack({
   children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const compact = useDensity() === "compact";
   return (
-    <div className={cn("flex flex-col gap-3", className)} {...props}>
+    <div
+      className={cn("flex flex-col", compact ? "gap-2" : "gap-3", className)}
+      {...props}
+    >
       {children}
     </div>
   );

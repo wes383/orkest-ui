@@ -3,8 +3,18 @@
 import * as React from "react";
 import { Section, Panel, SubsectionLabel, Row, Stack, Grid } from "@/app/_components/demo-helpers";
 import { Avatar, AvatarGroup } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tag } from "@/components/ui/tag";
+import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -54,7 +64,7 @@ import {
   ResultSubtitle,
   ResultActions,
 } from "@/components/ui/result";
-import { Inbox, Plus, Download, Check, Zap, GitPullRequest } from "lucide-react";
+import { Inbox, Plus, Download, Check, BookOpen, Zap, GitPullRequest } from "lucide-react";
 import {
   Accordion,
   AccordionItem,
@@ -112,10 +122,80 @@ export function DataDisplaySection() {
         <Panel>
           <SubsectionLabel>{t("dataDisplay.card")}</SubsectionLabel>
           <Grid cols={3}>
-            {/* Empty card shells — inner content intentionally removed. */}
-            <Card hoverable className="min-h-[140px]" />
-            <Card hoverable className="min-h-[140px]" />
-            <Card hoverable className="min-h-[140px]" />
+            {/* 1. Task card — priority badge, description, meta + action footer. */}
+            <Card hoverable className="flex flex-col">
+              <CardHeader>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-col gap-1">
+                    <CardTitle className="text-base">
+                      {t("dataDisplay.task1Title")}
+                    </CardTitle>
+                    <CardDescription>{t("dataDisplay.task1Desc")}</CardDescription>
+                  </div>
+                  <CardAction>
+                    <Badge variant="info">{t("forms.medium")}</Badge>
+                  </CardAction>
+                </div>
+              </CardHeader>
+              <CardFooter className="mt-auto justify-between gap-3">
+                <span className="text-xs text-foreground-muted">
+                  {t("dataDisplay.task1Time")}
+                </span>
+                <Button variant="ghost" size="sm">
+                  {t("dataDisplay.edit")}
+                </Button>
+              </CardFooter>
+            </Card>
+
+            {/* 2. Progress card — description plus a progress bar and its caption. */}
+            <Card hoverable className="flex flex-col">
+              <CardHeader>
+                <CardTitle className="text-base">
+                  {t("dataDisplay.task2Title")}
+                </CardTitle>
+                <CardDescription>{t("dataDisplay.task2Desc")}</CardDescription>
+              </CardHeader>
+              <CardContent className="mt-auto flex flex-col gap-2.5">
+                <Progress value={60} />
+                <div className="flex items-center justify-between text-xs text-foreground-muted">
+                  <span>{t("dataDisplay.task2Progress")}</span>
+                  <span>{t("dataDisplay.task2Time")}</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 3. Reading card — icon header, description, status badge + chapter tag. */}
+            <Card hoverable className="flex flex-col">
+              <CardHeader>
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-soft text-blue-fg"
+                    aria-hidden="true"
+                  >
+                    <BookOpen className="h-4 w-4" />
+                  </span>
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <CardTitle className="truncate text-base">
+                      {t("dataDisplay.task3Title")}
+                    </CardTitle>
+                    <span className="text-xs text-foreground-muted">
+                      {t("dataDisplay.task3Time")}
+                    </span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="mt-auto flex flex-col gap-3">
+                <p className="text-sm text-foreground-muted">
+                  {t("dataDisplay.task3Desc")}
+                </p>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <Badge variant="info" dot>
+                    {t("dataDisplay.task3Status")}
+                  </Badge>
+                  <Tag>ch-3</Tag>
+                </div>
+              </CardContent>
+            </Card>
           </Grid>
         </Panel>
 
@@ -384,7 +464,7 @@ export function DataDisplaySection() {
           <SubsectionLabel>{t("dataDisplay.empty")}</SubsectionLabel>
           <Empty>
             <EmptyIcon>
-              <Inbox className="h-12 w-12" />
+              <Inbox className="h-10 w-10" />
             </EmptyIcon>
             <EmptyTitle>{t("dataDisplay.emptyTitle")}</EmptyTitle>
             <EmptyDescription>{t("dataDisplay.emptyDesc")}</EmptyDescription>

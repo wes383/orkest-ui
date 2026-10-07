@@ -41,7 +41,11 @@ const AlertDialogContent = React.forwardRef<
         className={cn(
           // `relative` keeps any absolutely positioned child (e.g. an action-
           // area close button) anchored to the dialog instead of the wrapper.
-          "relative w-full max-w-md bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
+          //
+          // Same viewport cap as `DialogContent` (the wrapper's `p-4` is the
+          // 2rem). It carries no body region, so an over-long confirmation
+          // scrolls as a whole rather than hanging off the bottom of the screen.
+          "relative w-full max-w-md max-h-[calc(100dvh_-_2rem)] overflow-y-auto overflow-x-hidden bg-surface border border-border rounded-xl shadow-dialog animate-fade-slide-in p-0 focus:outline-none",
           className
         )}
         {...props}
@@ -127,7 +131,7 @@ const AlertDialogAction = React.forwardRef<
       "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium leading-none select-none transition-all duration-base ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50",
       "h-9 px-4 text-sm",
       destructive
-        ? "bg-red text-white hover:bg-red-fg"
+        ? "bg-red-solid text-red-solid-fg hover:bg-red-solid-hover"
         : "bg-accent text-accent-fg hover:bg-accent-hover",
       className
     )}

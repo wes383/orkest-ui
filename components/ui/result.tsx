@@ -12,7 +12,7 @@ import {
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export const resultIconVariants = cva("h-12 w-12", {
+export const resultIconVariants = cva("h-10 w-10", {
   variants: {
     status: {
       success: "text-green",
@@ -72,7 +72,7 @@ export const ResultIcon = React.forwardRef<HTMLDivElement, ResultIconProps>(
     return (
       <div
         ref={ref}
-        className={cn("mb-4", className)}
+        className={cn("mb-3", className)}
         {...props}
       >
         <Icon className={cn(resultIconVariants({ status }))} aria-hidden="true" />
@@ -93,7 +93,7 @@ export const ResultTitle = React.forwardRef<
     <h2
       ref={ref}
       className={cn(
-        "font-display text-2xl font-semibold tracking-tight",
+        "font-display text-xl font-semibold tracking-tight",
         className
       )}
       {...props}

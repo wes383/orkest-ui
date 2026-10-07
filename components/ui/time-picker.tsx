@@ -54,11 +54,12 @@ export interface TimePickerProps
   minuteStep?: number;
   /** Whether to use 12-hour mode + AM/PM column. Omit to follow the browser language. */
   use12Hour?: boolean;
-  /** Size variant of the Popover trigger. */
-  size?: "sm" | "md" | "lg";
+  /** Size variant of the Popover trigger. Omit to follow the global density tier. */
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
-const ITEM_HEIGHT = 36;
+// Row height follows the WheelPicker density default, so the wheel densifies
+// along with the rest of the UI in compact mode.
 const VISIBLE_COUNT = 5;
 
 /** Parse an "HH:mm" string into { hour, minute }. */
@@ -99,7 +100,7 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
       onChange,
       minuteStep: minuteStepProp = 1,
       use12Hour: use12HourProp,
-      size = "md",
+      size,
       disabled,
       placeholder = "HH:mm",
       "aria-label": ariaLabel,
@@ -197,7 +198,6 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
               items={hourItems}
               value={use12Hour ? hour12 : hour}
               onChange={handleHourChange}
-              itemHeight={ITEM_HEIGHT}
               visibleCount={VISIBLE_COUNT}
               className="w-12"
             />
@@ -212,7 +212,6 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
               items={minuteItems}
               value={minute}
               onChange={handleMinuteChange}
-              itemHeight={ITEM_HEIGHT}
               visibleCount={VISIBLE_COUNT}
               className="w-12"
             />
@@ -222,8 +221,7 @@ export const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(
                 items={PERIOD_ITEMS}
                 value={currentPeriod}
                 onChange={handlePeriodChange}
-                itemHeight={ITEM_HEIGHT}
-                visibleCount={VISIBLE_COUNT}
+                  visibleCount={VISIBLE_COUNT}
                 className="w-14"
               />
             )}

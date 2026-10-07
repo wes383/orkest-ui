@@ -30,14 +30,26 @@ const DrawerOverlay = React.forwardRef<
 DrawerOverlay.displayName = "DrawerOverlay";
 
 export const drawerVariants = cva(
-  "fixed z-modal bg-surface border-border shadow-dialog flex flex-col focus:outline-none",
+  // Inset 8px from the viewport edge so the panel reads as a floating surface
+  // rather than a slice of the screen. That is also why the border is drawn on
+  // all four sides — an attached edge would have nothing to butt against.
+  //
+  // `overflow-y-auto` is what turns a tall child (a `resize-y` textarea, a long
+  // form) into a scrollbar instead of a footer pushed past the bottom edge. For
+  // the side-anchored variants the `inset-y-2` alone already bounds the height;
+  // the `max-h` is for `top` / `bottom`, which only pin one axis. Both resolve
+  // to the same value, so a single declaration covers all four sides. `dvh`, not
+  // `vh`, so mobile browser chrome does not eat the bottom of the panel.
+  "fixed z-modal max-h-[calc(100dvh_-_1rem)] bg-surface border border-border rounded-xl shadow-dialog flex flex-col overflow-y-auto overflow-x-hidden focus:outline-none",
   {
     variants: {
       side: {
-        top: "inset-x-0 top-0 border-b border-border animate-slide-in-left",
-        bottom: "inset-x-0 bottom-0 border-t border-border animate-slide-in-left",
-        left: "inset-y-0 left-0 border-r border-border w-full max-w-[400px] animate-slide-in-left",
-        right: "inset-y-0 right-0 border-l border-border w-full max-w-[400px] animate-slide-in-right",
+        // `calc` keeps the gap on the attached side without letting the panel
+        // spill past the opposite edge on a narrow viewport.
+        top: "inset-x-2 top-2 animate-slide-in-left",
+        bottom: "inset-x-2 bottom-2 animate-slide-in-left",
+        left: "inset-y-2 left-2 w-[calc(100%_-_1rem)] max-w-[400px] animate-slide-in-left",
+        right: "inset-y-2 right-2 w-[calc(100%_-_1rem)] max-w-[400px] animate-slide-in-right",
       },
     },
     defaultVariants: {
@@ -80,6 +92,27 @@ const DrawerContent = React.forwardRef<
 ));
 DrawerContent.displayName = "DrawerContent";
 
+export interface DrawerBodyProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+/**
+ * The scrolling middle region of a drawer — the form goes between
+ * `DrawerHeader` and `DrawerFooter`.
+ *
+ * `min-h-0` is what actually makes it scroll: a flex item defaults to
+ * `min-height: auto`, so without it the body refuses to shrink below its
+ * content and pushes the footer out of the panel instead.
+ */
+const DrawerBody = React.forwardRef<HTMLDivElement, DrawerBodyProps>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("flex-1 min-h-0 overflow-y-auto px-5 pb-4", className)}
+      {...props}
+    />
+  )
+);
+DrawerBody.displayName = "DrawerBody";
+
 export interface DrawerHeaderProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -87,7 +120,7 @@ const DrawerHeader = React.forwardRef<HTMLDivElement, DrawerHeaderProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("p-5 pb-2 flex flex-col gap-1.5", className)}
+      className={cn("shrink-0 p-5 pb-2 flex flex-col gap-1.5", className)}
       {...props}
     />
   )
@@ -102,7 +135,7 @@ const DrawerFooter = React.forwardRef<HTMLDivElement, DrawerFooterProps>(
     <div
       ref={ref}
       className={cn(
-        "mt-auto flex justify-end gap-2 p-5 border-t border-border",
+        "shrink-0 mt-auto flex justify-end gap-2 p-5 border-t border-border",
         className
       )}
       {...props}
@@ -151,6 +184,7 @@ export {
   DrawerClose,
   DrawerOverlay,
   DrawerContent,
+  DrawerBody,
   DrawerHeader,
   DrawerFooter,
   DrawerTitle,

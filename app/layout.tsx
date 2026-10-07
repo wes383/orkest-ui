@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans, JetBrains_Mono, Noto_Sans_SC } from "next/fon
 import { cookies } from "next/headers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/components/language-provider";
+import { DensityProvider } from "@/components/density-provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Lang } from "@/lib/i18n";
 import "./globals.css";
@@ -84,8 +85,10 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <LanguageProvider initialLang={initialLang}>
-            {children}
-            <Toaster />
+            <DensityProvider>
+              {children}
+              <Toaster />
+            </DensityProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

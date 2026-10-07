@@ -73,6 +73,8 @@ Three modes are supported: **Light**, **Dark**, and **High Contrast** (composabl
 | `--accent-fg` | `#ffffff` | `#111111` | `#ffffff` |
 | `--overlay` | `rgba(0,0,0,0.18)` | `rgba(0,0,0,0.55)` | `rgba(0,0,0,0.6)` |
 
+`--overlay` is a black tint in every mode, so anything drawn *on* it — `LoadingOverlay`'s spinner and message — must contrast with the **page**, not the canvas. That means `text-foreground`, never `text-background`: `--background` *is* the canvas (`#fcfbfa` light / `#101010` dark), so it lands near-white in light mode and near-black in dark mode and reads as invisible against the scrim at both ends. `--foreground` also matches the `Spinner`'s `--accent` head in all four modes, so the pair stays consistent.
+
 **Semantic colors** (light / dark):
 - Blue `#2563eb` / `#93c5fd` — info, "medium" priority
 - Orange `#ea580c` / `#fdba74` — warning, "high" priority
@@ -81,6 +83,8 @@ Three modes are supported: **Light**, **Dark**, and **High Contrast** (composabl
 - Yellow `#ca8a04` / `#fde047` — caution
 
 Each semantic color ships with `-soft` (background tint) and `-border` (matching border) variants, both auto-adjusted for dark mode (rgba-based for translucency).
+
+Red additionally ships a **filled triple** — `--red-solid` / `--red-solid-hover` / `--red-solid-fg`, i.e. `bg-red-solid` / `hover:bg-red-solid-hover` / `text-red-solid-fg` — used by every destructive surface (Button `danger`, AlertDialog action, Popconfirm confirm). Unlike the rest of the palette it is deliberately **not inverted in dark mode**: `--red` in dark is a pale tint (`#fca5a5`) sized for text and icons, and painting white text on a pale tint is exactly the washed-out result this token exists to avoid. So the fill stays a saturated red in every mode — `#dc2626` normally (`#b91c1c` on hover), `#cc0000` (`#990000`) in high contrast — with white text on top.
 
 **Project palette** (19 colors, used for tags/avatars/accents):
 `red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, gray, slate`.
@@ -195,6 +199,110 @@ function ThemeToggle() {
 
 For multi-brand theming, inject CSS variables from a `ThemeTokens` object via `tokensToCssVars()` in `lib/tokens.ts`.
 
+### 1.12 Density Tiers
+
+Every control ships a comfortable default that matches the warm-minimal aesthetic. For data-heavy screens (dashboards, tables, admin forms) the library exposes an **opt-in** compact tier instead of leaving you to override classes by hand. Defaults are unchanged — nothing tightens unless you ask for it.
+
+Two axes:
+
+- **`size`** — for leaf controls. Components that already had `sm` / `md` / `lg` gain an `xs`: `Button`, `Input`, `Textarea`, `InputNumber`, `InputOTP`, `SelectTrigger`, `Combobox`, `DatePicker` / `TimePicker` / `DateTimePicker`. `Badge` and `Tag` follow the density through their existing `size` scale.
+- **`density`** — for row-based containers, propagated to their children through React context so only the root needs the prop. Values: `compact` / `default` / `comfortable`.
+
+**Shape is preserved, not normalised.** Pill-shaped elements (`Button`, `Chip`, `Pill`, `Avatar`, `Switch`, `Slider`, radio dots) stay pills in every tier. Field-like controls (`Input`, `Textarea`, `SelectTrigger`, picker triggers, `InputNumber`, `InputOTP`) stay rounded rectangles, which is why their radius lives in the size variant rather than the base class: `--radius-lg` is `16px`, and on an `h-8` (32px) field that is exactly half the height — the compact tier would otherwise silently turn every field into a capsule. Compact fields therefore use `--radius-md` (`12px`).
+
+| Component | Prop | Compact | Default |
+|---|---|---|---|
+| `Button` | `size="xs"` | `h-8 px-3 text-xs` (still `rounded-full`) | `md`: `h-10 px-5 text-sm` |
+| `Input` | `size="xs"` | `h-8 px-2.5 text-xs rounded-md` | `md`: `h-12 px-4 text-base rounded-lg` |
+| `Textarea` | `size="xs"` | `min-h-16 p-2 px-2.5 text-xs rounded-md` | `md`: `min-h-24 p-3 px-4 text-base rounded-xl` |
+| `InputNumber` | `size="xs"` | shell `h-8 rounded-md`, steppers `px-2` | `md`: shell `h-12 rounded-lg`, steppers `px-3` |
+| `InputOTP` | `size="xs"` on `InputOTPSlot` | slot `w-8 aspect-square rounded-md text-sm` | `md`: slot `w-12 aspect-square rounded-lg text-lg` |
+| `Select` | `size="xs"` on `SelectTrigger` | `h-8 px-2.5 text-xs rounded-md` | `md`: `h-12 px-4 text-sm rounded-lg` |
+| `DatePicker` / `TimePicker` / `DateTimePicker` | `size="xs"` (or omit) | trigger `h-8 text-xs rounded-md` | `md`: `h-12 rounded-lg` |
+| `Combobox` | `size="xs"` (or omit) | trigger `h-8 text-xs rounded-md`, panel `rounded-md p-0`, item `py-1 text-xs` | `md`: trigger `h-12 rounded-lg`, panel `rounded-lg`, item `py-1.5 text-sm` |
+| `SelectContent` | `density="compact"` | panel `p-0.5`, item `py-1.5 pl-8 text-xs` | panel `p-1`, item `py-2 pl-9 text-sm` |
+| `DropdownMenuContent` | `density="compact"` | items `py-1.5` | items `py-2` |
+| `ContextMenuContent` | `density="compact"` | items `py-1.5` | items `py-2` |
+| `Table` | `density="compact"` | head `h-9`, cell `px-3 py-1.5` | head `h-11`, cell `p-3` |
+| `Card` | `density="compact"` | `p-4` | `p-5` |
+| `List` | `density="compact"` | `py-1.5` | `py-2` |
+| `Menu` | `density="compact"` | `px-2 py-1` | `px-3 py-2` |
+| `Tabs` | `density="compact"` on `Tabs` | list `gap-0.5 p-0.5`, trigger `px-3 py-1.5 text-xs` | list `gap-1 p-1`, trigger `px-4 py-2.5 text-sm` |
+| `Pagination` | `density="compact"` on `Pagination` | link `h-7 min-w-7 text-xs` | link `h-9 min-w-9 text-sm` |
+| `Accordion` | `density="compact"` on `Accordion` | trigger `py-2.5 text-xs` | trigger `py-4 text-sm` |
+| `Descriptions` | `density="compact"` | cell `px-3 py-1.5 text-xs` | cell `px-4 py-2.5 text-sm` |
+| `Steps` | `density="compact"` on `Steps` | indicator `h-6 w-6 text-xs` | indicator `h-8 w-8 text-sm` |
+| `Timeline` | `density="compact"` on `Timeline` | dot `h-5 w-5`, item `gap-3 pb-4` | dot `h-6 w-6`, item `gap-4 pb-6` |
+| `Alert` | `density="compact"` | `gap-2 p-2.5 rounded-md text-xs` | `gap-3 p-3.5 rounded-lg text-sm` |
+| `Command` | `density="compact"` on `Command` | input `h-8 text-xs`, item `py-1 text-xs` | input `h-12 text-sm`, item `py-1.5 text-sm` |
+| `Calendar` | `density="compact"` | day `h-7 w-7 text-xs`, shell `p-1.5` | day `h-8 w-8 text-sm`, shell `p-2` |
+| `WheelPicker` | `density="compact"` | row `28px`, `text-xs` | row `36px`, `text-sm` |
+| `Checkbox` | `density="compact"` | `h-3.5 w-3.5`, glyph `h-2.5 w-2.5` | `h-4 w-4`, glyph `h-3 w-3` |
+| `RadioGroup` `RadioGroupItem` `RadioCard` | `density="compact"` | dot `h-3.5 w-3.5`, card `p-3` | dot `h-4 w-4`, card `p-4` |
+| `Switch` | `density="compact"` | track `h-[18px] w-8` (still `rounded-full`) | track `h-[22px] w-10` |
+| `Slider` | `density="compact"` | track `h-1`, thumb `h-3.5 w-3.5` | track `h-1.5`, thumb `h-4 w-4` |
+| `Chip` | `density="compact"` | `text-xs py-0.5` | `text-sm py-1` |
+| `Badge` | follows the density via `size` | `size="sm"` | `md`: `text-sm px-3 py-1` |
+| `Tag` | follows the density via `size` | `size="sm"` | `md`: `text-xs px-2 py-0.5` |
+
+Deliberately **not** density-aware: layout primitives (`Flex` / `Grid` / `Stack` / `Container` — spacing is author-specified), decorative atoms (`Avatar`, `Progress`, `Skeleton`, `Spinner`, `Separator`, `Divider`, `Kbd`, `Pill`) and overlay shells (`Dialog`, `Drawer`, `Popover`, `Tooltip` — already minimal).
+
+`density` reaches descendants through context, so setting it once on the root (`<Table>`, `<Card>`, `<Tabs>`, `<SelectContent>`, `<Command>`, …) is enough. Any individual child can still override it with its own `density` prop.
+
+```tsx
+<Card density="compact">
+  <CardHeader>
+    <CardTitle>Weekly report</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Table density="compact">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Task</TableHead>
+          <TableHead>Owner</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Ship docs</TableCell>
+          <TableCell>Wes</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    <Button size="xs" className="mt-3">
+      Add row
+    </Button>
+  </CardContent>
+</Card>
+```
+
+**Global density (`DensityProvider`)**
+
+Instead of tagging every component, mount `DensityProvider` once and let an app-level switch drive the whole tree. Components resolve their tier as: explicit `size` / `density` prop → surrounding density → `"default"`.
+
+```tsx
+import { DensityProvider, useDensityMode } from "@/components/density-provider";
+
+function DensitySwitch() {
+  const { density, setDensity } = useDensityMode();
+  return (
+    <button onClick={() => setDensity(density === "compact" ? "default" : "compact")}>
+      {density === "compact" ? "Default" : "Compact"}
+    </button>
+  );
+}
+
+<DensityProvider>
+  <DensitySwitch />
+  <App />
+</DensityProvider>
+```
+
+- Persists the choice to `orkest-density` in localStorage.
+- Optional: the library falls back to `"default"` without a provider, so it is safe to mount only where a switch is offered.
+- `useDensity()` reads the value (never throws); `useDensityMode()` also returns `setDensity` and requires a provider.
+- The showcase page's header switch is built on this — see `app/_components/density-toggle.tsx`.
+
 ---
 
 ## 2. Atoms
@@ -203,7 +311,7 @@ The lowest-level reusable units. Located in `components/ui/`.
 
 | Component | File | Variants / Notes |
 |---|---|---|
-| `Button`, `ButtonGroup` | button.tsx | variants: default/outline/ghost/danger/subtle/link; sizes: sm/md/lg/icon/icon-sm/fab; loading state; `asChild` via Slot |
+| `Button`, `ButtonGroup` | button.tsx | variants: default/outline/ghost/danger/subtle/link; sizes: xs/sm/md/lg/icon/icon-sm/icon-xs/fab; loading state; `asChild` via Slot |
 | `Link` / Text Link | (use `Button variant="link"` or `<a>`) | — |
 | `Icon` | icon.tsx | Wraps any lucide icon, sm/md/lg/xl sizes |
 | `Typography`, `Heading`, `Text`, `Code`, `Muted`, `Blockquote` | typography.tsx | Polymorphic `as` prop |
@@ -216,8 +324,9 @@ The lowest-level reusable units. Located in `components/ui/`.
 | `Spinner` | spinner.tsx | 4 sizes, role="status" |
 | `Skeleton`, `SkeletonText`, `SkeletonCircle` | skeleton.tsx | `animate-pulse-soft` |
 | `Progress`, `CircularProgress` | progress.tsx | Linear (thin/default/thick) + circular SVG |
-| `Tooltip` | tooltip.tsx | Radix Tooltip, 300ms delay, theme-aware bubble |
-| `Popover` | popover.tsx | Radix Popover, `shadow-pop` |
+| `Tooltip` | tooltip.tsx | Radix Tooltip, 300ms delay, surface bubble — white in light / near-black in dark, bordered + `shadow-md` (not inverted) |
+| `Popover` | popover.tsx | Radix Popover, `bg-surface` + `shadow-pop`, optional `container` for use inside a Dialog |
+| `HoverCard` (+ Trigger/Content) | hover-card.tsx | Radix HoverCard, opens on hover *and* keyboard focus (openDelay 300ms / closeDelay 120ms); same surface as `Popover`; holds multi-line content |
 | `Kbd` | kbd.tsx | Keyboard key display |
 
 ```tsx
@@ -238,17 +347,23 @@ The lowest-level reusable units. Located in `components/ui/`.
 | Component | File | Notes |
 |---|---|---|
 | `Label` | label.tsx | Radix Label, peer-state hooks |
-| `Input`, `InputWithIcon`, `PasswordInput` | input.tsx | Variants (default/error), sizes (sm/md/lg), Eye toggle for password |
+| `Input`, `InputWithIcon`, `PasswordInput` | input.tsx | Variants (default/error), sizes (xs/sm/md/lg), Eye toggle for password |
 | `Textarea` | textarea.tsx | `rounded-xl`, optional `showCount` character counter |
-| `Select` (+ all sub-components) | select.tsx | Radix Select, check indicator, scroll buttons |
+| `Select` (+ all sub-components) | select.tsx | Radix Select, check indicator, scroll buttons, trigger sizes (xs/sm/md/lg) |
+| `Combobox` | combobox.tsx | Single- *or* multi-select `Popover` + `Command` field, type-to-filter, option `description` / `icon` / `keywords` / `disabled`, sizes (xs/sm/md/lg), remote search (`searchValue` / `loading` / `selectedOption` / `shouldFilter`), `multiple`, `creatable` |
 | `Checkbox`, `CheckboxGroup` | checkbox.tsx | Check / Minus (indeterminate), group with `onValueChange` |
 | `RadioGroup`, `RadioGroupItem`, `RadioCard` | radio-group.tsx | Standard + card-style selectable |
 | `Switch` | switch.tsx | Radix Switch |
 | `Slider`, `RangeSlider` | slider.tsx | Radix Slider, multi-thumb support |
 | `InputNumber` | input-number.tsx | +/- buttons, min/max/step, clamp |
-| `InputOTP` (+ Group/Slot/Separator) | input-otp.tsx | Verification codes |
+| `InputOTP` (+ Group/Slot/Separator) | input-otp.tsx | Verification codes; slots are `aspect-square` with `min-w-0`, so a six-digit row compresses instead of overflowing a narrow card |
+| `DatePicker` | date-picker.tsx | `Popover` + `Calendar`; `mode="single" \| "range"`, `shortcuts` (Today / This week / …), `minDate` / `maxDate` / `disabledDates`, sizes (xs/sm/md/lg) |
+| `TimePicker` | time-picker.tsx | iOS-style wheel columns (hour + minute, AM/PM when 12-hour); `minuteStep`, 12/24-hour follows the page language or `use12Hour`; value is an `"HH:mm"` string |
+| `DateTimePicker` | date-time-picker.tsx | Day grid and wheel columns in one panel; value is an ISO string; same `minDate` / `maxDate` / `minuteStep` / `use12Hour` knobs |
 | `PasswordStrength` | password-strength.tsx | 0-4 strength meter + checklist |
 | `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage` | form.tsx | react-hook-form + zod integration |
+
+> **DateRangePicker** is not a separate component — it is `<DatePicker mode="range" />`, whose value is a `DateRange` (`{ from, to? }`). All three pickers sit on `Calendar` (`Data Display`) plus the wheel columns in `picker-shared.tsx`, so you can compose a different trigger around either primitive.
 
 ### Form Validation Pattern
 
@@ -283,10 +398,9 @@ const form = useForm({ resolver: zodResolver(schema) });
 
 ### Components NOT included (and why)
 
-- **DatePicker / TimePicker / DateRangePicker**: Use `Calendar` (built on `react-day-picker`) wrapped in a `Popover`. A complete recipe is in the roadmap.
 - **Upload / Cropper**: Out of scope — integrate [`react-dropzone`](https://github.com/react-dropzone/react-dropzone) + [`react-easy-crop`](https://github.com/ValentinH/react-easy-crop).
 - **ColorPicker**: Use [`react-colorful`](https://github.com/omgovich/react-colorful).
-- **Cascader / TreeSelect / Transfer / Mentions / AutoComplete / Combobox**: Build with `Popover` + `Command` (cmdk) primitives. See section 9.
+- **Cascader / TreeSelect / Transfer / Mentions / AutoComplete**: Build with `Popover` + `Command` (cmdk) primitives. See section 9. (For a plain searchable single-select, use `Combobox` — it already wraps that pair.)
 
 ---
 
@@ -323,6 +437,7 @@ const form = useForm({ resolver: zodResolver(schema) });
 | `Tabs` (+ List/Trigger/Content) | tabs.tsx | Radix Tabs, bottom 2px accent underline |
 | `Menu` (+ Label/Item/Divider/Group) | menu.tsx | Static presentational menu |
 | `DropdownMenu` (+ full compound) | dropdown-menu.tsx | Radix DropdownMenu, sub-menus, checkbox/radio items, destructive variant |
+| `ContextMenu` (+ full compound) | context-menu.tsx | Radix ContextMenu (right-click), sub-menus, checkbox/radio items, destructive variant, `density` |
 | `Breadcrumb` (+ full compound) | breadcrumb.tsx | `asChild` for next/link, ellipsis support |
 | `Pagination` (+ full compound) | pagination.tsx | href or onClick, `aria-current="page"` |
 | `Steps` (+ Step/StepItem/StepLabel/StepIndicator/StepSeparator) | steps.tsx | Horizontal/vertical, waiting/active/complete states |
@@ -366,21 +481,24 @@ useEffect(() => {
 
 | Component | File | Notes |
 |---|---|---|
-| `Card` (+ Header/Title/Description/Content/Footer/Action) | card.tsx | `hoverable` prop |
-| `Table` (+ Header/Body/Footer/Row/Head/Cell/Caption/Empty) | table.tsx | Native `<table>`, hoverable rows, `data-[state=selected]` |
+| `Card` (+ Header/Title/Description/Content/Footer/Action) | card.tsx | `hoverable` prop, density: compact/default/comfortable |
+| `Table` (+ Header/Body/Footer/Row/Head/Cell/Caption/Empty) | table.tsx | Native `<table>`, hoverable rows, `data-[state=selected]`, density: compact/default/comfortable |
 | `List` (+ Item/Separator) | list.tsx | density: compact/default/comfortable |
 | `Empty` (+ Icon/Title/Description/Actions) | empty.tsx | Dashed border, centered |
 | `Result` (+ Icon/Title/Subtitle/Actions) | result.tsx | success/error/warning/info/404/403/500 |
 | `Statistic` (+ Label/Value/Suffix/Prefix/Trend) | statistic.tsx | Plus `StatisticCard` wrapper |
 | `Timeline` (+ Item/Separator/Dot/Content/Title/Description/Time) | timeline.tsx | Vertical timeline with colored dots |
 | `Accordion` (+ Item/Trigger/Content) | accordion.tsx | Radix Accordion, animated expand |
-| `Calendar` | calendar.tsx | react-day-picker, single/range/multiple modes |
+| `Calendar` | calendar.tsx | react-day-picker, single/range/multiple modes, `density` |
+| `WheelPicker` (+ `WheelPickerItem`) | wheel-picker.tsx | Snapping scroll column, `density` — the primitive under `TimePicker` / `DateTimePicker` |
 | `Image` | image.tsx | Lazy load, fallback, skeleton placeholder |
-| `Carousel` (+ Content/Item/Previous/Next) | carousel.tsx | embla-carousel-react |
+| `Carousel` (+ Content/Item/Previous/Next) | carousel.tsx | embla-carousel-react; prev/next sit outside the track (3-track grid) |
 | `QRCode` | qrcode.tsx | Pure SVG (no dependency) |
 | `Descriptions` (+ Item/Label/Content) | descriptions.tsx | Key-value list, responsive |
 
 ### Table Pattern
+
+`density` is set on `<Table>` and inherited by every head/cell inside it — use `density="compact"` for data-heavy grids. See [1.12 Density Tiers](#112-density-tiers).
 
 ```tsx
 <Table>
@@ -417,9 +535,9 @@ const { virtualItems, totalHeight } = useVirtualList({
 
 | Component | File | Notes |
 |---|---|---|
-| `Dialog` (+ Trigger/Overlay/Content/Header/Footer/Title/Description/Close) | dialog.tsx | Radix Dialog, `rounded-2xl`, `shadow-dialog`, focus trap |
-| `AlertDialog` (+ full compound) | alert-dialog.tsx | Compact confirmation, destructive action |
-| `Drawer` | drawer.tsx | Side: left/right/top/bottom, slide-in |
+| `Dialog` (+ Trigger/Overlay/Content/`Body`/Header/Footer/Title/Description/Close) | dialog.tsx | Radix Dialog, `rounded-xl`, `shadow-dialog`, focus trap; capped to `calc(100dvh - 2rem)` with a scrolling `DialogBody` |
+| `AlertDialog` (+ full compound) | alert-dialog.tsx | Compact confirmation, destructive action; same viewport cap, scrolls as one piece |
+| `Drawer` (+ Trigger/Overlay/Content/`Body`/Header/Footer/Title/Description/Close) | drawer.tsx | Side: left/right/top/bottom, slide-in; sits 8px inside the viewport edge with `rounded-xl` and a border on all four sides; scrolling `DrawerBody` |
 | `Alert` (+ Title/Description/Icon) | alert.tsx | Inline, 4 semantic variants |
 | `Popconfirm` (+ Trigger/Content/Title/Description/Actions) | popconfirm.tsx | Confirmation bubble |
 | `LoadingOverlay` | loading-overlay.tsx | Full-screen or container-scoped |
@@ -461,6 +579,30 @@ toast.promise(api.save(), {
 </AlertDialog>
 ```
 
+### Overflow Inside a Dialog or Drawer
+
+A dialog and a drawer are both a `flex flex-col` shell with a viewport-derived `max-height` (`calc(100dvh - 2rem)` for the dialog, so its `p-4` wrapper stays clear; `calc(100dvh - 1rem)` for the drawer, matching its 8px inset). Wrap the middle of the panel in `DialogBody` / `DrawerBody` and the three regions behave:
+
+| Region | Behaviour |
+| --- | --- |
+| `DialogHeader` / `DrawerHeader` | `shrink-0` — pinned, never squeezed |
+| `DialogBody` / `DrawerBody` | `flex-1 min-h-0 overflow-y-auto` — takes the leftover height and scrolls |
+| `DialogFooter` / `DrawerFooter` | `shrink-0` — actions stay on screen |
+
+```tsx
+<DialogContent>
+  <DialogHeader>…</DialogHeader>
+  <DialogBody>{/* form, long text, … */}</DialogBody>
+  <DialogFooter>…</DialogFooter>
+</DialogContent>
+```
+
+`min-h-0` is the load-bearing class. A flex item defaults to `min-height: auto`, which means it refuses to shrink below its content — without it the body grows the panel instead of scrolling, and anything after it (the footer, and the last few form fields) is pushed off the bottom of the screen. This is what previously happened when a `resize-y` `Textarea` was dragged tall inside a modal: the field could not be constrained, so the panel grew with it.
+
+The shells also carry `overflow-y-auto` themselves, purely as a fallback: content that is *not* wrapped in a body scrolls inside the panel as a whole rather than being clipped. With a body in place the body absorbs the overflow, so the shell never scrolls and the two containers never fight.
+
+`AlertDialog` takes the same viewport cap but has no body region — a confirmation long enough to overflow scrolls as one piece, which is the right trade for a dialog this short.
+
 ---
 
 ## 8. Media & Content
@@ -481,38 +623,101 @@ The library deliberately keeps media handling lean — these dependencies are he
 
 ## 9. Advanced / Composite
 
-### 9.1 Combobox / AutoComplete
+### 9.1 Combobox
 
-Build using `Popover` + `Command`:
+`Combobox` is a single-select field with type-to-filter search. Reach for it over `Select` whenever the list is long enough that scrolling to find an option is annoying (projects, assignees, time zones); `Select` stays the better pick for short fixed lists, where the extra typing step buys nothing.
 
 ```tsx
-<Popover>
-  <PopoverTrigger asChild>
-    <Button variant="outline" role="combobox">
-      {value ? options.find(o => o.value === value)?.label : "Select..."}
-      <Icon as={ChevronsUpDown} />
-    </Button>
-  </PopoverTrigger>
-  <PopoverContent className="w-72 p-0">
-    <Command>
-      <CommandInput placeholder="Search..." />
-      <CommandList>
-        <CommandEmpty>No result.</CommandEmpty>
-        {options.map(o => (
-          <CommandItem key={o.value} onSelect={() => setValue(o.value)}>
-            {o.label}
-            <Icon as={Check} className={cn("ml-auto", value === o.value ? "opacity-100" : "opacity-0")} />
-          </CommandItem>
-        ))}
-      </CommandList>
-    </Command>
-  </PopoverContent>
-</Popover>
+const [project, setProject] = React.useState("orkest");
+
+<Combobox
+  value={project}
+  onValueChange={setProject}
+  placeholder="Select a project"
+  searchPlaceholder="Search projects..."
+  emptyText="No project found."
+  options={[
+    { value: "orkest", label: "Orkest", description: "Main project", icon: <Folder /> },
+    { value: "reading", label: "Reading list", keywords: ["books"] },
+    { value: "archived", label: "2025 archive", disabled: true },
+  ]}
+/>
 ```
+
+Picking an option closes the panel, the current selection is highlighted when the panel opens, and typing filters on `label` plus whatever `keywords` you attach.
+
+- **Form value** — the trigger is a `PickerTrigger`, so the value rides a hidden `<input>`. Add `name` and it submits inside a plain `<form>`; with `react-hook-form`, drive `value` / `onValueChange` from a `Controller`.
+- **Sizing** — omit `size` to follow the global density tier, or pass `size="xs" | "sm" | "md" | "lg"` to pin it. Radius lives in the size variant, so the compact tier stays a rounded rectangle rather than collapsing into a capsule.
+- **Inside a Dialog** — like the pickers, the panel re-targets its portal to the nearest dialog so the scroll lock does not clip it.
+- **Keyboard** — `Enter` / `Space` / `ArrowDown` open the panel; arrows move, `Enter` selects, `Esc` closes and returns focus to the trigger.
+
+Not included: chips in the trigger (multi-select shows a comma-joined summary), reordering selected values, and a maximum-selection cap.
+
+#### Multi-select and creating
+
+`multiple` turns the selection into a toggle and keeps the panel open — closing after each pick works against the user when the point is to pick several. `value` / `onValueChange` become arrays, and the trigger summarises the selection as `First, Second +N`.
+
+`creatable` adds a trailing row that mints an option out of the typed text, which is what turns the picker into a tag input. The row only appears when the query is non-empty and matches no existing label *exactly*, so it never competes with a real option.
+
+```tsx
+const [tags, setTags] = React.useState<string[]>(["design"]);
+
+<Combobox
+  multiple
+  creatable
+  value={tags}
+  onValueChange={setTags}
+  createText={(typed) => `Create "${typed}"`}
+  onCreate={(typed) => createTagOnServer(typed).id}  // omit to use the text as the value
+  options={[
+    { value: "design", label: "Design" },
+    { value: "eng", label: "Engineering" },
+  ]}
+/>
+```
+
+- **`onCreate`** — called with the typed text; return a string to use as the new value (a server id), or nothing to use the text as both value and label.
+- **Created options are remembered** — they are kept beside `options`, so a created label survives the next refetch and the trigger stays labelled. A value that later appears in `options` defers to the server's row.
+- **Composition** — a panel can be `multiple` *and* a remote search at the same time; the async props above are orthogonal.
+
+The `value` / `onValueChange` types come from the `multiple` flag through a discriminated union, so callers never narrow by hand (`ComboboxProps = ComboboxSingleProps | ComboboxMultipleProps`). Internally both modes share one normalized `string[]` state.
+
+#### Async / remote search
+
+Combobox never fetches anything itself — that belongs to your data layer (React Query, SWR, a server action). What it does offer is the four props that let a request be plugged in without fighting the internals:
+
+| Prop | Why it is needed |
+| --- | --- |
+| `shouldFilter={false}` | Without it cmdk applies its own matcher to a page the server has *already* filtered, and the list usually goes empty. |
+| `searchValue` + `onSearchValueChange` | Take the query over so it can be debounced and sent. The query is cleared on close, so a controlled caller should write the value straight back. The reset fires only when the box is non-empty, so every call reports a query that actually changed — a caller that flips a `loading` flag on this signal cannot be left spinning by a no-op close. |
+| `loading` (+ `loadingText`) | Replaces the whole list with a spinner row. The previous page is deliberately *not* left visible underneath — a spinner above live-looking results has no way to say which rows are current, so it reads as a bug rather than as progress. |
+| `selectedOption` | Keeps the trigger labelled when `value` is not part of the page currently in `options` — the normal case on an edit form. |
+
+Request ordering stays on your side: abort the superseded request, or ignore the response that arrives out of turn.
+
+```tsx
+const [query, setQuery] = React.useState("");
+const { data = [], isFetching } = useQuery(searchProjects(query));
+
+<Combobox
+  options={data}
+  value={projectId}
+  onValueChange={setProjectId}
+  selectedOption={savedProject}   // value not in `data` yet — still labelled
+  shouldFilter={false}            // server already filtered
+  searchValue={query}
+  onSearchValueChange={setQuery}
+  loading={isFetching}
+/>
+```
+
+The showcase (`FormsSection` → "Async search (Combobox)") runs the same shape against a debounced `setTimeout` stand-in for an endpoint, so the loading and label-resolution behaviour can be seen without a backend.
+
+`CommandLoading` (in `command.tsx`) is the row used for the spinner. cmdk gives it no trigger of its own — render it conditionally, in place of the list. It follows the density tier and takes its `aria-label` from a string child. Note that cmdk wraps the children in an unclassed inner `<div>`, and Tailwind's preflight makes `svg` a block element, so the spinner/label row has to be laid out on that inner wrapper rather than on the element the caller styles.
 
 ### 9.2 Segmented Control
 
-Use `ToggleGroup` from `@radix-ui/react-toggle-group` (already in `package.json`). Style inline or build a small wrapper.
+Use `ToggleGroup` from `@radix-ui/react-toggle-group` (add it to `package.json` — it is not shipped today). Style inline or build a small wrapper.
 
 ### 9.3 FilterBar / QueryFilter
 
@@ -1076,12 +1281,12 @@ Use `useVirtualList` for lists >1000 items. For tables, consider [`@tanstack/rea
 ## Reference
 
 - **Foundation**: `app/globals.css` · `tailwind.config.ts` · `lib/utils.ts` · `lib/tokens.ts`
-- **Components**: `components/ui/` (63 files)
+- **Components**: `components/ui/` (71 files, ~11,000 lines)
 - **Hooks**: `hooks/` (12 files)
-- **Theme**: `components/theme-provider.tsx`
+- **Theme**: `components/theme-provider.tsx` · `components/density-provider.tsx`
 - **Config**: `components.json` · `package.json` · `tsconfig.json`
 
-**Component count**: 63 components · 12 hooks · 4 lib modules · ~2,800 lines of TypeScript/CSS.
+**Component count**: 71 files under `components/ui/` · 12 hooks · 4 lib modules.
 
 ---
 

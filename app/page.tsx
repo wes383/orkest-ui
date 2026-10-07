@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ThemeToggle, LanguageToggle } from "@/app/_components/theme-toggle";
+import { DensityToggle } from "@/app/_components/density-toggle";
 import { useT } from "@/components/language-provider";
 import { ColorsSection } from "@/app/_sections/colors-section";
 import { TypographySection } from "@/app/_sections/typography-section";
@@ -48,8 +49,11 @@ export default function HomePage() {
               >
                 Orkest UI
               </a>
+              {/* Thirteen anchors do not fit a phone: they wrap into three
+                  rows inside a sticky header and eat the screen. Below `md`
+                  the header keeps only the logo and the three switches. */}
               <nav
-                className="flex flex-wrap items-center gap-1 max-w-full"
+                className="hidden flex-wrap items-center gap-1 max-w-full md:flex"
                 aria-label="Section navigation"
               >
                 {navLinks.map((link) => (
@@ -66,6 +70,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-2 shrink-0">
               <LanguageToggle />
+              <DensityToggle />
               <ThemeToggle />
             </div>
           </div>

@@ -1,21 +1,70 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { useDensity, type Density } from "@/components/density-provider";
 
-export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {}
+/** Row density tiers shared by Table, TableHead and TableCell. */
+export type TableDensity = Density;
+
+const tableHeadVariants = cva(
+  "text-left align-middle text-xs font-medium tracking-wide text-foreground-muted",
+  {
+    variants: {
+      density: {
+        compact: "h-9 px-3",
+        default: "h-11 px-3",
+        comfortable: "h-12 px-4",
+      },
+    },
+    defaultVariants: {
+      density: "default",
+    },
+  }
+);
+
+const tableCellVariants = cva("align-middle", {
+  variants: {
+    density: {
+      compact: "px-3 py-1.5",
+      default: "p-3",
+      comfortable: "px-4 py-3.5",
+    },
+  },
+  defaultVariants: {
+    density: "default",
+  },
+});
+
+/**
+ * Propagates the density set on `<Table>` down to `<TableHead>` / `<TableCell>`
+ * so only the table root needs the prop.
+ */
+const TableDensityContext = React.createContext<TableDensity>("default");
+
+export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+  /** Row density. Falls back to the surrounding density, then to "default". */
+  density?: TableDensity;
+}
 
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-x-auto">
-      <table
-        ref={ref}
-        className={cn(
-          "w-full caption-bottom text-sm border-collapse",
-          className
-        )}
-        {...props}
-      />
-    </div>
-  )
+  ({ className, density, ...props }, ref) => {
+    const globalDensity = useDensity();
+    const resolvedDensity = density ?? globalDensity;
+    return (
+      <div className="relative w-full overflow-x-auto">
+        <TableDensityContext.Provider value={resolvedDensity}>
+          <table
+            ref={ref}
+            className={cn(
+              "w-full caption-bottom text-sm border-collapse",
+              className
+            )}
+            {...props}
+          />
+        </TableDensityContext.Provider>
+      </div>
+    );
+  }
 );
 Table.displayName = "Table";
 
@@ -82,36 +131,41 @@ export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
 TableRow.displayName = "TableRow";
 
 export interface TableHeadProps
-  extends React.ThHTMLAttributes<HTMLTableCellElement> {}
+  extends React.ThHTMLAttributes<HTMLTableCellElement>,
+    Pick<VariantProps<typeof tableHeadVariants>, "density"> {}
 
 export const TableHead = React.forwardRef<
   HTMLTableCellElement,
   TableHeadProps
->(({ className, ...props }, ref) => (
-  <th
-    ref={ref}
-    className={cn(
-      "h-11 px-3 text-left align-middle text-xs font-medium tracking-wide text-foreground-muted",
-      className
-    )}
-    {...props}
-  />
-));
+>(({ className, density, ...props }, ref) => {
+  const ctx = React.useContext(TableDensityContext);
+  return (
+    <th
+      ref={ref}
+      className={cn(tableHeadVariants({ density: density ?? ctx, className }))}
+      {...props}
+    />
+  );
+});
 TableHead.displayName = "TableHead";
 
 export interface TableCellProps
-  extends React.TdHTMLAttributes<HTMLTableCellElement> {}
+  extends React.TdHTMLAttributes<HTMLTableCellElement>,
+    Pick<VariantProps<typeof tableCellVariants>, "density"> {}
 
 export const TableCell = React.forwardRef<
   HTMLTableCellElement,
   TableCellProps
->(({ className, ...props }, ref) => (
-  <td
-    ref={ref}
-    className={cn("p-3 align-middle", className)}
-    {...props}
-  />
-));
+>(({ className, density, ...props }, ref) => {
+  const ctx = React.useContext(TableDensityContext);
+  return (
+    <td
+      ref={ref}
+      className={cn(tableCellVariants({ density: density ?? ctx, className }))}
+      {...props}
+    />
+  );
+});
 TableCell.displayName = "TableCell";
 
 export interface TableCaptionProps

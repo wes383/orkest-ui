@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { useDensity } from "@/components/density-provider";
 
 /**
  * WheelPicker — iOS-style wheel picker primitive (supports infinite looping).
@@ -32,6 +33,13 @@ import { cn } from "@/lib/utils";
 const REPEAT = 21;
 const MID_OFFSET = Math.floor(REPEAT / 2);
 
+/** Row height per density, used when the caller does not pass an explicit `itemHeight`. */
+const WHEEL_ITEM_HEIGHT_FOR_DENSITY = {
+  compact: 28,
+  default: 36,
+  comfortable: 44,
+} as const;
+
 export interface WheelPickerItem {
   value: string | number;
   label: string;
@@ -55,12 +63,15 @@ export function WheelPicker({
   items,
   value,
   onChange,
-  itemHeight = 36,
+  itemHeight: itemHeightProp,
   visibleCount = 5,
   className,
   "aria-label": ariaLabel,
   ...props
 }: WheelPickerProps) {
+  const density = useDensity();
+  const itemHeight = itemHeightProp ?? WHEEL_ITEM_HEIGHT_FOR_DENSITY[density];
+
   if (visibleCount % 2 === 0) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(
@@ -341,7 +352,12 @@ export function WheelPicker({
               aria-selected={isA11yCopy ? isSelected : undefined}
               aria-disabled={isA11yCopy && item.disabled ? true : undefined}
               className={cn(
-                "flex cursor-pointer items-center justify-center text-center text-sm font-medium transition-colors",
+                "flex cursor-pointer items-center justify-center text-center font-medium transition-colors",
+                density === "compact"
+                  ? "text-xs"
+                  : density === "comfortable"
+                  ? "text-base"
+                  : "text-sm",
                 isSelected ? "text-foreground" : "text-foreground-muted",
                 item.disabled && "cursor-not-allowed"
               )}

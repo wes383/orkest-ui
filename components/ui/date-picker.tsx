@@ -39,7 +39,8 @@ export interface DatePickerProps {
   disabledDates?: Date[];
   shortcuts?: DatePickerShortcut[];
   placeholder?: string;
-  size?: "sm" | "md" | "lg";
+  /** Trigger size. Omit to follow the global density tier. */
+  size?: "xs" | "sm" | "md" | "lg";
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
@@ -182,7 +183,7 @@ export const DatePicker = React.forwardRef<HTMLInputElement, DatePickerProps>(
       disabledDates,
       shortcuts,
       placeholder,
-      size = "md",
+      size,
       disabled,
       className,
       contentClassName,

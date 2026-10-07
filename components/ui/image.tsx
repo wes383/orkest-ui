@@ -65,7 +65,7 @@ export const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     return (
       <span
         className={cn(
-          "relative inline-flex items-center justify-center overflow-hidden bg-hover-bg",
+          "relative inline-flex items-center justify-center overflow-hidden bg-muted",
           imageRounded({ rounded }),
           className
         )}

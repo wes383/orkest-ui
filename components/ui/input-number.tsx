@@ -3,6 +3,29 @@
 import * as React from "react";
 import { Minus, Plus } from "lucide-react";
 import { cn, clamp } from "@/lib/utils";
+import { useDensity, type Density } from "@/components/density-provider";
+
+/** Size tier of the stepper shell, mirroring Input's size scale. */
+export type InputNumberSize = "xs" | "sm" | "md" | "lg";
+
+const INPUT_NUMBER_SIZE: Record<
+  InputNumberSize,
+  { shell: string; input: string; button: string }
+> = {
+  // Radius lives here so the compact tier stays a rounded rect: at h-8 an
+  // --radius-lg (16px) corner would be exactly half the height (a capsule).
+  xs: { shell: "h-8 rounded-md", input: "text-xs", button: "px-2" },
+  sm: { shell: "h-10 rounded-lg", input: "text-sm", button: "px-2.5" },
+  md: { shell: "h-12 rounded-lg", input: "text-base", button: "px-3" },
+  lg: { shell: "h-14 rounded-lg", input: "text-lg", button: "px-3.5" },
+};
+
+/** Size used when no explicit `size` is given, derived from the global density. */
+const INPUT_NUMBER_SIZE_FOR_DENSITY: Record<Density, InputNumberSize> = {
+  compact: "xs",
+  default: "md",
+  comfortable: "lg",
+};
 
 export interface InputNumberProps
   extends Omit<
@@ -15,6 +38,8 @@ export interface InputNumberProps
   value?: number;
   defaultValue?: number;
   onValueChange?: (value: number) => void;
+  /** Shell size. Omit to follow the global density tier. */
+  size?: InputNumberSize;
 }
 
 const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
@@ -27,11 +52,15 @@ const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
       value,
       defaultValue = 0,
       onValueChange,
+      size,
       disabled,
       ...props
     },
     ref
   ) => {
+    const globalDensity = useDensity();
+    const sizing = INPUT_NUMBER_SIZE[size ?? INPUT_NUMBER_SIZE_FOR_DENSITY[globalDensity]];
+
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = React.useState<number>(() => {
       const v = typeof defaultValue === "number" ? defaultValue : Number(defaultValue) || 0;
@@ -80,7 +109,8 @@ const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
     return (
       <div
         className={cn(
-          "flex h-12 items-stretch overflow-hidden rounded-lg border border-border bg-surface",
+          "flex items-stretch overflow-hidden border border-border bg-surface",
+          sizing.shell,
           disabled && "opacity-60",
           className
         )}
@@ -89,7 +119,10 @@ const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
           type="button"
           onClick={() => stepBy(-1)}
           disabled={isMinDisabled}
-          className="flex items-center justify-center px-3 hover:bg-hover-bg disabled:pointer-events-none disabled:opacity-40 transition-colors text-foreground-muted"
+          className={cn(
+            "flex items-center justify-center hover:bg-hover-bg disabled:pointer-events-none disabled:opacity-40 transition-colors text-foreground-muted",
+            sizing.button
+          )}
           aria-label="Decrease"
           tabIndex={-1}
         >
@@ -105,14 +138,20 @@ const InputNumber = React.forwardRef<HTMLInputElement, InputNumberProps>(
           step={step}
           onChange={handleInputChange}
           disabled={disabled}
-          className="w-full min-w-0 border-0 bg-transparent text-center text-base text-foreground outline-none focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className={cn(
+            "w-full min-w-0 border-0 bg-transparent text-center text-foreground outline-none focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+            sizing.input
+          )}
           {...props}
         />
         <button
           type="button"
           onClick={() => stepBy(1)}
           disabled={isMaxDisabled}
-          className="flex items-center justify-center px-3 hover:bg-hover-bg disabled:pointer-events-none disabled:opacity-40 transition-colors text-foreground-muted"
+          className={cn(
+            "flex items-center justify-center hover:bg-hover-bg disabled:pointer-events-none disabled:opacity-40 transition-colors text-foreground-muted",
+            sizing.button
+          )}
           aria-label="Increase"
           tabIndex={-1}
         >

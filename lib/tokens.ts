@@ -33,6 +33,23 @@ export interface SemanticColor {
   border: string;
 }
 
+/**
+ * A filled surface built from a semantic colour — a destructive button, say —
+ * with the text colour that sits on top of it.
+ *
+ * Kept apart from `SemanticColor.DEFAULT` because that value doubles as the
+ * text/icon colour on a neutral background, so in dark mode it is a pale tint
+ * that cannot carry light text as a fill.
+ */
+export interface SolidColor {
+  /** Fill of the solid surface. */
+  DEFAULT: string;
+  /** Fill on hover. */
+  hover: string;
+  /** Text/icon colour on the fill. */
+  fg: string;
+}
+
 export interface ThemeTokens {
   mode: ThemeMode;
   colors: {
@@ -58,7 +75,8 @@ export interface ThemeTokens {
     semantic: {
       blue: SemanticColor;
       orange: SemanticColor;
-      red: SemanticColor;
+      /** Only red ships a solid triple — it is the one used as a filled surface. */
+      red: SemanticColor & { solid: SolidColor };
       green: SemanticColor;
       yellow: SemanticColor;
     };
@@ -197,7 +215,8 @@ export const lightTokens: ThemeTokens = {
     semantic: {
       blue:   { DEFAULT: "#2563eb", fg: "#1d4ed8", soft: "#eff6ff", border: "#bfdbfe" },
       orange: { DEFAULT: "#ea580c", fg: "#c2410c", soft: "#fff7ed", border: "#fed7aa" },
-      red:    { DEFAULT: "#dc2626", fg: "#b91c1c", soft: "#fef2f2", border: "#fecaca" },
+      red:    { DEFAULT: "#dc2626", fg: "#b91c1c", soft: "#fef2f2", border: "#fecaca",
+                solid: { DEFAULT: "#dc2626", hover: "#b91c1c", fg: "#ffffff" } },
       green:  { DEFAULT: "#16a34a", fg: "#15803d", soft: "#f0fdf4", border: "#bbf7d0" },
       yellow: { DEFAULT: "#ca8a04", fg: "#a16207", soft: "#fefce8", border: "#fde68a" },
     },
@@ -306,7 +325,10 @@ export const darkTokens: ThemeTokens = {
     semantic: {
       blue:   { DEFAULT: "#93c5fd", fg: "#60a5fa", soft: "rgba(59, 130, 246, 0.12)", border: "rgba(96, 165, 250, 0.45)" },
       orange: { DEFAULT: "#fdba74", fg: "#fb923c", soft: "rgba(249, 115, 22, 0.12)", border: "rgba(251, 146, 60, 0.45)" },
-      red:    { DEFAULT: "#fca5a5", fg: "#f87171", soft: "rgba(239, 68, 68, 0.12)",  border: "rgba(248, 113, 113, 0.45)" },
+      red:    { DEFAULT: "#fca5a5", fg: "#f87171", soft: "rgba(239, 68, 68, 0.12)",  border: "rgba(248, 113, 113, 0.45)",
+                // Not inverted with --red: a filled danger surface stays a
+                // saturated red so its white label keeps its contrast.
+                solid: { DEFAULT: "#dc2626", hover: "#b91c1c", fg: "#ffffff" } },
       green:  { DEFAULT: "#86efac", fg: "#4ade80", soft: "rgba(34, 197, 94, 0.16)",  border: "rgba(74, 222, 128, 0.45)" },
       yellow: { DEFAULT: "#fde047", fg: "#facc15", soft: "rgba(234, 179, 8, 0.14)",  border: "rgba(250, 204, 21, 0.45)" },
     },
@@ -346,7 +368,8 @@ export const highContrastTokens: ThemeTokens = {
     semantic: {
       ...lightTokens.colors.semantic,
       blue:   { DEFAULT: "#0000ee", fg: "#0000ee", soft: "rgba(0, 0, 238, 0.12)", border: "#0000ee" },
-      red:    { DEFAULT: "#cc0000", fg: "#cc0000", soft: "rgba(204, 0, 0, 0.12)", border: "#cc0000" },
+      red:    { DEFAULT: "#cc0000", fg: "#cc0000", soft: "rgba(204, 0, 0, 0.12)", border: "#cc0000",
+                solid: { DEFAULT: "#cc0000", hover: "#990000", fg: "#ffffff" } },
       green:  { DEFAULT: "#006400", fg: "#006400", soft: "rgba(0, 100, 0, 0.12)", border: "#006400" },
       orange: { DEFAULT: "#cc5500", fg: "#cc5500", soft: "rgba(204, 85, 0, 0.12)", border: "#cc5500" },
       yellow: { DEFAULT: "#ca8a04", fg: "#a16207", soft: "#fefce8", border: "#fde68a" },
@@ -385,7 +408,8 @@ export const darkHighContrastTokens: ThemeTokens = {
     semantic: {
       ...darkTokens.colors.semantic,
       blue:   { DEFAULT: "#6ba3ff", fg: "#6ba3ff", soft: "rgba(107, 163, 255, 0.12)", border: "#6ba3ff" },
-      red:    { DEFAULT: "#ff6b6b", fg: "#ff6b6b", soft: "rgba(255, 107, 107, 0.12)", border: "#ff6b6b" },
+      red:    { DEFAULT: "#ff6b6b", fg: "#ff6b6b", soft: "rgba(255, 107, 107, 0.12)", border: "#ff6b6b",
+                solid: { DEFAULT: "#cc0000", hover: "#990000", fg: "#ffffff" } },
       green:  { DEFAULT: "#66d97a", fg: "#66d97a", soft: "rgba(102, 217, 122, 0.16)", border: "#66d97a" },
       orange: { DEFAULT: "#ff9b3d", fg: "#ff9b3d", soft: "rgba(255, 155, 61, 0.12)", border: "#ff9b3d" },
       yellow: { DEFAULT: "#fde047", fg: "#facc15", soft: "rgba(234, 179, 8, 0.14)", border: "rgba(250, 204, 21, 0.45)" },
@@ -448,6 +472,9 @@ export function tokensToCssVars(tokens: ThemeTokens): Record<string, string> {
     "--red-fg": s.red.fg,
     "--red-soft": s.red.soft,
     "--red-border": s.red.border,
+    "--red-solid": s.red.solid.DEFAULT,
+    "--red-solid-hover": s.red.solid.hover,
+    "--red-solid-fg": s.red.solid.fg,
 
     "--green": s.green.DEFAULT,
     "--green-fg": s.green.fg,
