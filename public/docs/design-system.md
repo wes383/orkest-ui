@@ -54,7 +54,7 @@ npx shadcn@latest add button input dialog
 
 ## 1. Design Tokens / Foundations
 
-**Source of truth**: [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css) (CSS variables) + [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts) (TypeScript exports) + [`tailwind.config.ts`](file:///d:/FJ/ui-style/orkest-ui/tailwind.config.ts) (Tailwind mapping).
+**Source of truth**: `app/globals.css` (CSS variables) + `lib/tokens.ts` (TypeScript exports) + `tailwind.config.ts` (Tailwind mapping).
 
 ### 1.1 Color System
 
@@ -85,7 +85,7 @@ Each semantic color ships with `-soft` (background tint) and `-border` (matching
 **Project palette** (19 colors, used for tags/avatars/accents):
 `red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, gray, slate`.
 
-Use them via Tailwind classes under the `palette` namespace, e.g. `bg-palette-indigo`, `text-palette-violet`, or compute soft triples via `softColorTriple(hex)` from [`lib/utils.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/utils.ts).
+Use them via Tailwind classes under the `palette` namespace, e.g. `bg-palette-indigo`, `text-palette-violet`, or compute soft triples via `softColorTriple(hex)` from `lib/utils.ts`.
 
 ### 1.2 Typography System
 
@@ -95,7 +95,7 @@ Use them via Tailwind classes under the `palette` namespace, e.g. `bg-palette-in
 | `--font-display` | Plus Jakarta Sans (500–800) | Noto Sans SC | Headings, titles |
 | `--font-mono` | JetBrains Mono | Noto Sans SC | Code, numbers, kbd |
 
-**CJK font — Source Han Sans (Noto Sans SC)**: loaded via `next/font/google` in [`app/layout.tsx`](file:///d:/FJ/ui-style/orkest-ui/app/layout.tsx) as `--font-noto-sans-sc`, then referenced in all three font stacks in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css). This means Latin glyphs render in Inter / Plus Jakarta Sans / JetBrains Mono, while Chinese glyphs uniformly fall back to Noto Sans SC across body, headings, **and code** — including `<Code>`, `kbd`, monospace numerics, and inline code in toasts. Weights loaded: 400 / 500 / 700. `preload: false` + `display: "swap"` to keep large CJK files off the critical path.
+**CJK font — Source Han Sans (Noto Sans SC)**: loaded via `next/font/google` in `app/layout.tsx` as `--font-noto-sans-sc`, then referenced in all three font stacks in `app/globals.css`. This means Latin glyphs render in Inter / Plus Jakarta Sans / JetBrains Mono, while Chinese glyphs uniformly fall back to Noto Sans SC across body, headings, **and code** — including `<Code>`, `kbd`, monospace numerics, and inline code in toasts. Weights loaded: 400 / 500 / 700. `preload: false` + `display: "swap"` to keep large CJK files off the critical path.
 
 **Type scale** (size / line-height):
 `xs` 12/1.5 · `sm` 13/1.5 · `base` 15/1.5 · `lg` 18/1.3 · `xl` 20/1.3 · `2xl` 24/1.1 · `3xl` 28/1.1 · `4xl` 32/1.1 · `5xl` 40/1.1.
@@ -172,7 +172,7 @@ Animations defined: `animate-fade-in`, `animate-fade-slide-in`, `animate-scale-i
 - Library: **lucide-react** (1,500+ icons, tree-shakeable).
 - Default size: 16px (`md`). Sizes: `sm` 14, `md` 16, `lg` 20, `xl` 24.
 - Stroke width: 2. Inherits `currentColor`.
-- Use the [`Icon`](file:///d:/FJ/ui-style/orkest-ui/components/ui/icon.tsx) wrapper for consistent sizing.
+- Use the `Icon` wrapper for consistent sizing.
 
 ```tsx
 import { Icon } from "@/components/ui/icon";
@@ -193,32 +193,32 @@ function ThemeToggle() {
 }
 ```
 
-For multi-brand theming, inject CSS variables from a `ThemeTokens` object via `tokensToCssVars()` in [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts).
+For multi-brand theming, inject CSS variables from a `ThemeTokens` object via `tokensToCssVars()` in `lib/tokens.ts`.
 
 ---
 
 ## 2. Atoms
 
-The lowest-level reusable units. Located in [`components/ui/`](file:///d:/FJ/ui-style/orkest-ui/components/ui).
+The lowest-level reusable units. Located in `components/ui/`.
 
 | Component | File | Variants / Notes |
 |---|---|---|
-| `Button`, `ButtonGroup` | [button.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/button.tsx) | variants: default/outline/ghost/danger/subtle/link; sizes: sm/md/lg/icon/icon-sm/fab; loading state; `asChild` via Slot |
+| `Button`, `ButtonGroup` | button.tsx | variants: default/outline/ghost/danger/subtle/link; sizes: sm/md/lg/icon/icon-sm/fab; loading state; `asChild` via Slot |
 | `Link` / Text Link | (use `Button variant="link"` or `<a>`) | — |
-| `Icon` | [icon.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/icon.tsx) | Wraps any lucide icon, sm/md/lg/xl sizes |
-| `Typography`, `Heading`, `Text`, `Code`, `Muted`, `Blockquote` | [typography.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/typography.tsx) | Polymorphic `as` prop |
-| `Avatar`, `AvatarGroup` | [avatar.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/avatar.tsx) | Radix Avatar, 6 sizes, initials fallback, `max` overflow |
-| `Badge` | [badge.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/badge.tsx) | 7 variants (default/secondary/outline/success/warning/danger/info), optional dot |
-| `Tag` | [tag.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/tag.tsx) | Small monospace chip, default/solid |
-| `Chip` | [chip.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/chip.tsx) | Removable, with optional prefix |
-| `Divider` | [divider.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/divider.tsx) | Horizontal/vertical, optional centered label |
-| `Separator` | [separator.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/separator.tsx) | Radix-powered, ARIA-compliant |
-| `Spinner` | [spinner.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/spinner.tsx) | 4 sizes, role="status" |
-| `Skeleton`, `SkeletonText`, `SkeletonCircle` | [skeleton.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/skeleton.tsx) | `animate-pulse-soft` |
-| `Progress`, `CircularProgress` | [progress.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/progress.tsx) | Linear (thin/default/thick) + circular SVG |
-| `Tooltip` | [tooltip.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/tooltip.tsx) | Radix Tooltip, 300ms delay, theme-aware bubble |
-| `Popover` | [popover.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/popover.tsx) | Radix Popover, `shadow-pop` |
-| `Kbd` | [kbd.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/kbd.tsx) | Keyboard key display |
+| `Icon` | icon.tsx | Wraps any lucide icon, sm/md/lg/xl sizes |
+| `Typography`, `Heading`, `Text`, `Code`, `Muted`, `Blockquote` | typography.tsx | Polymorphic `as` prop |
+| `Avatar`, `AvatarGroup` | avatar.tsx | Radix Avatar, 6 sizes, initials fallback, `max` overflow |
+| `Badge` | badge.tsx | 7 variants (default/secondary/outline/success/warning/danger/info), optional dot |
+| `Tag` | tag.tsx | Small monospace chip, default/solid |
+| `Chip` | chip.tsx | Removable, with optional prefix |
+| `Divider` | divider.tsx | Horizontal/vertical, optional centered label |
+| `Separator` | separator.tsx | Radix-powered, ARIA-compliant |
+| `Spinner` | spinner.tsx | 4 sizes, role="status" |
+| `Skeleton`, `SkeletonText`, `SkeletonCircle` | skeleton.tsx | `animate-pulse-soft` |
+| `Progress`, `CircularProgress` | progress.tsx | Linear (thin/default/thick) + circular SVG |
+| `Tooltip` | tooltip.tsx | Radix Tooltip, 300ms delay, theme-aware bubble |
+| `Popover` | popover.tsx | Radix Popover, `shadow-pop` |
+| `Kbd` | kbd.tsx | Keyboard key display |
 
 ```tsx
 <Button variant="default" size="md">
@@ -237,18 +237,18 @@ The lowest-level reusable units. Located in [`components/ui/`](file:///d:/FJ/ui-
 
 | Component | File | Notes |
 |---|---|---|
-| `Label` | [label.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/label.tsx) | Radix Label, peer-state hooks |
-| `Input`, `InputWithIcon`, `PasswordInput` | [input.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/input.tsx) | Variants (default/error), sizes (sm/md/lg), Eye toggle for password |
-| `Textarea` | [textarea.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/textarea.tsx) | `rounded-xl`, optional `showCount` character counter |
-| `Select` (+ all sub-components) | [select.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/select.tsx) | Radix Select, check indicator, scroll buttons |
-| `Checkbox`, `CheckboxGroup` | [checkbox.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/checkbox.tsx) | Check / Minus (indeterminate), group with `onValueChange` |
-| `RadioGroup`, `RadioGroupItem`, `RadioCard` | [radio-group.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/radio-group.tsx) | Standard + card-style selectable |
-| `Switch` | [switch.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/switch.tsx) | Radix Switch |
-| `Slider`, `RangeSlider` | [slider.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/slider.tsx) | Radix Slider, multi-thumb support |
-| `InputNumber` | [input-number.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/input-number.tsx) | +/- buttons, min/max/step, clamp |
-| `InputOTP` (+ Group/Slot/Separator) | [input-otp.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/input-otp.tsx) | Verification codes |
-| `PasswordStrength` | [password-strength.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/password-strength.tsx) | 0-4 strength meter + checklist |
-| `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage` | [form.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/form.tsx) | react-hook-form + zod integration |
+| `Label` | label.tsx | Radix Label, peer-state hooks |
+| `Input`, `InputWithIcon`, `PasswordInput` | input.tsx | Variants (default/error), sizes (sm/md/lg), Eye toggle for password |
+| `Textarea` | textarea.tsx | `rounded-xl`, optional `showCount` character counter |
+| `Select` (+ all sub-components) | select.tsx | Radix Select, check indicator, scroll buttons |
+| `Checkbox`, `CheckboxGroup` | checkbox.tsx | Check / Minus (indeterminate), group with `onValueChange` |
+| `RadioGroup`, `RadioGroupItem`, `RadioCard` | radio-group.tsx | Standard + card-style selectable |
+| `Switch` | switch.tsx | Radix Switch |
+| `Slider`, `RangeSlider` | slider.tsx | Radix Slider, multi-thumb support |
+| `InputNumber` | input-number.tsx | +/- buttons, min/max/step, clamp |
+| `InputOTP` (+ Group/Slot/Separator) | input-otp.tsx | Verification codes |
+| `PasswordStrength` | password-strength.tsx | 0-4 strength meter + checklist |
+| `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage` | form.tsx | react-hook-form + zod integration |
 
 ### Form Validation Pattern
 
@@ -283,10 +283,10 @@ const form = useForm({ resolver: zodResolver(schema) });
 
 ### Components NOT included (and why)
 
-- **DatePicker / TimePicker / DateRangePicker**: Use [`Calendar`](file:///d:/FJ/ui-style/orkest-ui/components/ui/calendar.tsx) (built on `react-day-picker`) wrapped in a [`Popover`](file:///d:/FJ/ui-style/orkest-ui/components/ui/popover.tsx). A complete recipe is in the roadmap.
+- **DatePicker / TimePicker / DateRangePicker**: Use `Calendar` (built on `react-day-picker`) wrapped in a `Popover`. A complete recipe is in the roadmap.
 - **Upload / Cropper**: Out of scope — integrate [`react-dropzone`](https://github.com/react-dropzone/react-dropzone) + [`react-easy-crop`](https://github.com/ValentinH/react-easy-crop).
 - **ColorPicker**: Use [`react-colorful`](https://github.com/omgovich/react-colorful).
-- **Cascader / TreeSelect / Transfer / Mentions / AutoComplete / Combobox**: Build with [`Popover`](file:///d:/FJ/ui-style/orkest-ui/components/ui/popover.tsx) + [`Command`](file:///d:/FJ/ui-style/orkest-ui/components/ui/command.tsx) (cmdk) primitives. See section 9.
+- **Cascader / TreeSelect / Transfer / Mentions / AutoComplete / Combobox**: Build with `Popover` + `Command` (cmdk) primitives. See section 9.
 
 ---
 
@@ -294,13 +294,13 @@ const form = useForm({ resolver: zodResolver(schema) });
 
 | Component | File | Notes |
 |---|---|---|
-| `Container` | [container.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/container.tsx) | Sizes: sm/md/lg/xl/full, polymorphic |
-| `Grid`, `Row`, `Col` | [grid.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/grid.tsx) | Responsive `columns={{base,sm,md,lg,xl,2xl}}`, 12-col span system |
-| `Stack` | [stack.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/stack.tsx) | Vertical flex, optional `divider` between items |
-| `Flex` | [flex.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/flex.tsx) | direction/justify/align/wrap/gap |
-| `AspectRatio` (`Ratio`) | [aspect-ratio.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/aspect-ratio.tsx) | Radix AspectRatio |
-| `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` | [resizable.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/resizable.tsx) | `react-resizable-panels` |
-| `ScrollArea` | [scroll-area.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/scroll-area.tsx) | Radix ScrollArea, custom styled scrollbar |
+| `Container` | container.tsx | Sizes: sm/md/lg/xl/full, polymorphic |
+| `Grid`, `Row`, `Col` | grid.tsx | Responsive `columns={{base,sm,md,lg,xl,2xl}}`, 12-col span system |
+| `Stack` | stack.tsx | Vertical flex, optional `divider` between items |
+| `Flex` | flex.tsx | direction/justify/align/wrap/gap |
+| `AspectRatio` (`Ratio`) | aspect-ratio.tsx | Radix AspectRatio |
+| `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` | resizable.tsx | `react-resizable-panels` |
+| `ScrollArea` | scroll-area.tsx | Radix ScrollArea, custom styled scrollbar |
 | `Center` / `AbsoluteCenter` | (use `<Flex items="center" justify="center">`) | — |
 | `Affix` / `Sticky` | (use `position: sticky; z-sticky`) | — |
 | `Anchor` | Roadmap — use `<nav>` + IntersectionObserver | — |
@@ -320,13 +320,13 @@ const form = useForm({ resolver: zodResolver(schema) });
 
 | Component | File | Notes |
 |---|---|---|
-| `Tabs` (+ List/Trigger/Content) | [tabs.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/tabs.tsx) | Radix Tabs, bottom 2px accent underline |
-| `Menu` (+ Label/Item/Divider/Group) | [menu.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/menu.tsx) | Static presentational menu |
-| `DropdownMenu` (+ full compound) | [dropdown-menu.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/dropdown-menu.tsx) | Radix DropdownMenu, sub-menus, checkbox/radio items, destructive variant |
-| `Breadcrumb` (+ full compound) | [breadcrumb.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/breadcrumb.tsx) | `asChild` for next/link, ellipsis support |
-| `Pagination` (+ full compound) | [pagination.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/pagination.tsx) | href or onClick, `aria-current="page"` |
-| `Steps` (+ Step/StepItem/StepLabel/StepIndicator/StepSeparator) | [steps.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/steps.tsx) | Horizontal/vertical, waiting/active/complete states |
-| `Command`, `CommandDialog`, `CommandInput`, `CommandList`, `CommandItem`, ... | [command.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/command.tsx) | cmdk-powered Cmd+K palette |
+| `Tabs` (+ List/Trigger/Content) | tabs.tsx | Radix Tabs, bottom 2px accent underline |
+| `Menu` (+ Label/Item/Divider/Group) | menu.tsx | Static presentational menu |
+| `DropdownMenu` (+ full compound) | dropdown-menu.tsx | Radix DropdownMenu, sub-menus, checkbox/radio items, destructive variant |
+| `Breadcrumb` (+ full compound) | breadcrumb.tsx | `asChild` for next/link, ellipsis support |
+| `Pagination` (+ full compound) | pagination.tsx | href or onClick, `aria-current="page"` |
+| `Steps` (+ Step/StepItem/StepLabel/StepIndicator/StepSeparator) | steps.tsx | Horizontal/vertical, waiting/active/complete states |
+| `Command`, `CommandDialog`, `CommandInput`, `CommandList`, `CommandItem`, ... | command.tsx | cmdk-powered Cmd+K palette |
 
 ### Command Palette Recipe
 
@@ -366,19 +366,19 @@ useEffect(() => {
 
 | Component | File | Notes |
 |---|---|---|
-| `Card` (+ Header/Title/Description/Content/Footer/Action) | [card.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/card.tsx) | `hoverable` prop |
-| `Table` (+ Header/Body/Footer/Row/Head/Cell/Caption/Empty) | [table.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/table.tsx) | Native `<table>`, hoverable rows, `data-[state=selected]` |
-| `List` (+ Item/Separator) | [list.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/list.tsx) | density: compact/default/comfortable |
-| `Empty` (+ Icon/Title/Description/Actions) | [empty.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/empty.tsx) | Dashed border, centered |
-| `Result` (+ Icon/Title/Subtitle/Actions) | [result.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/result.tsx) | success/error/warning/info/404/403/500 |
-| `Statistic` (+ Label/Value/Suffix/Prefix/Trend) | [statistic.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/statistic.tsx) | Plus `StatisticCard` wrapper |
-| `Timeline` (+ Item/Separator/Dot/Content/Title/Description/Time) | [timeline.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/timeline.tsx) | Vertical timeline with colored dots |
-| `Accordion` (+ Item/Trigger/Content) | [accordion.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/accordion.tsx) | Radix Accordion, animated expand |
-| `Calendar` | [calendar.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/calendar.tsx) | react-day-picker, single/range/multiple modes |
-| `Image` | [image.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/image.tsx) | Lazy load, fallback, skeleton placeholder |
-| `Carousel` (+ Content/Item/Previous/Next) | [carousel.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/carousel.tsx) | embla-carousel-react |
-| `QRCode` | [qrcode.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/qrcode.tsx) | Pure SVG (no dependency) |
-| `Descriptions` (+ Item/Label/Content) | [descriptions.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/descriptions.tsx) | Key-value list, responsive |
+| `Card` (+ Header/Title/Description/Content/Footer/Action) | card.tsx | `hoverable` prop |
+| `Table` (+ Header/Body/Footer/Row/Head/Cell/Caption/Empty) | table.tsx | Native `<table>`, hoverable rows, `data-[state=selected]` |
+| `List` (+ Item/Separator) | list.tsx | density: compact/default/comfortable |
+| `Empty` (+ Icon/Title/Description/Actions) | empty.tsx | Dashed border, centered |
+| `Result` (+ Icon/Title/Subtitle/Actions) | result.tsx | success/error/warning/info/404/403/500 |
+| `Statistic` (+ Label/Value/Suffix/Prefix/Trend) | statistic.tsx | Plus `StatisticCard` wrapper |
+| `Timeline` (+ Item/Separator/Dot/Content/Title/Description/Time) | timeline.tsx | Vertical timeline with colored dots |
+| `Accordion` (+ Item/Trigger/Content) | accordion.tsx | Radix Accordion, animated expand |
+| `Calendar` | calendar.tsx | react-day-picker, single/range/multiple modes |
+| `Image` | image.tsx | Lazy load, fallback, skeleton placeholder |
+| `Carousel` (+ Content/Item/Previous/Next) | carousel.tsx | embla-carousel-react |
+| `QRCode` | qrcode.tsx | Pure SVG (no dependency) |
+| `Descriptions` (+ Item/Label/Content) | descriptions.tsx | Key-value list, responsive |
 
 ### Table Pattern
 
@@ -401,7 +401,7 @@ useEffect(() => {
 
 ### Virtual Scrolling
 
-For large lists, use [`useVirtualList`](file:///d:/FJ/ui-style/orkest-ui/hooks/use-virtual-list.ts):
+For large lists, use `useVirtualList`:
 
 ```tsx
 const { virtualItems, totalHeight } = useVirtualList({
@@ -417,14 +417,14 @@ const { virtualItems, totalHeight } = useVirtualList({
 
 | Component | File | Notes |
 |---|---|---|
-| `Dialog` (+ Trigger/Overlay/Content/Header/Footer/Title/Description/Close) | [dialog.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/dialog.tsx) | Radix Dialog, `rounded-2xl`, `shadow-dialog`, focus trap |
-| `AlertDialog` (+ full compound) | [alert-dialog.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/alert-dialog.tsx) | Compact confirmation, destructive action |
-| `Drawer` | [drawer.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/drawer.tsx) | Side: left/right/top/bottom, slide-in |
-| `Alert` (+ Title/Description/Icon) | [alert.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/alert.tsx) | Inline, 4 semantic variants |
-| `Popconfirm` (+ Trigger/Content/Title/Description/Actions) | [popconfirm.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/popconfirm.tsx) | Confirmation bubble |
-| `LoadingOverlay` | [loading-overlay.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/loading-overlay.tsx) | Full-screen or container-scoped |
-| `Watermark` | [watermark.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/watermark.tsx) | Tiled SVG pattern, low opacity |
-| `Toaster` + `toast()` | [toaster.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/toaster.tsx) | sonner-based, themed |
+| `Dialog` (+ Trigger/Overlay/Content/Header/Footer/Title/Description/Close) | dialog.tsx | Radix Dialog, `rounded-2xl`, `shadow-dialog`, focus trap |
+| `AlertDialog` (+ full compound) | alert-dialog.tsx | Compact confirmation, destructive action |
+| `Drawer` | drawer.tsx | Side: left/right/top/bottom, slide-in |
+| `Alert` (+ Title/Description/Icon) | alert.tsx | Inline, 4 semantic variants |
+| `Popconfirm` (+ Trigger/Content/Title/Description/Actions) | popconfirm.tsx | Confirmation bubble |
+| `LoadingOverlay` | loading-overlay.tsx | Full-screen or container-scoped |
+| `Watermark` | watermark.tsx | Tiled SVG pattern, low opacity |
+| `Toaster` + `toast()` | toaster.tsx | sonner-based, themed |
 
 ### Toast Usage
 
@@ -467,8 +467,8 @@ toast.promise(api.save(), {
 
 | Component | File | Notes |
 |---|---|---|
-| `Image` | [image.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/image.tsx) | Lazy loading, error fallback, blur/skeleton placeholder, `rounded` prop |
-| `Avatar` (upload + cropper) | [avatar.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/avatar.tsx) | For cropper, integrate `react-easy-crop` in a `Dialog` |
+| `Image` | image.tsx | Lazy loading, error fallback, blur/skeleton placeholder, `rounded` prop |
+| `Avatar` (upload + cropper) | avatar.tsx | For cropper, integrate `react-easy-crop` in a `Dialog` |
 | `Markdown Renderer` | Not bundled | Recommended: [`react-markdown`](https://github.com/remarkjs/react-markdown) + [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight) |
 | `CodeBlock` / Syntax Highlighter | Not bundled | Recommended: [`shiki`](https://github.com/shikijs/shiki) for SSR, [`prism-react-renderer`](https://github.com/FormidableLabs/prism-react-renderer) for client |
 | `Video` / `Audio Player` | Not bundled | Use native `<video controls>` or [`react-player`](https://github.com/cookpete/react-player) |
@@ -550,7 +550,7 @@ Compose `Heading` + `Text` + actions:
 
 ### 9.7 StatisticCard / DashboardCard
 
-Provided by [`statistic.tsx`](file:///d:/FJ/ui-style/orkest-ui/components/ui/statistic.tsx) — wraps a `Statistic` in a `Card` with optional icon and trend.
+Provided by `statistic.tsx` — wraps a `Statistic` in a `Card` with optional icon and trend.
 
 ### 9.8 ChatBubble / Message List
 
@@ -562,7 +562,7 @@ Not built in. Compose with `Flex` (columns) + `Stack` (cards per column) + drag 
 
 ### 9.10 Infinite Scroll / LoadMore
 
-Use [`useIntersectionObserver`](file:///d:/FJ/ui-style/orkest-ui/hooks/use-intersection-observer.ts):
+Use `useIntersectionObserver`:
 
 ```tsx
 const ref = useRef(null);
@@ -580,31 +580,31 @@ Not built in. Use [`@ecomfe/react-pull-refresh`](https://github.com/ecomfe/react
 
 ## 10. Utilities & Hooks
 
-### Hooks ([`hooks/`](file:///d:/FJ/ui-style/orkest-ui/hooks))
+### Hooks (`hooks/`)
 
 | Hook | File | Purpose |
 |---|---|---|
-| `useAppTheme` | [theme-provider.tsx](file:///d:/FJ/ui-style/orkest-ui/components/theme-provider.tsx) | theme, resolvedTheme, toggleTheme, highContrast |
-| `useBreakpoint` | [use-breakpoint.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-breakpoint.ts) | current breakpoint name, `useIsMobile()` |
-| `useMediaQuery` | [use-media-query.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-media-query.ts) | SSR-safe boolean |
-| `useClickOutside` | [use-click-outside.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-click-outside.ts) | with `ignoreRefs` option |
-| `useClipboard` | [use-clipboard.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-clipboard.ts) | copy + copied state |
-| `useDebounce` / `useDebouncedCallback` | [use-debounce.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-debounce.ts) | value + callback variants |
-| `useLocalStorage` | [use-local-storage.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-local-storage.ts) | JSON, cross-tab sync |
-| `useScrollLock` | [use-scroll-lock.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-scroll-lock.ts) | body scroll lock, scrollbar compensation |
-| `useFocusTrap` | [use-focus-trap.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-focus-trap.ts) | Tab/Shift+Tab cycling |
-| `useIntersectionObserver` | [use-intersection-observer.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-intersection-observer.ts) | SSR-safe |
-| `useVirtualList` | [use-virtual-list.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-virtual-list.ts) | minimal windowing, `scrollToIndex` |
-| `useControllableState` | [use-controllable-state.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-controllable-state.ts) | controlled/uncontrolled |
-| `useId` | [use-id.ts](file:///d:/FJ/ui-style/orkest-ui/hooks/use-id.ts) | stable id with prefix |
+| `useAppTheme` | theme-provider.tsx | theme, resolvedTheme, toggleTheme, highContrast |
+| `useBreakpoint` | use-breakpoint.ts | current breakpoint name, `useIsMobile()` |
+| `useMediaQuery` | use-media-query.ts | SSR-safe boolean |
+| `useClickOutside` | use-click-outside.ts | with `ignoreRefs` option |
+| `useClipboard` | use-clipboard.ts | copy + copied state |
+| `useDebounce` / `useDebouncedCallback` | use-debounce.ts | value + callback variants |
+| `useLocalStorage` | use-local-storage.ts | JSON, cross-tab sync |
+| `useScrollLock` | use-scroll-lock.ts | body scroll lock, scrollbar compensation |
+| `useFocusTrap` | use-focus-trap.ts | Tab/Shift+Tab cycling |
+| `useIntersectionObserver` | use-intersection-observer.ts | SSR-safe |
+| `useVirtualList` | use-virtual-list.ts | minimal windowing, `scrollToIndex` |
+| `useControllableState` | use-controllable-state.ts | controlled/uncontrolled |
+| `useId` | use-id.ts | stable id with prefix |
 
-### Utility Functions ([`lib/utils.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/utils.ts))
+### Utility Functions (`lib/utils.ts`)
 
 `cn` (clsx + tailwind-merge) · `hexToRgb` · `hexToRgba` · `softColorTriple` · `formatNumber` · `formatCurrency` · `formatDate` · `formatRelativeTime` · `uid` · `sleep` · `clamp` · `debounce` · `throttle` · `isNil` · `pick` · `omit`.
 
 ### Command-style APIs
 
-- `toast(...)` — imperative toasts ([toaster.tsx](file:///d:/FJ/ui-style/orkest-ui/components/ui/toaster.tsx))
+- `toast(...)` — imperative toasts (toaster.tsx)
 - Modal/Dialog can be made imperative by wrapping in a context provider — recipe in roadmap.
 
 ---
@@ -613,11 +613,11 @@ Not built in. Use [`@ecomfe/react-pull-refresh`](https://github.com/ecomfe/react
 
 ### 11.1 Theme Object Structure
 
-See [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts) — exports `ThemeTokens` interface + `lightTokens` + `darkTokens` + `themes` registry.
+See `lib/tokens.ts` — exports `ThemeTokens` interface + `lightTokens` + `darkTokens` + `themes` registry.
 
 ### 11.2 CSS Variables Export
 
-All tokens in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css) are CSS variables. Use `tokensToCssVars(tokens)` to convert a `ThemeTokens` object to a flat `{ [varName]: value }` record for runtime injection.
+All tokens in `app/globals.css` are CSS variables. Use `tokensToCssVars(tokens)` to convert a `ThemeTokens` object to a flat `{ [varName]: value }` record for runtime injection.
 
 ### 11.3 Theme Switching
 
@@ -647,8 +647,8 @@ For deeper customization, **copy the component source** into your project and mo
 
 ### 11.5 Design Token Export
 
-- JSON: `JSON.stringify(lightTokens, null, 2)` from [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts).
-- CSS: already in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css).
+- JSON: `JSON.stringify(lightTokens, null, 2)` from `lib/tokens.ts`.
+- CSS: already in `app/globals.css`.
 - SCSS / Style Dictionary: pipe the JSON through [Style Dictionary](https://amzn.github.io/style-dictionary/).
 
 ### 11.6 Multi-Brand / Multi-Tenant
@@ -667,7 +667,7 @@ CSS variables cascade naturally, so per-tenant theming is just a wrapper.
 
 ### 11.7 Tailwind Compatibility
 
-Tokens are exposed as Tailwind theme extensions (see [`tailwind.config.ts`](file:///d:/FJ/ui-style/orkest-ui/tailwind.config.ts)). All standard utilities work: `bg-background`, `text-foreground-muted`, `border-border-strong`, `shadow-pop`, `rounded-2xl`, etc.
+Tokens are exposed as Tailwind theme extensions (see `tailwind.config.ts`). All standard utilities work: `bg-background`, `text-foreground-muted`, `border-border-strong`, `shadow-pop`, `rounded-2xl`, etc.
 
 ### 11.8 CSS-in-JS / CSS Modules / UnoCSS
 
@@ -715,7 +715,7 @@ Toggle via `useAppTheme().toggleHighContrast()`.
 }
 ```
 
-Already in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css).
+Already in `app/globals.css`.
 
 ### 12.6 Focus Visibility
 
@@ -735,7 +735,7 @@ Components have minimal hard-coded copy (e.g., `Empty`'s default "No data"). Ove
 
 ### 13.2 Date / Number / Currency Formatting
 
-Use helpers from [`lib/utils.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/utils.ts):
+Use helpers from `lib/utils.ts`:
 
 ```tsx
 formatNumber(1234567.89, "en-US");                          // "1,234,567.89"
@@ -756,9 +756,9 @@ All use `Intl.NumberFormat` / `Intl.DateTimeFormat` / `Intl.RelativeTimeFormat` 
 
 The project ships with a lightweight i18n layer — no external dependency required.
 
-**Source**: [`lib/i18n.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/i18n.ts) (dictionary) + [`components/language-provider.tsx`](file:///d:/FJ/ui-style/orkest-ui/components/language-provider.tsx) (context + hooks).
+**Source**: `lib/i18n.ts` (dictionary) + `components/language-provider.tsx` (context + hooks).
 
-- `LanguageProvider` wraps the app in [`app/layout.tsx`](file:///d:/FJ/ui-style/orkest-ui/app/layout.tsx).
+- `LanguageProvider` wraps the app in `app/layout.tsx`.
 - Persists the choice to `localStorage` under `orkest-lang`.
 - Updates `<html lang>` for accessibility / SEO.
 - Hydration-safe: renders `zh` on the server and first paint, then syncs from `localStorage` after mount.
@@ -832,7 +832,7 @@ export const Default: StoryObj<typeof Button> = {
 
 ### 14.4 Design Spec (Figma Mapping)
 
-Token names in code match Figma variable names 1:1 (`--background` ↔ `background`, `--blue` ↔ `blue`, etc.). Import [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts) JSON output into Figma via [Tokens Studio](https://tokens.studio/).
+Token names in code match Figma variable names 1:1 (`--background` ↔ `background`, `--blue` ↔ `blue`, etc.). Import `lib/tokens.ts` JSON output into Figma via [Tokens Studio](https://tokens.studio/).
 
 ### 14.5 Changelog / Migration Guide
 
@@ -909,7 +909,7 @@ This library is designed for **source copy-paste** (shadcn style). If you need a
 ### 15.7 TypeScript
 
 - Full types for every component, prop, and variant.
-- `strict: true` enabled in [`tsconfig.json`](file:///d:/FJ/ui-style/orkest-ui/tsconfig.json).
+- `strict: true` enabled in `tsconfig.json`.
 - Run `npm run typecheck` to verify.
 
 ### 15.8 Styling Strategy
@@ -966,7 +966,7 @@ Declared in `package.json`:
 
 ### 16.1 Error Boundaries
 
-Wrap your app in a React Error Boundary that renders a [`Result`](file:///d:/FJ/ui-style/orkest-ui/components/ui/result.tsx) with `status="500"`:
+Wrap your app in a React Error Boundary that renders a `Result` with `status="500"`:
 
 ```tsx
 class ErrorBoundary extends React.Component {
@@ -998,7 +998,7 @@ class ErrorBoundary extends React.Component {
 
 ### 16.4 Print Styles
 
-In [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css):
+In `app/globals.css`:
 
 ```css
 @media print {
@@ -1037,15 +1037,15 @@ Use `<div className="no-print">` on UI chrome you don't want in printouts.
 
 ### 16.8 Contribution Guide / Token Update Flow
 
-1. Edit tokens in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css) (CSS) AND [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts) (TypeScript) — keep in sync.
-2. Update [`tailwind.config.ts`](file:///d:/FJ/ui-style/orkest-ui/tailwind.config.ts) if you added a new token name.
+1. Edit tokens in `app/globals.css` (CSS) AND `lib/tokens.ts` (TypeScript) — keep in sync.
+2. Update `tailwind.config.ts` if you added a new token name.
 3. Run `npm run typecheck`.
 4. Add a Changeset: `npx changeset`.
 5. Open a PR.
 
 ### 16.9 Design Resource Sync (Figma / Sketch / XD)
 
-- Export [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts) as JSON.
+- Export `lib/tokens.ts` as JSON.
 - Import into [Tokens Studio for Figma](https://tokens.studio/) — variables map 1:1.
 - Use the official [shadcn Figma kit](https://www.figma.com/community/file/1260205111872998480) as a base, then apply Orkest tokens.
 
@@ -1057,13 +1057,13 @@ Use `<div className="no-print">` on UI chrome you don't want in printouts.
 
 ### 16.11 Animation Library Integration
 
-- **CSS-only** (default): all motion is CSS keyframes in [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css) — zero JS overhead.
+- **CSS-only** (default): all motion is CSS keyframes in `app/globals.css` — zero JS overhead.
 - **Framer Motion**: install [`framer-motion`](https://www.framer.com/motion/) for advanced scenarios. Use sparingly — most UI motion should be CSS.
 - **Motion One**: [`motion`](https://motion.dev/) — lighter alternative to Framer.
 
 ### 16.12 Virtual Scrolling / Large Data
 
-Use [`useVirtualList`](file:///d:/FJ/ui-style/orkest-ui/hooks/use-virtual-list.ts) for lists >1000 items. For tables, consider [`@tanstack/react-table`](https://tanstack.com/table/v8) with row virtualization.
+Use `useVirtualList` for lists >1000 items. For tables, consider [`@tanstack/react-table`](https://tanstack.com/table/v8) with row virtualization.
 
 ### 16.13 Security
 
@@ -1075,11 +1075,11 @@ Use [`useVirtualList`](file:///d:/FJ/ui-style/orkest-ui/hooks/use-virtual-list.t
 
 ## Reference
 
-- **Foundation**: [`app/globals.css`](file:///d:/FJ/ui-style/orkest-ui/app/globals.css) · [`tailwind.config.ts`](file:///d:/FJ/ui-style/orkest-ui/tailwind.config.ts) · [`lib/utils.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/utils.ts) · [`lib/tokens.ts`](file:///d:/FJ/ui-style/orkest-ui/lib/tokens.ts)
-- **Components**: [`components/ui/`](file:///d:/FJ/ui-style/orkest-ui/components/ui) (63 files)
-- **Hooks**: [`hooks/`](file:///d:/FJ/ui-style/orkest-ui/hooks) (12 files)
-- **Theme**: [`components/theme-provider.tsx`](file:///d:/FJ/ui-style/orkest-ui/components/theme-provider.tsx)
-- **Config**: [`components.json`](file:///d:/FJ/ui-style/orkest-ui/components.json) · [`package.json`](file:///d:/FJ/ui-style/orkest-ui/package.json) · [`tsconfig.json`](file:///d:/FJ/ui-style/orkest-ui/tsconfig.json)
+- **Foundation**: `app/globals.css` · `tailwind.config.ts` · `lib/utils.ts` · `lib/tokens.ts`
+- **Components**: `components/ui/` (63 files)
+- **Hooks**: `hooks/` (12 files)
+- **Theme**: `components/theme-provider.tsx`
+- **Config**: `components.json` · `package.json` · `tsconfig.json`
 
 **Component count**: 63 components · 12 hooks · 4 lib modules · ~2,800 lines of TypeScript/CSS.
 
