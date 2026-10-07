@@ -384,7 +384,7 @@ export function DataDisplaySection() {
           <SubsectionLabel>{t("dataDisplay.empty")}</SubsectionLabel>
           <Empty>
             <EmptyIcon>
-              <Inbox className="h-10 w-10" />
+              <Inbox className="h-12 w-12" />
             </EmptyIcon>
             <EmptyTitle>{t("dataDisplay.emptyTitle")}</EmptyTitle>
             <EmptyDescription>{t("dataDisplay.emptyDesc")}</EmptyDescription>

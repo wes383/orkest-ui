@@ -27,7 +27,7 @@ export const EmptyIcon = React.forwardRef<HTMLDivElement, EmptyIconProps>(
       <div
         ref={ref}
         className={cn(
-          "h-10 w-10 text-foreground-faint mb-4 flex items-center justify-center",
+          "h-12 w-12 text-foreground-faint mb-4 flex items-center justify-center",
           className
         )}
         {...props}
@@ -47,7 +47,7 @@ export const EmptyTitle = React.forwardRef<
   return (
     <h3
       ref={ref}
-      className={cn("font-display text-lg font-semibold", className)}
+      className={cn("font-display text-2xl font-semibold tracking-tight", className)}
       {...props}
     />
   );
