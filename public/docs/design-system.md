@@ -414,7 +414,7 @@ const form = useForm({ resolver: zodResolver(schema) });
 | `Flex` | flex.tsx | direction/justify/align/wrap/gap |
 | `AspectRatio` (`Ratio`) | aspect-ratio.tsx | Radix AspectRatio |
 | `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` | resizable.tsx | `react-resizable-panels` |
-| `ScrollArea` | scroll-area.tsx | Radix ScrollArea, custom styled scrollbar |
+| `ScrollArea` | scroll-area.tsx | No Radix — native overflow container + custom-styled thumb. Wheel/keyboard/touch scroll via the browser; the thumb is computed from live DOM geometry (no cached sizes, hard-clamped drag), so it cannot jump. Exports `ScrollArea` only (no `ScrollBar`) |
 | `Center` / `AbsoluteCenter` | (use `<Flex items="center" justify="center">`) | — |
 | `Affix` / `Sticky` | (use `position: sticky; z-sticky`) | — |
 | `Anchor` | Roadmap — use `<nav>` + IntersectionObserver | — |
