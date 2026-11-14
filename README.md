@@ -7,7 +7,7 @@ The repository is a pnpm monorepo containing the library and its custom document
 
 ## Status
 
-Early development. The shipped surface currently includes:
+`0.1.0` is prepared but not published. The current surface includes:
 
 - Primitives: `Box`, `Stack`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,

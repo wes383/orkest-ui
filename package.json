@@ -11,6 +11,12 @@
     "test:watch": "pnpm --filter @orkest/ui test:watch",
     "typecheck": "pnpm -r --if-present typecheck",
     "docs:dev": "pnpm --filter @orkest/docs dev",
-    "docs:build": "pnpm --filter @orkest/docs build"
+    "docs:build": "pnpm --filter @orkest/docs build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3"
   }
 }
