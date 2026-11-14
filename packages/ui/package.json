@@ -1,6 +1,15 @@
 {
   "name": "@orkest/ui",
   "version": "0.0.0",
+  "description": "Neutral-first React primitives and components with semantic design tokens and light and dark themes.",
+  "keywords": [
+    "react",
+    "ui",
+    "component-library",
+    "design-system",
+    "typescript",
+    "css-modules"
+  ],
   "type": "module",
   "sideEffects": [
     "**/*.css"
