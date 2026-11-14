@@ -8,10 +8,21 @@ import { useRef } from 'react';
 import type { NavGroup } from '@/lib/docs-types';
 
 import { DocsNav } from './docs-nav';
+import { useScrollOverflow } from './use-scroll-overflow';
 
 export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pathname = usePathname();
+  const { ref: scrollRef, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(
+    navigation,
+  );
+  const bodyClassName = [
+    'mobile-nav-body',
+    overflowing && !atTop ? 'mobile-nav-fade-top' : '',
+    overflowing && !atBottom ? 'mobile-nav-fade-bottom' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   function open() {
     if (!dialogRef.current?.open) {
@@ -56,8 +67,8 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
             <Icon icon={X} size="sm" />
           </button>
         </div>
-        <div className="mobile-nav-body">
-          <div className="mobile-nav-scroll">
+        <div className={bodyClassName}>
+          <div ref={scrollRef} className="mobile-nav-scroll">
             <DocsNav navigation={navigation} activePath={pathname} onNavigate={close} />
           </div>
         </div>

@@ -271,13 +271,43 @@ kbd {
 }
 
 .docs-sidebar {
+  --docs-sidebar-pad-top: 3rem;
+  --docs-sidebar-pad-bottom: 3.5rem;
   position: sticky;
   top: var(--docs-header-height);
   display: flex;
   flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height));
-  padding: 3rem 0 3.5rem;
+  padding: var(--docs-sidebar-pad-top) 0 var(--docs-sidebar-pad-bottom);
   overflow: hidden;
+}
+
+.docs-sidebar::before,
+.docs-sidebar::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 32px;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.docs-sidebar::before {
+  top: var(--docs-sidebar-pad-top);
+  background: linear-gradient(to bottom, var(--ui-background), transparent);
+}
+
+.docs-sidebar::after {
+  bottom: var(--docs-sidebar-pad-bottom);
+  background: linear-gradient(to top, var(--ui-background), transparent);
+}
+
+.docs-sidebar-fade-top::before,
+.docs-sidebar-fade-bottom::after {
+  opacity: 1;
 }
 
 .docs-sidebar-scroll {
@@ -291,27 +321,6 @@ kbd {
 
 .docs-sidebar-scroll::-webkit-scrollbar {
   display: none;
-}
-
-.docs-sidebar-scrollable {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    rgba(0, 0, 0, 0.35) 12px,
-    #000 40px,
-    #000 calc(100% - 40px),
-    rgba(0, 0, 0, 0.35) calc(100% - 12px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    rgba(0, 0, 0, 0.35) 12px,
-    #000 40px,
-    #000 calc(100% - 40px),
-    rgba(0, 0, 0, 0.35) calc(100% - 12px),
-    transparent 100%
-  );
 }
 
 .docs-main {
@@ -1078,6 +1087,42 @@ kbd {
   content: '';
 }
 
+.toc-body {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.toc-body::before,
+.toc-body::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 32px;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.toc-body::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--ui-background), transparent);
+}
+
+.toc-body::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--ui-background), transparent);
+}
+
+.toc-fade-top::before,
+.toc-fade-bottom::after {
+  opacity: 1;
+}
+
 .toc-scroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -1088,27 +1133,6 @@ kbd {
 
 .toc-scroll::-webkit-scrollbar {
   display: none;
-}
-
-.toc-scrollable {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    rgba(0, 0, 0, 0.35) 16px,
-    #000 48px,
-    #000 calc(100% - 48px),
-    rgba(0, 0, 0, 0.35) calc(100% - 16px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    rgba(0, 0, 0, 0.35) 16px,
-    #000 48px,
-    #000 calc(100% - 48px),
-    rgba(0, 0, 0, 0.35) calc(100% - 16px),
-    transparent 100%
-  );
 }
 
 .toc-list {
@@ -1455,9 +1479,40 @@ kbd {
 }
 
 .mobile-nav-body {
+  --mobile-nav-pad-top: 2rem;
+  --mobile-nav-pad-bottom: 2.5rem;
+  position: relative;
   height: calc(100dvh - var(--docs-header-height));
-  padding: 2rem 1.25rem 2.5rem;
+  padding: var(--mobile-nav-pad-top) 1.25rem var(--mobile-nav-pad-bottom);
   overflow: hidden;
+}
+
+.mobile-nav-body::before,
+.mobile-nav-body::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 32px;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.mobile-nav-body::before {
+  top: var(--mobile-nav-pad-top);
+  background: linear-gradient(to bottom, var(--ui-surface), transparent);
+}
+
+.mobile-nav-body::after {
+  bottom: var(--mobile-nav-pad-bottom);
+  background: linear-gradient(to top, var(--ui-surface), transparent);
+}
+
+.mobile-nav-fade-top::before,
+.mobile-nav-fade-bottom::after {
+  opacity: 1;
 }
 
 .mobile-nav-scroll {
@@ -1465,13 +1520,6 @@ kbd {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 16px,
-    #000 calc(100% - 16px),
-    transparent 100%
-  );
 }
 
 .mobile-nav-scroll::-webkit-scrollbar {

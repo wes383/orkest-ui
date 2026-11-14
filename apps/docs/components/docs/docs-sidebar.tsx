@@ -9,16 +9,18 @@ import { useScrollOverflow } from './use-scroll-overflow';
 
 export function DocsSidebar({ navigation }: { navigation: NavGroup[] }) {
   const pathname = usePathname();
-  const { ref, overflowing } = useScrollOverflow<HTMLDivElement>(navigation);
+  const { ref, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(navigation);
+  const className = [
+    'docs-sidebar',
+    overflowing && !atTop ? 'docs-sidebar-fade-top' : '',
+    overflowing && !atBottom ? 'docs-sidebar-fade-bottom' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <aside className="docs-sidebar">
-      <div
-        ref={ref}
-        className={
-          overflowing ? 'docs-sidebar-scroll docs-sidebar-scrollable' : 'docs-sidebar-scroll'
-        }
-      >
+    <aside className={className}>
+      <div ref={ref} className="docs-sidebar-scroll">
         <DocsNav navigation={navigation} activePath={pathname} />
       </div>
     </aside>
