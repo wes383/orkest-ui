@@ -9,7 +9,7 @@
     "build": "pnpm --filter @orkest/ui build",
     "test": "pnpm --filter @orkest/ui test",
     "test:watch": "pnpm --filter @orkest/ui test:watch",
-    "typecheck": "pnpm -r --if-present typecheck",
+    "typecheck": "pnpm -r --workspace-concurrency=1 --if-present typecheck",
     "docs:dev": "pnpm --filter @orkest/docs dev",
     "docs:build": "pnpm --filter @orkest/docs build",
     "playground:dev": "pnpm --filter @orkest/playground dev",
