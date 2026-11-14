@@ -85,6 +85,7 @@ describe('Tag', () => {
 
     expect(onRemove).toHaveBeenCalledTimes(1);
     expect(screen.getByText('Design').tagName).toBe('SPAN');
+    expect(screen.getByText('Design')).toHaveAttribute('data-removable', 'true');
   });
 
   it('renders an interactive tag as a button', async () => {

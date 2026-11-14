@@ -43,6 +43,10 @@
   border-radius: var(--ok-radius-full);
 }
 
+.chip[data-removable="true"] {
+  padding-right: var(--ok-space-1);
+}
+
 .chip[data-variant="default"] {
   --chip-accent: var(--ui-muted-foreground);
   background: var(--ui-secondary);
@@ -171,7 +175,6 @@
 }
 
 .remove:hover {
-  background: color-mix(in srgb, currentColor 14%, transparent);
   opacity: 1;
 }
 

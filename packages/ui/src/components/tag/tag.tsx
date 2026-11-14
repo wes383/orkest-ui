@@ -106,6 +106,7 @@ export const Tag = forwardRef<HTMLSpanElement | HTMLButtonElement, TagProps>(fun
     'data-size': size,
     'data-shape': shape,
     'data-custom': color ? true : undefined,
+    'data-removable': removable || undefined,
     'data-interactive': isInteractive || undefined,
   };
 
