@@ -189,6 +189,7 @@
 
 .textarea {
   height: auto;
+  min-height: calc(1em * var(--ok-line-height-normal) + var(--field-padding-y) * 2);
   padding: var(--field-padding-y) var(--field-padding-x);
   box-sizing: border-box;
   resize: vertical;

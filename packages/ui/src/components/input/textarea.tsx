@@ -85,7 +85,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     const paddingY =
       (Number.parseFloat(computed.paddingTop) || 0) +
       (Number.parseFloat(computed.paddingBottom) || 0);
-    const minHeight = minRows === undefined ? paddingY : minRows * lineHeight + paddingY;
+    const minHeight = Math.max(
+      lineHeight + paddingY,
+      minRows === undefined ? 0 : minRows * lineHeight + paddingY,
+    );
     const maxHeight =
       maxRows === undefined ? Number.POSITIVE_INFINITY : maxRows * lineHeight + paddingY;
 
