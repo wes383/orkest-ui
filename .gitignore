@@ -4,6 +4,7 @@ coverage/
 .vite/
 .next/
 out/
+/apps/docs/next-env.d.ts
 *.tsbuildinfo
 *.tgz
 *.log
