@@ -173,7 +173,7 @@ kbd {
 }
 
 .primary-nav-link:hover {
-  background: var(--ui-surface-sunken);
+  background: var(--ui-secondary);
   color: var(--ui-foreground);
 }
 
@@ -267,7 +267,7 @@ kbd {
   align-items: start;
   max-width: var(--docs-shell-width);
   margin: 0 auto;
-  background: var(--ui-surface-sunken);
+  background: var(--ui-background);
 }
 
 .docs-sidebar {
@@ -279,6 +279,7 @@ kbd {
   flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height));
   padding: var(--docs-sidebar-pad-top) 0 var(--docs-sidebar-pad-bottom);
+  border-right: var(--ok-border-width) solid var(--ui-border-subtle);
   overflow: hidden;
 }
 
@@ -297,12 +298,12 @@ kbd {
 
 .docs-sidebar::before {
   top: var(--docs-sidebar-pad-top);
-  background: linear-gradient(to bottom, var(--ui-surface-sunken), transparent);
+  background: linear-gradient(to bottom, var(--ui-background), transparent);
 }
 
 .docs-sidebar::after {
   bottom: var(--docs-sidebar-pad-bottom);
-  background: linear-gradient(to top, var(--ui-surface-sunken), transparent);
+  background: linear-gradient(to top, var(--ui-background), transparent);
 }
 
 .docs-sidebar-fade-top::before,
@@ -327,7 +328,6 @@ kbd {
 .docs-main {
   min-width: 0;
   padding: 3rem 3.5rem 5rem;
-  border-left: var(--ok-border-width) solid var(--ui-border);
   background: var(--ui-background);
 }
 
@@ -363,19 +363,16 @@ kbd {
   line-height: 1.4;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
-    box-shadow var(--ok-duration-fast) var(--ok-ease-standard),
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
 .docs-nav-link:hover {
-  background: var(--ui-background);
-  box-shadow: var(--ok-shadow-xs);
+  background: var(--ui-secondary);
   color: var(--ui-foreground);
 }
 
 .docs-nav-link[aria-current='page'] {
-  background: var(--ui-background);
-  box-shadow: var(--ok-shadow-xs);
+  background: var(--ui-secondary);
   color: var(--ui-foreground);
   font-weight: var(--ok-font-weight-medium);
 }
@@ -2088,7 +2085,6 @@ kbd {
 
   .docs-shell {
     grid-template-columns: minmax(0, 1fr);
-    background: var(--ui-background);
   }
 
   .docs-sidebar {
@@ -2097,7 +2093,6 @@ kbd {
 
   .docs-main {
     padding: 2rem 1.5rem 4rem;
-    border-left: 0;
   }
 }
 
