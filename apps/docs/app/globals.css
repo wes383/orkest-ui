@@ -7,12 +7,14 @@
 
   /* Docs surfaces need a clearer step away from the white page than the library default. */
   --ui-surface-sunken: var(--ok-color-neutral-100);
+  --docs-nav-foreground: var(--ok-color-black);
   --docs-table-divider: var(--ok-color-neutral-200);
 }
 
 :root[data-orkest-theme='dark'] {
   /* A darker step is invisible against the near-black page, so raise it instead. */
   --ui-surface-sunken: var(--ok-color-neutral-900);
+  --docs-nav-foreground: var(--ui-foreground);
   --docs-table-divider: var(--ok-color-neutral-800);
 }
 
@@ -175,8 +177,9 @@ kbd {
   height: 2rem;
   padding: 0 10px;
   border-radius: 0.5rem;
-  color: var(--ui-muted-foreground);
+  color: var(--docs-nav-foreground);
   font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-medium);
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
     color var(--ok-duration-fast) var(--ok-ease-standard);
@@ -184,11 +187,11 @@ kbd {
 
 .primary-nav-link:hover {
   background: var(--ui-secondary);
-  color: var(--ui-foreground);
+  color: var(--docs-nav-foreground);
 }
 
 .primary-nav-link[aria-current='page'] {
-  color: var(--ui-foreground);
+  color: var(--docs-nav-foreground);
 }
 
 .header-actions {
@@ -1160,7 +1163,7 @@ kbd {
 .toc-link {
   display: block;
   padding: 6px 0;
-  color: var(--ui-muted-foreground);
+  color: var(--ui-subtle-foreground);
   font-size: var(--ok-font-size-xs);
   line-height: 1.4;
   transition: color var(--ok-duration-fast) var(--ok-ease-standard);
