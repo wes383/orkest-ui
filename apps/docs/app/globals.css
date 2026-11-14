@@ -646,7 +646,7 @@ kbd {
 }
 
 .table-wrap thead th {
-  background: var(--ui-surface-sunken);
+  background: var(--ui-secondary-hover);
   color: var(--ui-muted-foreground);
   font-size: 11px;
   font-weight: var(--ok-font-weight-semibold);
@@ -654,7 +654,7 @@ kbd {
 }
 
 .table-wrap tbody tr:nth-child(even) {
-  background: var(--ui-surface-sunken);
+  background: var(--ui-secondary-hover);
 }
 
 .table-wrap tbody tr {
@@ -662,7 +662,7 @@ kbd {
 }
 
 .table-wrap tbody tr:hover {
-  background: var(--ui-secondary-hover);
+  background: var(--ui-secondary-active);
 }
 
 .table-wrap tbody tr:last-child th,
