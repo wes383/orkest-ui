@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import type { NavGroup, SearchIndexItem } from '@/lib/docs-types';
 
 import { MobileNav } from './mobile-nav';
@@ -15,6 +17,10 @@ export function DocsHeader({
   return (
     <header className="site-header">
       <div className="site-header-inner">
+        <Link href="/" className="brand">
+          Orkest UI
+        </Link>
+
         <PrimaryNav />
 
         <div className="header-actions">

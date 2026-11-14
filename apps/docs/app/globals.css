@@ -128,11 +128,20 @@ kbd {
   padding: 0 var(--ok-space-6);
 }
 
+.brand {
+  font-family: var(--ok-font-display);
+  font-size: 0.9375rem;
+  font-weight: var(--ok-font-weight-semibold);
+  letter-spacing: var(--ok-letter-spacing-tight);
+  white-space: nowrap;
+}
+
 .primary-nav {
   display: flex;
   align-items: center;
   gap: 2px;
   height: 100%;
+  margin-left: var(--ok-space-4);
 }
 
 .primary-nav-link {
