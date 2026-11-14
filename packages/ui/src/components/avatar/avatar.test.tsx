@@ -247,6 +247,37 @@ describe('AvatarGroup', () => {
     expect(screen.getByText('2 teammates')).toBeInTheDocument();
   });
 
+  it('uses the singular overflow label for one hidden avatar', () => {
+    render(
+      <AvatarGroup max={1}>
+        <Avatar>
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
+        <Avatar>
+          <AvatarFallback>B</AvatarFallback>
+        </Avatar>
+      </AvatarGroup>,
+    );
+
+    expect(screen.getByText('1 more avatar')).toBeInTheDocument();
+  });
+
+  it('can show only the overflow indicator', () => {
+    render(
+      <AvatarGroup max={0}>
+        <Avatar>
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
+        <Avatar>
+          <AvatarFallback>B</AvatarFallback>
+        </Avatar>
+      </AvatarGroup>,
+    );
+
+    expect(screen.queryByText('A')).not.toBeInTheDocument();
+    expect(screen.getByText('+2')).toBeInTheDocument();
+  });
+
   it('applies size and shape to child avatars and the overflow indicator', () => {
     const { container } = render(
       <AvatarGroup max={1} size="lg" shape="square">
