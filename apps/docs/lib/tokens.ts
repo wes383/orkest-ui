@@ -52,6 +52,15 @@ const semanticTokenGroups = [
     ],
   },
   {
+    title: 'Destructive action',
+    tokens: [
+      '--ui-danger-solid',
+      '--ui-danger-solid-hover',
+      '--ui-danger-solid-active',
+      '--ui-danger-solid-foreground',
+    ],
+  },
+  {
     title: 'Disabled states',
     tokens: ['--ui-disabled-surface', '--ui-disabled-foreground'],
   },

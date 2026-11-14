@@ -41,6 +41,12 @@
   --ui-secondary-active: var(--ok-color-neutral-200);
   --ui-secondary-foreground: var(--ok-color-neutral-900);
 
+  /* Destructive action */
+  --ui-danger-solid: var(--ok-color-red-600);
+  --ui-danger-solid-hover: var(--ok-color-red-700);
+  --ui-danger-solid-active: var(--ok-color-red-800);
+  --ui-danger-solid-foreground: var(--ok-color-white);
+
   /* Disabled state */
   --ui-disabled-surface: var(--ok-color-neutral-100);
   --ui-disabled-foreground: var(--ok-color-neutral-400);
@@ -102,6 +108,12 @@
   --ui-secondary-hover: var(--ok-color-neutral-800);
   --ui-secondary-active: var(--ok-color-neutral-700);
   --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+  /* Destructive action */
+  --ui-danger-solid: var(--ok-color-red-600);
+  --ui-danger-solid-hover: var(--ok-color-red-700);
+  --ui-danger-solid-active: var(--ok-color-red-800);
+  --ui-danger-solid-foreground: var(--ok-color-white);
 
   /* Disabled state */
   --ui-disabled-surface: var(--ok-color-neutral-850);
@@ -166,6 +178,12 @@
     --ui-secondary-hover: var(--ok-color-neutral-800);
     --ui-secondary-active: var(--ok-color-neutral-700);
     --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+    /* Destructive action */
+    --ui-danger-solid: var(--ok-color-red-600);
+    --ui-danger-solid-hover: var(--ok-color-red-700);
+    --ui-danger-solid-active: var(--ok-color-red-800);
+    --ui-danger-solid-foreground: var(--ok-color-white);
 
     /* Disabled state */
     --ui-disabled-surface: var(--ok-color-neutral-850);

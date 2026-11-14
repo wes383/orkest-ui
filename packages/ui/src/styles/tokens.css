@@ -162,9 +162,11 @@
   --ok-control-height-sm: 1.75rem; /* 28px */
   --ok-control-height-md: 2.25rem; /* 36px */
   --ok-control-height-lg: 2.75rem; /* 44px */
+  --ok-control-height-xl: 3.25rem; /* 52px */
   --ok-control-padding-x-sm: 0.625rem; /* 10px */
   --ok-control-padding-x-md: 0.875rem; /* 14px */
   --ok-control-padding-x-lg: 1.125rem; /* 18px */
+  --ok-control-padding-x-xl: 1.375rem; /* 22px */
 
   /* Icon sizing */
   --ok-icon-size-sm: 1rem; /* 16px */
