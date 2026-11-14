@@ -82,3 +82,7 @@ Run the documentation site from the repository root:
 ```bash
 pnpm docs:dev
 ```
+
+## License
+
+Apache-2.0. See [LICENSE](LICENSE).

@@ -74,4 +74,4 @@ custom documentation site under `apps/docs/content`.
 
 ## License
 
-No license has been declared yet.
+Apache-2.0. See [LICENSE](LICENSE).
