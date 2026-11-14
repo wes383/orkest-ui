@@ -15,6 +15,12 @@ including both light and dark themes.
 
 <SemanticColorTable />
 
+<Callout type="note" title="State colors use dedicated tokens">
+  Disabled surfaces and labels use `--ui-disabled-surface` and `--ui-disabled-foreground` instead of
+  reduced opacity, so disabled controls keep predictable contrast. Loading indicators inherit the
+  component's `currentColor` and do not need a separate overlay token.
+</Callout>
+
 ## Primitive palettes
 
 Primitive scales are implementation details. Use them to understand the palette, but consume the

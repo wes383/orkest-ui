@@ -52,6 +52,10 @@ const semanticTokenGroups = [
     ],
   },
   {
+    title: 'Disabled states',
+    tokens: ['--ui-disabled-surface', '--ui-disabled-foreground'],
+  },
+  {
     title: 'Accent',
     tokens: [
       '--ui-accent',

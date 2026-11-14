@@ -41,6 +41,10 @@
   --ui-secondary-active: var(--ok-color-neutral-200);
   --ui-secondary-foreground: var(--ok-color-neutral-900);
 
+  /* Disabled state */
+  --ui-disabled-surface: var(--ok-color-neutral-100);
+  --ui-disabled-foreground: var(--ok-color-neutral-400);
+
   /* Accent — links, selection and subtle highlights */
   --ui-accent: var(--ok-color-accent-600);
   --ui-accent-hover: var(--ok-color-accent-700);
@@ -98,6 +102,10 @@
   --ui-secondary-hover: var(--ok-color-neutral-800);
   --ui-secondary-active: var(--ok-color-neutral-700);
   --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+  /* Disabled state */
+  --ui-disabled-surface: var(--ok-color-neutral-850);
+  --ui-disabled-foreground: var(--ok-color-neutral-500);
 
   /* Accent */
   --ui-accent: var(--ok-color-accent-300);
@@ -158,6 +166,10 @@
     --ui-secondary-hover: var(--ok-color-neutral-800);
     --ui-secondary-active: var(--ok-color-neutral-700);
     --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+    /* Disabled state */
+    --ui-disabled-surface: var(--ok-color-neutral-850);
+    --ui-disabled-foreground: var(--ok-color-neutral-500);
 
     /* Accent */
     --ui-accent: var(--ok-color-accent-300);
