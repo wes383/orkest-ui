@@ -12,5 +12,4 @@
   <rect width="256" height="256" fill="url(#background)" />
   <circle cx="128" cy="98" r="52" fill="#f4f4f5" />
   <path d="M40 256c0-49 39-88 88-88s88 39 88 88z" fill="url(#body)" />
-  <path d="M96 216c0 21 14 40 32 40s32-19 32-40z" fill="#f4f4f5" opacity="0.18" />
 </svg>
