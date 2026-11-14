@@ -24,7 +24,7 @@
 }
 
 .field:focus-within {
-  border-color: var(--ui-muted-foreground);
+  border-color: var(--ui-subtle-foreground);
 }
 
 .field[data-size="sm"] {
