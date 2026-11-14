@@ -1375,6 +1375,7 @@ kbd {
   align-items: center;
   gap: var(--ok-space-3);
   padding: 14px 18px;
+  border-bottom: var(--ok-border-width) solid var(--ui-border);
 }
 
 .search-input {
@@ -1389,6 +1390,11 @@ kbd {
 
 .search-input::placeholder {
   color: var(--ui-subtle-foreground);
+}
+
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .search-body {
