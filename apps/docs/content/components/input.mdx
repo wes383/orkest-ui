@@ -11,6 +11,23 @@ trailing icons, invalid, disabled, and read-only states, and fills the width of 
 Pair it with [Label](/docs/components/typography/#semantic-components) for the accessible name and
 [Caption](/docs/components/typography/) for help text.
 
+## Types
+
+`Input` forwards the native `type` attribute, so common HTML input types work without extra props:
+
+- `text` — plain text
+- `email` — email addresses
+- `password` — masked text
+- `number` — numeric input
+- `search` — search fields
+- `tel` — telephone numbers
+- `url` — URLs
+- `date` — dates
+- `time` — times
+- `datetime-local` — dates and times
+
+Native browser validation, autocomplete, and input modes remain available.
+
 ## Live preview
 
 <ComponentPreview
@@ -110,6 +127,75 @@ export function Example() {
   </Box>
 </ComponentPreview>
 
+## Prefix and suffix
+
+<ComponentPreview
+  title="Affixes"
+  code={`import { Box, Input } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Input prefix="$" suffix="USD" placeholder="0.00" aria-label="Amount" />
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Input prefix="$" suffix="USD" placeholder="0.00" aria-label="Amount" />
+  </Box>
+</ComponentPreview>
+
+## Actions
+
+`clearable` shows a clear action while the input has a value. `passwordToggle` adds a visibility
+toggle for password fields. Both actions have accessible names and keep focus inside the field.
+
+<ComponentPreview
+  title="Clear and password visibility"
+  code={`import { Box, Input, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={2}>
+        <Input clearable defaultValue="Clear me" aria-label="Clearable input" />
+        <Input type="password" passwordToggle defaultValue="secret" aria-label="Password" />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Input clearable defaultValue="Clear me" aria-label="Clearable input" />
+      <Input type="password" passwordToggle defaultValue="secret" aria-label="Password" />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Character count
+
+<ComponentPreview
+  title="Character count"
+  code={`import { Box, Input } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Input showCount maxLength={40} placeholder="Short bio" aria-label="Short bio" />
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Input showCount maxLength={40} placeholder="Short bio" aria-label="Short bio" />
+  </Box>
+</ComponentPreview>
+
+The count is rendered below the field and updates as the value changes. `maxLength` still uses the
+native constraint.
+
 ## States
 
 <ComponentPreview
@@ -189,10 +275,61 @@ export function Example() {
       description: 'Decorative icon rendered after the input text.',
     },
     {
+      name: 'prefix',
+      type: 'ReactNode',
+      description: 'Text or node rendered before the input value.',
+    },
+    {
+      name: 'suffix',
+      type: 'ReactNode',
+      description: 'Text or node rendered after the input value.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a clear action while the input has a value.',
+    },
+    {
+      name: 'clearLabel',
+      type: 'string',
+      default: `'Clear input'`,
+      description: 'Accessible name for the clear action.',
+    },
+    {
+      name: 'passwordToggle',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a visibility toggle when type is password.',
+    },
+    {
+      name: 'showPasswordLabel',
+      type: 'string',
+      default: `'Show password'`,
+      description: 'Accessible name for the show-password action.',
+    },
+    {
+      name: 'hidePasswordLabel',
+      type: 'string',
+      default: `'Hide password'`,
+      description: 'Accessible name for the hide-password action.',
+    },
+    {
+      name: 'showCount',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows the current character count below the field.',
+    },
+    {
       name: 'type',
       type: 'string',
       default: `'text'`,
-      description: 'Native input type, such as email, password, or search.',
+      description: 'Native input type, such as email, password, search, date, or number.',
+    },
+    {
+      name: 'maxLength',
+      type: 'number',
+      description: 'Native maximum length. Used by the character count when showCount is enabled.',
     },
     {
       name: 'native attributes',
@@ -214,6 +351,10 @@ export function Example() {
   alone.
 - `disabled` and `readOnly` use the native attributes and remain distinguishable without color alone.
 - Leading and trailing icons are decorative and hidden from assistive technology.
+- Clear and password actions are buttons with accessible names. The password toggle exposes
+  `aria-pressed`.
+- With a controlled `value`, update it in `onChange` when the clear action fires.
+- The character count is supplementary. `maxLength` remains the native constraint.
 - Focus is shown by darkening the field border; no separate focus ring is drawn. Invalid fields keep
   the danger border.
 - Refs are forwarded to the native input element.
