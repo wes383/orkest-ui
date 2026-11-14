@@ -12,6 +12,7 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "docs:dev": "pnpm --filter @orkest/docs dev",
     "docs:build": "pnpm --filter @orkest/docs build",
+    "playground:dev": "pnpm --filter @orkest/playground dev",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish"

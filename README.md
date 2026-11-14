@@ -24,6 +24,7 @@ Core components, complex interactions, and the first public release are still in
 | --- | --- | --- |
 | `packages/ui` | `@orkest/ui` | Component library source and build output |
 | `apps/docs` | `@orkest/docs` | Documentation site (Next.js App Router + MDX) |
+| `apps/playground` | `@orkest/playground` | Private Next.js consumer used to validate the built package |
 
 `Development-guide.md` and `Custom-documentation-spec.md` are local planning documents and are
 intentionally not tracked.
@@ -43,6 +44,7 @@ pnpm test        # run the library test suite
 pnpm typecheck   # type-check the library and the documentation site
 pnpm docs:dev    # build the library, then start the documentation site
 pnpm docs:build  # build the library, then statically export the documentation site
+pnpm playground:dev  # build the library, then start the consumer playground on port 3001
 ```
 
 `pnpm lint` is not configured in this repository.
