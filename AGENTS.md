@@ -57,8 +57,7 @@ Before implementing a feature or fixing a bug:
 4.  Check existing utilities, hooks, tokens, and dependencies before
     creating new ones.
 5.  Identify the public API and consumers that may be affected.
-6.  Determine which tests, stories, documentation, and exports need to
-    change.
+6.  Determine which tests, documentation, and exports need to change.
 
 Do not assume that an example, proposal, or historical project note
 describes the current repository state. The checked-in code and
@@ -77,7 +76,8 @@ General technology direction:
   following the repository's established approach.
 - pnpm for package management and workspace operations.
 - Vitest and Testing Library for component tests, if configured.
-- Storybook for component examples and documentation, if configured.
+- The in-repo documentation site (`apps/docs`) for component examples
+  and documentation. Storybook is intentionally not used.
 - Vite or the repository's existing build tool for library builds.
 - Lucide React for icons, where the project has adopted it.
 
@@ -109,8 +109,8 @@ to match an example structure.
 
 General expectations:
 
-- Keep each component's implementation, styles, tests, and stories
-  close together when that matches the existing convention.
+- Keep each component's implementation, styles, and tests close
+  together when that matches the existing convention.
 - Separate public exports from internal implementation details.
 - Export only APIs that are intended to be supported.
 - Keep shared utilities and hooks focused and reusable.
@@ -278,13 +278,15 @@ Do not delete, weaken, or skip tests merely to make a test suite pass.
 If a test is outdated, explain why and replace it with an appropriate
 test.
 
-## Stories and Documentation
+## Documentation
 
-When Storybook is configured, add or update stories for new components
-and meaningful behavior changes.
+The repository uses a custom documentation site in `apps/docs` instead
+of Storybook. Do not add Storybook or a second component implementation
+for documentation examples.
 
-Stories should demonstrate real component usage and cover important
-public states, such as:
+Add or update an MDX page when adding a component or changing meaningful
+behavior. Documentation pages should demonstrate real component usage
+and cover important public states, such as:
 
 - Default usage.
 - Variants and sizes.
@@ -293,8 +295,9 @@ public states, such as:
 - Long content and layout edge cases.
 - Theme variations, where supported.
 
-Keep stories aligned with the actual public API. Do not create examples
-that rely on private implementation details.
+Import live examples from `@orkest/ui` and keep them aligned with the
+actual public API. Do not create examples that rely on private
+implementation details.
 
 Update relevant documentation when changing:
 
@@ -347,7 +350,7 @@ For a component change, normally verify:
 1.  Relevant component tests.
 2.  TypeScript checks.
 3.  Package build.
-4.  Storybook or visual review, when applicable.
+4.  Documentation site or visual review, when applicable.
 
 For package or export changes, also test the built package from a
 consumer project where practical.
@@ -367,7 +370,7 @@ If a command fails:
 - Avoid unrelated formatting or refactoring.
 - Preserve backward compatibility unless a breaking change is
   explicitly requested.
-- Update tests, stories, exports, and documentation together.
+- Update tests, exports, and documentation together.
 - Call out public API changes.
 - Call out dependency changes.
 - Do not modify generated files manually unless the project requires
@@ -400,7 +403,7 @@ are satisfied:
 - [ ] Native semantics and accessibility requirements are addressed.
 - [ ] TypeScript types are accurate.
 - [ ] Tests cover important behavior and edge cases.
-- [ ] Stories and documentation are updated, where applicable.
+- [ ] Documentation pages are updated, where applicable.
 - [ ] Public exports are correct.
 - [ ] Relevant tests pass.
 - [ ] Type checking passes.
