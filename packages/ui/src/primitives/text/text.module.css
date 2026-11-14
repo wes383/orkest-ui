@@ -16,6 +16,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+.text[data-size="2xs"] {
+  font-size: var(--ok-font-size-2xs);
+  line-height: var(--ok-line-height-normal);
+}
+
 .text[data-size="xs"] {
   font-size: var(--ok-font-size-xs);
   line-height: var(--ok-line-height-normal);
@@ -42,6 +47,31 @@
   letter-spacing: var(--ok-letter-spacing-tight);
 }
 
+.text[data-size="2xl"] {
+  font-size: var(--ok-font-size-2xl);
+  line-height: var(--ok-line-height-snug);
+}
+
+.text[data-size="3xl"] {
+  font-size: var(--ok-font-size-3xl);
+  line-height: var(--ok-line-height-tight);
+}
+
+.text[data-size="4xl"] {
+  font-size: var(--ok-font-size-4xl);
+  line-height: var(--ok-line-height-tight);
+}
+
+.text[data-size="5xl"] {
+  font-size: var(--ok-font-size-5xl);
+  line-height: var(--ok-line-height-tight);
+}
+
+.text[data-size="inherit"] {
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .text[data-weight="regular"] {
   font-weight: var(--ok-font-weight-regular);
 }
@@ -52,6 +82,10 @@
 
 .text[data-weight="semibold"] {
   font-weight: var(--ok-font-weight-semibold);
+}
+
+.text[data-weight="bold"] {
+  font-weight: var(--ok-font-weight-bold);
 }
 
 .text[data-tone="default"] {
@@ -98,8 +132,58 @@
   text-align: justify;
 }
 
+.text[data-line-height="tight"] {
+  line-height: var(--ok-line-height-tight);
+}
+
+.text[data-line-height="snug"] {
+  line-height: var(--ok-line-height-snug);
+}
+
+.text[data-line-height="normal"] {
+  line-height: var(--ok-line-height-normal);
+}
+
+.text[data-line-height="relaxed"] {
+  line-height: var(--ok-line-height-relaxed);
+}
+
+.text[data-letter-spacing="tighter"] {
+  letter-spacing: var(--ok-letter-spacing-tighter);
+}
+
+.text[data-letter-spacing="tight"] {
+  letter-spacing: var(--ok-letter-spacing-tight);
+}
+
+.text[data-letter-spacing="normal"] {
+  letter-spacing: var(--ok-letter-spacing-normal);
+}
+
+.text[data-letter-spacing="wide"] {
+  letter-spacing: var(--ok-letter-spacing-wide);
+}
+
+.text[data-italic="true"] {
+  font-style: italic;
+}
+
+.text[data-underline="true"] {
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--ok-border-width);
+  text-underline-offset: var(--ok-space-1);
+}
+
 .text[data-truncate="true"] {
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.text[data-line-clamp="true"] {
+  display: -webkit-box;
+  overflow: hidden;
+  white-space: normal;
+  -webkit-box-orient: vertical;
 }
