@@ -18,7 +18,13 @@ export function ComponentPreview({
 }) {
   return (
     <div className="component-preview">
-      <p className="preview-label">{title}</p>
+      <div className="preview-toolbar">
+        <span className="preview-label">
+          <span className="preview-dot" aria-hidden="true" />
+          {title}
+        </span>
+        <span className="preview-source">@orkest/ui</span>
+      </div>
       <div className="preview-canvas">{children}</div>
       <CodeBlock code={code} language={language} filename={filename} />
     </div>

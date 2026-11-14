@@ -100,7 +100,7 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
         aria-keyshortcuts="Control+K Meta+K"
       >
         <Icon icon={Search} size="sm" />
-        <span className="search-label">Search</span>
+        <span className="search-label">Search docs</span>
         <kbd className="search-shortcut">Ctrl K</kbd>
       </button>
 

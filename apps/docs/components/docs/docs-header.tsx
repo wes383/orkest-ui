@@ -3,15 +3,9 @@ import Link from 'next/link';
 import type { NavGroup, SearchIndexItem } from '@/lib/docs-types';
 
 import { MobileNav } from './mobile-nav';
+import { PrimaryNav } from './primary-nav';
 import { SearchDialog } from './search-dialog';
 import { ThemeToggle } from './theme-toggle';
-
-const primaryLinks = [
-  { href: '/docs/', label: 'Docs' },
-  { href: '/docs/foundations/colors/', label: 'Foundations' },
-  { href: '/docs/components/box/', label: 'Components' },
-  { href: '/docs/guides/theming/', label: 'Guides' },
-];
 
 export function DocsHeader({
   navigation,
@@ -29,14 +23,9 @@ export function DocsHeader({
           </span>
           <span className="brand-name">Orkest UI</span>
         </Link>
+        <span className="brand-badge">Preview</span>
 
-        <nav className="primary-nav" aria-label="Primary">
-          {primaryLinks.map((link) => (
-            <Link href={link.href} key={link.href}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <PrimaryNav />
 
         <div className="header-actions">
           <SearchDialog index={searchIndex} />

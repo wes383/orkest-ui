@@ -40,6 +40,8 @@ export default async function DocRoute({ params }: DocRouteProps) {
   }
 
   const { previous, next } = getAdjacentDocs(doc.slug);
+  const wordCount = doc.plainText.split(/\s+/).filter(Boolean).length;
+  const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
     <div className={doc.headings.length > 0 ? 'page-grid' : 'page-grid page-grid-no-toc'}>
@@ -50,6 +52,9 @@ export default async function DocRoute({ params }: DocRouteProps) {
           <p className="page-eyebrow">{doc.sectionLabel}</p>
           <h1 className="page-title">{doc.title}</h1>
           <p className="page-description">{doc.description}</p>
+          <p className="page-meta">
+            <span>{readingMinutes} min read</span>
+          </p>
         </header>
 
         <div className="prose">
