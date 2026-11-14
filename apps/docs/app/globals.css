@@ -26,6 +26,7 @@
 
 html {
   scroll-padding-top: calc(var(--docs-header-height) + var(--ok-space-6));
+  scrollbar-gutter: stable;
 }
 
 @media (prefers-reduced-motion: no-preference) {
