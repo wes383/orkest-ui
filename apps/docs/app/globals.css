@@ -760,9 +760,9 @@ kbd {
 
 .component-preview {
   margin: 1.5rem 0;
+  border: var(--ok-border-width) solid var(--ui-border);
   border-radius: 1rem;
-  background: var(--ui-surface);
-  box-shadow: var(--ok-shadow-xs);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -772,7 +772,6 @@ kbd {
   justify-content: space-between;
   gap: var(--ok-space-3);
   padding: 10px 14px;
-  background: var(--ui-surface-sunken);
 }
 
 .preview-label {
@@ -808,7 +807,6 @@ kbd {
   gap: var(--ok-space-4);
   min-height: 10rem;
   padding: 2rem;
-  background: var(--ui-surface-sunken);
 }
 
 .preview-canvas > * {
