@@ -96,9 +96,10 @@ function extractText(node: ReactNode): string {
 
 function MdxPre({ children, ...props }: ComponentPropsWithoutRef<'pre'>) {
   const code = extractText(children).replace(/\n+$/, '');
+  const isSingleLine = !code.includes('\n');
 
   return (
-    <div className="code-block">
+    <div className={isSingleLine ? 'code-block code-block-single-line' : 'code-block'}>
       <CopyButton code={code} />
       <div className="code-block-content">
         <pre {...props}>{children}</pre>

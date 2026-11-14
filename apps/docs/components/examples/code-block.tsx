@@ -12,9 +12,10 @@ export async function CodeBlock({
   language?: BundledLanguage;
 }) {
   const html = await highlightCode(code, language);
+  const isSingleLine = !code.trimEnd().includes('\n');
 
   return (
-    <div className="code-block">
+    <div className={isSingleLine ? 'code-block code-block-single-line' : 'code-block'}>
       <CopyButton code={code} />
       <div className="code-block-content" dangerouslySetInnerHTML={{ __html: html }} />
     </div>

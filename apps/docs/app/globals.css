@@ -719,6 +719,11 @@ kbd {
   color: var(--ui-foreground);
 }
 
+.code-block-single-line .copy-button {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .code-block-content pre {
   margin: 0;
   padding: 20px;
