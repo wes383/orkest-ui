@@ -10,6 +10,7 @@
   --docs-table-row: var(--ok-color-neutral-50);
   --docs-table-row-alt: var(--ok-color-neutral-100);
   --docs-table-head: var(--ok-color-neutral-100);
+  --docs-table-code: var(--ok-color-neutral-200);
 }
 
 :root[data-orkest-theme='dark'] {
@@ -18,6 +19,7 @@
   --docs-table-row: var(--ok-color-neutral-900);
   --docs-table-row-alt: var(--ok-color-neutral-800);
   --docs-table-head: var(--ok-color-neutral-800);
+  --docs-table-code: var(--ok-color-neutral-700);
 }
 
 *,
@@ -672,10 +674,10 @@ kbd {
   border-bottom: 0;
 }
 
-.table-wrap code {
-  padding: 0;
-  border: 0;
-  background: transparent;
+.table-wrap table code {
+  padding: 0.12em 0.34em;
+  border-radius: var(--ok-radius-sm);
+  background: var(--docs-table-code);
   font-size: 0.92em;
   overflow-wrap: anywhere;
 }
