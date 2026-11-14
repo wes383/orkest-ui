@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
@@ -9,6 +8,7 @@ import '@orkest/ui/style.css';
 import './globals.css';
 
 import { DocsHeader } from '@/components/docs/docs-header';
+import { SiteFooter } from '@/components/docs/site-footer';
 import { ThemeScript } from '@/components/docs/theme-script';
 import { getNavigation, getSearchIndex } from '@/lib/docs-source';
 
@@ -34,12 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <DocsHeader navigation={navigation} searchIndex={searchIndex} />
         <main id="main-content">{children}</main>
-        <footer className="site-footer">
-          <div className="site-footer-inner">
-            <p>Orkest UI · A neutral-first React component library.</p>
-            <Link href="/docs/introduction/">Read the documentation</Link>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );

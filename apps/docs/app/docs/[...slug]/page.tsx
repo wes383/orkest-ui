@@ -11,8 +11,6 @@ type DocRouteProps = {
   params: Promise<{ slug: string[] }>;
 };
 
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return getDocs().map((doc) => ({ slug: doc.slugSegments }));
 }
