@@ -193,6 +193,35 @@
   padding: var(--field-padding-y) var(--field-padding-x);
   box-sizing: border-box;
   resize: vertical;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-subtle-foreground) transparent;
+}
+
+/* Keep the native scrollbar but remove arrow buttons and match the theme. */
+.textarea::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.textarea::-webkit-scrollbar-track,
+.textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-subtle-foreground);
+  background-clip: content-box;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--ui-muted-foreground);
+  background-clip: content-box;
+}
+
+.textarea::-webkit-scrollbar-button {
+  display: none;
 }
 
 .textarea[data-resize="none"] {
