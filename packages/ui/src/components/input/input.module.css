@@ -1,3 +1,20 @@
+.root {
+  display: grid;
+  gap: var(--ok-space-1);
+  width: 100%;
+}
+
+.countBelow {
+  justify-self: end;
+  color: var(--ui-subtle-foreground);
+  font-size: var(--ok-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.root[data-disabled="true"] .countBelow {
+  color: var(--ui-disabled-foreground);
+}
+
 .field {
   --field-height: var(--ok-control-height-md);
   --field-padding-x: var(--ok-control-padding-x-md);
@@ -124,6 +141,42 @@
   color: var(--ui-disabled-foreground);
 }
 
+.affix {
+  flex: none;
+  color: var(--ui-muted-foreground);
+  font-size: inherit;
+  white-space: nowrap;
+}
+
+.field[data-disabled="true"] .affix {
+  color: var(--ui-disabled-foreground);
+}
+
+.action {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ok-radius-sm);
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  cursor: pointer;
+}
+
+.action:hover {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.action:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: 0;
+}
+
 .textareaField {
   height: auto;
   align-items: stretch;
@@ -134,6 +187,27 @@
 .textarea {
   height: auto;
   resize: vertical;
+}
+
+.textarea[data-resize="none"] {
+  resize: none;
+}
+
+.textarea[data-resize="vertical"] {
+  resize: vertical;
+}
+
+.textarea[data-resize="horizontal"] {
+  resize: horizontal;
+}
+
+.textarea[data-resize="both"] {
+  resize: both;
+}
+
+.textarea[data-auto-resize="true"] {
+  resize: none;
+  overflow-y: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

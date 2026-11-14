@@ -15,31 +15,32 @@ describe('Textarea', () => {
     const textarea = screen.getByPlaceholderText('Message') as HTMLTextAreaElement;
     expect(textarea.tagName).toBe('TEXTAREA');
     expect(textarea).toHaveAttribute('rows', '3');
-    expect(container.firstElementChild).toHaveAttribute('data-size', 'md');
+    expect(textarea).toHaveAttribute('data-resize', 'vertical');
+    expect(container.querySelector('[data-size="md"]')).toBeInTheDocument();
   });
 
   it.each(sizes)('applies the %s size to the field', (size) => {
     const { container } = render(<Textarea size={size} placeholder="Message" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-size', size);
+    expect(container.querySelector(`[data-size="${size}"]`)).toBeInTheDocument();
   });
 
   it('exposes the invalid state', () => {
     const { container } = render(<Textarea invalid placeholder="Message" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-invalid', 'true');
+    expect(container.querySelector('[data-invalid="true"]')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Message')).toHaveAttribute('aria-invalid', 'true');
   });
 
   it('exposes disabled and read-only states', () => {
     const { container, rerender } = render(<Textarea disabled placeholder="Disabled" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-disabled', 'true');
+    expect(container.querySelector('[data-disabled="true"]')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Disabled')).toBeDisabled();
 
     rerender(<Textarea readOnly placeholder="Read only" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-read-only', 'true');
+    expect(container.querySelector('[data-read-only="true"]')).toBeInTheDocument();
     expect((screen.getByPlaceholderText('Read only') as HTMLTextAreaElement).readOnly).toBe(true);
   });
 
@@ -75,5 +76,31 @@ describe('Textarea', () => {
     await user.type(screen.getByPlaceholderText('Type'), 'abc');
 
     expect(onChange).toHaveBeenCalledTimes(3);
+  });
+
+  it('supports auto-resize and disables manual resize', () => {
+    render(<Textarea autoResize minRows={2} maxRows={5} aria-label="Notes" />);
+
+    const textarea = screen.getByRole('textbox', { name: 'Notes' });
+    expect(textarea).toHaveAttribute('data-auto-resize', 'true');
+    expect(textarea).toHaveAttribute('data-resize', 'none');
+  });
+
+  it('applies a manual resize direction', () => {
+    render(<Textarea resize="none" aria-label="Notes" />);
+
+    expect(screen.getByRole('textbox', { name: 'Notes' })).toHaveAttribute('data-resize', 'none');
+  });
+
+  it('shows a character count', async () => {
+    const user = userEvent.setup();
+
+    render(<Textarea showCount maxLength={20} defaultValue="hello" aria-label="Message" />);
+
+    expect(screen.getByText('5 / 20')).toBeInTheDocument();
+
+    await user.type(screen.getByRole('textbox', { name: 'Message' }), '!');
+
+    expect(screen.getByText('6 / 20')).toBeInTheDocument();
   });
 });

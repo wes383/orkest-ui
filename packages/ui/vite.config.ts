@@ -30,6 +30,10 @@ export default defineConfig({
         'react/jsx-dev-runtime',
         'lucide-react',
       ],
+      // Input and Textarea use hooks, so the single bundle is a client module.
+      output: {
+        banner: "'use client';",
+      },
     },
   },
   test: {

@@ -17,7 +17,7 @@ describe('Input', () => {
     expect(input.tagName).toBe('INPUT');
     expect(input.type).toBe('text');
 
-    const field = container.firstElementChild;
+    const field = container.querySelector('[data-size="md"]');
     expect(field).toHaveAttribute('data-size', 'md');
     expect(field).not.toHaveAttribute('data-invalid');
     expect(field).not.toHaveAttribute('data-disabled');
@@ -28,25 +28,25 @@ describe('Input', () => {
   it.each(sizes)('applies the %s size to the field', (size) => {
     const { container } = render(<Input size={size} placeholder="Field" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-size', size);
+    expect(container.querySelector(`[data-size="${size}"]`)).toBeInTheDocument();
   });
 
   it('exposes the invalid state', () => {
     const { container } = render(<Input invalid placeholder="Email" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-invalid', 'true');
+    expect(container.querySelector('[data-invalid="true"]')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email')).toHaveAttribute('aria-invalid', 'true');
   });
 
   it('exposes disabled and read-only states', () => {
     const { container, rerender } = render(<Input disabled placeholder="Disabled" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-disabled', 'true');
+    expect(container.querySelector('[data-disabled="true"]')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Disabled')).toBeDisabled();
 
     rerender(<Input readOnly placeholder="Read only" />);
 
-    expect(container.firstElementChild).toHaveAttribute('data-read-only', 'true');
+    expect(container.querySelector('[data-read-only="true"]')).toBeInTheDocument();
     expect((screen.getByPlaceholderText('Read only') as HTMLInputElement).readOnly).toBe(true);
   });
 
@@ -97,5 +97,85 @@ describe('Input', () => {
     await user.type(screen.getByPlaceholderText('Type'), 'abc');
 
     expect(onChange).toHaveBeenCalledTimes(3);
+  });
+
+  it('renders prefix and suffix content', () => {
+    render(<Input prefix="$" suffix="USD" placeholder="Amount" />);
+
+    expect(screen.getByText('$')).toBeInTheDocument();
+    expect(screen.getByText('USD')).toBeInTheDocument();
+  });
+
+  it('clears the value and hides the clear action', async () => {
+    const user = userEvent.setup();
+
+    render(<Input clearable defaultValue="hello" aria-label="Name" />);
+
+    const input = screen.getByRole('textbox', { name: 'Name' }) as HTMLInputElement;
+    expect(input.value).toBe('hello');
+
+    await user.click(screen.getByRole('button', { name: 'Clear input' }));
+
+    expect(input.value).toBe('');
+    expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
+  });
+
+  it('does not show the clear action for an empty input', () => {
+    render(<Input clearable aria-label="Empty" />);
+
+    expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
+  });
+
+  it('toggles password visibility', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Input type="password" passwordToggle defaultValue="secret" aria-label="Password" />,
+    );
+
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    expect(input.type).toBe('password');
+
+    await user.click(screen.getByRole('button', { name: 'Show password' }));
+    expect(input.type).toBe('text');
+
+    await user.click(screen.getByRole('button', { name: 'Hide password' }));
+    expect(input.type).toBe('password');
+  });
+
+  it('shows a character count', async () => {
+    const user = userEvent.setup();
+
+    render(<Input showCount maxLength={10} defaultValue="abc" aria-label="Bio" />);
+
+    expect(screen.getByText('3 / 10')).toBeInTheDocument();
+
+    await user.type(screen.getByRole('textbox', { name: 'Bio' }), 'd');
+
+    expect(screen.getByText('4 / 10')).toBeInTheDocument();
+  });
+
+  it('derives the character count from a controlled value', () => {
+    render(
+      <Input showCount maxLength={10} value="abcd" onChange={() => {}} aria-label="Controlled" />,
+    );
+
+    expect(screen.getByText('4 / 10')).toBeInTheDocument();
+  });
+
+  it('hides actions when disabled', () => {
+    render(
+      <Input
+        clearable
+        passwordToggle
+        type="password"
+        defaultValue="secret"
+        disabled
+        aria-label="Password"
+      />,
+    );
+
+    expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Show password' })).not.toBeInTheDocument();
   });
 });
