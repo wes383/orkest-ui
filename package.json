@@ -8,7 +8,7 @@
     "test": "pnpm --filter @orkest/ui test",
     "test:watch": "pnpm --filter @orkest/ui test:watch",
     "typecheck": "pnpm -r --if-present typecheck",
-    "docs": "pnpm --filter @orkest/docs dev",
-    "build:docs": "pnpm --filter @orkest/docs build"
+    "docs:dev": "pnpm --filter @orkest/docs dev",
+    "docs:build": "pnpm --filter @orkest/docs build"
   }
 }
