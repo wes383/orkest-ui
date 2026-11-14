@@ -9,7 +9,9 @@ Early development (`0.0.0`). The package is not published yet and the public API
 
 Currently exported:
 
-- Primitives: `Box`, `Stack`, `Text`, `Icon`
+- Primitives: `Box`, `Stack`, `Icon`
+- Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
+  `Link`
 - Components: `Button`, `IconButton`
 
 ## Install

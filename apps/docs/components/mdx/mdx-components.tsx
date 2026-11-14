@@ -5,7 +5,22 @@ import {
   type ReactNode,
 } from 'react';
 
-import { Box, Button, Icon, IconButton, Stack, Text } from '@orkest/ui';
+import {
+  Box,
+  Button,
+  Caption,
+  Code,
+  Heading,
+  Icon,
+  IconButton,
+  Label,
+  Link as TypographyLink,
+  Paragraph,
+  Small,
+  Stack,
+  Strong,
+  Text,
+} from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
 import { ColorPalette } from './color-palette';
@@ -116,9 +131,17 @@ export const mdxComponents = {
   table: MdxTable,
   Box,
   Button,
+  Caption,
+  Code,
+  Heading,
   Icon,
   IconButton,
+  Label,
+  Link: TypographyLink,
+  Paragraph,
+  Small,
   Stack,
+  Strong,
   Text,
   Check,
   Circle,

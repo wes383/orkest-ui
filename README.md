@@ -9,7 +9,9 @@ The repository is a pnpm monorepo containing the library and its custom document
 
 Early development. The shipped surface currently includes:
 
-- Primitives: `Box`, `Stack`, `Text`, `Icon`
+- Primitives: `Box`, `Stack`, `Icon`
+- Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
+  `Link`
 - Components: `Button`, `IconButton`
 
 Core components, complex interactions, and the first public release are still in progress.

@@ -1,12 +1,13 @@
 ---
 title: Text
-description: Typographic primitive with sizes, weights, tones, and font families.
+description: Typographic primitive with the full size scale, weights, families, and overflow controls.
 section: components
 order: 3
 ---
 
-`Text` renders a span by default and provides a small, token-driven set of typographic options. It
-accepts any element through `as`, so it can also render paragraphs, headings, and list content.
+`Text` renders a span by default and provides the token-driven typography options shared by the rest
+of the [typography family](/docs/components/typography/). It accepts any element through `as`, so it
+can also render paragraphs, headings, and list content.
 
 ## Live preview
 
@@ -30,14 +31,16 @@ export function Example() {
 >
   <Stack gap={2}>
     <Text size="xl" weight="semibold">
-      Design with clarity
+      {'Design with clarity'}
     </Text>
     <Text size="md">Primary body copy stays comfortable to read.</Text>
     <Text size="sm" tone="muted">
-      Secondary details recede without becoming unreadable.
+      {'Secondary details recede without becoming unreadable.'}
     </Text>
   </Stack>
 </ComponentPreview>
+
+## Font families
 
 <ComponentPreview
   title="Font families"
@@ -55,15 +58,111 @@ export function Example() {
 >
   <Stack gap={2}>
     <Text font="display" size="xl" weight="semibold">
-      Build with clarity.
+      {'Build with clarity.'}
     </Text>
     <Text font="mono" size="sm">
-      const ui = &quot;orkest&quot;;
+      {'const ui = "orkest";'}
     </Text>
     <Text font="numeric" size="sm">
-      1,248.50 · 12:45 · 01 02 03
+      {'1,248.50 · 12:45 · 01 02 03'}
     </Text>
   </Stack>
+</ComponentPreview>
+
+## Sizes and weights
+
+`Text` supports the full type scale from `2xs` to `5xl`, plus `inherit` for nested inline content.
+Weights are `regular`, `medium`, `semibold`, and `bold`.
+
+<ComponentPreview
+  title="Sizes and weights"
+  code={`<Stack gap={1}>
+  <Text size="2xs">2xs · 12px</Text>
+  <Text size="xs">xs · 13px</Text>
+  <Text size="sm">sm · 14px</Text>
+  <Text size="md">md · 16px</Text>
+  <Text size="lg">lg · 18px</Text>
+  <Text size="xl" weight="bold">
+    xl · 20px bold
+  </Text>
+  <Text size="2xl">2xl · 24px</Text>
+  <Text size="3xl">3xl · 30px</Text>
+  <Text size="4xl">4xl · 38px</Text>
+  <Text size="5xl">5xl · 48px</Text>
+</Stack>`}
+>
+  <Stack gap={1}>
+    <Text size="2xs">2xs · 12px</Text>
+    <Text size="xs">xs · 13px</Text>
+    <Text size="sm">sm · 14px</Text>
+    <Text size="md">md · 16px</Text>
+    <Text size="lg">lg · 18px</Text>
+    <Text size="xl" weight="bold">
+      {'xl · 20px bold'}
+    </Text>
+    <Text size="2xl">2xl · 24px</Text>
+    <Text size="3xl">3xl · 30px</Text>
+    <Text size="4xl">4xl · 38px</Text>
+    <Text size="5xl">5xl · 48px</Text>
+  </Stack>
+</ComponentPreview>
+
+## Style options
+
+<ComponentPreview
+  title="Tracking, line height, italic, and underline"
+  code={`<Stack gap={2}>
+  <Text lineHeight="relaxed" letterSpacing="wide">
+    Relaxed line height with wide tracking.
+  </Text>
+  <Text italic>Italic text</Text>
+  <Text underline>Underlined text</Text>
+  <Text as="p" align="center" tone="muted">
+    Centered muted text
+  </Text>
+</Stack>`}
+>
+  <Stack gap={2}>
+    <Text lineHeight="relaxed" letterSpacing="wide">
+      {'Relaxed line height with wide tracking.'}
+    </Text>
+    <Text italic>Italic text</Text>
+    <Text underline>Underlined text</Text>
+    <Text as="p" align="center" tone="muted">
+      {'Centered muted text'}
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Overflow
+
+`truncate` is single-line; `lineClamp` is multi-line and takes precedence when both are set. The full
+text stays in the DOM.
+
+<ComponentPreview
+  title="Truncation"
+  code={`<Box style={{ width: '22rem' }}>
+  <Stack gap={2}>
+    <Text as="p" truncate>
+      Single-line truncation keeps long copy from wrapping onto a second line.
+    </Text>
+    <Text as="p" lineClamp={2}>
+      Multi-line clamping stops after two lines and hides the remainder, which is useful for
+      previews and summaries.
+    </Text>
+  </Stack>
+</Box>`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Text as="p" truncate>
+        {'Single-line truncation keeps long copy from wrapping onto a second line.'}
+      </Text>
+      <Text as="p" lineClamp={2}>
+        {'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews and summaries.'}
+      </Text>
+    </Stack>
+  </Box>
 </ComponentPreview>
 
 ## Props
@@ -72,13 +171,13 @@ export function Example() {
   rows={[
     {
       name: 'size',
-      type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`,
+      type: `'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'inherit'`,
       default: `'md'`,
-      description: 'Font size and matching line height.',
+      description: 'Font size and matching line height. inherit keeps the surrounding size.',
     },
     {
       name: 'weight',
-      type: `'regular' | 'medium' | 'semibold'`,
+      type: `'regular' | 'medium' | 'semibold' | 'bold'`,
       default: `'regular'`,
       description: 'Font weight token.',
     },
@@ -86,7 +185,7 @@ export function Example() {
       name: 'tone',
       type: `'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger'`,
       default: `'default'`,
-      description: 'Semantic text color.',
+      description: 'Semantic text color. This is the color control for Text.',
     },
     {
       name: 'align',
@@ -102,10 +201,38 @@ export function Example() {
         'Font family. Display is intended for large headings; mono for code; numeric keeps Inter with tabular figures so digits align.',
     },
     {
+      name: 'lineHeight',
+      type: `'tight' | 'snug' | 'normal' | 'relaxed'`,
+      description: 'Overrides the line height selected by the size.',
+    },
+    {
+      name: 'letterSpacing',
+      type: `'tighter' | 'tight' | 'normal' | 'wide'`,
+      description: 'Overrides the letter spacing selected by the size.',
+    },
+    {
       name: 'truncate',
       type: 'boolean',
       default: 'false',
-      description: 'Single-line overflow with an ellipsis.',
+      description:
+        'Single-line overflow with an ellipsis. The element switches to block layout so clipping works.',
+    },
+    {
+      name: 'lineClamp',
+      type: 'number',
+      description: 'Clamps text to the given number of lines. Takes precedence over truncate.',
+    },
+    {
+      name: 'italic',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies italic styling. Use Strong for emphasis semantics.',
+    },
+    {
+      name: 'underline',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies an underline with token-based thickness and offset.',
     },
     {
       name: 'as',
@@ -113,18 +240,25 @@ export function Example() {
       default: `'span'`,
       description: 'Element to render.',
     },
+    {
+      name: 'native attributes',
+      type: 'ComponentPropsWithRef<T>',
+      description: 'Inherited from the element selected by as, including ref forwarding.',
+    },
   ]}
 />
 
 ## Accessibility
 
 - `Text` defaults to a span. Use `as` to render the correct semantic element.
-- Do not skip heading levels. A visual size does not determine the heading level.
-- Truncation is visual; the full text remains in the DOM for assistive technology.
+- Do not skip heading levels. A visual size does not determine the heading level; use
+  [Heading](/docs/components/typography/) for headings.
+- Truncation and line clamping are visual; the full text remains in the DOM for assistive technology.
 - Tone is not a substitute for context. Pair success or danger text with a clear label or icon.
 - Inherited native attributes such as `id`, `title`, and event handlers are forwarded.
 
 ## Related
 
-- [Typography foundations](/docs/foundations/typography/) for the full type scale.
+- [Typography](/docs/components/typography/) for the semantic text component family.
+- [Typography foundations](/docs/foundations/typography/) for the full type scale and tokens.
 - [Stack](/docs/components/stack/) for vertical rhythm.

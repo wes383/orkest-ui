@@ -1,0 +1,400 @@
+---
+title: Typography
+description: Semantic text components, heading levels, sizes, weights, and overflow controls.
+section: components
+order: 7
+---
+
+Orkest UI provides a small typography family built on the `Text` primitive. Each component renders
+the correct native element by default and shares the same size, weight, color, alignment, spacing,
+and overflow options.
+
+Use these components instead of styling headings and paragraphs ad hoc. For the underlying font
+tokens, see [Typography foundations](/docs/foundations/typography/).
+
+## Live preview
+
+<ComponentPreview
+  title="Article composition"
+  code={`import { Caption, Code, Heading, Link, Paragraph, Stack, Strong } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Heading level={3}>Release notes</Heading>
+      <Paragraph>
+        The <Strong>typography</Strong> family keeps semantic HTML and visual styles separate. Use{' '}
+        <Code>level</Code> for heading semantics and{' '}
+        <Link href="/docs/components/text/">shared options</Link> for rhythm.
+      </Paragraph>
+      <Caption>Updated 12 minutes ago</Caption>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Heading level={3}>Release notes</Heading>
+    <Paragraph>
+      {'The '}
+      <Strong>typography</Strong>
+      {' family keeps semantic HTML and visual styles separate. Use '}
+      <Code>level</Code>
+      {' for heading semantics and '}
+      <Link href="/docs/components/text/">shared options</Link>
+      {' for rhythm.'}
+    </Paragraph>
+    <Caption>Updated 12 minutes ago</Caption>
+  </Stack>
+</ComponentPreview>
+
+## Heading levels
+
+`level` sets both the rendered heading element and the default size. Level 1 renders an `h1` at the
+`5xl` size; the preview below starts at level 2 because the documentation page already owns its `h1`.
+
+<ComponentPreview
+  title="Heading scale"
+  code={`import { Heading, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={2}>
+      <Heading level={2}>Level 2 heading</Heading>
+      <Heading level={3}>Level 3 heading</Heading>
+      <Heading level={4}>Level 4 heading</Heading>
+      <Heading level={5}>Level 5 heading</Heading>
+      <Heading level={6}>Level 6 heading</Heading>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={2}>
+    <Heading level={2}>Level 2 heading</Heading>
+    <Heading level={3}>Level 3 heading</Heading>
+    <Heading level={4}>Level 4 heading</Heading>
+    <Heading level={5}>Level 5 heading</Heading>
+    <Heading level={6}>Level 6 heading</Heading>
+  </Stack>
+</ComponentPreview>
+
+Use `as` when the visual level and the document structure need to differ, and `size` to override the
+visual size without changing semantics.
+
+## Text sizes
+
+The full type scale is available on `Text` and all semantic text components. `inherit` keeps the
+surrounding size, which is useful for inline elements such as `Strong`, `Code`, and `Link`.
+
+<ComponentPreview
+  title="Type scale"
+  code={`import { Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={1}>
+      <Text size="2xs">2xs · 12px</Text>
+      <Text size="xs">xs · 13px</Text>
+      <Text size="sm">sm · 14px</Text>
+      <Text size="md">md · 16px</Text>
+      <Text size="lg">lg · 18px</Text>
+      <Text size="xl">xl · 20px</Text>
+      <Text size="2xl">2xl · 24px</Text>
+      <Text size="3xl">3xl · 30px</Text>
+      <Text size="4xl">4xl · 38px</Text>
+      <Text size="5xl">5xl · 48px</Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={1}>
+    <Text size="2xs">2xs · 12px</Text>
+    <Text size="xs">xs · 13px</Text>
+    <Text size="sm">sm · 14px</Text>
+    <Text size="md">md · 16px</Text>
+    <Text size="lg">lg · 18px</Text>
+    <Text size="xl">xl · 20px</Text>
+    <Text size="2xl">2xl · 24px</Text>
+    <Text size="3xl">3xl · 30px</Text>
+    <Text size="4xl">4xl · 38px</Text>
+    <Text size="5xl">5xl · 48px</Text>
+  </Stack>
+</ComponentPreview>
+
+## Weights
+
+<ComponentPreview
+  title="Weights"
+  code={`import { Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={1}>
+      <Text weight="regular">Regular 400</Text>
+      <Text weight="medium">Medium 500</Text>
+      <Text weight="semibold">Semibold 600</Text>
+      <Text weight="bold">Bold 700</Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={1}>
+    <Text weight="regular">Regular 400</Text>
+    <Text weight="medium">Medium 500</Text>
+    <Text weight="semibold">Semibold 600</Text>
+    <Text weight="bold">Bold 700</Text>
+  </Stack>
+</ComponentPreview>
+
+## Shared options
+
+<ComponentPreview
+  title="Line height, tracking, style, and alignment"
+  code={`import { Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={2}>
+      <Text lineHeight="relaxed" letterSpacing="wide">
+        Relaxed line height with wide tracking.
+      </Text>
+      <Text italic>Italic text is visual; use Strong for emphasis semantics.</Text>
+      <Text underline>Underlined text</Text>
+      <Text as="p" align="center" tone="muted">
+        Centered muted text
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={2}>
+    <Text lineHeight="relaxed" letterSpacing="wide">
+      {'Relaxed line height with wide tracking.'}
+    </Text>
+    <Text italic>Italic text is visual; use Strong for emphasis semantics.</Text>
+    <Text underline>Underlined text</Text>
+    <Text as="p" align="center" tone="muted">
+      {'Centered muted text'}
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Overflow
+
+`truncate` limits text to one line. `lineClamp` limits it to a number of lines and takes precedence
+when both props are set. Both options are visual; the full text remains in the DOM.
+
+<ComponentPreview
+  title="Single-line and multi-line overflow"
+  code={`import { Box, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={2}>
+        <Text as="p" truncate>
+          Single-line truncation keeps long copy from wrapping onto a second line.
+        </Text>
+        <Text as="p" lineClamp={2}>
+          Multi-line clamping stops after two lines and hides the remainder, which is useful for
+          previews, cards, and feed summaries.
+        </Text>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Text as="p" truncate>
+        {'Single-line truncation keeps long copy from wrapping onto a second line.'}
+      </Text>
+      <Text as="p" lineClamp={2}>
+        {'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews, cards, and feed summaries.'}
+      </Text>
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Semantic components
+
+<ComponentPreview
+  title="Labels, emphasis, code, and links"
+  code={`import { Caption, Code, Label, Link, Small, Stack, Strong, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={4}>
+      <Stack gap={1}>
+        <Label htmlFor="typography-project">Project name</Label>
+        <input
+          id="typography-project"
+          type="text"
+          defaultValue="Orkest"
+          aria-describedby="typography-project-help"
+        />
+        <Caption id="typography-project-help">Use a short name.</Caption>
+      </Stack>
+      <Text as="p">
+        Use <Strong>strong</Strong>, <Code>inline code</Code>, and{' '}
+        <Link href="/docs/components/text/">links</Link> inside body copy.
+      </Text>
+      <Small>Small text inherits the surrounding color.</Small>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Stack gap={1}>
+      <Label htmlFor="typography-project">Project name</Label>
+      <input
+        id="typography-project"
+        type="text"
+        defaultValue="Orkest"
+        aria-describedby="typography-project-help"
+      />
+      <Caption id="typography-project-help">Use a short name.</Caption>
+    </Stack>
+    <Text as="p">
+      {'Use '}
+      <Strong>strong</Strong>
+      {', '}
+      <Code>inline code</Code>
+      {', and '}
+      <Link href="/docs/components/text/">links</Link>
+      {' inside body copy.'}
+    </Text>
+    <Small>Small text inherits the surrounding color.</Small>
+  </Stack>
+</ComponentPreview>
+
+## Component defaults
+
+- `Heading` renders `h1`–`h6` from `level` (default `2`) with a level-driven size, semibold weight,
+  tight line height, and tighter tracking.
+- `Paragraph` renders `p` at `md` with relaxed line height.
+- `Label` renders `label` at `sm` with medium weight.
+- `Caption` renders `span` at `xs` with the muted tone.
+- `Small` renders `small` at `sm` and inherits the surrounding color.
+- `Strong` renders `strong` at `inherit` size with semibold weight and inherited color.
+- `Code` renders `code` at `inherit` size with the monospace face and a subtle token surface.
+- `Link` renders `a` at `inherit` size with the accent tone and a persistent underline.
+
+## Props
+
+These options are shared by every typography component. Each component supplies its own defaults.
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'inherit'`,
+      description: 'Font size and matching line height. Defaults vary by component.',
+    },
+    {
+      name: 'weight',
+      type: `'regular' | 'medium' | 'semibold' | 'bold'`,
+      description: 'Font weight token. Defaults vary by component.',
+    },
+    {
+      name: 'tone',
+      type: `'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger'`,
+      description: 'Semantic text color. This is the color control for typography.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end' | 'justify'`,
+      description: 'Text alignment.',
+    },
+    {
+      name: 'font',
+      type: `'sans' | 'display' | 'mono' | 'numeric'`,
+      description: 'Font family. Numeric keeps Inter with tabular figures.',
+    },
+    {
+      name: 'lineHeight',
+      type: `'tight' | 'snug' | 'normal' | 'relaxed'`,
+      description: 'Overrides the line height selected by the size.',
+    },
+    {
+      name: 'letterSpacing',
+      type: `'tighter' | 'tight' | 'normal' | 'wide'`,
+      description: 'Overrides the letter spacing selected by the size.',
+    },
+    {
+      name: 'truncate',
+      type: 'boolean',
+      description:
+        'Single-line overflow with an ellipsis. The element switches to block layout so clipping works.',
+    },
+    {
+      name: 'lineClamp',
+      type: 'number',
+      description: 'Clamps text to the given number of lines. Takes precedence over truncate.',
+    },
+    {
+      name: 'italic',
+      type: 'boolean',
+      description: 'Applies italic styling. Use Strong for emphasis semantics.',
+    },
+    {
+      name: 'underline',
+      type: 'boolean',
+      description: 'Applies an underline with token-based thickness and offset.',
+    },
+    {
+      name: 'as',
+      type: 'ElementType',
+      description: 'Renders a custom element or component while keeping the typography styles.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ComponentPropsWithRef<T>',
+      description: 'Inherited from the rendered element, including ref forwarding.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    {
+      name: 'Heading.level',
+      type: '1 | 2 | 3 | 4 | 5 | 6',
+      default: '2',
+      description: 'Sets the rendered heading element and the default size.',
+    },
+    {
+      name: 'Heading.size',
+      type: 'TextSize',
+      description: 'Overrides the level-driven visual size without changing semantics.',
+    },
+    {
+      name: 'Label.htmlFor',
+      type: 'string',
+      description: 'Associates the label with a form control.',
+    },
+    {
+      name: 'Link.href',
+      type: 'string',
+      description: 'Native anchor destination. Use Button for actions instead.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `Heading` renders a real heading element. Do not skip levels. Use `size` and `as` only when the
+  visual design or page structure requires decoupling.
+- `Paragraph`, `Label`, `Strong`, `Code`, and `Link` render `p`, `label`, `strong`, `code`, and `a`.
+  Keep those semantics unless a different element is genuinely correct.
+- Associate `Label` with its control through `htmlFor` or by wrapping the control.
+- `Link` is for navigation. Use `Button` for actions, including `variant="link"`.
+- Links use color and an underline, so meaning is not communicated by color alone.
+- Truncation and line clamping are visual. The full text stays in the DOM; provide a title or another
+  way to read critical content when necessary.
+- `tone` is semantic color, not a replacement for context. Pair status tones with text or an icon.
+
+## Related
+
+- [Text](/docs/components/text/) for the underlying typography primitive and its full props.
+- [Typography foundations](/docs/foundations/typography/) for font families, scale, and tokens.
+- [Button](/docs/components/button/) for actions styled as links.
