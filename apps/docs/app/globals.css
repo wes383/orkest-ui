@@ -1435,6 +1435,10 @@ kbd {
   background: var(--ui-secondary);
 }
 
+.search-result-link:focus-visible {
+  outline: none;
+}
+
 .search-result-section {
   color: var(--ui-subtle-foreground);
   font-size: 10px;
