@@ -1162,7 +1162,6 @@ kbd {
 
 .toc-link[aria-current='location'] {
   color: var(--ui-foreground);
-  font-weight: var(--ok-font-weight-semibold);
 }
 
 .toc-item-nested .toc-link {
