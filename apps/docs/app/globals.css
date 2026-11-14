@@ -1351,7 +1351,7 @@ kbd {
   max-height: 70vh;
   margin: 0;
   padding: 0;
-  border: 0;
+  border: var(--ok-border-width) solid var(--ui-border);
   border-radius: 1rem;
   background: var(--ui-surface);
   color: var(--ui-foreground);
