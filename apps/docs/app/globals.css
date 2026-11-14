@@ -276,7 +276,7 @@ kbd {
   display: flex;
   flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height));
-  padding: 4rem 0 5rem;
+  padding: 3rem 0 3.5rem;
   overflow: hidden;
 }
 
@@ -322,7 +322,7 @@ kbd {
 
 .docs-nav {
   display: grid;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .docs-nav-group-title {
@@ -1456,7 +1456,7 @@ kbd {
 
 .mobile-nav-body {
   height: calc(100dvh - var(--docs-header-height));
-  padding: 3rem 1.25rem 4.5rem;
+  padding: 2rem 1.25rem 2.5rem;
   overflow: hidden;
 }
 
