@@ -1,5 +1,9 @@
 import Link from 'next/link';
-import type { ComponentPropsWithoutRef } from 'react';
+import {
+  isValidElement,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from 'react';
 
 import { Box, Icon, Stack, Text } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
@@ -14,6 +18,7 @@ import { TokenTable } from './token-table';
 import { FontFamilySample, TypographySample } from './typography-sample';
 import { CodeBlock } from '../examples/code-block';
 import { ComponentPreview } from '../examples/component-preview';
+import { CopyButton } from '../examples/copy-button';
 
 function Heading2({ id, children, ...props }: ComponentPropsWithoutRef<'h2'>) {
   return (
@@ -73,10 +78,42 @@ function MdxTable(props: ComponentPropsWithoutRef<'table'>) {
   );
 }
 
+function extractText(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') {
+    return String(node);
+  }
+
+  if (Array.isArray(node)) {
+    return node.map(extractText).join('');
+  }
+
+  if (isValidElement<{ children?: ReactNode }>(node)) {
+    return extractText(node.props.children);
+  }
+
+  return '';
+}
+
+function MdxPre({ children, ...props }: ComponentPropsWithoutRef<'pre'>) {
+  const code = extractText(children).replace(/\n+$/, '');
+
+  return (
+    <div className="code-block">
+      <div className="code-block-header code-block-header-actions">
+        <CopyButton code={code} />
+      </div>
+      <div className="code-block-content">
+        <pre {...props}>{children}</pre>
+      </div>
+    </div>
+  );
+}
+
 export const mdxComponents = {
   h2: Heading2,
   h3: Heading3,
   a: MdxLink,
+  pre: MdxPre,
   table: MdxTable,
   Box,
   Stack,

@@ -702,6 +702,10 @@ kbd {
   background: var(--ui-surface);
 }
 
+.code-block-header-actions {
+  justify-content: flex-end;
+}
+
 .code-block-label {
   color: var(--ui-muted-foreground);
   font-size: 11px;
@@ -739,6 +743,17 @@ kbd {
   font-family: var(--ok-font-mono);
   font-size: var(--ok-font-size-xs);
   line-height: 1.65;
+}
+
+.code-block-content pre,
+.prose pre {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.code-block-content pre::-webkit-scrollbar,
+.prose pre::-webkit-scrollbar {
+  display: none;
 }
 
 .code-block-content code {
