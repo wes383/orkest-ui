@@ -273,14 +273,23 @@ kbd {
 .docs-sidebar {
   position: sticky;
   top: var(--docs-header-height);
+  display: flex;
+  flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height));
-  padding: 4rem 1.25rem 5rem 1.5rem;
+  padding: 4rem 0 5rem;
+  overflow: hidden;
+}
+
+.docs-sidebar-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 1.25rem 0 1.5rem;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.docs-sidebar::-webkit-scrollbar {
+.docs-sidebar-scroll::-webkit-scrollbar {
   display: none;
 }
 
@@ -1448,6 +1457,11 @@ kbd {
 .mobile-nav-body {
   height: calc(100dvh - var(--docs-header-height));
   padding: 3rem 1.25rem 4.5rem;
+  overflow: hidden;
+}
+
+.mobile-nav-scroll {
+  height: 100%;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -1460,7 +1474,7 @@ kbd {
   );
 }
 
-.mobile-nav-body::-webkit-scrollbar {
+.mobile-nav-scroll::-webkit-scrollbar {
   display: none;
 }
 

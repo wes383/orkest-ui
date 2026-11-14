@@ -57,7 +57,9 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
           </button>
         </div>
         <div className="mobile-nav-body">
-          <DocsNav navigation={navigation} activePath={pathname} onNavigate={close} />
+          <div className="mobile-nav-scroll">
+            <DocsNav navigation={navigation} activePath={pathname} onNavigate={close} />
+          </div>
         </div>
       </dialog>
     </>
