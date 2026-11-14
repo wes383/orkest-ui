@@ -4,6 +4,14 @@
   font-family: var(--ok-font-sans);
 }
 
+.text[data-font="display"] {
+  font-family: var(--ok-font-display);
+}
+
+.text[data-font="mono"] {
+  font-family: var(--ok-font-mono);
+}
+
 .text[data-size="xs"] {
   font-size: var(--ok-font-size-xs);
   line-height: var(--ok-line-height-normal);

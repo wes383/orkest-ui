@@ -8,12 +8,15 @@ export type TextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type TextWeight = 'regular' | 'medium' | 'semibold';
 export type TextTone = 'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger';
 export type TextAlign = 'start' | 'center' | 'end' | 'justify';
+export type TextFont = 'sans' | 'display' | 'mono';
 
 export interface TextOwnProps {
   size?: TextSize;
   weight?: TextWeight;
   tone?: TextTone;
   align?: TextAlign;
+  /** `display` opts into the large-heading face; `mono` is intended for code. */
+  font?: TextFont;
   /** Truncates content on a single line with an ellipsis. */
   truncate?: boolean;
 }
@@ -28,6 +31,7 @@ function TextImpl(
     weight = 'regular',
     tone = 'default',
     align = 'start',
+    font = 'sans',
     truncate = false,
     ...rest
   }: TextProps,
@@ -44,6 +48,7 @@ function TextImpl(
       data-weight={weight}
       data-tone={tone}
       data-align={align}
+      data-font={font}
       data-truncate={truncate || undefined}
     />
   );

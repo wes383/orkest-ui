@@ -13,6 +13,7 @@ describe('Text', () => {
     expect(text).toHaveAttribute('data-weight', 'regular');
     expect(text).toHaveAttribute('data-tone', 'default');
     expect(text).toHaveAttribute('data-align', 'start');
+    expect(text).toHaveAttribute('data-font', 'sans');
     expect(text).not.toHaveAttribute('data-truncate');
   });
 
@@ -48,5 +49,13 @@ describe('Text', () => {
     expect(text).toHaveAttribute('id', 'copy');
     expect(text).toHaveAttribute('title', 'Tooltip');
     expect(text).toHaveClass('custom');
+  });
+
+  it('supports display and monospace font families', () => {
+    const { rerender } = render(<Text font="display">Display</Text>);
+    expect(screen.getByText('Display')).toHaveAttribute('data-font', 'display');
+
+    rerender(<Text font="mono">Code</Text>);
+    expect(screen.getByText('Code')).toHaveAttribute('data-font', 'mono');
   });
 });

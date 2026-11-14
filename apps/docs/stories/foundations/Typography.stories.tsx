@@ -13,7 +13,7 @@ function TypographyPage() {
         eyebrow="Foundations · Typography"
         title="Hierarchy without noise."
         description="A compact type scale keeps dense product interfaces readable. Weight and tone carry emphasis before size does."
-        meta={['5 text sizes', '3 weights', '7 tones']}
+        meta={['5 text sizes', '3 weights', '4 font tokens']}
       />
 
       <Section
@@ -71,27 +71,55 @@ function TypographyPage() {
       </Section>
 
       <Section
-        title="Font stacks"
-        description="The host application decides which fonts to load. Orkest UI falls back to the platform UI stack."
+        title="Font families"
+        description="Inter carries UI text, Plus Jakarta Sans is an optional display face for large headings, and JetBrains Mono is reserved for code. CJK glyphs fall back to Noto Sans."
       >
         <div className={styles.demoGrid}>
           <div className={styles.panel}>
-            <p className={styles.panelEyebrow}>Sans</p>
+            <p className={styles.panelEyebrow}>Sans · Inter</p>
             <Text size="lg" weight="medium">
               The quick brown fox jumps over the lazy dog.
             </Text>
+            <p className={styles.note}>
+              <Text size="md" tone="muted">
+                统一字体，清晰克制。
+              </Text>
+            </p>
             <p className={styles.note}>
               <code className={styles.tokenName}>--ok-font-sans</code>
             </p>
           </div>
           <div className={styles.panel}>
-            <p className={styles.panelEyebrow}>Mono</p>
-            <p className={styles.mono}>const ui = &quot;orkest&quot;;</p>
+            <p className={styles.panelEyebrow}>Display · Plus Jakarta Sans</p>
+            <Text
+              font="display"
+              size="xl"
+              weight="semibold"
+              style={{
+                fontSize: 'var(--ok-font-size-4xl)',
+                lineHeight: 'var(--ok-line-height-tight)',
+              }}
+            >
+              Build with clarity.
+            </Text>
+            <p className={styles.note}>
+              <code className={styles.tokenName}>--ok-font-display</code>
+            </p>
+          </div>
+          <div className={styles.panel}>
+            <p className={styles.panelEyebrow}>Mono · JetBrains Mono</p>
+            <Text font="mono" size="md">
+              const ui = &quot;orkest&quot;;
+            </Text>
             <p className={styles.note}>
               <code className={styles.tokenName}>--ok-font-mono</code>
             </p>
           </div>
         </div>
+        <p className={styles.note}>
+          The host application loads the font files. Orkest UI only defines the family stacks and
+          the Noto Sans CJK fallback.
+        </p>
       </Section>
     </Page>
   );

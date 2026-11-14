@@ -29,7 +29,7 @@
 
 .title {
   margin: 0 0 var(--ok-space-4);
-  font-family: var(--ok-font-sans);
+  font-family: var(--ok-font-display);
   font-size: clamp(var(--ok-font-size-3xl), 5vw, var(--ok-font-size-4xl));
   font-weight: var(--ok-font-weight-semibold);
   letter-spacing: var(--ok-letter-spacing-tighter);
@@ -138,12 +138,6 @@
   font-weight: var(--ok-font-weight-semibold);
   letter-spacing: var(--ok-letter-spacing-wide);
   text-transform: uppercase;
-}
-
-.mono {
-  color: var(--ui-foreground);
-  font-family: var(--ok-font-mono);
-  font-size: var(--ok-font-size-sm);
 }
 
 .layoutRow {

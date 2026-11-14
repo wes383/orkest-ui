@@ -77,13 +77,24 @@
   --ok-color-red-900: #331414;
 
   /* Typography */
+  /*
+   * Inter covers UI text, Plus Jakarta Sans is an optional display face for
+   * large headings, and JetBrains Mono covers code. CJK glyphs fall back to
+   * Noto Sans before any generic family.
+   */
+  --ok-font-cjk:
+    "Noto Sans", "Noto Sans CJK SC", "Noto Sans SC", "Noto Sans TC",
+    "Noto Sans JP", "Noto Sans KR";
   --ok-font-sans:
-    "Inter", "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Inter", "Inter Variable", var(--ok-font-cjk), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ok-font-display:
+    "Plus Jakarta Sans", "Plus Jakarta Sans Variable", "Inter", "Inter Variable",
+    var(--ok-font-cjk), ui-sans-serif, system-ui, sans-serif;
   --ok-font-mono:
-    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
-    monospace;
+    "JetBrains Mono", "JetBrains Mono Variable", var(--ok-font-cjk), ui-monospace,
+    SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --ok-font-size-2xs: 0.75rem; /* 12px */
   --ok-font-size-xs: 0.8125rem; /* 13px */

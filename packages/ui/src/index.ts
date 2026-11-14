@@ -17,4 +17,12 @@ export type {
 } from './primitives/stack';
 
 export { Text } from './primitives/text';
-export type { TextAlign, TextOwnProps, TextProps, TextSize, TextTone, TextWeight } from './primitives/text';
+export type {
+  TextAlign,
+  TextFont,
+  TextOwnProps,
+  TextProps,
+  TextSize,
+  TextTone,
+  TextWeight,
+} from './primitives/text';
