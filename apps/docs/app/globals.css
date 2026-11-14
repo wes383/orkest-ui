@@ -1062,7 +1062,7 @@ kbd {
 
 .toc {
   position: sticky;
-  top: calc(var(--docs-header-height) + 2rem);
+  top: calc(var(--docs-header-height) + 3rem);
   display: flex;
   flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height) - 4rem);
