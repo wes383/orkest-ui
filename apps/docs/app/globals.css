@@ -523,7 +523,8 @@ kbd {
   color: var(--ui-accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-underline-offset: 5px;
+  text-decoration-skip-ink: none;
 }
 
 .prose a:hover {
