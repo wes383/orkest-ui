@@ -180,12 +180,13 @@
 .textareaField {
   height: auto;
   align-items: stretch;
-  padding-top: var(--field-padding-y);
-  padding-bottom: var(--field-padding-y);
+  padding: 0;
 }
 
 .textarea {
   height: auto;
+  padding: var(--field-padding-y) var(--field-padding-x);
+  box-sizing: border-box;
   resize: vertical;
 }
 
