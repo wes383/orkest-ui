@@ -1,5 +1,8 @@
 import './styles/index.css';
 
+export { Badge } from './components/badge';
+export type { BadgeProps, BadgeShape, BadgeSize, BadgeVariant } from './components/badge';
+
 export { Box } from './primitives/box';
 export type { BoxProps } from './primitives/box';
 
