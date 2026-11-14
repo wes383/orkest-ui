@@ -249,6 +249,11 @@ kbd {
   color: var(--ui-foreground);
 }
 
+.search-trigger:focus-visible {
+  background: var(--ui-secondary);
+  outline: none;
+}
+
 .search-shortcut {
   display: inline-flex;
   padding: 1px 5px;
