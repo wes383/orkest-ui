@@ -12,6 +12,14 @@ export type { IconProps, IconSize, IconTone } from './primitives/icon';
 export { IconButton } from './components/icon-button';
 export type { IconButtonProps } from './components/icon-button';
 
+export { Input, Textarea } from './components/input';
+export type {
+  InputProps,
+  InputSize,
+  TextareaProps,
+  TextareaSize,
+} from './components/input';
+
 export { Stack } from './primitives/stack';
 export type {
   StackAlign,

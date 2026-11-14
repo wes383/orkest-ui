@@ -1,0 +1,140 @@
+.field {
+  --field-height: var(--ok-control-height-md);
+  --field-padding-x: var(--ok-control-padding-x-md);
+  --field-padding-y: var(--ok-space-2);
+  --field-radius: var(--ok-radius-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  width: 100%;
+  height: var(--field-height);
+  padding: 0 var(--field-padding-x);
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--field-radius);
+  background: var(--ui-surface);
+  box-sizing: border-box;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.field:focus-within {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.field[data-size="sm"] {
+  --field-height: var(--ok-control-height-sm);
+  --field-padding-x: var(--ok-control-padding-x-sm);
+  --field-padding-y: var(--ok-space-1);
+  --field-radius: var(--ok-radius-lg);
+  font-size: var(--ok-font-size-xs);
+}
+
+.field[data-size="md"] {
+  --field-height: var(--ok-control-height-md);
+  --field-padding-x: var(--ok-control-padding-x-md);
+  --field-padding-y: var(--ok-space-2);
+  --field-radius: var(--ok-radius-xl);
+  font-size: var(--ok-font-size-sm);
+}
+
+.field[data-size="lg"] {
+  --field-height: var(--ok-control-height-lg);
+  --field-padding-x: var(--ok-control-padding-x-lg);
+  --field-padding-y: var(--ok-space-3);
+  --field-radius: var(--ok-radius-xl);
+  font-size: var(--ok-font-size-md);
+}
+
+.field[data-size="xl"] {
+  --field-height: var(--ok-control-height-xl);
+  --field-padding-x: var(--ok-control-padding-x-xl);
+  --field-padding-y: var(--ok-space-3);
+  --field-radius: var(--ok-radius-2xl);
+  font-size: var(--ok-font-size-lg);
+}
+
+.field:hover:not([data-disabled="true"]):not([data-read-only="true"]):not(
+    [data-invalid="true"]
+  ) {
+  border-color: var(--ui-border-strong);
+}
+
+.field[data-invalid="true"] {
+  border-color: var(--ui-danger);
+}
+
+.field[data-invalid="true"]:focus-within {
+  outline-color: var(--ui-danger);
+}
+
+.field[data-disabled="true"] {
+  background: var(--ui-disabled-surface);
+  border-color: var(--ui-border-subtle);
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.field[data-read-only="true"] {
+  background: var(--ui-surface-sunken);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--ui-subtle-foreground);
+  opacity: 1;
+}
+
+.field[data-disabled="true"] .input {
+  cursor: not-allowed;
+}
+
+.field[data-disabled="true"] .input::placeholder {
+  color: var(--ui-disabled-foreground);
+}
+
+.iconSlot {
+  display: inline-flex;
+  flex: none;
+  color: var(--ui-muted-foreground);
+}
+
+.field[data-disabled="true"] .iconSlot {
+  color: var(--ui-disabled-foreground);
+}
+
+.textareaField {
+  height: auto;
+  align-items: stretch;
+  padding-top: var(--field-padding-y);
+  padding-bottom: var(--field-padding-y);
+}
+
+.textarea {
+  height: auto;
+  resize: vertical;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field {
+    transition: none;
+  }
+}
