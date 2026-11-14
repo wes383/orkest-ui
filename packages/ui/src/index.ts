@@ -26,9 +26,34 @@ export { Text } from './primitives/text';
 export type {
   TextAlign,
   TextFont,
+  TextLetterSpacing,
+  TextLineHeight,
   TextOwnProps,
   TextProps,
   TextSize,
   TextTone,
   TextWeight,
 } from './primitives/text';
+
+export {
+  Caption,
+  Code,
+  Heading,
+  Label,
+  Link,
+  Paragraph,
+  Small,
+  Strong,
+} from './components/typography';
+export type {
+  CaptionProps,
+  CodeProps,
+  HeadingLevel,
+  HeadingOwnProps,
+  HeadingProps,
+  LabelProps,
+  LinkProps,
+  ParagraphProps,
+  SmallProps,
+  StrongProps,
+} from './components/typography';

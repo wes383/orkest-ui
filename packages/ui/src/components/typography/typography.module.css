@@ -1,0 +1,10 @@
+.code {
+  padding: 0.12em 0.34em;
+  border-radius: var(--ok-radius-sm);
+  background: var(--ui-surface-sunken);
+}
+
+/* Doubled class keeps the hover color above the Text tone rule in the cascade. */
+.link.link:hover {
+  color: var(--ui-accent-hover);
+}
