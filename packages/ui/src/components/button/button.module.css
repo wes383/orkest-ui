@@ -1,7 +1,7 @@
 .button {
   --button-height: var(--ok-control-height-md);
   --button-padding-x: var(--ok-control-padding-x-md);
-  --button-radius: var(--ok-radius-lg);
+  --button-radius: var(--ok-radius-xl);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -33,28 +33,28 @@
 .button[data-size="sm"] {
   --button-height: var(--ok-control-height-sm);
   --button-padding-x: var(--ok-control-padding-x-sm);
-  --button-radius: var(--ok-radius-md);
+  --button-radius: var(--ok-radius-lg);
   font-size: var(--ok-font-size-xs);
 }
 
 .button[data-size="md"] {
   --button-height: var(--ok-control-height-md);
   --button-padding-x: var(--ok-control-padding-x-md);
-  --button-radius: var(--ok-radius-lg);
+  --button-radius: var(--ok-radius-xl);
   font-size: var(--ok-font-size-sm);
 }
 
 .button[data-size="lg"] {
   --button-height: var(--ok-control-height-lg);
   --button-padding-x: var(--ok-control-padding-x-lg);
-  --button-radius: var(--ok-radius-lg);
+  --button-radius: var(--ok-radius-xl);
   font-size: var(--ok-font-size-md);
 }
 
 .button[data-size="xl"] {
   --button-height: var(--ok-control-height-xl);
   --button-padding-x: var(--ok-control-padding-x-xl);
-  --button-radius: var(--ok-radius-xl);
+  --button-radius: var(--ok-radius-2xl);
   font-size: var(--ok-font-size-lg);
 }
 
