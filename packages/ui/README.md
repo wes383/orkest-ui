@@ -54,10 +54,11 @@ export function Example() {
 
 ## Client components
 
-`Input` and `Textarea` are exported from `@orkest/ui/client` because they use client-side state:
+`Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Input`, and `Textarea` are exported from
+`@orkest/ui/client` because they use client-side state:
 
 ```tsx
-import { Input, Textarea } from '@orkest/ui/client';
+import { Avatar, AvatarFallback, Input, Textarea } from '@orkest/ui/client';
 ```
 
 Render them inside a Client Component (a module with `'use client'`).

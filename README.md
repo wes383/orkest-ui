@@ -62,10 +62,10 @@ import '@orkest/ui/style.css';
 Theme state belongs to the host application. Set `data-orkest-theme="light"` or `"dark"` on the
 document root or a container; without the attribute the stylesheet follows `prefers-color-scheme`.
 
-Client-only form controls are exported from `@orkest/ui/client`:
+Client-only components are exported from `@orkest/ui/client`:
 
 ```tsx
-import { Input, Textarea } from '@orkest/ui/client';
+import { Avatar, AvatarFallback, Input, Textarea } from '@orkest/ui/client';
 ```
 
 They use client-side state and must render inside a Client Component.
