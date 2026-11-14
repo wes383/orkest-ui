@@ -69,11 +69,18 @@ const semanticTokenGroups = [
     tokens: [
       '--ui-success',
       '--ui-success-surface',
+      '--ui-success-surface-foreground',
       '--ui-warning',
       '--ui-warning-surface',
+      '--ui-warning-surface-foreground',
       '--ui-danger',
       '--ui-danger-surface',
+      '--ui-danger-surface-foreground',
     ],
+  },
+  {
+    title: 'Selection',
+    tokens: ['--ui-selection-background'],
   },
 ] as const;
 

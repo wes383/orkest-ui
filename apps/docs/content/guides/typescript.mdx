@@ -85,4 +85,4 @@ pnpm typecheck
 ```
 
 The UI package uses `tsc --noEmit`, and the documentation app builds the UI package before running
-its own type check because it consumes the published types from `packages/ui/dist`.
+its own type check because it consumes the built declarations from `packages/ui/dist`.
