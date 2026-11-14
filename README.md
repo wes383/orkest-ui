@@ -15,8 +15,8 @@ The repository is a pnpm monorepo containing the library and its custom document
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
 - Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
 
-Core components, complex interactions, and the first public release are still in progress.
-`@orkest/ui` is not published to a registry yet.
+Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
+registry yet.
 
 ## Workspace
 
@@ -41,7 +41,7 @@ intentionally not tracked.
 pnpm install
 pnpm build       # build @orkest/ui
 pnpm test        # run the library test suite
-pnpm typecheck   # type-check the library and the documentation site
+pnpm typecheck   # type-check the library, the documentation site, and the playground
 pnpm docs:dev    # build the library, then start the documentation site
 pnpm docs:build  # build the library, then statically export the documentation site
 pnpm playground:dev  # build the library, then start the consumer playground on port 3001
