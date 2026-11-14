@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 
 import type { DocHeading } from '@/lib/docs-types';
 
+import { useScrollOverflow } from './use-scroll-overflow';
+
 export function TableOfContents({ headings }: { headings: DocHeading[] }) {
   const [activeId, setActiveId] = useState<string | null>(headings[0]?.id ?? null);
+  const { ref: scrollRef, overflowing } = useScrollOverflow<HTMLDivElement>(headings);
 
   useEffect(() => {
     const elements = headings
@@ -45,19 +48,27 @@ export function TableOfContents({ headings }: { headings: DocHeading[] }) {
   return (
     <nav className="toc" aria-label="On this page">
       <p className="toc-title">On this page</p>
-      <ul className="toc-list">
-        {headings.map((heading) => (
-          <li className={heading.level === 3 ? 'toc-item toc-item-nested' : 'toc-item'} key={heading.id}>
-            <a
-              className="toc-link"
-              href={`#${heading.id}`}
-              aria-current={activeId === heading.id ? 'location' : undefined}
+      <div
+        ref={scrollRef}
+        className={overflowing ? 'toc-scroll toc-scrollable' : 'toc-scroll'}
+      >
+        <ul className="toc-list">
+          {headings.map((heading) => (
+            <li
+              className={heading.level === 3 ? 'toc-item toc-item-nested' : 'toc-item'}
+              key={heading.id}
             >
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+              <a
+                className="toc-link"
+                href={`#${heading.id}`}
+                aria-current={activeId === heading.id ? 'location' : undefined}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 }
