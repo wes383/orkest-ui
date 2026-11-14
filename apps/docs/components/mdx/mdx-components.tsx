@@ -99,9 +99,7 @@ function MdxPre({ children, ...props }: ComponentPropsWithoutRef<'pre'>) {
 
   return (
     <div className="code-block">
-      <div className="code-block-header code-block-header-actions">
-        <CopyButton code={code} />
-      </div>
+      <CopyButton code={code} />
       <div className="code-block-content">
         <pre {...props}>{children}</pre>
       </div>

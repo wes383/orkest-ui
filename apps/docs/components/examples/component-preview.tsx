@@ -8,13 +8,11 @@ export function ComponentPreview({
   code,
   title = 'Example',
   language = 'tsx',
-  filename,
 }: {
   children: ReactNode;
   code: string;
   title?: string;
   language?: BundledLanguage;
-  filename?: string;
 }) {
   return (
     <>
@@ -28,7 +26,7 @@ export function ComponentPreview({
         </div>
         <div className="preview-canvas">{children}</div>
       </div>
-      <CodeBlock code={code} language={language} filename={filename} />
+      <CodeBlock code={code} language={language} />
     </>
   );
 }

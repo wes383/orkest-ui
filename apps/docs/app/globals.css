@@ -686,6 +686,7 @@ kbd {
 /* Code blocks */
 
 .code-block {
+  position: relative;
   margin: 1.5rem 0;
   border-radius: 0.875rem;
   background: var(--ui-surface-sunken);
@@ -693,35 +694,20 @@ kbd {
   overflow: hidden;
 }
 
-.code-block-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--ok-space-3);
-  padding: 10px 14px;
-  background: var(--ui-surface);
-}
-
-.code-block-header-actions {
-  justify-content: flex-end;
-}
-
-.code-block-label {
-  color: var(--ui-muted-foreground);
-  font-size: 11px;
-  letter-spacing: 0;
-}
-
 .copy-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
   border: 0;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-secondary);
+  border-radius: var(--ok-radius-md);
+  background: var(--ui-surface);
   color: var(--ui-muted-foreground);
-  font-size: 10px;
   cursor: pointer;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),

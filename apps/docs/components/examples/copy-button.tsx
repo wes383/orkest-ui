@@ -31,7 +31,6 @@ export function CopyButton({ code }: { code: string }) {
     <>
       <button type="button" className="copy-button" onClick={copyCode} aria-label="Copy code">
         <Icon icon={state === 'copied' ? Check : Copy} size="sm" />
-        <span aria-hidden="true">{state === 'copied' ? 'Copied' : state === 'error' ? 'Failed' : 'Copy'}</span>
       </button>
       <span className="sr-only" role="status" aria-live="polite">
         {state === 'copied'
