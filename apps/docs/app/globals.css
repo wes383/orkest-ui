@@ -886,6 +886,12 @@ kbd {
   margin: 1.5rem 0;
 }
 
+/* Token names are short; keep them on one line so the name column keeps its width. */
+.token-table .table-wrap tbody th code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
 .token-table-title {
   margin: 0 0 var(--ok-space-2);
   color: var(--ui-muted-foreground);
