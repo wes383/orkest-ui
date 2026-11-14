@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Orkest UI — primitive design tokens
+   --------------------------------------------------------------------------
+   Raw values only. Components must consume semantic tokens from themes.css
+   instead of referencing these scales directly.
+   ========================================================================== */
+
+:root {
+  /* Color — neutral */
+  --ok-color-white: #ffffff;
+  --ok-color-black: #000000;
+  --ok-color-neutral-0: #ffffff;
+  --ok-color-neutral-50: #fafafa;
+  --ok-color-neutral-100: #f4f4f5;
+  --ok-color-neutral-150: #ececee;
+  --ok-color-neutral-200: #e4e4e7;
+  --ok-color-neutral-300: #d1d1d6;
+  --ok-color-neutral-400: #a1a1aa;
+  --ok-color-neutral-450: #8d8d95;
+  --ok-color-neutral-500: #71717a;
+  --ok-color-neutral-600: #52525b;
+  --ok-color-neutral-700: #3f3f46;
+  --ok-color-neutral-800: #27272a;
+  --ok-color-neutral-850: #1f1f23;
+  --ok-color-neutral-900: #18181b;
+  --ok-color-neutral-925: #111113;
+  --ok-color-neutral-950: #09090b;
+  --ok-color-neutral-975: #050506;
+
+  /* Color — accent (muted slate blue, used sparingly) */
+  --ok-color-accent-50: #f3f6f8;
+  --ok-color-accent-100: #e7edf1;
+  --ok-color-accent-200: #cfdce4;
+  --ok-color-accent-300: #aec3ce;
+  --ok-color-accent-400: #86a1b1;
+  --ok-color-accent-500: #648292;
+  --ok-color-accent-600: #4c6675;
+  --ok-color-accent-700: #3f545f;
+  --ok-color-accent-800: #35454e;
+  --ok-color-accent-900: #2e3b42;
+  --ok-color-accent-950: #171f24;
+
+  /* Color — success */
+  --ok-color-green-50: #f2f8f5;
+  --ok-color-green-100: #e6f1eb;
+  --ok-color-green-200: #cbe3d6;
+  --ok-color-green-300: #a9d3bd;
+  --ok-color-green-400: #7fb99c;
+  --ok-color-green-500: #5b9c7c;
+  --ok-color-green-600: #3f7a5f;
+  --ok-color-green-700: #2f5c47;
+  --ok-color-green-800: #244737;
+  --ok-color-green-900: #14231b;
+
+  /* Color — warning */
+  --ok-color-amber-50: #fbf7ee;
+  --ok-color-amber-100: #f6efdf;
+  --ok-color-amber-200: #eadbb9;
+  --ok-color-amber-300: #dcc38d;
+  --ok-color-amber-400: #c7a45e;
+  --ok-color-amber-500: #a9863c;
+  --ok-color-amber-600: #8a6d2f;
+  --ok-color-amber-700: #6b5424;
+  --ok-color-amber-800: #503f1c;
+  --ok-color-amber-900: #2a2110;
+
+  /* Color — danger */
+  --ok-color-red-50: #fcf5f5;
+  --ok-color-red-100: #f9ecec;
+  --ok-color-red-200: #f0d5d5;
+  --ok-color-red-300: #e6b3b3;
+  --ok-color-red-400: #d88787;
+  --ok-color-red-500: #c26565;
+  --ok-color-red-600: #a94a4a;
+  --ok-color-red-700: #8a3434;
+  --ok-color-red-800: #6b2828;
+  --ok-color-red-900: #331414;
+
+  /* Typography */
+  --ok-font-sans:
+    "Inter", "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ok-font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+
+  --ok-font-size-2xs: 0.75rem; /* 12px */
+  --ok-font-size-xs: 0.8125rem; /* 13px */
+  --ok-font-size-sm: 0.875rem; /* 14px */
+  --ok-font-size-md: 1rem; /* 16px */
+  --ok-font-size-lg: 1.125rem; /* 18px */
+  --ok-font-size-xl: 1.25rem; /* 20px */
+  --ok-font-size-2xl: 1.5rem; /* 24px */
+  --ok-font-size-3xl: 1.875rem; /* 30px */
+  --ok-font-size-4xl: 2.375rem; /* 38px */
+  --ok-font-size-5xl: 3rem; /* 48px */
+
+  --ok-font-weight-regular: 400;
+  --ok-font-weight-medium: 500;
+  --ok-font-weight-semibold: 600;
+  --ok-font-weight-bold: 700;
+
+  --ok-line-height-tight: 1.2;
+  --ok-line-height-snug: 1.35;
+  --ok-line-height-normal: 1.5;
+  --ok-line-height-relaxed: 1.65;
+
+  --ok-letter-spacing-tighter: -0.02em;
+  --ok-letter-spacing-tight: -0.011em;
+  --ok-letter-spacing-normal: 0;
+  --ok-letter-spacing-wide: 0.02em;
+
+  /* Spacing (4px base) */
+  --ok-space-0: 0;
+  --ok-space-1: 0.25rem; /* 4px */
+  --ok-space-2: 0.5rem; /* 8px */
+  --ok-space-3: 0.75rem; /* 12px */
+  --ok-space-4: 1rem; /* 16px */
+  --ok-space-5: 1.25rem; /* 20px */
+  --ok-space-6: 1.5rem; /* 24px */
+  --ok-space-8: 2rem; /* 32px */
+  --ok-space-10: 2.5rem; /* 40px */
+  --ok-space-12: 3rem; /* 48px */
+  --ok-space-16: 4rem; /* 64px */
+  --ok-space-20: 5rem; /* 80px */
+
+  /* Radius */
+  --ok-radius-none: 0;
+  --ok-radius-sm: 0.25rem; /* 4px */
+  --ok-radius-md: 0.375rem; /* 6px */
+  --ok-radius-lg: 0.5rem; /* 8px */
+  --ok-radius-xl: 0.75rem; /* 12px */
+  --ok-radius-2xl: 1rem; /* 16px */
+  --ok-radius-full: 9999px;
+
+  /* Borders */
+  --ok-border-width: 1px;
+  --ok-border-width-strong: 2px;
+
+  /* Shadows — intentionally subtle */
+  --ok-shadow-xs: 0 1px 2px 0 rgb(9 9 11 / 0.04);
+  --ok-shadow-sm:
+    0 1px 3px 0 rgb(9 9 11 / 0.06), 0 1px 2px -1px rgb(9 9 11 / 0.04);
+  --ok-shadow-md:
+    0 4px 12px -2px rgb(9 9 11 / 0.08), 0 2px 4px -2px rgb(9 9 11 / 0.04);
+  --ok-shadow-lg:
+    0 12px 32px -8px rgb(9 9 11 / 0.12), 0 4px 8px -4px rgb(9 9 11 / 0.05);
+
+  /* Control sizing */
+  --ok-control-height-sm: 1.75rem; /* 28px */
+  --ok-control-height-md: 2.25rem; /* 36px */
+  --ok-control-height-lg: 2.75rem; /* 44px */
+  --ok-control-padding-x-sm: 0.625rem; /* 10px */
+  --ok-control-padding-x-md: 0.875rem; /* 14px */
+  --ok-control-padding-x-lg: 1.125rem; /* 18px */
+
+  /* Icon sizing */
+  --ok-icon-size-sm: 1rem; /* 16px */
+  --ok-icon-size-md: 1.25rem; /* 20px */
+  --ok-icon-size-lg: 1.5rem; /* 24px */
+  --ok-icon-stroke-width: 1.75;
+
+  /* Focus */
+  --ok-focus-ring-width: 2px;
+  --ok-focus-ring-offset: 2px;
+
+  /* Layering */
+  --ok-z-dropdown: 1000;
+  --ok-z-sticky: 1100;
+  --ok-z-overlay: 1200;
+  --ok-z-modal: 1300;
+  --ok-z-popover: 1400;
+  --ok-z-toast: 1500;
+  --ok-z-tooltip: 1600;
+
+  /* Motion */
+  --ok-duration-instant: 60ms;
+  --ok-duration-fast: 120ms;
+  --ok-duration-normal: 180ms;
+  --ok-duration-slow: 280ms;
+  --ok-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ok-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --ok-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Opacity */
+  --ok-opacity-disabled: 0.45;
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.vite/
+storybook-static/
+*.tsbuildinfo
+*.tgz
+*.log
+.DS_Store
+Thumbs.db
+/Development-guide.md

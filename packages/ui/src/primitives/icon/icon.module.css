@@ -1,0 +1,21 @@
+.icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  stroke-width: var(--ok-icon-stroke-width);
+}
+
+.icon[data-size="sm"] {
+  width: var(--ok-icon-size-sm);
+  height: var(--ok-icon-size-sm);
+}
+
+.icon[data-size="md"] {
+  width: var(--ok-icon-size-md);
+  height: var(--ok-icon-size-md);
+}
+
+.icon[data-size="lg"] {
+  width: var(--ok-icon-size-lg);
+  height: var(--ok-icon-size-lg);
+}

@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Orkest UI — semantic theme tokens
+   --------------------------------------------------------------------------
+   Theme control belongs to the host application. Orkest UI only provides the
+   token mapping:
+
+   <html data-orkest-theme="light">  force light
+   <html data-orkest-theme="dark">   force dark
+   no attribute                      follow prefers-color-scheme
+
+   The attribute may also be placed on any container to theme a subtree.
+   Keep the dark mapping in the media query in sync with the explicit dark
+   block below. color-scheme is set so native controls match the theme.
+   ========================================================================== */
+
+:root,
+[data-orkest-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --ui-background: var(--ok-color-neutral-0);
+  --ui-surface: var(--ok-color-neutral-0);
+  --ui-surface-raised: var(--ok-color-neutral-0);
+  --ui-surface-sunken: var(--ok-color-neutral-50);
+  --ui-overlay: rgb(9 9 11 / 0.4);
+
+  /* Text */
+  --ui-foreground: var(--ok-color-neutral-900);
+  --ui-muted-foreground: var(--ok-color-neutral-600);
+  --ui-subtle-foreground: var(--ok-color-neutral-500);
+
+  /* Primary action — ink, not a saturated brand color */
+  --ui-primary: var(--ok-color-neutral-900);
+  --ui-primary-hover: var(--ok-color-neutral-800);
+  --ui-primary-active: var(--ok-color-neutral-950);
+  --ui-primary-foreground: var(--ok-color-white);
+
+  /* Secondary action */
+  --ui-secondary: var(--ok-color-neutral-100);
+  --ui-secondary-hover: var(--ok-color-neutral-150);
+  --ui-secondary-active: var(--ok-color-neutral-200);
+  --ui-secondary-foreground: var(--ok-color-neutral-900);
+
+  /* Accent — links, selection and subtle highlights */
+  --ui-accent: var(--ok-color-accent-600);
+  --ui-accent-hover: var(--ok-color-accent-700);
+  --ui-accent-surface: var(--ok-color-accent-50);
+  --ui-accent-surface-foreground: var(--ok-color-accent-700);
+
+  /* Borders */
+  --ui-border-subtle: var(--ok-color-neutral-150);
+  --ui-border: var(--ok-color-neutral-200);
+  --ui-border-strong: var(--ok-color-neutral-300);
+
+  /* Focus */
+  --ui-focus-ring: var(--ok-color-accent-500);
+
+  /* Status */
+  --ui-success: var(--ok-color-green-600);
+  --ui-success-surface: var(--ok-color-green-50);
+  --ui-success-surface-foreground: var(--ok-color-green-700);
+
+  --ui-warning: var(--ok-color-amber-600);
+  --ui-warning-surface: var(--ok-color-amber-50);
+  --ui-warning-surface-foreground: var(--ok-color-amber-700);
+
+  --ui-danger: var(--ok-color-red-600);
+  --ui-danger-surface: var(--ok-color-red-50);
+  --ui-danger-surface-foreground: var(--ok-color-red-700);
+
+  /* Selection */
+  --ui-selection-background: var(--ok-color-accent-200);
+}
+
+[data-orkest-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --ui-background: var(--ok-color-neutral-950);
+  --ui-surface: var(--ok-color-neutral-925);
+  --ui-surface-raised: var(--ok-color-neutral-900);
+  --ui-surface-sunken: var(--ok-color-neutral-975);
+  --ui-overlay: rgb(0 0 0 / 0.6);
+
+  /* Text */
+  --ui-foreground: var(--ok-color-neutral-100);
+  --ui-muted-foreground: var(--ok-color-neutral-400);
+  --ui-subtle-foreground: var(--ok-color-neutral-450);
+
+  /* Primary action */
+  --ui-primary: var(--ok-color-neutral-100);
+  --ui-primary-hover: var(--ok-color-neutral-0);
+  --ui-primary-active: var(--ok-color-neutral-300);
+  --ui-primary-foreground: var(--ok-color-neutral-900);
+
+  /* Secondary action */
+  --ui-secondary: var(--ok-color-neutral-850);
+  --ui-secondary-hover: var(--ok-color-neutral-800);
+  --ui-secondary-active: var(--ok-color-neutral-700);
+  --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+  /* Accent */
+  --ui-accent: var(--ok-color-accent-300);
+  --ui-accent-hover: var(--ok-color-accent-200);
+  --ui-accent-surface: var(--ok-color-accent-950);
+  --ui-accent-surface-foreground: var(--ok-color-accent-200);
+
+  /* Borders */
+  --ui-border-subtle: var(--ok-color-neutral-900);
+  --ui-border: var(--ok-color-neutral-850);
+  --ui-border-strong: var(--ok-color-neutral-700);
+
+  /* Focus */
+  --ui-focus-ring: var(--ok-color-accent-400);
+
+  /* Status */
+  --ui-success: var(--ok-color-green-300);
+  --ui-success-surface: var(--ok-color-green-900);
+  --ui-success-surface-foreground: var(--ok-color-green-200);
+
+  --ui-warning: var(--ok-color-amber-300);
+  --ui-warning-surface: var(--ok-color-amber-900);
+  --ui-warning-surface-foreground: var(--ok-color-amber-200);
+
+  --ui-danger: var(--ok-color-red-300);
+  --ui-danger-surface: var(--ok-color-red-900);
+  --ui-danger-surface-foreground: var(--ok-color-red-200);
+
+  /* Selection */
+  --ui-selection-background: var(--ok-color-accent-700);
+}
+
+/* System preference applies only when the host has not forced a theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-orkest-theme="light"]) {
+    color-scheme: dark;
+
+    /* Surfaces */
+    --ui-background: var(--ok-color-neutral-950);
+    --ui-surface: var(--ok-color-neutral-925);
+    --ui-surface-raised: var(--ok-color-neutral-900);
+    --ui-surface-sunken: var(--ok-color-neutral-975);
+    --ui-overlay: rgb(0 0 0 / 0.6);
+
+    /* Text */
+    --ui-foreground: var(--ok-color-neutral-100);
+    --ui-muted-foreground: var(--ok-color-neutral-400);
+    --ui-subtle-foreground: var(--ok-color-neutral-450);
+
+    /* Primary action */
+    --ui-primary: var(--ok-color-neutral-100);
+    --ui-primary-hover: var(--ok-color-neutral-0);
+    --ui-primary-active: var(--ok-color-neutral-300);
+    --ui-primary-foreground: var(--ok-color-neutral-900);
+
+    /* Secondary action */
+    --ui-secondary: var(--ok-color-neutral-850);
+    --ui-secondary-hover: var(--ok-color-neutral-800);
+    --ui-secondary-active: var(--ok-color-neutral-700);
+    --ui-secondary-foreground: var(--ok-color-neutral-100);
+
+    /* Accent */
+    --ui-accent: var(--ok-color-accent-300);
+    --ui-accent-hover: var(--ok-color-accent-200);
+    --ui-accent-surface: var(--ok-color-accent-950);
+    --ui-accent-surface-foreground: var(--ok-color-accent-200);
+
+    /* Borders */
+    --ui-border-subtle: var(--ok-color-neutral-900);
+    --ui-border: var(--ok-color-neutral-850);
+    --ui-border-strong: var(--ok-color-neutral-700);
+
+    /* Focus */
+    --ui-focus-ring: var(--ok-color-accent-400);
+
+    /* Status */
+    --ui-success: var(--ok-color-green-300);
+    --ui-success-surface: var(--ok-color-green-900);
+    --ui-success-surface-foreground: var(--ok-color-green-200);
+
+    --ui-warning: var(--ok-color-amber-300);
+    --ui-warning-surface: var(--ok-color-amber-900);
+    --ui-warning-surface-foreground: var(--ok-color-amber-200);
+
+    --ui-danger: var(--ok-color-red-300);
+    --ui-danger-surface: var(--ok-color-red-900);
+    --ui-danger-surface-foreground: var(--ok-color-red-200);
+
+    /* Selection */
+    --ui-selection-background: var(--ok-color-accent-700);
+  }
+}

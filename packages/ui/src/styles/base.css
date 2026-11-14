@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Orkest UI — base behavior
+   --------------------------------------------------------------------------
+   Only library-owned tokens are adjusted here. No global element styles are
+   applied, so consuming applications keep full control of their own CSS.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ok-duration-instant: 0ms;
+    --ok-duration-fast: 0ms;
+    --ok-duration-normal: 0ms;
+    --ok-duration-slow: 0ms;
+  }
+}
