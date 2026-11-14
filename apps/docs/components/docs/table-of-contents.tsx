@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 import type { DocHeading } from '@/lib/docs-types';
 
@@ -54,6 +54,19 @@ export function TableOfContents({ headings }: { headings: DocHeading[] }) {
     return null;
   }
 
+  function handleLinkClick(event: MouseEvent<HTMLAnchorElement>, id: string) {
+    const target = document.getElementById(id);
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    window.history.pushState(null, '', `#${id}`);
+    setActiveId(id);
+  }
+
   return (
     <nav className="toc" aria-label="On this page">
       <p className="toc-title">On this page</p>
@@ -69,6 +82,7 @@ export function TableOfContents({ headings }: { headings: DocHeading[] }) {
                   className="toc-link"
                   href={`#${heading.id}`}
                   aria-current={activeId === heading.id ? 'location' : undefined}
+                  onClick={(event) => handleLinkClick(event, heading.id)}
                 >
                   {heading.text}
                 </a>
