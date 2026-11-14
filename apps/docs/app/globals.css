@@ -7,13 +7,11 @@
 
   /* Docs surfaces need a clearer step away from the white page than the library default. */
   --ui-surface-sunken: var(--ok-color-neutral-100);
-  --docs-table-surface: var(--ok-color-neutral-200);
 }
 
 :root[data-orkest-theme='dark'] {
   /* A darker step is invisible against the near-black page, so raise it instead. */
   --ui-surface-sunken: var(--ok-color-neutral-900);
-  --docs-table-surface: var(--ok-color-neutral-800);
 }
 
 *,
@@ -648,15 +646,19 @@ kbd {
 }
 
 .table-wrap thead th {
-  background: var(--docs-table-surface);
+  background: var(--ui-secondary-hover);
   color: var(--ui-muted-foreground);
   font-size: 11px;
   font-weight: var(--ok-font-weight-semibold);
   white-space: nowrap;
 }
 
+.table-wrap tbody tr:nth-child(odd) {
+  background: var(--ui-surface-sunken);
+}
+
 .table-wrap tbody tr:nth-child(even) {
-  background: var(--docs-table-surface);
+  background: var(--ui-secondary-hover);
 }
 
 .table-wrap tbody tr:last-child th,
