@@ -35,6 +35,15 @@ component APIs, documentation, tests, and release process.
     manual verification as successful unless they were actually run and
     passed.
 
+## Code Comments
+
+- Write code comments in English.
+- Add comments only when they explain non-obvious intent, constraints,
+  trade-offs, or accessibility and browser behavior.
+- Avoid comments that restate the code, repeat type information, or add
+  no value.
+- Do not leave commented-out code.
+
 ## Before Starting a Task
 
 Before implementing a feature or fixing a bug:
@@ -367,6 +376,16 @@ If a command fails:
 
 Before making broad changes, inspect the working tree and preserve
 existing user modifications.
+
+## Commit Conventions
+
+- Commit after each completed change.
+- Write the commit subject as one short English sentence in
+  Conventional Commits format, for example
+  `feat(button): add loading state` or
+  `fix(dialog): restore focus on close`.
+- Keep each commit scoped to a single logical change.
+- Do not include generated artifacts or unrelated changes in a commit.
 
 ## Definition of Done
 
