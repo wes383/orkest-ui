@@ -267,7 +267,7 @@ kbd {
   align-items: start;
   max-width: var(--docs-shell-width);
   margin: 0 auto;
-  background: var(--ui-background);
+  background: var(--ui-surface-sunken);
 }
 
 .docs-sidebar {
@@ -297,12 +297,12 @@ kbd {
 
 .docs-sidebar::before {
   top: var(--docs-sidebar-pad-top);
-  background: linear-gradient(to bottom, var(--ui-background), transparent);
+  background: linear-gradient(to bottom, var(--ui-surface-sunken), transparent);
 }
 
 .docs-sidebar::after {
   bottom: var(--docs-sidebar-pad-bottom);
-  background: linear-gradient(to top, var(--ui-background), transparent);
+  background: linear-gradient(to top, var(--ui-surface-sunken), transparent);
 }
 
 .docs-sidebar-fade-top::before,
@@ -327,6 +327,7 @@ kbd {
 .docs-main {
   min-width: 0;
   padding: 3rem 3.5rem 5rem;
+  border-left: var(--ok-border-width) solid var(--ui-border);
   background: var(--ui-background);
 }
 
@@ -362,15 +363,19 @@ kbd {
   line-height: 1.4;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    box-shadow var(--ok-duration-fast) var(--ok-ease-standard),
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
 .docs-nav-link:hover {
-  background: var(--ui-secondary);
+  background: var(--ui-background);
+  box-shadow: var(--ok-shadow-xs);
   color: var(--ui-foreground);
 }
 
 .docs-nav-link[aria-current='page'] {
+  background: var(--ui-background);
+  box-shadow: var(--ok-shadow-xs);
   color: var(--ui-foreground);
   font-weight: var(--ok-font-weight-medium);
 }
@@ -2083,6 +2088,7 @@ kbd {
 
   .docs-shell {
     grid-template-columns: minmax(0, 1fr);
+    background: var(--ui-background);
   }
 
   .docs-sidebar {
@@ -2091,6 +2097,7 @@ kbd {
 
   .docs-main {
     padding: 2rem 1.5rem 4rem;
+    border-left: 0;
   }
 }
 
