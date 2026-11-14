@@ -169,6 +169,11 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
                         href={result.href}
                         className="search-result-link"
                         data-search-result
+                        onMouseMove={(event) => {
+                          if (document.activeElement !== event.currentTarget) {
+                            event.currentTarget.focus({ preventScroll: true });
+                          }
+                        }}
                         onClick={closeDialog}
                       >
                         <span className="search-result-section">{result.sectionLabel}</span>
