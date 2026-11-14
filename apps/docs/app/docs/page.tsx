@@ -35,10 +35,8 @@ export default function DocsIndexPage() {
         <section className="docs-index-section" id={group.id} key={group.id}>
           <div className="docs-index-section-header">
             <span className="docs-index-number">{String(index + 1).padStart(2, '0')}</span>
-            <div>
-              <h2 className="docs-index-title">{group.label}</h2>
-              <p className="docs-index-description">{group.description}</p>
-            </div>
+            <h2 className="docs-index-title">{group.label}</h2>
+            <p className="docs-index-description">{group.description}</p>
           </div>
           <div className="docs-index-grid">
             {group.items.map((item) => (
