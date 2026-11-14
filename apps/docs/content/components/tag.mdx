@@ -5,12 +5,11 @@ section: components
 order: 11
 ---
 
-`Tag` is a chip for removable or clickable labels. It shares variants, sizes, shapes, icons, dots,
-and custom colors with [Badge](/docs/components/badge/), but owns the interactive and remove
-behavior.
+`Tag` is a chip for removable or clickable labels. It shares variants, sizes, shapes, icons, and
+custom colors with [Badge](/docs/components/badge/), but owns the interactive and remove behavior.
+Badge remains the choice for read-only status, status dots, and counts.
 
-Use `Badge` for static status, counts, and metadata. Use `Tag` when the label can be removed or
-selected.
+Use `Badge` when the label is informational. Use `Tag` when the label can be removed or selected.
 
 ## Live preview
 
@@ -91,10 +90,10 @@ export function Example() {
   </Stack>
 </ComponentPreview>
 
-## Icons and dots
+## Icons
 
 <ComponentPreview
-  title="Icons and status dots"
+  title="Icons"
   code={`import { Stack, Tag } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
@@ -107,9 +106,6 @@ export function Example() {
       <Tag variant="success" rightIcon={Check}>
         Done
       </Tag>
-      <Tag variant="success" dot>
-        Online
-      </Tag>
     </Stack>
   );
 }`}
@@ -120,9 +116,6 @@ export function Example() {
     </Tag>
     <Tag variant="success" rightIcon={Check}>
       {'Done'}
-    </Tag>
-    <Tag variant="success" dot>
-      {'Online'}
     </Tag>
   </Stack>
 </ComponentPreview>
@@ -225,12 +218,6 @@ export function Example() {
       name: 'rightIcon',
       type: 'LucideIcon',
       description: 'Decorative icon rendered after the content.',
-    },
-    {
-      name: 'dot',
-      type: 'boolean',
-      default: 'false',
-      description: 'Shows a leading status dot.',
     },
     {
       name: 'color',

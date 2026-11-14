@@ -23,8 +23,6 @@ export interface TagProps extends HTMLAttributes<HTMLElement> {
   leftIcon?: LucideIcon;
   /** Decorative Lucide icon rendered after the content. */
   rightIcon?: LucideIcon;
-  /** Shows a leading status dot. */
-  dot?: boolean;
   /** Tints the tag with a custom CSS color. */
   color?: string;
   /** Shows a remove action. Removable tags render as a span, not a button. */
@@ -56,7 +54,6 @@ export const Tag = forwardRef<HTMLSpanElement | HTMLButtonElement, TagProps>(fun
     shape = 'pill',
     leftIcon,
     rightIcon,
-    dot = false,
     color,
     removable = false,
     onRemove,
@@ -78,7 +75,6 @@ export const Tag = forwardRef<HTMLSpanElement | HTMLButtonElement, TagProps>(fun
 
   const content = (
     <>
-      {dot ? <span className={styles.dot} data-dot="true" aria-hidden="true" /> : null}
       {leftIcon ? <Icon icon={leftIcon} size={iconSize} /> : null}
       {children}
       {rightIcon ? <Icon icon={rightIcon} size={iconSize} /> : null}

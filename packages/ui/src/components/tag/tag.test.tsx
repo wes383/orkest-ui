@@ -65,12 +65,6 @@ describe('Tag', () => {
     }
   });
 
-  it('renders a leading status dot', () => {
-    const { container } = render(<Tag dot>Active</Tag>);
-
-    expect(container.querySelector('[data-dot="true"]')).toBeInTheDocument();
-  });
-
   it('renders a removable action', async () => {
     const user = userEvent.setup();
     const onRemove = vi.fn();
