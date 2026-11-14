@@ -5,8 +5,8 @@ section: components
 order: 10
 ---
 
-`Badge` labels status, metadata, counts, or removable tags. It is decorative by default and renders a
-`span`. With `interactive`, it renders a native button and supports keyboard and focus behavior.
+`Badge` labels status, metadata, and counts. It is decorative by default and renders a `span`. For
+removable or clickable chips, use [Tag](/docs/components/tag/).
 
 ## Live preview
 
@@ -145,58 +145,6 @@ export function Example() {
   </Stack>
 </ComponentPreview>
 
-## Removable
-
-<ComponentPreview
-  title="Removable tags"
-  code={`import { useState } from 'react';
-import { Badge, Stack } from '@orkest/ui';
-
-export function Example() {
-  const [tags, setTags] = useState(['Design', 'Engineering']);
-
-  return (
-    <Stack direction="row" gap={2} wrap>
-      {tags.map((tag) => (
-        <Badge
-          key={tag}
-          removable
-          onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
-        >
-          {tag}
-        </Badge>
-      ))}
-    </Stack>
-  );
-}`}
->
-  <RemovableBadgeExample />
-</ComponentPreview>
-
-## Interactive
-
-<ComponentPreview
-  title="Clickable badge"
-  code={`import { useState } from 'react';
-import { Badge } from '@orkest/ui';
-
-export function Example() {
-  const [active, setActive] = useState(false);
-
-  return (
-    <Badge
-      interactive
-      variant={active ? 'success' : 'outline'}
-      onClick={() => setActive((value) => !value)}
-    >
-      {active ? 'Selected' : 'Select tag'}
-    </Badge>
-  );
-}`}
->
-  <InteractiveBadgeExample />
-</ComponentPreview>
-
 ## Custom color
 
 `color` creates a tinted badge while keeping the theme surface underneath. Check text contrast when
@@ -253,23 +201,6 @@ export function Example() {
         'Shows a leading status dot. With no content, renders a standalone dot and should receive an aria-label when meaningful.',
     },
     {
-      name: 'removable',
-      type: 'boolean',
-      default: 'false',
-      description: 'Shows a remove action. Removable badges render as a span, not a button.',
-    },
-    {
-      name: 'onRemove',
-      type: '() => void',
-      description: 'Called when the remove action is pressed.',
-    },
-    {
-      name: 'removeLabel',
-      type: 'string',
-      default: `'Remove'`,
-      description: 'Accessible name for the remove action.',
-    },
-    {
       name: 'count',
       type: 'number',
       description: 'Count value. Takes precedence over children.',
@@ -286,20 +217,8 @@ export function Example() {
       description: 'Custom CSS color used as a tinted badge accent.',
     },
     {
-      name: 'interactive',
-      type: 'boolean',
-      default: 'false',
-      description: 'Renders a native button with keyboard and focus behavior. Ignored when removable.',
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Disables interactive badges and their remove action.',
-    },
-    {
       name: 'native attributes',
-      type: 'HTMLAttributes<HTMLElement>',
+      type: 'HTMLAttributes<HTMLSpanElement>',
       description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
     },
   ]}
@@ -307,13 +226,8 @@ export function Example() {
 
 ## Accessibility
 
-- Non-interactive badges render a `span`. Do not attach click handlers; use `interactive` for
-  clickable badges.
-- Interactive badges render a native `<button type="button">` with keyboard activation and a
-  focus-visible ring.
-- Removable badges stay non-interactive as a whole so the remove action can be a native button.
-  `interactive` is ignored when `removable` is set.
-- The remove action has an accessible name from `removeLabel`.
+- Badges render a `span` and are not interactive. Use [Tag](/docs/components/tag/) for removable or
+  clickable chips.
 - A standalone dot needs an `aria-label` when its status is meaningful.
 - Icons are decorative and hidden from assistive technology.
 - Do not communicate status with color alone. Pair variants and custom colors with text or a dot
@@ -322,6 +236,7 @@ export function Example() {
 
 ## Related
 
+- [Tag](/docs/components/tag/) for removable or clickable chips.
 - [Button](/docs/components/button/) for full-size actions.
 - [Icon](/docs/components/icon/) for icon sizing and accessibility.
 - [Text](/docs/components/text/) for surrounding metadata.

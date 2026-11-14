@@ -12,7 +12,7 @@ Early development. The shipped surface currently includes:
 - Primitives: `Box`, `Stack`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
-- Components: `Badge`, `Button`, `IconButton`
+- Components: `Badge`, `Button`, `IconButton`, `Tag`
 - Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
 
 Core components, complex interactions, and the first public release are still in progress.

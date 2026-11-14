@@ -12,7 +12,7 @@ Currently exported:
 - Primitives: `Box`, `Stack`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
-- Components: `Badge`, `Button`, `IconButton`
+- Components: `Badge`, `Button`, `IconButton`, `Tag`
 - Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
 
 ## Install

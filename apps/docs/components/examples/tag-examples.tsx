@@ -2,36 +2,36 @@
 
 import { useState } from 'react';
 
-import { Badge, Stack } from '@orkest/ui';
+import { Stack, Tag } from '@orkest/ui';
 
-export function RemovableBadgeExample() {
+export function RemovableTagExample() {
   const [tags, setTags] = useState(['Design', 'Engineering', 'Product']);
 
   return (
     <Stack direction="row" gap={2} wrap>
       {tags.map((tag) => (
-        <Badge
+        <Tag
           key={tag}
           removable
           onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
         >
           {tag}
-        </Badge>
+        </Tag>
       ))}
     </Stack>
   );
 }
 
-export function InteractiveBadgeExample() {
+export function InteractiveTagExample() {
   const [active, setActive] = useState(false);
 
   return (
-    <Badge
+    <Tag
       interactive
       variant={active ? 'success' : 'outline'}
       onClick={() => setActive((value) => !value)}
     >
       {active ? 'Selected' : 'Select tag'}
-    </Badge>
+    </Tag>
   );
 }

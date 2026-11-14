@@ -1,0 +1,292 @@
+---
+title: Tag
+description: Removable or clickable chips with the same visual language as Badge.
+section: components
+order: 11
+---
+
+`Tag` is a chip for removable or clickable labels. It shares variants, sizes, shapes, icons, dots,
+and custom colors with [Badge](/docs/components/badge/), but owns the interactive and remove
+behavior.
+
+Use `Badge` for static status, counts, and metadata. Use `Tag` when the label can be removed or
+selected.
+
+## Live preview
+
+<ComponentPreview
+  title="Fixed and removable tags"
+  code={`import { Stack, Tag } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Tag>Design</Tag>
+      <Tag variant="info">Engineering</Tag>
+      <Tag variant="outline">Product</Tag>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <Tag>Design</Tag>
+    <Tag variant="info">Engineering</Tag>
+    <Tag variant="outline">Product</Tag>
+  </Stack>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Variants"
+  code={`import { Stack, Tag } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Tag>Default</Tag>
+      <Tag variant="info">Info</Tag>
+      <Tag variant="success">Success</Tag>
+      <Tag variant="warning">Warning</Tag>
+      <Tag variant="destructive">Destructive</Tag>
+      <Tag variant="outline">Outline</Tag>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <Tag>Default</Tag>
+    <Tag variant="info">Info</Tag>
+    <Tag variant="success">Success</Tag>
+    <Tag variant="warning">Warning</Tag>
+    <Tag variant="destructive">Destructive</Tag>
+    <Tag variant="outline">Outline</Tag>
+  </Stack>
+</ComponentPreview>
+
+## Sizes and shapes
+
+Tags are pill-shaped by default. Set `shape="rounded"` for a tighter corner.
+
+<ComponentPreview
+  title="Sizes and shapes"
+  code={`import { Stack, Tag } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Tag size="sm">Small</Tag>
+      <Tag size="md">Medium</Tag>
+      <Tag size="lg">Large</Tag>
+      <Tag shape="rounded">Rounded</Tag>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Tag size="sm">Small</Tag>
+    <Tag size="md">Medium</Tag>
+    <Tag size="lg">Large</Tag>
+    <Tag shape="rounded">Rounded</Tag>
+  </Stack>
+</ComponentPreview>
+
+## Icons and dots
+
+<ComponentPreview
+  title="Icons and status dots"
+  code={`import { Stack, Tag } from '@orkest/ui';
+import { Check, Circle } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Tag variant="info" leftIcon={Circle}>
+        Info
+      </Tag>
+      <Tag variant="success" rightIcon={Check}>
+        Done
+      </Tag>
+      <Tag variant="success" dot>
+        Online
+      </Tag>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Tag variant="info" leftIcon={Circle}>
+      {'Info'}
+    </Tag>
+    <Tag variant="success" rightIcon={Check}>
+      {'Done'}
+    </Tag>
+    <Tag variant="success" dot>
+      {'Online'}
+    </Tag>
+  </Stack>
+</ComponentPreview>
+
+## Removable
+
+Removable tags stay non-interactive as a whole so the remove action can be a native button.
+
+<ComponentPreview
+  title="Removable tags"
+  code={`import { useState } from 'react';
+import { Stack, Tag } from '@orkest/ui';
+
+export function Example() {
+  const [tags, setTags] = useState(['Design', 'Engineering']);
+
+  return (
+    <Stack direction="row" gap={2} wrap>
+      {tags.map((tag) => (
+        <Tag
+          key={tag}
+          removable
+          onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
+        >
+          {tag}
+        </Tag>
+      ))}
+    </Stack>
+  );
+}`}
+>
+  <RemovableTagExample />
+</ComponentPreview>
+
+## Interactive
+
+<ComponentPreview
+  title="Clickable tag"
+  code={`import { useState } from 'react';
+import { Tag } from '@orkest/ui';
+
+export function Example() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Tag
+      interactive
+      variant={active ? 'success' : 'outline'}
+      onClick={() => setActive((value) => !value)}
+    >
+      {active ? 'Selected' : 'Select tag'}
+    </Tag>
+  );
+}`}
+>
+  <InteractiveTagExample />
+</ComponentPreview>
+
+## Custom color
+
+<ComponentPreview
+  title="Custom color"
+  code={`import { Tag } from '@orkest/ui';
+
+export function Example() {
+  return <Tag color="#7c3aed">Custom</Tag>;
+}`}
+>
+  <Tag color="#7c3aed">Custom</Tag>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'default' | 'info' | 'success' | 'warning' | 'destructive' | 'outline'`,
+      default: `'default'`,
+      description: 'Semantic color treatment.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Control height, font size, radius, and icon size.',
+    },
+    {
+      name: 'shape',
+      type: `'rounded' | 'pill'`,
+      default: `'pill'`,
+      description: 'Corner treatment.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the content.',
+    },
+    {
+      name: 'rightIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered after the content.',
+    },
+    {
+      name: 'dot',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a leading status dot.',
+    },
+    {
+      name: 'color',
+      type: 'string',
+      description: 'Custom CSS color used as a tinted tag accent.',
+    },
+    {
+      name: 'removable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a remove action. Removable tags render as a span, not a button.',
+    },
+    {
+      name: 'onRemove',
+      type: '() => void',
+      description: 'Called when the remove action is pressed.',
+    },
+    {
+      name: 'removeLabel',
+      type: 'string',
+      default: `'Remove'`,
+      description: 'Accessible name for the remove action.',
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      default: 'false',
+      description: 'Renders a native button with keyboard and focus behavior. Ignored when removable.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables interactive tags and their remove action.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Static tags render a `span`; interactive tags render a native `<button type="button">`.
+- Removable tags keep the root non-interactive so the remove action can be a native button.
+  `interactive` is ignored when `removable` is set.
+- The remove action has an accessible name from `removeLabel`.
+- Interactive tags support keyboard activation and a focus-visible ring.
+- Icons are decorative and hidden from assistive technology.
+- Do not communicate status with color alone. Pair variants, dots, and custom colors with text.
+- Check contrast when using custom colors.
+
+## Related
+
+- [Badge](/docs/components/badge/) for static status, count, and metadata labels.
+- [Button](/docs/components/button/) for full-size actions.
+- [Icon](/docs/components/icon/) for icon sizing and accessibility.

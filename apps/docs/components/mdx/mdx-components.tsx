@@ -20,6 +20,7 @@ import {
   Small,
   Stack,
   Strong,
+  Tag,
   Text,
 } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
@@ -32,11 +33,11 @@ import { SpacingScale } from './spacing-scale';
 import { TokenPreviewGrid } from './token-preview-grid';
 import { TokenTable } from './token-table';
 import { FontFamilySample, TypographySample } from './typography-sample';
-import { InteractiveBadgeExample, RemovableBadgeExample } from '../examples/badge-examples';
 import { CodeBlock } from '../examples/code-block';
 import { ComponentPreview } from '../examples/component-preview';
 import { CopyButton } from '../examples/copy-button';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
+import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 
 function Heading2({ id, children, ...props }: ComponentPropsWithoutRef<'h2'>) {
   return (
@@ -142,14 +143,15 @@ export const mdxComponents = {
   IconButton,
   Input,
   InputIconsExample,
-  InteractiveBadgeExample,
+  InteractiveTagExample,
   Label,
   Link: TypographyLink,
   Paragraph,
-  RemovableBadgeExample,
+  RemovableTagExample,
   Small,
   Stack,
   Strong,
+  Tag,
   Text,
   Textarea,
   Check,
