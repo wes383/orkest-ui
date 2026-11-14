@@ -1241,13 +1241,12 @@ kbd {
 .docs-index-section-header {
   display: flex;
   gap: var(--ok-space-4);
-  align-items: flex-start;
+  align-items: baseline;
   margin-bottom: 1.25rem;
   padding-top: 1.5rem;
 }
 
 .docs-index-number {
-  padding-top: 3px;
   color: var(--ui-accent);
   font-size: 12px;
   font-weight: var(--ok-font-weight-medium);
