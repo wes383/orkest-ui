@@ -274,7 +274,7 @@ kbd {
   position: sticky;
   top: var(--docs-header-height);
   max-height: calc(100dvh - var(--docs-header-height));
-  padding: 2.5rem 1.25rem 3rem 1.5rem;
+  padding: 4rem 1.25rem 5rem 1.5rem;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -1447,7 +1447,7 @@ kbd {
 
 .mobile-nav-body {
   height: calc(100dvh - var(--docs-header-height));
-  padding: 1.5rem var(--ok-space-4);
+  padding: 3rem 1.25rem 4.5rem;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
