@@ -4,7 +4,15 @@ import type { LucideIcon } from 'lucide-react';
 import { cx } from '../../utils/cx';
 import styles from './icon.module.css';
 
-export type IconSize = 'sm' | 'md' | 'lg';
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'inherit';
+export type IconTone =
+  | 'default'
+  | 'muted'
+  | 'subtle'
+  | 'inherit'
+  | 'accent'
+  | 'success'
+  | 'danger';
 
 export interface IconProps
   extends Omit<
@@ -13,7 +21,13 @@ export interface IconProps
   > {
   /** A Lucide icon component, e.g. `import { Check } from 'lucide-react'`. */
   icon: LucideIcon;
+  /** Icon size. `inherit` matches the surrounding font size. */
   size?: IconSize;
+  /**
+   * Semantic color. Defaults to `inherit` so icons follow the foreground of
+   * the control they are placed in, such as Button or Input.
+   */
+  tone?: IconTone;
   /**
    * Accessible name. When omitted the icon is treated as decorative and
    * hidden from assistive technology.
@@ -29,7 +43,16 @@ type IconStyle = CSSProperties & {
 
 /** Token-sized icon with the correct decorative or labelled accessibility semantics. */
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { icon: Glyph, size = 'md', label, className, style, strokeWidth, ...rest },
+  {
+    icon: Glyph,
+    size = 'md',
+    tone = 'inherit',
+    label,
+    className,
+    style,
+    strokeWidth,
+    ...rest
+  },
   ref,
 ) {
   const mergedStyle: IconStyle | undefined =
@@ -41,10 +64,12 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
       {...rest}
       className={cx(styles.icon, className)}
       data-size={size}
+      data-tone={tone}
       style={mergedStyle}
-      {...(label
-        ? { role: 'img', 'aria-label': label }
-        : { 'aria-hidden': true, focusable: false })}
+      role={label ? 'img' : undefined}
+      aria-label={label || undefined}
+      aria-hidden={label ? undefined : true}
+      focusable={label ? undefined : false}
     />
   );
 });

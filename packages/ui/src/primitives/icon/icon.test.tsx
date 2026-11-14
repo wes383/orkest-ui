@@ -10,6 +10,8 @@ describe('Icon', () => {
 
     const icon = screen.getByTestId('icon');
     expect(icon.tagName.toLowerCase()).toBe('svg');
+    expect(icon).toHaveAttribute('data-size', 'md');
+    expect(icon).toHaveAttribute('data-tone', 'inherit');
     expect(icon).toHaveAttribute('aria-hidden', 'true');
     expect(icon).toHaveAttribute('focusable', 'false');
     expect(icon).not.toHaveAttribute('role');
@@ -27,6 +29,37 @@ describe('Icon', () => {
 
     const icon = screen.getByTestId('icon');
     expect(icon).toHaveAttribute('data-size', 'lg');
+    expect(icon.style.getPropertyValue('--ok-icon-stroke-width')).toBe('2.5');
+  });
+
+  it('supports the full size scale including inherit', () => {
+    const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'inherit'] as const;
+    const { rerender } = render(<Icon icon={Circle} size="xs" data-testid="icon" />);
+
+    for (const size of sizes) {
+      rerender(<Icon icon={Circle} size={size} data-testid="icon" />);
+      expect(screen.getByTestId('icon')).toHaveAttribute('data-size', size);
+    }
+  });
+
+  it('applies semantic tones', () => {
+    render(<Icon icon={Circle} tone="accent" data-testid="icon" />);
+
+    expect(screen.getByTestId('icon')).toHaveAttribute('data-tone', 'accent');
+  });
+
+  it('merges custom styles with the stroke width override', () => {
+    render(
+      <Icon
+        icon={Circle}
+        data-testid="icon"
+        strokeWidth={2.5}
+        style={{ color: 'rebeccapurple' }}
+      />,
+    );
+
+    const icon = screen.getByTestId('icon');
+    expect(icon.style.color).toBe('rebeccapurple');
     expect(icon.style.getPropertyValue('--ok-icon-stroke-width')).toBe('2.5');
   });
 

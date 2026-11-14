@@ -1,36 +1,154 @@
 ---
 title: Icon
-description: Token-sized Lucide icons with correct decorative or labelled semantics.
+description: Token-sized Lucide icons with semantic colors, stroke control, and correct accessibility semantics.
 section: components
 order: 4
 ---
 
-`Icon` wraps a Lucide icon component, applies a token-based size and stroke width, and handles the
-accessible name. Icons inherit the current text color.
+`Icon` wraps a Lucide icon component and applies token-based sizing, semantic color, and stroke
+width. It preserves the accessible name rules that controls need, so icons compose cleanly with
+`Button`, `IconButton`, and future form and navigation components.
 
 ## Live preview
 
 <ComponentPreview
-  title="Sizes and labels"
-  code={`import { Icon, Stack } from '@orkest/ui';
-import { Check, Circle } from 'lucide-react';
+  title="Sizes"
+  code={`import { Icon, Stack, Text } from '@orkest/ui';
+import { Circle } from 'lucide-react';
 
 export function Example() {
   return (
     <Stack direction="row" align="center" gap={4}>
+      <Icon icon={Circle} size="xs" />
       <Icon icon={Circle} size="sm" />
       <Icon icon={Circle} size="md" />
       <Icon icon={Circle} size="lg" />
-      <Icon icon={Check} size="md" label="Completed" />
+      <Icon icon={Circle} size="xl" />
+      <Text size="lg">
+        <Icon icon={Circle} size="inherit" />
+      </Text>
     </Stack>
   );
 }`}
 >
   <Stack direction="row" align="center" gap={4}>
+    <Icon icon={Circle} size="xs" />
     <Icon icon={Circle} size="sm" />
     <Icon icon={Circle} size="md" />
     <Icon icon={Circle} size="lg" />
-    <Icon icon={Check} size="md" label="Completed" />
+    <Icon icon={Circle} size="xl" />
+    <Text size="lg">
+      <Icon icon={Circle} size="inherit" />
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Colors
+
+`tone` uses semantic theme tokens, so icons change with the active theme. The default is `inherit`,
+which keeps icons aligned with the foreground of the surrounding control.
+
+<ComponentPreview
+  title="Semantic tones"
+  code={`import { Icon, Stack } from '@orkest/ui';
+import { Check } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" align="center" gap={4}>
+      <Icon icon={Check} tone="default" />
+      <Icon icon={Check} tone="muted" />
+      <Icon icon={Check} tone="subtle" />
+      <Icon icon={Check} tone="accent" />
+      <Icon icon={Check} tone="success" />
+      <Icon icon={Check} tone="danger" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" align="center" gap={4}>
+    <Icon icon={Check} tone="default" />
+    <Icon icon={Check} tone="muted" />
+    <Icon icon={Check} tone="subtle" />
+    <Icon icon={Check} tone="accent" />
+    <Icon icon={Check} tone="success" />
+    <Icon icon={Check} tone="danger" />
+  </Stack>
+</ComponentPreview>
+
+## Stroke width
+
+The default stroke width comes from `--ok-icon-stroke-width`. Override it per icon when a denser or
+lighter treatment is needed.
+
+<ComponentPreview
+  title="Stroke widths"
+  code={`import { Icon, Stack } from '@orkest/ui';
+import { Circle } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" align="center" gap={4}>
+      <Icon icon={Circle} strokeWidth={1.25} />
+      <Icon icon={Circle} />
+      <Icon icon={Circle} strokeWidth={2.5} />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" align="center" gap={4}>
+    <Icon icon={Circle} strokeWidth={1.25} />
+    <Icon icon={Circle} />
+    <Icon icon={Circle} strokeWidth={2.5} />
+  </Stack>
+</ComponentPreview>
+
+## Custom styles
+
+Native SVG attributes, `className`, `style`, and refs are forwarded. Inline styles can use semantic
+tokens when a one-off color is needed.
+
+<ComponentPreview
+  title="Inline style"
+  code={`import { Icon } from '@orkest/ui';
+import { Circle } from 'lucide-react';
+
+export function Example() {
+  return <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />;
+}`}
+>
+  <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />
+</ComponentPreview>
+
+## Composition
+
+`Button` and `IconButton` render `Icon` internally for their icon slots, so sizing and color inherit
+from the control. The same rules make `Icon` ready for inputs and navigation items: use
+`size="inherit"` to match text, and leave the icon decorative when the control already has a name.
+
+<ComponentPreview
+  title="Inside buttons"
+  code={`import { Button, IconButton, Stack } from '@orkest/ui';
+import { ArrowRight, Plus, Settings } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" align="center" gap={2} wrap>
+      <Button leftIcon={Plus}>New project</Button>
+      <Button variant="secondary" rightIcon={ArrowRight}>
+        Continue
+      </Button>
+      <IconButton icon={Settings} label="Settings" variant="outline" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" align="center" gap={2} wrap>
+    <Button leftIcon={Plus}>New project</Button>
+    <Button variant="secondary" rightIcon={ArrowRight}>
+      {'Continue'}
+    </Button>
+    <IconButton icon={Settings} label="Settings" variant="outline" />
   </Stack>
 </ComponentPreview>
 
@@ -46,9 +164,16 @@ export function Example() {
     },
     {
       name: 'size',
-      type: `'sm' | 'md' | 'lg'`,
+      type: `'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'inherit'`,
       default: `'md'`,
-      description: 'Maps to the icon size tokens: 16px, 20px, or 24px.',
+      description:
+        'Maps to icon size tokens: 12px, 16px, 20px, 24px, or 32px. inherit uses 1em so the icon matches surrounding text.',
+    },
+    {
+      name: 'tone',
+      type: `'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger'`,
+      default: `'inherit'`,
+      description: 'Semantic icon color. inherit follows the surrounding control foreground.',
     },
     {
       name: 'label',
@@ -63,9 +188,14 @@ export function Example() {
       description: 'Overrides the default icon stroke width token.',
     },
     {
+      name: 'className / style',
+      type: 'string / CSSProperties',
+      description: 'Merged with the internal class and inline style, including the stroke override.',
+    },
+    {
       name: 'native SVG attributes',
-      type: 'ComponentPropsWithoutRef<"svg">',
-      description: 'Inherited from the underlying SVG element.',
+      type: `ComponentPropsWithoutRef<'svg'>`,
+      description: 'Forwarded to the SVG element; refs are forwarded to the underlying SVG.',
     },
   ]}
 />
@@ -89,9 +219,12 @@ When the icon sits inside a control that already has an accessible name, leave t
 ```
 
 Do not use an icon label to duplicate visible text in the same control. Use the icon as decoration
-when the surrounding text already communicates the action.
+when the surrounding text already communicates the action. Tone is not a substitute for meaning:
+pair success or danger icons with text or another non-color cue.
 
 ## Related
 
+- [Button](/docs/components/button/) for buttons with leading, trailing, or icon-only content.
+- [IconButton](/docs/components/icon-button/) for icon-only actions with a required label.
 - [Text](/docs/components/text/) for adjacent labels.
 - [Stack](/docs/components/stack/) for icon and text alignment.

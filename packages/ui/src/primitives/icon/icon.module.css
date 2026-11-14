@@ -5,6 +5,11 @@
   stroke-width: var(--ok-icon-stroke-width);
 }
 
+.icon[data-size="xs"] {
+  width: var(--ok-icon-size-xs);
+  height: var(--ok-icon-size-xs);
+}
+
 .icon[data-size="sm"] {
   width: var(--ok-icon-size-sm);
   height: var(--ok-icon-size-sm);
@@ -18,4 +23,42 @@
 .icon[data-size="lg"] {
   width: var(--ok-icon-size-lg);
   height: var(--ok-icon-size-lg);
+}
+
+.icon[data-size="xl"] {
+  width: var(--ok-icon-size-xl);
+  height: var(--ok-icon-size-xl);
+}
+
+.icon[data-size="inherit"] {
+  width: 1em;
+  height: 1em;
+}
+
+.icon[data-tone="default"] {
+  color: var(--ui-foreground);
+}
+
+.icon[data-tone="muted"] {
+  color: var(--ui-muted-foreground);
+}
+
+.icon[data-tone="subtle"] {
+  color: var(--ui-subtle-foreground);
+}
+
+.icon[data-tone="inherit"] {
+  color: inherit;
+}
+
+.icon[data-tone="accent"] {
+  color: var(--ui-accent);
+}
+
+.icon[data-tone="success"] {
+  color: var(--ui-success);
+}
+
+.icon[data-tone="danger"] {
+  color: var(--ui-danger);
 }
