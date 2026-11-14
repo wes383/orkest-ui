@@ -279,7 +279,6 @@ kbd {
   flex-direction: column;
   max-height: calc(100dvh - var(--docs-header-height));
   padding: var(--docs-sidebar-pad-top) 0 var(--docs-sidebar-pad-bottom);
-  border-right: var(--ok-border-width) solid var(--ui-border-subtle);
   overflow: hidden;
 }
 
@@ -315,6 +314,7 @@ kbd {
   flex: 1 1 auto;
   min-height: 0;
   padding: 0 1.25rem 0 1.5rem;
+  border-right: var(--ok-border-width) solid var(--ui-border-subtle);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
