@@ -51,11 +51,14 @@ describe('Text', () => {
     expect(text).toHaveClass('custom');
   });
 
-  it('supports display and monospace font families', () => {
+  it('supports display, monospace, and numeric font families', () => {
     const { rerender } = render(<Text font="display">Display</Text>);
     expect(screen.getByText('Display')).toHaveAttribute('data-font', 'display');
 
     rerender(<Text font="mono">Code</Text>);
     expect(screen.getByText('Code')).toHaveAttribute('data-font', 'mono');
+
+    rerender(<Text font="numeric">1,248.50</Text>);
+    expect(screen.getByText('1,248.50')).toHaveAttribute('data-font', 'numeric');
   });
 });

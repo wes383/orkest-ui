@@ -54,6 +54,14 @@ export function FontFamilySample() {
         </Text>
         <code className="font-sample-token">--ok-font-mono</code>
       </div>
+
+      <div className="font-sample">
+        <p className="font-sample-label">Numeric · Inter Tabular</p>
+        <Text font="numeric" size="lg" weight="medium">
+          01 02 03 · 1,248.50 · 12:45
+        </Text>
+        <code className="font-sample-token">font-variant-numeric: tabular-nums</code>
+      </div>
     </div>
   );
 }

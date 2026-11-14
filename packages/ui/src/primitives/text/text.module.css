@@ -12,6 +12,10 @@
   font-family: var(--ok-font-mono);
 }
 
+.text[data-font="numeric"] {
+  font-variant-numeric: tabular-nums;
+}
+
 .text[data-size="xs"] {
   font-size: var(--ok-font-size-xs);
   line-height: var(--ok-line-height-normal);

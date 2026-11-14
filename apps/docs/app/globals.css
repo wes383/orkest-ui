@@ -469,6 +469,7 @@ kbd {
   color: var(--ui-subtle-foreground);
   font-size: 11px;
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Prose */
@@ -1263,6 +1264,7 @@ kbd {
   font-size: 12px;
   font-weight: var(--ok-font-weight-medium);
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .docs-index-title {
@@ -1840,6 +1842,7 @@ kbd {
   font-size: 12px;
   font-weight: var(--ok-font-weight-medium);
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .landing-principle h3 {
@@ -1910,6 +1913,7 @@ kbd {
   font-size: 12px;
   font-weight: var(--ok-font-weight-medium);
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .landing-link-copy {
