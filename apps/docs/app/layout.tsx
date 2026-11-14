@@ -8,7 +8,6 @@ import '@orkest/ui/style.css';
 import './globals.css';
 
 import { DocsHeader } from '@/components/docs/docs-header';
-import { SiteFooter } from '@/components/docs/site-footer';
 import { ThemeScript } from '@/components/docs/theme-script';
 import { getNavigation, getSearchIndex } from '@/lib/docs-source';
 
@@ -34,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <DocsHeader navigation={navigation} searchIndex={searchIndex} />
         <main id="main-content">{children}</main>
-        <SiteFooter />
       </body>
     </html>
   );
