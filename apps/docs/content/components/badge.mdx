@@ -1,0 +1,327 @@
+---
+title: Badge
+description: Compact status, count, and tag labels with variants, sizes, icons, and actions.
+section: components
+order: 10
+---
+
+`Badge` labels status, metadata, counts, or removable tags. It is decorative by default and renders a
+`span`. With `interactive`, it renders a native button and supports keyboard and focus behavior.
+
+## Live preview
+
+<ComponentPreview
+  title="Variants"
+  code={`import { Badge, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Badge>Default</Badge>
+      <Badge variant="info">Info</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <Badge>Default</Badge>
+    <Badge variant="info">Info</Badge>
+    <Badge variant="success">Success</Badge>
+    <Badge variant="warning">Warning</Badge>
+    <Badge variant="destructive">Destructive</Badge>
+    <Badge variant="outline">Outline</Badge>
+  </Stack>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Badge, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Medium</Badge>
+      <Badge size="lg">Large</Badge>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Badge size="sm">Small</Badge>
+    <Badge size="md">Medium</Badge>
+    <Badge size="lg">Large</Badge>
+  </Stack>
+</ComponentPreview>
+
+## Shapes
+
+<ComponentPreview
+  title="Rounded and pill"
+  code={`import { Badge, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Badge shape="rounded">Rounded</Badge>
+      <Badge shape="pill">Pill</Badge>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <Badge shape="rounded">Rounded</Badge>
+    <Badge shape="pill">Pill</Badge>
+  </Stack>
+</ComponentPreview>
+
+## Icons and dots
+
+Icons are decorative. A leading dot inherits the variant accent color. With no content, `dot`
+renders a standalone status dot; give it an `aria-label` when the status is meaningful.
+
+<ComponentPreview
+  title="Icons and status dots"
+  code={`import { Badge, Stack } from '@orkest/ui';
+import { Check, Circle } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Badge variant="info" leftIcon={Circle}>
+        Info
+      </Badge>
+      <Badge variant="success" rightIcon={Check}>
+        Done
+      </Badge>
+      <Badge variant="success" dot>
+        Online
+      </Badge>
+      <Badge variant="success" dot aria-label="Online" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Badge variant="info" leftIcon={Circle}>
+      {'Info'}
+    </Badge>
+    <Badge variant="success" rightIcon={Check}>
+      {'Done'}
+    </Badge>
+    <Badge variant="success" dot>
+      {'Online'}
+    </Badge>
+    <Badge variant="success" dot aria-label="Online" />
+  </Stack>
+</ComponentPreview>
+
+## Count
+
+`count` takes precedence over children. Values above `maxCount` render as `maxCount+`.
+
+<ComponentPreview
+  title="Counts"
+  code={`import { Badge, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Badge count={8} variant="destructive" shape="pill" />
+      <Badge count={120} maxCount={99} variant="info" shape="pill" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Badge count={8} variant="destructive" shape="pill" />
+    <Badge count={120} maxCount={99} variant="info" shape="pill" />
+  </Stack>
+</ComponentPreview>
+
+## Removable
+
+<ComponentPreview
+  title="Removable tags"
+  code={`import { useState } from 'react';
+import { Badge, Stack } from '@orkest/ui';
+
+export function Example() {
+  const [tags, setTags] = useState(['Design', 'Engineering']);
+
+  return (
+    <Stack direction="row" gap={2} wrap>
+      {tags.map((tag) => (
+        <Badge
+          key={tag}
+          removable
+          onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
+        >
+          {tag}
+        </Badge>
+      ))}
+    </Stack>
+  );
+}`}
+>
+  <RemovableBadgeExample />
+</ComponentPreview>
+
+## Interactive
+
+<ComponentPreview
+  title="Clickable badge"
+  code={`import { useState } from 'react';
+import { Badge } from '@orkest/ui';
+
+export function Example() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Badge
+      interactive
+      variant={active ? 'success' : 'outline'}
+      onClick={() => setActive((value) => !value)}
+    >
+      {active ? 'Selected' : 'Select tag'}
+    </Badge>
+  );
+}`}
+>
+  <InteractiveBadgeExample />
+</ComponentPreview>
+
+## Custom color
+
+`color` creates a tinted badge while keeping the theme surface underneath. Check text contrast when
+using light or low-contrast colors.
+
+<ComponentPreview
+  title="Custom color"
+  code={`import { Badge } from '@orkest/ui';
+
+export function Example() {
+  return <Badge color="#7c3aed">Custom</Badge>;
+}`}
+>
+  <Badge color="#7c3aed">Custom</Badge>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'default' | 'info' | 'success' | 'warning' | 'destructive' | 'outline'`,
+      default: `'default'`,
+      description: 'Semantic color treatment.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Control height, font size, radius, and icon size.',
+    },
+    {
+      name: 'shape',
+      type: `'rounded' | 'pill'`,
+      default: `'rounded'`,
+      description: 'Corner treatment.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the content.',
+    },
+    {
+      name: 'rightIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered after the content.',
+    },
+    {
+      name: 'dot',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Shows a leading status dot. With no content, renders a standalone dot and should receive an aria-label when meaningful.',
+    },
+    {
+      name: 'removable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a remove action. Removable badges render as a span, not a button.',
+    },
+    {
+      name: 'onRemove',
+      type: '() => void',
+      description: 'Called when the remove action is pressed.',
+    },
+    {
+      name: 'removeLabel',
+      type: 'string',
+      default: `'Remove'`,
+      description: 'Accessible name for the remove action.',
+    },
+    {
+      name: 'count',
+      type: 'number',
+      description: 'Count value. Takes precedence over children.',
+    },
+    {
+      name: 'maxCount',
+      type: 'number',
+      default: '99',
+      description: 'Maximum displayed count before rendering `maxCount+`.',
+    },
+    {
+      name: 'color',
+      type: 'string',
+      description: 'Custom CSS color used as a tinted badge accent.',
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      default: 'false',
+      description: 'Renders a native button with keyboard and focus behavior. Ignored when removable.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables interactive badges and their remove action.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Non-interactive badges render a `span`. Do not attach click handlers; use `interactive` for
+  clickable badges.
+- Interactive badges render a native `<button type="button">` with keyboard activation and a
+  focus-visible ring.
+- Removable badges stay non-interactive as a whole so the remove action can be a native button.
+  `interactive` is ignored when `removable` is set.
+- The remove action has an accessible name from `removeLabel`.
+- A standalone dot needs an `aria-label` when its status is meaningful.
+- Icons are decorative and hidden from assistive technology.
+- Do not communicate status with color alone. Pair variants and custom colors with text or a dot
+  label.
+- Check contrast when using custom colors.
+
+## Related
+
+- [Button](/docs/components/button/) for full-size actions.
+- [Icon](/docs/components/icon/) for icon sizing and accessibility.
+- [Text](/docs/components/text/) for surrounding metadata.

@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import {
+  Badge,
   Box,
   Button,
   Caption,
@@ -31,6 +32,7 @@ import { SpacingScale } from './spacing-scale';
 import { TokenPreviewGrid } from './token-preview-grid';
 import { TokenTable } from './token-table';
 import { FontFamilySample, TypographySample } from './typography-sample';
+import { InteractiveBadgeExample, RemovableBadgeExample } from '../examples/badge-examples';
 import { CodeBlock } from '../examples/code-block';
 import { ComponentPreview } from '../examples/component-preview';
 import { CopyButton } from '../examples/copy-button';
@@ -130,6 +132,7 @@ export const mdxComponents = {
   a: MdxLink,
   pre: MdxPre,
   table: MdxTable,
+  Badge,
   Box,
   Button,
   Caption,
@@ -139,9 +142,11 @@ export const mdxComponents = {
   IconButton,
   Input,
   InputIconsExample,
+  InteractiveBadgeExample,
   Label,
   Link: TypographyLink,
   Paragraph,
+  RemovableBadgeExample,
   Small,
   Stack,
   Strong,
