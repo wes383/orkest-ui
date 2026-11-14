@@ -8,12 +8,23 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import type { SearchIndexItem } from '@/lib/docs-types';
 import { searchDocs } from '@/lib/search';
 
+import { useScrollOverflow } from './use-scroll-overflow';
+
 export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState('');
   const results = searchDocs(index, query);
+  const { ref: resultsScrollRef, overflowing, atTop, atBottom } =
+    useScrollOverflow<HTMLDivElement>(query);
+  const bodyClassName = [
+    'search-body',
+    overflowing && !atTop ? 'search-body-fade-top' : '',
+    overflowing && !atBottom ? 'search-body-fade-bottom' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   useEffect(() => {
     function handleShortcut(event: globalThis.KeyboardEvent) {
@@ -144,48 +155,50 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
             </button>
           </div>
 
-          <div className="search-body" onKeyDown={handleResultsKeyDown}>
-            {query.trim() === '' ? (
-              <p className="search-empty">
-                Search page titles, headings, and content. Press <kbd>Esc</kbd> to close.
-              </p>
-            ) : null}
-
-            {query.trim() !== '' && results.length === 0 ? (
-              <p className="search-empty" role="status">
-                No results for “{query}”.
-              </p>
-            ) : null}
-
-            {results.length > 0 ? (
-              <div ref={resultsRef}>
-                <p className="sr-only" role="status">
-                  {results.length} results
+          <div className={bodyClassName} onKeyDown={handleResultsKeyDown}>
+            <div ref={resultsScrollRef} className="search-results-scroll">
+              {query.trim() === '' ? (
+                <p className="search-empty">
+                  Search page titles, headings, and content. Press <kbd>Esc</kbd> to close.
                 </p>
-                <ul className="search-results">
-                  {results.map((result) => (
-                    <li key={result.href}>
-                      <Link
-                        href={result.href}
-                        className="search-result-link"
-                        data-search-result
-                        onMouseMove={(event) => {
-                          if (document.activeElement !== event.currentTarget) {
-                            event.currentTarget.focus({ preventScroll: true });
-                          }
-                        }}
-                        onClick={closeDialog}
-                      >
-                        <span className="search-result-section">{result.sectionLabel}</span>
-                        <span className="search-result-title">{result.title}</span>
-                        <span className="search-result-description">{result.description}</span>
-                        <span className="search-result-excerpt">{result.excerpt}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
+              ) : null}
+
+              {query.trim() !== '' && results.length === 0 ? (
+                <p className="search-empty" role="status">
+                  No results for “{query}”.
+                </p>
+              ) : null}
+
+              {results.length > 0 ? (
+                <div ref={resultsRef}>
+                  <p className="sr-only" role="status">
+                    {results.length} results
+                  </p>
+                  <ul className="search-results">
+                    {results.map((result) => (
+                      <li key={result.href}>
+                        <Link
+                          href={result.href}
+                          className="search-result-link"
+                          data-search-result
+                          onMouseMove={(event) => {
+                            if (document.activeElement !== event.currentTarget) {
+                              event.currentTarget.focus({ preventScroll: true });
+                            }
+                          }}
+                          onClick={closeDialog}
+                        >
+                          <span className="search-result-section">{result.sectionLabel}</span>
+                          <span className="search-result-title">{result.title}</span>
+                          <span className="search-result-description">{result.description}</span>
+                          <span className="search-result-excerpt">{result.excerpt}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
           </div>
 
           <div className="search-footer">

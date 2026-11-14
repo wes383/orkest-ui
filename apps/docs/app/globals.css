@@ -1403,21 +1403,49 @@ kbd {
 }
 
 .search-body {
+  position: relative;
   flex: 1;
-  padding: 12px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 12px,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
+  min-height: 0;
 }
 
-.search-body::-webkit-scrollbar {
+.search-body::before,
+.search-body::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 48px;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.search-body::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--ui-surface), transparent);
+}
+
+.search-body::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--ui-surface), transparent);
+}
+
+.search-body-fade-top::before,
+.search-body-fade-bottom::after {
+  opacity: 1;
+}
+
+.search-results-scroll {
+  height: 100%;
+  padding: 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.search-results-scroll::-webkit-scrollbar {
   display: none;
 }
 
