@@ -10,7 +10,8 @@
 }
 
 :root[data-orkest-theme='dark'] {
-  --ui-surface-sunken: var(--ok-color-neutral-975);
+  /* A darker step is invisible against the near-black page, so raise it instead. */
+  --ui-surface-sunken: var(--ok-color-neutral-900);
 }
 
 *,
@@ -247,7 +248,7 @@ kbd {
   padding: 1px 5px;
   border: 0;
   border-radius: var(--ok-radius-sm);
-  background: var(--ui-surface-raised);
+  background: var(--ui-background);
   color: var(--ui-subtle-foreground);
   font-size: 9px;
   line-height: 1.5;
