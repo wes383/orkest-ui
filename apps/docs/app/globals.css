@@ -674,16 +674,24 @@ kbd {
   overflow-wrap: anywhere;
 }
 
-.props-table th:first-child {
+.props-table {
+  table-layout: fixed;
+}
+
+.props-table th:nth-child(1) {
+  width: 19%;
+}
+
+.props-table th:nth-child(2) {
   width: 18%;
 }
 
 .props-table th:nth-child(3) {
-  width: 15%;
+  width: 17%;
 }
 
 .props-table th:nth-child(4) {
-  width: 11%;
+  width: 12%;
 }
 
 .props-table tbody th {
