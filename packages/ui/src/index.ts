@@ -3,6 +3,9 @@ import './styles/index.css';
 export { Badge } from './components/badge';
 export type { BadgeProps, BadgeShape, BadgeSize, BadgeVariant } from './components/badge';
 
+export { Tag } from './components/tag';
+export type { TagProps, TagShape, TagSize, TagVariant } from './components/tag';
+
 export { Box } from './primitives/box';
 export type { BoxProps } from './primitives/box';
 

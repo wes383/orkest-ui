@@ -1,19 +1,19 @@
-.badge {
-  --badge-height: var(--ok-space-6);
-  --badge-padding-x: var(--ok-space-2);
-  --badge-font-size: var(--ok-font-size-xs);
-  --badge-radius: var(--ok-radius-md);
-  --badge-accent: var(--ui-muted-foreground);
+.chip {
+  --chip-height: var(--ok-space-6);
+  --chip-padding-x: var(--ok-space-2);
+  --chip-font-size: var(--ok-font-size-xs);
+  --chip-radius: var(--ok-radius-md);
+  --chip-accent: var(--ui-muted-foreground);
   display: inline-flex;
   align-items: center;
   gap: var(--ok-space-1);
   box-sizing: border-box;
-  min-height: var(--badge-height);
-  padding: 0 var(--badge-padding-x);
+  min-height: var(--chip-height);
+  padding: 0 var(--chip-padding-x);
   border: var(--ok-border-width) solid transparent;
-  border-radius: var(--badge-radius);
+  border-radius: var(--chip-radius);
   font-family: var(--ok-font-sans);
-  font-size: var(--badge-font-size);
+  font-size: var(--chip-font-size);
   font-variant-numeric: tabular-nums;
   font-weight: var(--ok-font-weight-medium);
   line-height: 1;
@@ -21,83 +21,83 @@
   vertical-align: middle;
 }
 
-.badge[data-size="sm"] {
-  --badge-height: var(--ok-space-5);
-  --badge-font-size: var(--ok-font-size-2xs);
-  --badge-radius: var(--ok-radius-md);
+.chip[data-size="sm"] {
+  --chip-height: var(--ok-space-5);
+  --chip-font-size: var(--ok-font-size-2xs);
+  --chip-radius: var(--ok-radius-md);
 }
 
-.badge[data-size="md"] {
-  --badge-height: var(--ok-space-6);
-  --badge-font-size: var(--ok-font-size-xs);
-  --badge-radius: var(--ok-radius-md);
+.chip[data-size="md"] {
+  --chip-height: var(--ok-space-6);
+  --chip-font-size: var(--ok-font-size-xs);
+  --chip-radius: var(--ok-radius-md);
 }
 
-.badge[data-size="lg"] {
-  --badge-height: calc(var(--ok-space-6) + var(--ok-space-1));
-  --badge-font-size: var(--ok-font-size-sm);
-  --badge-radius: var(--ok-radius-lg);
+.chip[data-size="lg"] {
+  --chip-height: calc(var(--ok-space-6) + var(--ok-space-1));
+  --chip-font-size: var(--ok-font-size-sm);
+  --chip-radius: var(--ok-radius-lg);
 }
 
-.badge[data-shape="pill"] {
+.chip[data-shape="pill"] {
   border-radius: var(--ok-radius-full);
 }
 
-.badge[data-variant="default"] {
-  --badge-accent: var(--ui-muted-foreground);
+.chip[data-variant="default"] {
+  --chip-accent: var(--ui-muted-foreground);
   background: var(--ui-secondary);
   color: var(--ui-secondary-foreground);
 }
 
-.badge[data-variant="info"] {
-  --badge-accent: var(--ui-accent);
+.chip[data-variant="info"] {
+  --chip-accent: var(--ui-accent);
   background: var(--ui-accent-surface);
   color: var(--ui-accent-surface-foreground);
 }
 
-.badge[data-variant="success"] {
-  --badge-accent: var(--ui-success);
+.chip[data-variant="success"] {
+  --chip-accent: var(--ui-success);
   background: var(--ui-success-surface);
   color: var(--ui-success-surface-foreground);
 }
 
-.badge[data-variant="warning"] {
-  --badge-accent: var(--ui-warning);
+.chip[data-variant="warning"] {
+  --chip-accent: var(--ui-warning);
   background: var(--ui-warning-surface);
   color: var(--ui-warning-surface-foreground);
 }
 
-.badge[data-variant="destructive"] {
-  --badge-accent: var(--ui-danger);
+.chip[data-variant="destructive"] {
+  --chip-accent: var(--ui-danger);
   background: var(--ui-danger-surface);
   color: var(--ui-danger-surface-foreground);
 }
 
-.badge[data-variant="outline"] {
-  --badge-accent: var(--ui-muted-foreground);
+.chip[data-variant="outline"] {
+  --chip-accent: var(--ui-muted-foreground);
   background: transparent;
   border-color: var(--ui-border);
   color: var(--ui-foreground);
 }
 
-.badge[data-custom="true"] {
-  --badge-accent: var(--badge-custom-color);
+.chip[data-custom="true"] {
+  --chip-accent: var(--chip-custom-color);
   border-color: var(--ui-border);
-  border-color: color-mix(in srgb, var(--badge-custom-color) 35%, transparent);
+  border-color: color-mix(in srgb, var(--chip-custom-color) 35%, transparent);
   background: var(--ui-secondary);
-  background: color-mix(in srgb, var(--badge-custom-color) 12%, transparent);
-  color: var(--badge-custom-color);
+  background: color-mix(in srgb, var(--chip-custom-color) 12%, transparent);
+  color: var(--chip-custom-color);
 }
 
-.badge[data-dot-only="true"] {
+.chip[data-dot-only="true"] {
   justify-content: center;
-  width: var(--badge-height);
-  height: var(--badge-height);
+  width: var(--chip-height);
+  height: var(--chip-height);
   min-height: 0;
   padding: 0;
   border-color: transparent;
   background: transparent;
-  color: var(--badge-accent);
+  color: var(--chip-accent);
 }
 
 .dot {
@@ -105,22 +105,22 @@
   width: 0.5em;
   height: 0.5em;
   border-radius: var(--ok-radius-full);
-  background: var(--badge-accent, currentColor);
+  background: var(--chip-accent, currentColor);
 }
 
-.badge[data-dot-only="true"] .dot {
+.chip[data-dot-only="true"] .dot {
   width: 0.5rem;
   height: 0.5rem;
 }
 
-.badge[data-interactive="true"] {
+.chip[data-interactive="true"] {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   cursor: pointer;
 }
 
-.badge[data-interactive="true"]::after {
+.chip[data-interactive="true"]::after {
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -132,25 +132,25 @@
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.badge[data-interactive="true"]:hover::after {
+.chip[data-interactive="true"]:hover::after {
   opacity: 0.08;
 }
 
-.badge[data-interactive="true"]:active::after {
+.chip[data-interactive="true"]:active::after {
   opacity: 0.14;
 }
 
-.badge[data-interactive="true"]:focus-visible {
+.chip[data-interactive="true"]:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: var(--ok-focus-ring-offset);
 }
 
-.badge[data-interactive="true"]:disabled {
+.chip[data-interactive="true"]:disabled {
   cursor: not-allowed;
   opacity: var(--ok-opacity-disabled);
 }
 
-.badge[data-interactive="true"]:disabled::after {
+.chip[data-interactive="true"]:disabled::after {
   opacity: 0;
 }
 
@@ -186,7 +186,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .badge[data-interactive="true"]::after {
+  .chip[data-interactive="true"]::after {
     transition: none;
   }
 }
