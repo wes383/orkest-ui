@@ -126,6 +126,12 @@ describe('Input', () => {
     expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
   });
 
+  it('marks the field when an action is present', () => {
+    const { container } = render(<Input clearable defaultValue="Value" aria-label="Name" />);
+
+    expect(container.querySelector('[data-actions="true"]')).toBeInTheDocument();
+  });
+
   it('toggles password visibility', async () => {
     const user = userEvent.setup();
 

@@ -76,6 +76,10 @@
   font-size: var(--ok-font-size-lg);
 }
 
+.field[data-actions="true"] {
+  padding-right: var(--ok-space-2);
+}
+
 .field:hover:not(:focus-within):not([data-disabled="true"]):not([data-read-only="true"]):not(
     [data-invalid="true"]
   ) {
@@ -161,7 +165,7 @@
   height: 1.25rem;
   padding: 0;
   border: 0;
-  border-radius: var(--ok-radius-sm);
+  border-radius: var(--ok-radius-lg);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;

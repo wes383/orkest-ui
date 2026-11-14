@@ -99,6 +99,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const resolvedType = type === 'password' && passwordVisible ? 'text' : type;
   const showClear = clearable && length > 0 && !disabled && !readOnly;
   const showPasswordAction = passwordToggle && type === 'password' && !disabled;
+  const hasActions = showClear || showPasswordAction;
   const countText = maxLength === undefined ? String(length) : `${length} / ${maxLength}`;
 
   const setInputRef = useCallback(
@@ -150,6 +151,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         data-invalid={invalid || undefined}
         data-disabled={disabled || undefined}
         data-read-only={readOnly || undefined}
+        data-actions={hasActions || undefined}
       >
         {leftIcon ? (
           <span className={styles.iconSlot}>
