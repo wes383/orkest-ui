@@ -24,8 +24,9 @@
 }
 
 .field:focus-within {
+  border-color: transparent;
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
-  outline-offset: var(--ok-focus-ring-offset);
+  outline-offset: 0;
 }
 
 .field[data-size="sm"] {
@@ -60,7 +61,7 @@
   font-size: var(--ok-font-size-lg);
 }
 
-.field:hover:not([data-disabled="true"]):not([data-read-only="true"]):not(
+.field:hover:not(:focus-within):not([data-disabled="true"]):not([data-read-only="true"]):not(
     [data-invalid="true"]
   ) {
   border-color: var(--ui-border-strong);
@@ -71,6 +72,7 @@
 }
 
 .field[data-invalid="true"]:focus-within {
+  border-color: transparent;
   outline-color: var(--ui-danger);
 }
 
@@ -95,6 +97,10 @@
   color: inherit;
   font: inherit;
   line-height: inherit;
+  outline: none;
+}
+
+.field .input:focus-visible {
   outline: none;
 }
 
