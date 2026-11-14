@@ -126,6 +126,34 @@ describe('Input', () => {
     expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
   });
 
+  it('hides the clear action when read-only', () => {
+    render(<Input clearable readOnly defaultValue="hello" aria-label="Name" />);
+
+    expect(screen.queryByRole('button', { name: 'Clear input' })).not.toBeInTheDocument();
+  });
+
+  it('supports custom action labels', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Input
+        clearable
+        passwordToggle
+        type="password"
+        defaultValue="secret"
+        clearLabel="Clear password"
+        showPasswordLabel="Reveal password"
+        hidePasswordLabel="Conceal password"
+        aria-label="Password"
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Clear password' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Reveal password' }));
+    expect(screen.getByRole('button', { name: 'Conceal password' })).toBeInTheDocument();
+  });
+
   it('marks the field when an action is present', () => {
     const { container } = render(<Input clearable defaultValue="Value" aria-label="Name" />);
 

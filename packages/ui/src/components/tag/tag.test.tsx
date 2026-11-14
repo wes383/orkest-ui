@@ -82,6 +82,16 @@ describe('Tag', () => {
     expect(screen.getByText('Design')).toHaveAttribute('data-removable', 'true');
   });
 
+  it('uses a custom remove label', () => {
+    render(
+      <Tag removable removeLabel="Remove design">
+        Design
+      </Tag>,
+    );
+
+    expect(screen.getByRole('button', { name: 'Remove design' })).toBeInTheDocument();
+  });
+
   it('renders an interactive tag as a button', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
