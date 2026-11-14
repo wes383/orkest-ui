@@ -35,10 +35,10 @@
   --ui-primary-active: var(--ok-color-neutral-950);
   --ui-primary-foreground: var(--ok-color-white);
 
-  /* Secondary action */
-  --ui-secondary: var(--ok-color-neutral-100);
-  --ui-secondary-hover: var(--ok-color-neutral-150);
-  --ui-secondary-active: var(--ok-color-neutral-200);
+  /* Secondary action — keep a visible step above sunken surfaces. */
+  --ui-secondary: var(--ok-color-neutral-150);
+  --ui-secondary-hover: var(--ok-color-neutral-200);
+  --ui-secondary-active: var(--ok-color-neutral-300);
   --ui-secondary-foreground: var(--ok-color-neutral-900);
 
   /* Destructive action */
