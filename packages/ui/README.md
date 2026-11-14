@@ -13,7 +13,8 @@ Currently exported:
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
-- Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
+- Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Input`, `Textarea`
+  (exported from `@orkest/ui/client`)
 
 ## Install
 

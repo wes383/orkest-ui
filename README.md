@@ -13,7 +13,8 @@ The repository is a pnpm monorepo containing the library and its custom document
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
-- Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
+- Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Input`, `Textarea`
+  (exported from `@orkest/ui/client`)
 
 Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
 registry yet.

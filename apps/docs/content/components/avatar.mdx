@@ -1,0 +1,447 @@
+---
+title: Avatar
+description: User and entity avatars with images, fallbacks, status indicators, and overlapping groups.
+section: components
+order: 12
+---
+
+`Avatar` represents a person or entity with an image, initials, or an icon. It also provides presence
+status and overlapping groups.
+
+Avatar components track image loading with React state, so import them from `@orkest/ui/client`.
+
+## Live preview
+
+<ComponentPreview
+  title="Avatar with status"
+  code={`import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Avatar size="lg" status="online">
+      <AvatarImage src="/avatar.jpg" alt="Alex Morgan" />
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+  );
+}`}
+>
+  <Avatar size="lg" status="online">
+    <AvatarImage src="/avatars/avatar-sample.svg" alt="Alex Morgan" />
+    <AvatarFallback>{'AM'}</AvatarFallback>
+  </Avatar>
+</ComponentPreview>
+
+## Image and fallback
+
+`AvatarFallback` is visible while the image loads, when no image is provided, and after a load
+failure. `AvatarImage` removes itself from the layout after an error so the fallback remains visible.
+
+<ComponentPreview
+  title="Image, failed image, and initials"
+  code={`import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Avatar size="lg">
+      <AvatarImage src="/avatar.jpg" alt="Alex Morgan" />
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} align="center">
+    <Avatar size="lg">
+      <AvatarImage src="/avatars/avatar-sample.svg" alt="Alex Morgan" />
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="lg">
+      <AvatarImage src="/avatars/missing.svg" alt="Jordan Lee" />
+      <AvatarFallback>{'JL'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="lg">
+      <AvatarFallback>{'SK'}</AvatarFallback>
+    </Avatar>
+  </Stack>
+</ComponentPreview>
+
+## Initials
+
+Use one or two characters in `AvatarFallback`. Initials scale with the avatar size.
+
+<ComponentPreview
+  title="Initials"
+  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <>
+      <Avatar size="xs"><AvatarFallback>{'XS'}</AvatarFallback></Avatar>
+      <Avatar size="sm"><AvatarFallback>{'SM'}</AvatarFallback></Avatar>
+      <Avatar size="md"><AvatarFallback>{'MD'}</AvatarFallback></Avatar>
+      <Avatar size="lg"><AvatarFallback>{'LG'}</AvatarFallback></Avatar>
+      <Avatar size="xl"><AvatarFallback>{'XL'}</AvatarFallback></Avatar>
+    </>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} align="center" wrap>
+    <Avatar size="xs">
+      <AvatarFallback>{'XS'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="sm">
+      <AvatarFallback>{'SM'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="md">
+      <AvatarFallback>{'MD'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="lg">
+      <AvatarFallback>{'LG'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="xl">
+      <AvatarFallback>{'XL'}</AvatarFallback>
+    </Avatar>
+  </Stack>
+</ComponentPreview>
+
+## Shapes
+
+Circles are the default. Square avatars use a size-aware corner radius.
+
+<ComponentPreview
+  title="Circle and square"
+  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Avatar size="lg" shape="square">
+      <AvatarFallback>{'SQ'}</AvatarFallback>
+    </Avatar>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} align="center">
+    <Avatar size="lg">
+      <AvatarFallback>{'CI'}</AvatarFallback>
+    </Avatar>
+    <Avatar size="lg" shape="square">
+      <AvatarFallback>{'SQ'}</AvatarFallback>
+    </Avatar>
+  </Stack>
+</ComponentPreview>
+
+## Icon
+
+Icons inherit the avatar size and color. Set `label` on `Avatar` when the fallback is decorative, so
+the avatar keeps an accessible name.
+
+<ComponentPreview
+  title="Icon avatar"
+  code={`import { Bot } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Avatar size="lg" label="Orkest assistant">
+      <AvatarFallback>
+        <Bot aria-hidden="true" />
+      </AvatarFallback>
+    </Avatar>
+  );
+}`}
+>
+  <AvatarIconExample />
+</ComponentPreview>
+
+## Status
+
+Add `status` to show a presence indicator in the bottom-right corner. Every status includes
+visually hidden text; use `statusLabel` to customize it.
+
+<ComponentPreview
+  title="Presence status"
+  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Avatar status="online" statusLabel="Online">
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+  );
+}`}
+>
+  <Stack direction="row" gap={4} align="start" wrap>
+    <Stack gap={2} align="center">
+      <Avatar status="online">
+        <AvatarFallback>{'ON'}</AvatarFallback>
+      </Avatar>
+      <Text size="sm" tone="muted">
+        {'Online'}
+      </Text>
+    </Stack>
+    <Stack gap={2} align="center">
+      <Avatar status="away">
+        <AvatarFallback>{'AW'}</AvatarFallback>
+      </Avatar>
+      <Text size="sm" tone="muted">
+        {'Away'}
+      </Text>
+    </Stack>
+    <Stack gap={2} align="center">
+      <Avatar status="offline">
+        <AvatarFallback>{'OF'}</AvatarFallback>
+      </Avatar>
+      <Text size="sm" tone="muted">
+        {'Offline'}
+      </Text>
+    </Stack>
+    <Stack gap={2} align="center">
+      <Avatar status="busy">
+        <AvatarFallback>{'BU'}</AvatarFallback>
+      </Avatar>
+      <Text size="sm" tone="muted">
+        {'Busy'}
+      </Text>
+    </Stack>
+  </Stack>
+</ComponentPreview>
+
+## Avatar group
+
+`AvatarGroup` overlaps its children. `size` and `shape` cascade to avatars that do not set their own,
+and `spacing` controls the overlap using a spacing token step.
+
+<ComponentPreview
+  title="Overlapping avatars"
+  code={`import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <AvatarGroup size="md" spacing={2}>
+      <Avatar><AvatarFallback>{'AM'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'JL'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'SK'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'TW'}</AvatarFallback></Avatar>
+    </AvatarGroup>
+  );
+}`}
+>
+  <AvatarGroup size="md" spacing={2}>
+    <Avatar>
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'JL'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'SK'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'TW'}</AvatarFallback>
+    </Avatar>
+  </AvatarGroup>
+</ComponentPreview>
+
+### Overflow
+
+Set `max` to keep the first N avatars and replace the rest with a count. The group preserves child
+order, so place the avatars that must stay visible first. `overflowLabel` customizes the accessible
+text and defaults to `N more avatars`.
+
+<ComponentPreview
+  title="Overflow count"
+  code={`import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <AvatarGroup max={3} size="md">
+      <Avatar><AvatarFallback>{'AM'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'JL'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'SK'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'TW'}</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>{'RB'}</AvatarFallback></Avatar>
+    </AvatarGroup>
+  );
+}`}
+>
+  <AvatarGroup max={3} size="md">
+    <Avatar>
+      <AvatarFallback>{'AM'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'JL'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'SK'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'TW'}</AvatarFallback>
+    </Avatar>
+    <Avatar>
+      <AvatarFallback>{'RB'}</AvatarFallback>
+    </Avatar>
+  </AvatarGroup>
+</ComponentPreview>
+
+## Props
+
+### Avatar
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Avatar size. Inherits from AvatarGroup when omitted.',
+    },
+    {
+      name: 'shape',
+      type: `'circle' | 'square'`,
+      default: `'circle'`,
+      description: 'Corner shape. Inherits from AvatarGroup when omitted.',
+    },
+    {
+      name: 'status',
+      type: `'online' | 'away' | 'offline' | 'busy'`,
+      description: 'Presence indicator rendered at the bottom-right corner.',
+    },
+    {
+      name: 'statusLabel',
+      type: 'string',
+      default: `'Online' | 'Away' | 'Offline' | 'Busy'`,
+      description: 'Visually hidden status text announced to assistive technology.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      description:
+        'Accessible name. When set, the visual image or fallback is hidden from assistive technology.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+### AvatarImage
+
+<PropsTable
+  rows={[
+    {
+      name: 'src',
+      type: 'string',
+      description: 'Image source. Use a square image for the best crop.',
+    },
+    {
+      name: 'alt',
+      type: 'string',
+      description:
+        'Accessible description of the image. Use an empty string only when the avatar is decorative.',
+    },
+    {
+      name: 'onLoad',
+      type: 'ReactEventHandler<HTMLImageElement>',
+      description: 'Called after the image loads.',
+    },
+    {
+      name: 'onError',
+      type: 'ReactEventHandler<HTMLImageElement>',
+      description: 'Called when the image fails to load. The fallback takes over.',
+    },
+    {
+      name: 'native attributes',
+      type: `Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>`,
+      description: 'Image attributes, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+### AvatarFallback
+
+<PropsTable
+  rows={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Initials, an icon, or other fallback content.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+### AvatarGroup
+
+<PropsTable
+  rows={[
+    {
+      name: 'max',
+      type: 'number',
+      description: 'Maximum visible avatars before the overflow indicator replaces the rest.',
+    },
+    {
+      name: 'size',
+      type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Size applied to child avatars that do not set their own size.',
+    },
+    {
+      name: 'shape',
+      type: `'circle' | 'square'`,
+      default: `'circle'`,
+      description: 'Shape applied to child avatars that do not set their own shape.',
+    },
+    {
+      name: 'spacing',
+      type: '0 | 1 | 2 | 3 | 4',
+      default: '2',
+      description: 'Overlap between avatars as a spacing token step.',
+    },
+    {
+      name: 'overflowLabel',
+      type: '(count: number) => string',
+      default: '`N more avatars`',
+      description: 'Accessible label for the overflow indicator.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `AvatarImage` requires `alt`. Describe the person or entity, or pass an empty alt when the avatar
+  is purely decorative.
+- Use `label` on `Avatar` when the fallback is an icon or another visual without a text name. The
+  visual content is hidden from assistive technology and the label becomes the accessible name.
+- Status indicators always include visually hidden text. Default labels are Online, Away, Offline,
+  and Busy; use `statusLabel` for product-specific wording.
+- Do not communicate status with color alone. The status text is part of the accessible name, and
+  surrounding UI should provide a visible equivalent when status is important.
+- The group overflow indicator announces `N more avatars` by default. Customize it with
+  `overflowLabel`.
+- Avatars are not interactive. Wrap them in a [Button](/docs/components/button/) or use
+  [Tag](/docs/components/tag/) for clickable chips.
+
+## Related
+
+- [Button](/docs/components/button/) for avatar actions and menus.
+- [Badge](/docs/components/badge/) for compact status and count labels.
+- [Tag](/docs/components/tag/) for removable or clickable labels.
+- [Icon](/docs/components/icon/) for icon sizing and accessibility.

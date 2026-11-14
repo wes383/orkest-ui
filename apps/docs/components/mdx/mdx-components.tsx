@@ -36,6 +36,13 @@ import { FontFamilySample, TypographySample } from './typography-sample';
 import { CodeBlock } from '../examples/code-block';
 import { ComponentPreview } from '../examples/component-preview';
 import { CopyButton } from '../examples/copy-button';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarIconExample,
+  AvatarImage,
+} from '../examples/avatar-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 
@@ -133,6 +140,11 @@ export const mdxComponents = {
   a: MdxLink,
   pre: MdxPre,
   table: MdxTable,
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarIconExample,
+  AvatarImage,
   Badge,
   Box,
   Button,

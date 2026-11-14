@@ -2,6 +2,7 @@ import { ArrowRight, Settings } from 'lucide-react';
 
 import { Badge, Button, Heading, IconButton, Stack, Tag, Text } from '@orkest/ui';
 
+import { AvatarDemo } from './avatar-demo';
 import { PlaygroundForm } from './playground-form';
 
 function Showcase({ idPrefix }: { idPrefix: string }) {
@@ -37,6 +38,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
           <Tag variant="outline">Engineering</Tag>
         </Stack>
       </Stack>
+      <AvatarDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>
   );
