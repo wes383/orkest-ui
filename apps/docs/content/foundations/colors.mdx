@@ -1,0 +1,61 @@
+---
+title: Colors
+description: Semantic color tokens, primitive palettes, and theme behavior.
+section: foundations
+order: 1
+---
+
+Color in Orkest UI is intentionally restrained. Neutral surfaces carry most of the interface, while
+the muted accent and status colors appear only where meaning or interaction requires them.
+
+## Semantic tokens
+
+Components consume semantic tokens. The values below are generated from the current token source,
+including both light and dark themes.
+
+<SemanticColorTable />
+
+## Primitive palettes
+
+Primitive scales are implementation details. Use them to understand the palette, but consume the
+semantic tokens above in application and component code.
+
+### Neutral
+
+<ColorPalette family="neutral" />
+
+### Accent
+
+<ColorPalette family="accent" />
+
+### Success
+
+<ColorPalette family="green" />
+
+### Warning
+
+<ColorPalette family="amber" />
+
+### Danger
+
+<ColorPalette family="red" />
+
+## Theme behavior
+
+The library provides light and dark mappings. Theme state belongs to the host application:
+
+```html
+<html data-orkest-theme="light">
+  ...
+</html>
+```
+
+When the attribute is absent, the stylesheet follows `prefers-color-scheme`. The `color-scheme`
+property is set per theme so native controls match.
+
+<Callout type="note" title="Do not communicate state with color alone">
+  Pair status colors with text or an icon. The `Text` tone, callout labels, and icon labels in these
+  docs follow that rule.
+</Callout>
+
+See [Theming](/docs/guides/theming/) for persistence, dark mode, and CSS variable overrides.

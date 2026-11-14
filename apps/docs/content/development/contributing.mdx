@@ -1,0 +1,72 @@
+---
+title: Contributing
+description: Setup, conventions, and the workflow for components and documentation.
+section: development
+order: 3
+---
+
+## Setup
+
+```bash
+pnpm install
+pnpm --filter @orkest/ui build
+pnpm docs
+```
+
+The documentation app builds the UI package before starting. Run `pnpm test` and `pnpm typecheck`
+before submitting a change.
+
+## Code conventions
+
+- Follow the existing repository structure and naming.
+- Use semantic design tokens instead of hard-coded colors, spacing, radii, or typography values.
+- Write code comments in English and only when they explain non-obvious intent or constraints.
+- Keep components independent of application routing, state, and backend services.
+- Preserve native HTML semantics and forward relevant native attributes.
+- Add or update tests when behavior changes.
+- Update the relevant MDX page when a public prop, default, or interaction changes.
+
+## Commits
+
+Commit after each completed change. Use one short English sentence in Conventional Commits format:
+
+```text
+feat(stack): add baseline alignment
+fix(icon): keep decorative icons hidden from assistive technology
+docs(colors): derive values from token source
+```
+
+Keep each commit focused on one logical change and do not commit build output.
+
+## Adding a component
+
+1. Add the implementation under `packages/ui/src/primitives/<name>/`.
+2. Add a CSS Module using semantic tokens.
+3. Add tests for rendering, states, keyboard behavior, and native attributes where relevant.
+4. Export the component and public types from the component barrel and `src/index.ts`.
+5. Add a documentation page under `apps/docs/content/components/`.
+6. Provide a live preview and a copyable code example using the real component.
+7. Document states, accessibility behavior, and related components.
+8. Run tests, type checks, and the documentation build.
+
+## Adding a documentation page
+
+Create an MDX file with frontmatter:
+
+```yaml
+---
+title: Button
+description: A control that triggers an action.
+section: components
+order: 1
+---
+```
+
+Use an existing section id from `apps/docs/lib/docs-navigation.ts`. Navigation, previous/next links,
+and search entries are generated from the content files, so no separate navigation registry needs to
+be edited.
+
+<Callout type="warning" title="Do not document unimplemented APIs">
+  A page may describe behavior only when it exists in `packages/ui`. Do not add placeholder pages or
+  speculative props.
+</Callout>

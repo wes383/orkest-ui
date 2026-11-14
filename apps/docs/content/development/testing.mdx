@@ -1,0 +1,58 @@
+---
+title: Testing
+description: The current test strategy and verification commands.
+section: development
+order: 2
+---
+
+The repository uses Vitest and Testing Library for component behavior. Tests live next to the
+components they cover.
+
+## Commands
+
+```bash
+pnpm test
+pnpm typecheck
+pnpm build
+pnpm build:docs
+```
+
+`pnpm build:docs` builds the UI package, compiles every MDX page, generates the local search index,
+and produces the static documentation site.
+
+## Component tests
+
+Current tests cover:
+
+- Default rendering and polymorphism.
+- Variant props and observable attributes.
+- Native attribute forwarding.
+- Ref forwarding.
+- Decorative and labelled icon semantics.
+- Dynamic and monospace font families on `Text`.
+
+Tests assert user-observable behavior rather than CSS class names where possible.
+
+## Token integrity
+
+`packages/ui/src/styles/themes.test.ts` checks that:
+
+- Light and dark theme blocks define the same semantic tokens.
+- Every primitive referenced by a semantic token exists.
+- The system dark mapping matches the explicit dark mapping.
+
+## Documentation checks
+
+After a content or shell change, verify:
+
+- Every navigation entry points to a real MDX page.
+- Frontmatter includes `title`, `description`, `section`, and `order`.
+- Headings and table-of-contents anchors resolve.
+- Code examples use real imports and public props.
+- Search finds page titles, headings, and content.
+- The site builds with `output: 'export'`.
+
+<Callout type="note" title="No lint script">
+  The repository does not currently configure a lint command. Do not report lint as passed unless a
+  lint script is added and executed.
+</Callout>

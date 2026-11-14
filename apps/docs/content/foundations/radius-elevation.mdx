@@ -1,0 +1,38 @@
+---
+title: Radius & Elevation
+description: Corner radii, borders, and the restrained shadow scale.
+section: foundations
+order: 4
+---
+
+Structure comes from borders and alignment first. Shadows are subtle and never carry meaning on
+their own.
+
+## Radius
+
+<Text size="sm" tone="muted">
+  Radius tiles use the token value as their corner radius.
+</Text>
+
+<TokenPreviewGrid kind="radius" prefix="--ok-radius-" />
+
+<TokenTable title="Radius tokens" prefix="--ok-radius-" />
+
+Small radii keep controls precise. Larger radii are reserved for surfaces and overlays.
+
+## Elevation
+
+<TokenPreviewGrid kind="shadow" prefix="--ok-shadow-" />
+
+<TokenTable title="Shadow tokens" prefix="--ok-shadow-" />
+
+<Callout type="note" title="Borders before shadows">
+  A one-pixel border is the default separator. Add elevation only when a surface needs to lift above
+  its surroundings, such as a menu or dialog.
+</Callout>
+
+## Borders
+
+<TokenTable title="Border tokens" prefix="--ok-border-" />
+
+Border strength communicates structure, not status. Status is always paired with text or an icon.

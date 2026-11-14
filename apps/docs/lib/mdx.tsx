@@ -1,0 +1,37 @@
+import rehypeShiki from '@shikijs/rehype';
+import { Check, Circle } from 'lucide-react';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import rehypeSlug from 'rehype-slug';
+
+import { mdxComponents } from '@/components/mdx/mdx-components';
+
+export function MdxContent({ source }: { source: string }) {
+  return (
+    <MDXRemote
+      source={source}
+      components={mdxComponents}
+      options={{
+        blockJS: false,
+        scope: {
+          Check,
+          Circle,
+        },
+        mdxOptions: {
+          rehypePlugins: [
+            rehypeSlug,
+            [
+              rehypeShiki,
+              {
+                themes: {
+                  light: 'github-light',
+                  dark: 'github-dark',
+                },
+                defaultColor: 'light',
+              },
+            ],
+          ],
+        },
+      }}
+    />
+  );
+}

@@ -1,0 +1,71 @@
+---
+title: Installation
+description: Add Orkest UI to a React or Next.js workspace and load its styles.
+section: getting-started
+order: 2
+---
+
+Orkest UI is currently developed inside this monorepo. It is not published to a public registry
+yet, so the installation instructions below describe the workspace workflow.
+
+<Callout type="warning" title="Package availability">
+  Do not install a similarly named package from a public registry. Add `@orkest/ui` as a workspace
+  dependency until the first release is published.
+</Callout>
+
+## Requirements
+
+- React 18.2 or React 19.
+- React DOM with a matching version.
+- TypeScript is recommended for the public prop types.
+- pnpm for workspace operations.
+
+## Add the package
+
+Add `@orkest/ui` to the application `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@orkest/ui": "workspace:*"
+  }
+}
+```
+
+Then install the workspace dependencies:
+
+```bash
+pnpm install
+```
+
+## Load the styles
+
+Import the compiled stylesheet once in the application root:
+
+```tsx
+import '@orkest/ui/style.css';
+```
+
+The stylesheet contains the design tokens, light and dark theme mappings, and component styles. It
+does not load font files or override host application typography.
+
+## Build the library first
+
+The package exports its built `dist` directory. In this monorepo the documentation app and local
+consumers must build `packages/ui` before starting or building their own app:
+
+```bash
+pnpm --filter @orkest/ui build
+```
+
+The `apps/docs` scripts run this step automatically before `dev`, `build`, and `typecheck`.
+
+## Peer dependencies
+
+React and React DOM are peer dependencies. `lucide-react` is a regular dependency because `Icon`
+uses it for its icon primitives.
+
+## Next steps
+
+- Follow the [Quick Start](/docs/quick-start/) to render a first composition.
+- Read [Theming](/docs/guides/theming/) before overriding tokens.

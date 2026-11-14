@@ -2,10 +2,12 @@ node_modules/
 dist/
 coverage/
 .vite/
-storybook-static/
+.next/
+out/
 *.tsbuildinfo
 *.tgz
 *.log
 .DS_Store
 Thumbs.db
 /Development-guide.md
+/Custom-documentation-spec.md

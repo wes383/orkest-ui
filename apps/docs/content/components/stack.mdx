@@ -1,0 +1,113 @@
+---
+title: Stack
+description: One-dimensional flex layout with token-based gaps.
+section: components
+order: 2
+---
+
+`Stack` arranges items in a row or column and applies a spacing token as the gap. It is the default
+layout primitive for vertical rhythm and simple horizontal groups.
+
+## Live preview
+
+<ComponentPreview
+  title="Vertical rhythm"
+  code={`import { Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Text weight="semibold">Release checklist</Text>
+      <Text size="sm" tone="muted">
+        Tokens are generated from the source stylesheet.
+      </Text>
+      <Text size="sm" tone="muted">
+        Docs and components share the same visual language.
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Text weight="semibold">Release checklist</Text>
+    <Text size="sm" tone="muted">
+      Tokens are generated from the source stylesheet.
+    </Text>
+    <Text size="sm" tone="muted">
+      Docs and components share the same visual language.
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+<ComponentPreview
+  title="Horizontal group"
+  code={`<Stack direction="row" align="center" gap={2}>
+  <Text weight="semibold">Status</Text>
+  <Text size="sm" tone="success">
+    Ready
+  </Text>
+</Stack>`}
+>
+  <Stack direction="row" align="center" gap={2}>
+    <Text weight="semibold">Status</Text>
+    <Text size="sm" tone="success">
+      Ready
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'direction',
+      type: `'row' | 'column'`,
+      default: `'column'`,
+      description: 'Main axis of the flex container.',
+    },
+    {
+      name: 'gap',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20',
+      default: '2',
+      description: 'Spacing step mapped to a --ok-space token.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end' | 'stretch' | 'baseline'`,
+      default: `'stretch'`,
+      description: 'Cross-axis alignment.',
+    },
+    {
+      name: 'justify',
+      type: `'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'`,
+      default: `'start'`,
+      description: 'Main-axis distribution.',
+    },
+    {
+      name: 'wrap',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows items to wrap onto multiple lines.',
+    },
+    {
+      name: 'as',
+      type: 'ElementType',
+      default: `'div'`,
+      description: 'Element to render, preserving native attributes.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+`Stack` does not add ARIA roles or keyboard behavior. It only changes visual layout.
+
+- Reading order remains DOM order. Avoid visual reordering that contradicts the source order.
+- Use `as` to render semantic elements such as `ul`, `nav`, or `section` when appropriate.
+- Direction and alignment are visual concerns; they should not change the meaning of the content.
+
+## Related
+
+- [Box](/docs/components/box/) for an unstyled semantic container.
+- [Text](/docs/components/text/) for typographic content.

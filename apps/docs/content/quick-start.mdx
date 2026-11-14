@@ -1,0 +1,75 @@
+---
+title: Quick Start
+description: Build a small interface with Box, Stack, Text, and Icon.
+section: getting-started
+order: 3
+---
+
+The current primitives cover layout, text, and icons. This example composes them into a small status
+panel.
+
+<ComponentPreview
+  title="Status panel"
+  code={`import { Icon, Stack, Text } from '@orkest/ui';
+import { Check } from 'lucide-react';
+
+export function StatusPanel() {
+  return (
+    <Stack gap={3}>
+      <Stack direction="row" align="center" gap={2}>
+        <Icon icon={Check} size="sm" />
+        <Text weight="semibold">Semantic by default</Text>
+      </Stack>
+      <Text size="sm" tone="muted">
+        Surfaces, text, and borders follow the active theme.
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Stack direction="row" align="center" gap={2}>
+      <Icon icon={Check} size="sm" />
+      <Text weight="semibold">Semantic by default</Text>
+    </Stack>
+    <Text size="sm" tone="muted">
+      Surfaces, text, and borders follow the active theme.
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Add a theme
+
+The library follows `prefers-color-scheme` when no theme attribute is present. To force a theme, set
+`data-orkest-theme` on the document root or any container:
+
+```html
+<html data-orkest-theme="dark">
+  ...
+</html>
+```
+
+The host application owns theme state and persistence. The [Theming guide](/docs/guides/theming/)
+shows a complete pattern, including a script that avoids a flash of the wrong theme.
+
+## Compose with tokens
+
+Use `Stack` for one-dimensional layout and spacing tokens for gaps. Avoid hard-coded spacing between
+components:
+
+```tsx
+<Stack gap={4}>
+  <Text size="sm" weight="medium">
+    Section title
+  </Text>
+  <Text size="sm" tone="muted">
+    Supporting content stays on the same rhythm.
+  </Text>
+</Stack>
+```
+
+## Next steps
+
+- Explore [Foundations](/docs/foundations/colors/) to understand the token layers.
+- Read the [Stack](/docs/components/stack/) and [Text](/docs/components/text/) references.
+- Use [Box](/docs/components/box/) when a polymorphic container is needed.

@@ -1,0 +1,123 @@
+---
+title: Text
+description: Typographic primitive with sizes, weights, tones, and font families.
+section: components
+order: 3
+---
+
+`Text` renders a span by default and provides a small, token-driven set of typographic options. It
+accepts any element through `as`, so it can also render paragraphs, headings, and list content.
+
+## Live preview
+
+<ComponentPreview
+  title="Text hierarchy"
+  code={`import { Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={2}>
+      <Text size="xl" weight="semibold">
+        Design with clarity
+      </Text>
+      <Text size="md">Primary body copy stays comfortable to read.</Text>
+      <Text size="sm" tone="muted">
+        Secondary details recede without becoming unreadable.
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={2}>
+    <Text size="xl" weight="semibold">
+      Design with clarity
+    </Text>
+    <Text size="md">Primary body copy stays comfortable to read.</Text>
+    <Text size="sm" tone="muted">
+      Secondary details recede without becoming unreadable.
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+<ComponentPreview
+  title="Display and monospace families"
+  code={`<Stack gap={2}>
+  <Text font="display" size="xl" weight="semibold">
+    Build with clarity.
+  </Text>
+  <Text font="mono" size="sm">
+    const ui = "orkest";
+  </Text>
+</Stack>`}
+>
+  <Stack gap={2}>
+    <Text font="display" size="xl" weight="semibold">
+      Build with clarity.
+    </Text>
+    <Text font="mono" size="sm">
+      const ui = &quot;orkest&quot;;
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Font size and matching line height.',
+    },
+    {
+      name: 'weight',
+      type: `'regular' | 'medium' | 'semibold'`,
+      default: `'regular'`,
+      description: 'Font weight token.',
+    },
+    {
+      name: 'tone',
+      type: `'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger'`,
+      default: `'default'`,
+      description: 'Semantic text color.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end' | 'justify'`,
+      default: `'start'`,
+      description: 'Text alignment.',
+    },
+    {
+      name: 'font',
+      type: `'sans' | 'display' | 'mono'`,
+      default: `'sans'`,
+      description: 'Font family. Display is intended for large headings; mono for code.',
+    },
+    {
+      name: 'truncate',
+      type: 'boolean',
+      default: 'false',
+      description: 'Single-line overflow with an ellipsis.',
+    },
+    {
+      name: 'as',
+      type: 'ElementType',
+      default: `'span'`,
+      description: 'Element to render.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `Text` defaults to a span. Use `as` to render the correct semantic element.
+- Do not skip heading levels. A visual size does not determine the heading level.
+- Truncation is visual; the full text remains in the DOM for assistive technology.
+- Tone is not a substitute for context. Pair success or danger text with a clear label or icon.
+- Inherited native attributes such as `id`, `title`, and event handlers are forwarded.
+
+## Related
+
+- [Typography foundations](/docs/foundations/typography/) for the full type scale.
+- [Stack](/docs/components/stack/) for vertical rhythm.

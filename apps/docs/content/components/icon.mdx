@@ -1,0 +1,97 @@
+---
+title: Icon
+description: Token-sized Lucide icons with correct decorative or labelled semantics.
+section: components
+order: 4
+---
+
+`Icon` wraps a Lucide icon component, applies a token-based size and stroke width, and handles the
+accessible name. Icons inherit the current text color.
+
+## Live preview
+
+<ComponentPreview
+  title="Sizes and labels"
+  code={`import { Icon, Stack } from '@orkest/ui';
+import { Check, Circle } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" align="center" gap={4}>
+      <Icon icon={Circle} size="sm" />
+      <Icon icon={Circle} size="md" />
+      <Icon icon={Circle} size="lg" />
+      <Icon icon={Check} size="md" label="Completed" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" align="center" gap={4}>
+    <Icon icon={Circle} size="sm" />
+    <Icon icon={Circle} size="md" />
+    <Icon icon={Circle} size="lg" />
+    <Icon icon={Check} size="md" label="Completed" />
+  </Stack>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'icon',
+      type: 'LucideIcon',
+      required: true,
+      description: 'A Lucide icon component, such as the Check import above.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Maps to the icon size tokens: 16px, 20px, or 24px.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      description:
+        'Accessible name. When omitted, the icon is hidden from assistive technology.',
+    },
+    {
+      name: 'strokeWidth',
+      type: 'number',
+      default: '1.75',
+      description: 'Overrides the default icon stroke width token.',
+    },
+    {
+      name: 'native SVG attributes',
+      type: 'ComponentPropsWithoutRef<"svg">',
+      description: 'Inherited from the underlying SVG element.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+Icons are decorative by default: they receive `aria-hidden="true"` and `focusable="false"`.
+
+Provide a `label` only when the icon conveys meaning on its own:
+
+```tsx
+<Icon icon={Check} label="Completed" />
+```
+
+When the icon sits inside a control that already has an accessible name, leave the icon decorative:
+
+```tsx
+<button type="button" aria-label="Close dialog">
+  <Icon icon={X} size="sm" />
+</button>
+```
+
+Do not use an icon label to duplicate visible text in the same control. Use the icon as decoration
+when the surrounding text already communicates the action.
+
+## Related
+
+- [Text](/docs/components/text/) for adjacent labels.
+- [Stack](/docs/components/stack/) for icon and text alignment.

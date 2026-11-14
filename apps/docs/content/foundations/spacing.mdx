@@ -1,0 +1,44 @@
+---
+title: Spacing
+description: The four-pixel spacing scale and layout rhythm.
+section: foundations
+order: 3
+---
+
+Spacing uses a four-pixel base. The same scale applies to gaps, padding, and vertical rhythm, which
+keeps dense interfaces aligned without making them feel cramped.
+
+## Spacing scale
+
+<SpacingScale />
+
+<TokenTable title="Spacing tokens" prefix="--ok-space-" />
+
+## Use the scale
+
+Prefer spacing tokens over decimal pixel values. `Stack` accepts a `gap` step that maps directly to
+the scale:
+
+```tsx
+<Stack gap={4}>
+  <Text weight="semibold">Section title</Text>
+  <Text size="sm" tone="muted">
+    Supporting content uses the same rhythm.
+  </Text>
+</Stack>
+```
+
+`gap={4}` resolves to `var(--ok-space-4)`, or 16px. Values are intentionally finite to discourage
+one-off spacing decisions.
+
+## A practical rhythm
+
+- Use `2` or `3` for tight relationships inside a control group.
+- Use `4` or `6` between related blocks.
+- Use `8` to `12` between sections.
+- Use `16` or more for page-level separation.
+
+<Callout type="tip" title="Keep spacing in the parent">
+  Prefer a `Stack` gap over adding margins to every child. A single gap keeps the relationship
+  between items explicit and easy to change.
+</Callout>

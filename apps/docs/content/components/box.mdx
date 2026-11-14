@@ -1,0 +1,91 @@
+---
+title: Box
+description: A polymorphic, unstyled container for semantic composition.
+section: components
+order: 1
+---
+
+`Box` is the neutral composition base for the library. It renders the element you choose, forwards
+native props and refs, and adds only `box-sizing: border-box`.
+
+## Overview
+
+Use `Box` when a wrapper is needed but no layout or visual behavior should be imposed. Choose the
+semantic element with `as` instead of adding ARIA roles to a `div`.
+
+<Callout type="note" title="Box is not a layout system">
+  Use [Stack](/docs/components/stack/) for one-dimensional layout. Box intentionally exposes no
+  spacing, display, or color props.
+</Callout>
+
+## Live preview
+
+<ComponentPreview
+  title="Semantic container"
+  code={`import { Box, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box as="section" aria-label="Project summary">
+      <Stack gap={2}>
+        <Text weight="semibold">Project summary</Text>
+        <Text size="sm" tone="muted">
+          Box renders a real section element here.
+        </Text>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box as="section" aria-label="Project summary">
+    <Stack gap={2}>
+      <Text weight="semibold">Project summary</Text>
+      <Text size="sm" tone="muted">
+        Box renders a real section element here.
+      </Text>
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'as',
+      type: 'ElementType',
+      default: `'div'`,
+      description: 'Element or component to render.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Merged with the internal class name.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Content rendered inside the element.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ComponentPropsWithRef<T>',
+      description: 'Inherited from the element selected by as.',
+    },
+  ]}
+/>
+
+`BoxProps<T>` is exported for wrapper components. The `as` prop drives the available native
+attributes and the ref type.
+
+## Accessibility
+
+- `Box` adds no roles, labels, or keyboard behavior.
+- Choose an element that matches the content, such as `section`, `nav`, `article`, or `ul`.
+- Provide an accessible name when the chosen landmark needs one.
+- Do not replace a native interactive element with a clickable Box.
+
+## Related
+
+- [Stack](/docs/components/stack/) for flex layout.
+- [Text](/docs/components/text/) for typographic content.

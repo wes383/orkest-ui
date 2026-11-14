@@ -1,0 +1,88 @@
+---
+title: TypeScript
+description: Public types, polymorphic props, and ref forwarding.
+section: guides
+order: 3
+---
+
+Orkest UI is written in TypeScript with strict settings. Public component props and supporting types
+are exported from the package entry point.
+
+## Import types
+
+```tsx
+import type {
+  BoxProps,
+  IconProps,
+  StackProps,
+  TextProps,
+  TextFont,
+  TextSize,
+  TextTone,
+} from '@orkest/ui';
+```
+
+## Polymorphic props
+
+`Box`, `Stack`, and `Text` accept an `as` prop. The native attributes and ref type follow the
+selected element:
+
+```tsx
+import { Text } from '@orkest/ui';
+
+<Text as="a" href="/docs" size="sm">
+  Documentation
+</Text>;
+```
+
+In the example above, `href` is accepted because `as` is `"a"`. Supplying a button-only attribute
+would be a type error.
+
+Use the generic form when extracting a wrapper:
+
+```tsx
+import { Text, type TextProps } from '@orkest/ui';
+
+function Caption(props: TextProps<'p'>) {
+  return <Text as="p" size="xs" tone="muted" {...props} />;
+}
+```
+
+## Ref forwarding
+
+The primitives forward refs to the rendered element:
+
+```tsx
+import { useRef } from 'react';
+import { Stack } from '@orkest/ui';
+
+const ref = useRef<HTMLDivElement>(null);
+
+<Stack ref={ref} gap={4}>
+  ...
+</Stack>;
+```
+
+## Icon types
+
+`IconProps` extends the native SVG props, omitting `children`, `width`, `height`, and `strokeWidth`.
+The component adds its own `icon`, `size`, `label`, and `strokeWidth` props.
+
+```tsx
+import { Icon, type IconProps, type IconSize } from '@orkest/ui';
+import { Check } from 'lucide-react';
+
+const size: IconSize = 'sm';
+const props: IconProps = { icon: Check, size, label: 'Completed' };
+```
+
+## Type checking
+
+Run the repository type check with:
+
+```bash
+pnpm typecheck
+```
+
+The UI package uses `tsc --noEmit`, and the documentation app builds the UI package before running
+its own type check because it consumes the published types from `packages/ui/dist`.

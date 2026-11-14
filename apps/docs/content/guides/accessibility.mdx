@@ -1,0 +1,59 @@
+---
+title: Accessibility
+description: What the library implements and what consumers must provide.
+section: guides
+order: 1
+---
+
+Accessibility is part of component correctness. This page separates behavior provided by Orkest UI
+from responsibilities that remain with the application.
+
+## Implemented in the library
+
+- **Semantic elements.** Primitives render real elements and support `as` for appropriate markup.
+- **Native attributes.** Components forward native props, including labels, roles, and event
+  handlers where they apply.
+- **Visible focus.** Interactive documentation states use `focus-visible` outlines based on the
+  `--ui-focus-ring` token.
+- **Icon semantics.** `Icon` is decorative by default and exposes an accessible name only when a
+  `label` is provided.
+- **Reduced motion.** Duration tokens collapse to zero under `prefers-reduced-motion: reduce`.
+- **Theme contrast.** Semantic text, surface, and border tokens are defined for light and dark
+  themes.
+
+<Callout type="warning" title="No certification">
+  These practices are designed to support accessibility, but the library does not claim formal
+  WCAG conformance. Verify your product with real assistive technology and user testing.
+</Callout>
+
+## Consumer responsibilities
+
+- Give every control an accessible name.
+- Keep heading levels sequential and meaningful.
+- Maintain readable contrast when overriding tokens.
+- Ensure keyboard focus order matches the visual order.
+- Provide labels and error messages for form controls.
+- Test dialogs and overlays for focus entry, trapping, and restoration as they are added.
+- Do not communicate status with color alone.
+
+## Icons
+
+Use `label` when an icon is the only content:
+
+```tsx
+<Icon icon={Check} label="Completed" />
+```
+
+Leave the icon decorative when nearby text or the parent control already provides the name:
+
+```tsx
+<button type="button" aria-label="Close dialog">
+  <Icon icon={X} size="sm" />
+</button>
+```
+
+## Related
+
+- [Colors](/docs/foundations/colors/) for contrast-oriented semantic tokens.
+- [Icon](/docs/components/icon/) for the component API.
+- [Theming](/docs/guides/theming/) for safe token overrides.

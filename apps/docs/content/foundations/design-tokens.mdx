@@ -1,0 +1,51 @@
+---
+title: Design Tokens
+description: Primitive and semantic token layers, sizing, layering, and overrides.
+section: foundations
+order: 6
+---
+
+Orkest UI uses two token layers.
+
+- **Primitive tokens** hold raw design values such as `--ok-color-neutral-900` or `--ok-space-4`.
+- **Semantic tokens** map those values to intent, such as `--ui-background` or `--ui-border`.
+
+Component styles consume semantic tokens. Theme switching only remaps the semantic layer.
+
+## Source files
+
+- `packages/ui/src/styles/tokens.css` defines primitive values.
+- `packages/ui/src/styles/themes.css` maps semantic tokens for light and dark themes.
+- `packages/ui/src/styles/base.css` adjusts library-owned behavior such as reduced motion.
+
+## Sizing
+
+<TokenTable title="Control heights" prefix="--ok-control-height-" />
+<TokenTable title="Control padding" prefix="--ok-control-padding-x-" />
+<TokenTable title="Icon sizes" prefix="--ok-icon-size-" />
+<TokenTable title="Focus tokens" prefix="--ok-focus-" />
+
+## Layering
+
+<TokenTable title="Z-index tokens" prefix="--ok-z-" />
+
+Layering tokens keep menus, overlays, dialogs, popovers, and toasts in a predictable order.
+
+## Borders and opacity
+
+<TokenTable title="Border tokens" prefix="--ok-border-" />
+<TokenTable title="Opacity tokens" prefix="--ok-opacity-" />
+
+## Overrides
+
+Override semantic tokens on the document root or a themed subtree:
+
+```css
+[data-orkest-theme='light'] {
+  --ui-accent: #3f545f;
+  --ui-focus-ring: #648292;
+}
+```
+
+Prefer semantic overrides over overriding primitive values. Primitive overrides affect every
+semantic token that references them and are harder to audit.

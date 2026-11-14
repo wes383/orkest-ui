@@ -1,0 +1,45 @@
+---
+title: Motion
+description: Duration and easing tokens for restrained interaction feedback.
+section: foundations
+order: 5
+---
+
+Motion supports state changes and never delays the user. Durations are short and easing is
+predictable.
+
+## Durations
+
+<TokenTable title="Duration tokens" prefix="--ok-duration-" />
+
+## Easing
+
+<TokenTable title="Easing tokens" prefix="--ok-ease-" />
+
+Use the standard easing for most state transitions. The emphasized curve is suitable for small
+entrances such as an overlay or popover.
+
+## Reduced motion
+
+The base stylesheet collapses all duration tokens to `0ms` when the user prefers reduced motion:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ok-duration-instant: 0ms;
+    --ok-duration-fast: 0ms;
+    --ok-duration-normal: 0ms;
+    --ok-duration-slow: 0ms;
+  }
+}
+```
+
+Components that animate should use these tokens rather than hard-coded durations.
+
+```css
+.button {
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+```

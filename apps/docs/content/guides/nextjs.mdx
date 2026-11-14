@@ -1,0 +1,75 @@
+---
+title: Next.js
+description: Integrate Orkest UI with the Next.js App Router.
+section: guides
+order: 4
+---
+
+Orkest UI can be used in the Next.js App Router. The main integration points are the compiled
+stylesheet, the theme attribute, and the font files loaded by the host application.
+
+## Import styles once
+
+Import the package stylesheet in the root layout:
+
+```tsx
+import '@orkest/ui/style.css';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+## Set the theme before paint
+
+Add the theme attribute script from the [Theming guide](/docs/guides/theming/) at the start of the
+body, and set `suppressHydrationWarning` on the `<html>` element:
+
+```tsx
+<html lang="en" suppressHydrationWarning>
+  <body>
+    <ThemeScript />
+    {children}
+  </body>
+</html>
+```
+
+## Load fonts
+
+The library references Inter, Plus Jakarta Sans, JetBrains Mono, and a Noto Sans CJK fallback. Load
+those fonts in the host application. The documentation app uses the `@fontsource-variable` packages:
+
+```ts
+import '@fontsource-variable/inter';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/jetbrains-mono';
+```
+
+## Server and client components
+
+Import the primitives directly from `@orkest/ui` in App Router pages. The current components do not
+fetch data and do not require a provider. Interactive application controls that use state or event
+handlers should still live inside client components.
+
+## Monorepo build order
+
+When consuming the workspace package, build the UI package before building the application:
+
+```bash
+pnpm --filter @orkest/ui build
+pnpm --filter your-app build
+```
+
+The package exports `dist`, so the stylesheet and declarations are not available until the library
+has been built.
+
+## Verify the integration
+
+- The page renders with the expected theme.
+- The stylesheet is loaded exactly once.
+- Fonts resolve to Inter, JetBrains Mono, and the CJK fallback.
+- No hydration warning appears in the console.

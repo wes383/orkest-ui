@@ -1,0 +1,52 @@
+---
+title: Typography
+description: Font families, type scale, weights, and tone.
+section: foundations
+order: 2
+---
+
+Typography is compact and quietly hierarchical. Inter carries interface text, Plus Jakarta Sans is
+an optional display face for large headings, and JetBrains Mono is reserved for code. CJK glyphs
+fall back to Noto Sans.
+
+## Font families
+
+<FontFamilySample />
+
+<TokenTable
+  title="Font family tokens"
+  tokens={['--ok-font-sans', '--ok-font-display', '--ok-font-mono', '--ok-font-cjk']}
+/>
+
+The host application loads the font files. Orkest UI only defines the family stacks and the CJK
+fallback.
+
+## Type scale
+
+<Text size="xl" weight="semibold">
+  Design with clarity and restraint.
+</Text>
+
+<TypographySample />
+
+<TokenTable title="Font sizes" prefix="--ok-font-size-" />
+
+## Weights
+
+<TokenTable title="Font weights" prefix="--ok-font-weight-" />
+
+Regular is the default for body copy. Medium is used for labels and compact emphasis. Semibold is
+reserved for headings and strong emphasis.
+
+## Line heights
+
+<TokenTable title="Line heights" prefix="--ok-line-height-" />
+
+## Letter spacing
+
+<TokenTable title="Letter spacing" prefix="--ok-letter-spacing-" />
+
+## The Text component
+
+Use [Text](/docs/components/text/) for size, weight, tone, alignment, optional display and
+monospace families, and single-line truncation.

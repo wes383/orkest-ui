@@ -1,0 +1,109 @@
+---
+title: Theming
+description: Control light and dark themes, persist the choice, and override tokens.
+section: guides
+order: 2
+---
+
+Orkest UI provides theme-aware styles. The host application owns theme state, persistence, and the
+UI that changes the theme.
+
+## How themes work
+
+Semantic tokens are remapped under the `data-orkest-theme` attribute:
+
+```html
+<html data-orkest-theme="light">
+  ...
+</html>
+```
+
+When the attribute is absent, the stylesheet follows `prefers-color-scheme`. The attribute can also
+be placed on a container to theme a subtree.
+
+```html
+<div data-orkest-theme="dark">
+  ...
+</div>
+```
+
+## Avoid a flash of the wrong theme
+
+Read the saved preference before the page paints. Place this script at the start of the body in a
+Next.js root layout:
+
+```html
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem('orkest-theme');
+      var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = stored === 'light' || stored === 'dark' ? stored : dark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-orkest-theme', theme);
+    } catch (error) {}
+  })();
+</script>
+```
+
+Add `suppressHydrationWarning` to the `<html>` element when the script sets the attribute before
+React hydrates.
+
+## A theme toggle
+
+```tsx
+'use client';
+
+export function ThemeToggle() {
+  function toggleTheme() {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-orkest-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+
+    root.setAttribute('data-orkest-theme', next);
+    localStorage.setItem('orkest-theme', next);
+  }
+
+  return (
+    <button type="button" onClick={toggleTheme} aria-label="Switch color theme">
+      Toggle theme
+    </button>
+  );
+}
+```
+
+The docs application uses this pattern with the `Icon` component and a decorative sun or moon icon.
+
+## Dark mode
+
+The dark theme is a semantic token mapping, not a separate stylesheet. Components do not need
+theme-specific styles. Avoid selecting colors directly in application CSS:
+
+```css
+/* Prefer semantic tokens. */
+.surface {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-foreground);
+}
+```
+
+## Override tokens
+
+Override semantic variables at the scope you want to change:
+
+```css
+[data-orkest-theme='dark'] {
+  --ui-accent: #aec3ce;
+  --ui-focus-ring: #86a1b1;
+}
+```
+
+Primitive overrides affect every semantic token that references them. Prefer semantic overrides.
+
+<Callout type="note" title="Keep contrast in mind">
+  Check text and focus indicator contrast after overriding colors. The default semantic tokens are
+  tuned for readable text and visible focus.
+</Callout>
+
+See [Colors](/docs/foundations/colors/) for the available semantic tokens and [Design Tokens](/docs/foundations/design-tokens/)
+for the full token reference.
