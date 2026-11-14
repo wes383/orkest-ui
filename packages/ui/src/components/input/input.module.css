@@ -24,9 +24,7 @@
 }
 
 .field:focus-within {
-  border-color: transparent;
-  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
-  outline-offset: 0;
+  border-color: var(--ui-muted-foreground);
 }
 
 .field[data-size="sm"] {
@@ -72,8 +70,7 @@
 }
 
 .field[data-invalid="true"]:focus-within {
-  border-color: transparent;
-  outline-color: var(--ui-danger);
+  border-color: var(--ui-danger);
 }
 
 .field[data-disabled="true"] {

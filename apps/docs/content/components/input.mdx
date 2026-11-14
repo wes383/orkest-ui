@@ -214,7 +214,8 @@ export function Example() {
   alone.
 - `disabled` and `readOnly` use the native attributes and remain distinguishable without color alone.
 - Leading and trailing icons are decorative and hidden from assistive technology.
-- Focus is shown on the field wrapper, and invalid fields focus with the danger color.
+- Focus is shown by darkening the field border; no separate focus ring is drawn. Invalid fields keep
+  the danger border.
 - Refs are forwarded to the native input element.
 
 ## Related
