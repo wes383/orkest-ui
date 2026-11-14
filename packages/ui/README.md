@@ -9,10 +9,8 @@ Early development (`0.0.0`). The package is not published yet and the public API
 
 Currently exported:
 
-- `Box`
-- `Stack`
-- `Text`
-- `Icon`
+- Primitives: `Box`, `Stack`, `Text`, `Icon`
+- Components: `Button`, `IconButton`
 
 ## Install
 

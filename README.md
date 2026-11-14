@@ -7,12 +7,10 @@ The repository is a pnpm monorepo containing the library and its custom document
 
 ## Status
 
-Early development. The shipped surface is four primitives:
+Early development. The shipped surface currently includes:
 
-- `Box`
-- `Stack`
-- `Text`
-- `Icon`
+- Primitives: `Box`, `Stack`, `Text`, `Icon`
+- Components: `Button`, `IconButton`
 
 Core components, complex interactions, and the first public release are still in progress.
 `@orkest/ui` is not published to a registry yet.

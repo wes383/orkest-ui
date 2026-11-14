@@ -1,0 +1,146 @@
+---
+title: IconButton
+description: A square icon-only button with a required accessible name and token-based sizes.
+section: components
+order: 6
+---
+
+`IconButton` is a square, icon-only variant of [Button](/docs/components/button/). The `label` prop is
+required and becomes the button's accessible name, so the icon never carries meaning on its own.
+
+Use it for compact actions such as add, edit, settings, or delete. For buttons with visible text, use
+`Button`.
+
+## Live preview
+
+<ComponentPreview
+  title="Common actions"
+  code={`import { IconButton, Stack } from '@orkest/ui';
+import { Plus, Settings, Trash2 } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <IconButton icon={Plus} label="Add item" />
+      <IconButton icon={Settings} label="Settings" variant="outline" />
+      <IconButton icon={Trash2} label="Delete" variant="destructive" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <IconButton icon={Plus} label="Add item" />
+    <IconButton icon={Settings} label="Settings" variant="outline" />
+    <IconButton icon={Trash2} label="Delete" variant="destructive" />
+  </Stack>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { IconButton, Stack } from '@orkest/ui';
+import { Plus } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <IconButton icon={Plus} label="Add item" size="sm" />
+      <IconButton icon={Plus} label="Add item" size="md" />
+      <IconButton icon={Plus} label="Add item" size="lg" />
+      <IconButton icon={Plus} label="Add item" size="xl" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <IconButton icon={Plus} label="Add item" size="sm" />
+    <IconButton icon={Plus} label="Add item" size="md" />
+    <IconButton icon={Plus} label="Add item" size="lg" />
+    <IconButton icon={Plus} label="Add item" size="xl" />
+  </Stack>
+</ComponentPreview>
+
+## States
+
+<ComponentPreview
+  title="Disabled and loading"
+  code={`import { IconButton, Stack } from '@orkest/ui';
+import { Settings } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <IconButton icon={Settings} label="Settings" disabled />
+      <IconButton icon={Settings} label="Loading settings" loading />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <IconButton icon={Settings} label="Settings" disabled />
+    <IconButton icon={Settings} label="Loading settings" loading />
+  </Stack>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'icon',
+      type: 'LucideIcon',
+      required: true,
+      description: 'Icon rendered inside the button. It is hidden from assistive technology.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      required: true,
+      description: 'Accessible name applied as aria-label.',
+    },
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `'primary'`,
+      description: 'Visual treatment inherited from Button.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Square control size. Width and height always match.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the button, sets aria-busy, and replaces the icon with a spinner.',
+    },
+    {
+      name: 'type',
+      type: `'button' | 'submit' | 'reset'`,
+      default: `'button'`,
+      description: 'Native button type. The default prevents accidental form submission.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, name, value, form, event handlers, ARIA, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `label` is required and becomes the accessible name. Never rely on the icon alone.
+- The icon is decorative and hidden from assistive technology.
+- The component renders a native `<button>` with `type="button"` by default.
+- Loading sets the native disabled state and `aria-busy="true"`, matching `Button`.
+- Focus-visible and disabled styles use the same tokens and behavior as `Button`.
+- For navigation, use a link element with an accessible name instead of `IconButton`.
+
+## Related
+
+- [Button](/docs/components/button/) for actions with a visible label.
+- [Icon](/docs/components/icon/) for decorative and labelled icons.

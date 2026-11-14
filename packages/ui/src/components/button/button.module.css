@@ -1,0 +1,211 @@
+.button {
+  --button-height: var(--ok-control-height-md);
+  --button-padding-x: var(--ok-control-padding-x-md);
+  --button-radius: var(--ok-radius-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ok-space-2);
+  height: var(--button-height);
+  padding: 0 var(--button-padding-x);
+  border: var(--ok-border-width) solid transparent;
+  border-radius: var(--button-radius);
+  appearance: none;
+  box-sizing: border-box;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.button:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.button[data-size="sm"] {
+  --button-height: var(--ok-control-height-sm);
+  --button-padding-x: var(--ok-control-padding-x-sm);
+  --button-radius: var(--ok-radius-md);
+  font-size: var(--ok-font-size-xs);
+}
+
+.button[data-size="md"] {
+  --button-height: var(--ok-control-height-md);
+  --button-padding-x: var(--ok-control-padding-x-md);
+  --button-radius: var(--ok-radius-lg);
+  font-size: var(--ok-font-size-sm);
+}
+
+.button[data-size="lg"] {
+  --button-height: var(--ok-control-height-lg);
+  --button-padding-x: var(--ok-control-padding-x-lg);
+  --button-radius: var(--ok-radius-lg);
+  font-size: var(--ok-font-size-md);
+}
+
+.button[data-size="xl"] {
+  --button-height: var(--ok-control-height-xl);
+  --button-padding-x: var(--ok-control-padding-x-xl);
+  --button-radius: var(--ok-radius-xl);
+  font-size: var(--ok-font-size-lg);
+}
+
+.button[data-icon-only="true"] {
+  width: var(--button-height);
+  min-width: var(--button-height);
+  padding-inline: 0;
+  gap: 0;
+}
+
+.button[data-full-width="true"] {
+  width: 100%;
+}
+
+/* Variants */
+
+.button[data-variant="primary"] {
+  background: var(--ui-primary);
+  color: var(--ui-primary-foreground);
+}
+
+.button[data-variant="primary"]:hover:not(:disabled) {
+  background: var(--ui-primary-hover);
+}
+
+.button[data-variant="primary"]:active:not(:disabled) {
+  background: var(--ui-primary-active);
+}
+
+.button[data-variant="secondary"] {
+  background: var(--ui-secondary);
+  color: var(--ui-secondary-foreground);
+}
+
+.button[data-variant="secondary"]:hover:not(:disabled) {
+  background: var(--ui-secondary-hover);
+}
+
+.button[data-variant="secondary"]:active:not(:disabled) {
+  background: var(--ui-secondary-active);
+}
+
+.button[data-variant="outline"] {
+  background: transparent;
+  border-color: var(--ui-border);
+  color: var(--ui-foreground);
+}
+
+.button[data-variant="outline"]:hover:not(:disabled) {
+  background: var(--ui-secondary);
+  border-color: var(--ui-border-strong);
+}
+
+.button[data-variant="outline"]:active:not(:disabled) {
+  background: var(--ui-secondary-active);
+  border-color: var(--ui-border-strong);
+}
+
+.button[data-variant="ghost"] {
+  background: transparent;
+  color: var(--ui-foreground);
+}
+
+.button[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--ui-secondary);
+}
+
+.button[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--ui-secondary-active);
+}
+
+.button[data-variant="destructive"] {
+  background: var(--ui-danger-solid);
+  color: var(--ui-danger-solid-foreground);
+}
+
+.button[data-variant="destructive"]:hover:not(:disabled) {
+  background: var(--ui-danger-solid-hover);
+}
+
+.button[data-variant="destructive"]:active:not(:disabled) {
+  background: var(--ui-danger-solid-active);
+}
+
+.button[data-variant="link"] {
+  height: auto;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--ui-accent);
+}
+
+.button[data-variant="link"]:hover:not(:disabled) {
+  color: var(--ui-accent-hover);
+  text-decoration: underline;
+  text-decoration-thickness: var(--ok-border-width);
+  text-underline-offset: var(--ok-space-1);
+}
+
+.button[data-variant="link"]:active:not(:disabled) {
+  color: var(--ui-accent-hover);
+}
+
+.button[data-variant="link"][data-icon-only="true"] {
+  width: auto;
+  min-width: 0;
+}
+
+/* Loading keeps the variant treatment while the native disabled state blocks input. */
+
+.button[data-loading="true"] {
+  cursor: progress;
+}
+
+/* Disabled */
+
+.button:disabled:not([data-loading="true"]) {
+  background: var(--ui-disabled-surface);
+  border-color: transparent;
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.button[data-variant="outline"]:disabled:not([data-loading="true"]) {
+  background: transparent;
+  border-color: var(--ui-border-subtle);
+}
+
+.button[data-variant="ghost"]:disabled:not([data-loading="true"]),
+.button[data-variant="link"]:disabled:not([data-loading="true"]) {
+  background: transparent;
+}
+
+.button[data-variant="link"]:disabled:not([data-loading="true"]) {
+  text-decoration: none;
+}
+
+/* Spinner */
+
+.spinner {
+  animation: button-spin 0.9s linear infinite;
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

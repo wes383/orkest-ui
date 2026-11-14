@@ -1,0 +1,251 @@
+---
+title: Button
+description: Trigger actions with token-driven variants, sizes, icons, and loading feedback.
+section: components
+order: 5
+---
+
+`Button` renders a native `<button>` with a small set of visual variants, four sizes, optional icons,
+and a loading state. It defaults to `type="button"` so it does not submit a form accidentally.
+
+Use `Button` for actions. For navigation, render a link element instead. For icon-only actions, use
+[IconButton](/docs/components/icon-button/) which requires an accessible name.
+
+## Live preview
+
+<ComponentPreview
+  title="Default button"
+  code={`import { Button } from '@orkest/ui';
+
+export function Example() {
+  return <Button>Save changes</Button>;
+}`}
+>
+  <Button>Save changes</Button>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Variants"
+  code={`import { Button, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Button>Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="link">Link</Button>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} wrap>
+    <Button>Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="outline">Outline</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="destructive">Destructive</Button>
+    <Button variant="link">Link</Button>
+  </Stack>
+</ComponentPreview>
+
+<Callout type="note" title="The link variant is visual only">
+  `variant="link"` renders a button that looks like a link. It keeps button semantics. Use an anchor
+  element when the interaction navigates to another URL.
+</Callout>
+
+## Sizes
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Button, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+      <Button size="xl">Extra large</Button>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Button size="sm">Small</Button>
+    <Button size="md">Medium</Button>
+    <Button size="lg">Large</Button>
+    <Button size="xl">Extra large</Button>
+  </Stack>
+</ComponentPreview>
+
+## Icons
+
+Icons are decorative because the button label supplies the accessible name. The icon size follows the
+button size.
+
+<ComponentPreview
+  title="Leading, trailing, and icon-only"
+  code={`import { Button, Stack } from '@orkest/ui';
+import { ArrowRight, Plus } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Button leftIcon={Plus}>New project</Button>
+      <Button variant="secondary" rightIcon={ArrowRight}>
+        Continue
+      </Button>
+      <Button iconOnly leftIcon={Plus} aria-label="Add item" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Button leftIcon={Plus}>New project</Button>
+    <Button variant="secondary" rightIcon={ArrowRight}>
+      Continue
+    </Button>
+    <Button iconOnly leftIcon={Plus} aria-label="Add item" />
+  </Stack>
+</ComponentPreview>
+
+Prefer [IconButton](/docs/components/icon-button/) for icon-only actions; its `label` prop is
+required and becomes the accessible name.
+
+## States
+
+<ComponentPreview
+  title="Disabled and loading"
+  code={`import { Button, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" wrap>
+      <Button disabled>Disabled</Button>
+      <Button loading>Saving</Button>
+      <Button variant="outline" loading>
+        Publishing
+      </Button>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" wrap>
+    <Button disabled>Disabled</Button>
+    <Button loading>Saving</Button>
+    <Button variant="outline" loading>
+      Publishing
+    </Button>
+  </Stack>
+</ComponentPreview>
+
+`loading` sets the native `disabled` attribute, exposes `aria-busy="true"`, and replaces the leading
+icon with a spinner. This blocks repeated submissions but also removes the button from the tab order
+until loading completes.
+
+## Full width
+
+<ComponentPreview
+  title="Full width"
+  code={`import { Box, Button } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '18rem' }}>
+      <Button fullWidth>Continue</Button>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '18rem' }}>
+    <Button fullWidth>Continue</Button>
+  </Box>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `'primary'`,
+      description: 'Visual treatment. The link variant changes appearance only.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Control height, padding, radius, and label size.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the label.',
+    },
+    {
+      name: 'rightIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered after the label. Hidden while loading.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the button, sets aria-busy, and renders a spinner.',
+    },
+    {
+      name: 'fullWidth',
+      type: 'boolean',
+      default: 'false',
+      description: 'Stretches the button to the width of its container.',
+    },
+    {
+      name: 'iconOnly',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Renders a square icon-only button. Provide an accessible name with aria-label or use IconButton.',
+    },
+    {
+      name: 'type',
+      type: `'button' | 'submit' | 'reset'`,
+      default: `'button'`,
+      description: 'Native button type. The default prevents accidental form submission.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Button label. Required unless iconOnly is combined with an icon.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, name, value, form, event handlers, ARIA, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `Button` renders a native `<button>`, so Enter and Space activate it.
+- The default `type` is `button`. Set `type="submit"` explicitly for form submission.
+- Loading buttons are natively disabled and announce `aria-busy`. The label remains available to
+  assistive technology.
+- Leading and trailing icons are hidden from assistive technology. The label supplies the accessible
+  name.
+- `iconOnly` requires an `aria-label`. Prefer `IconButton`, whose `label` prop is required.
+- The focus-visible ring uses the shared focus tokens and is not removed.
+- Disabled buttons rely on the native disabled state and a muted token surface, not color alone.
+- The link variant does not change semantics; use an anchor for navigation.
+
+## Related
+
+- [IconButton](/docs/components/icon-button/) for icon-only actions with a required label.
+- [Icon](/docs/components/icon/) for the icon primitive used by buttons.
+- [Colors](/docs/foundations/colors/) for action and state tokens.
