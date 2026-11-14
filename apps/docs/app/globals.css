@@ -674,9 +674,25 @@ kbd {
   overflow-wrap: anywhere;
 }
 
+.props-table th:first-child {
+  width: 18%;
+}
+
+.props-table th:nth-child(3) {
+  width: 15%;
+}
+
+.props-table th:nth-child(4) {
+  width: 11%;
+}
+
 .props-table tbody th {
   color: var(--ui-foreground);
   font-weight: var(--ok-font-weight-medium);
+}
+
+.table-wrap .props-table code {
+  overflow-wrap: break-word;
 }
 
 .token-value {
