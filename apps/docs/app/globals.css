@@ -1046,6 +1046,7 @@ kbd {
 }
 
 .typography-label {
+  justify-self: start;
   color: var(--ui-muted-foreground);
   font-size: 10px;
 }
