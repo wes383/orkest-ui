@@ -1,0 +1,225 @@
+---
+title: Input
+description: Single-line text fields with token sizes, icons, validation, and native semantics.
+section: components
+order: 8
+---
+
+`Input` renders a native `<input>` inside a token-styled field. It supports four sizes, leading and
+trailing icons, invalid, disabled, and read-only states, and fills the width of its container.
+
+Pair it with [Label](/docs/components/typography/#semantic-components) for the accessible name and
+[Caption](/docs/components/typography/) for help text.
+
+## Live preview
+
+<ComponentPreview
+  title="Label, input, and help text"
+  code={`import { Box, Caption, Input, Label, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={1}>
+        <Label htmlFor="input-email">Email</Label>
+        <Input
+          id="input-email"
+          type="email"
+          placeholder="you@example.com"
+          aria-describedby="input-email-help"
+        />
+        <Caption id="input-email-help">We only use this for account notices.</Caption>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={1}>
+      <Label htmlFor="input-email">Email</Label>
+      <Input
+        id="input-email"
+        type="email"
+        placeholder="you@example.com"
+        aria-describedby="input-email-help"
+      />
+      <Caption id="input-email-help">{'We only use this for account notices.'}</Caption>
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Box, Input, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={2}>
+        <Input size="sm" placeholder="Small" aria-label="Small input" />
+        <Input size="md" placeholder="Medium" aria-label="Medium input" />
+        <Input size="lg" placeholder="Large" aria-label="Large input" />
+        <Input size="xl" placeholder="Extra large" aria-label="Extra large input" />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Input size="sm" placeholder="Small" aria-label="Small input" />
+      <Input size="md" placeholder="Medium" aria-label="Medium input" />
+      <Input size="lg" placeholder="Large" aria-label="Large input" />
+      <Input size="xl" placeholder="Extra large" aria-label="Extra large input" />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Icons
+
+Icons are decorative and follow the input size. The input keeps its own accessible name through a
+label or `aria-label`.
+
+<ComponentPreview
+  title="Leading and trailing icons"
+  code={`import { Box, Input, Stack } from '@orkest/ui';
+import { Check, Search } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={2}>
+        <Input
+          leftIcon={Search}
+          placeholder="Search components"
+          aria-label="Search components"
+        />
+        <Input rightIcon={Check} defaultValue="Looks good" aria-label="Validation status" />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Input leftIcon={Search} placeholder="Search components" aria-label="Search components" />
+      <Input rightIcon={Check} defaultValue="Looks good" aria-label="Validation status" />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## States
+
+<ComponentPreview
+  title="Invalid, disabled, and read-only"
+  code={`import { Box, Input, Label, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={3}>
+        <Stack gap={1}>
+          <Label htmlFor="input-invalid">Email</Label>
+          <Input
+            id="input-invalid"
+            type="email"
+            invalid
+            defaultValue="not-an-email"
+            aria-describedby="input-invalid-error"
+          />
+          <Text as="p" size="sm" tone="danger" id="input-invalid-error">
+            Enter a valid email address.
+          </Text>
+        </Stack>
+        <Input disabled placeholder="Disabled" aria-label="Disabled input" />
+        <Input readOnly defaultValue="Read-only value" aria-label="Read-only input" />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={3}>
+      <Stack gap={1}>
+        <Label htmlFor="input-invalid">Email</Label>
+        <Input
+          id="input-invalid"
+          type="email"
+          invalid
+          defaultValue="not-an-email"
+          aria-describedby="input-invalid-error"
+        />
+        <Text as="p" size="sm" tone="danger" id="input-invalid-error">
+          {'Enter a valid email address.'}
+        </Text>
+      </Stack>
+      <Input disabled placeholder="Disabled" aria-label="Disabled input" />
+      <Input readOnly defaultValue="Read-only value" aria-label="Read-only input" />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description:
+        'Control height, padding, radius, and text size. Heights are 28px, 36px, 44px, and 52px.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the danger border and sets aria-invalid.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the input text.',
+    },
+    {
+      name: 'rightIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered after the input text.',
+    },
+    {
+      name: 'type',
+      type: 'string',
+      default: `'text'`,
+      description: 'Native input type, such as email, password, or search.',
+    },
+    {
+      name: 'native attributes',
+      type: 'InputHTMLAttributes<HTMLInputElement>',
+      description:
+        'Placeholder, value, name, required, aria-describedby, events, and ref are forwarded. The native numeric size attribute is replaced by the control size.',
+    },
+  ]}
+/>
+
+`Input` always fills its container width. Constrain it with a layout component such as `Box` or
+`Stack`.
+
+## Accessibility
+
+- Provide an accessible name with `Label htmlFor` or `aria-label`. A placeholder is not a label.
+- Connect help and error text with `aria-describedby`.
+- `invalid` sets `aria-invalid`. Pair it with visible error text; do not rely on the border color
+  alone.
+- `disabled` and `readOnly` use the native attributes and remain distinguishable without color alone.
+- Leading and trailing icons are decorative and hidden from assistive technology.
+- Focus is shown on the field wrapper, and invalid fields focus with the danger color.
+- Refs are forwarded to the native input element.
+
+## Related
+
+- [Textarea](/docs/components/textarea/) for multi-line input.
+- [Typography](/docs/components/typography/) for Label, Caption, and error text.
+- [Icon](/docs/components/icon/) for icon sizing rules.
+- [Button](/docs/components/button/) for form actions.

@@ -219,14 +219,14 @@ export function Example() {
 
 <ComponentPreview
   title="Labels, emphasis, code, and links"
-  code={`import { Caption, Code, Label, Link, Small, Stack, Strong, Text } from '@orkest/ui';
+  code={`import { Caption, Code, Input, Label, Link, Small, Stack, Strong, Text } from '@orkest/ui';
 
 export function Example() {
   return (
     <Stack gap={4}>
       <Stack gap={1}>
         <Label htmlFor="typography-project">Project name</Label>
-        <input
+        <Input
           id="typography-project"
           type="text"
           defaultValue="Orkest"
@@ -246,7 +246,7 @@ export function Example() {
   <Stack gap={4}>
     <Stack gap={1}>
       <Label htmlFor="typography-project">Project name</Label>
-      <input
+      <Input
         id="typography-project"
         type="text"
         defaultValue="Orkest"

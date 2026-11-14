@@ -13,6 +13,7 @@ import {
   Heading,
   Icon,
   IconButton,
+  Input,
   Label,
   Link as TypographyLink,
   Paragraph,
@@ -20,6 +21,7 @@ import {
   Stack,
   Strong,
   Text,
+  Textarea,
 } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
@@ -136,6 +138,7 @@ export const mdxComponents = {
   Heading,
   Icon,
   IconButton,
+  Input,
   Label,
   Link: TypographyLink,
   Paragraph,
@@ -143,6 +146,7 @@ export const mdxComponents = {
   Stack,
   Strong,
   Text,
+  Textarea,
   Check,
   Circle,
   ComponentPreview,

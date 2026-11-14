@@ -1,0 +1,184 @@
+---
+title: Textarea
+description: Multi-line text fields with token sizes, validation, and native semantics.
+section: components
+order: 9
+---
+
+`Textarea` renders a native `<textarea>` inside the same token-styled field as
+[Input](/docs/components/input/). It supports the shared control sizes, invalid, disabled, and
+read-only states, and fills the width of its container.
+
+## Live preview
+
+<ComponentPreview
+  title="Label, textarea, and help text"
+  code={`import { Box, Caption, Label, Stack, Textarea } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={1}>
+        <Label htmlFor="textarea-message">Message</Label>
+        <Textarea
+          id="textarea-message"
+          rows={4}
+          placeholder="How can we help?"
+          aria-describedby="textarea-message-help"
+        />
+        <Caption id="textarea-message-help">Include any relevant details.</Caption>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={1}>
+      <Label htmlFor="textarea-message">Message</Label>
+      <Textarea
+        id="textarea-message"
+        rows={4}
+        placeholder="How can we help?"
+        aria-describedby="textarea-message-help"
+      />
+      <Caption id="textarea-message-help">{'Include any relevant details.'}</Caption>
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Box, Stack, Textarea } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={2}>
+        <Textarea size="sm" rows={3} placeholder="Small" aria-label="Small textarea" />
+        <Textarea size="md" rows={3} placeholder="Medium" aria-label="Medium textarea" />
+        <Textarea size="lg" rows={3} placeholder="Large" aria-label="Large textarea" />
+        <Textarea size="xl" rows={3} placeholder="Extra large" aria-label="Extra large textarea" />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={2}>
+      <Textarea size="sm" rows={3} placeholder="Small" aria-label="Small textarea" />
+      <Textarea size="md" rows={3} placeholder="Medium" aria-label="Medium textarea" />
+      <Textarea size="lg" rows={3} placeholder="Large" aria-label="Large textarea" />
+      <Textarea size="xl" rows={3} placeholder="Extra large" aria-label="Extra large textarea" />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## States
+
+<ComponentPreview
+  title="Invalid, disabled, and read-only"
+  code={`import { Box, Label, Stack, Text, Textarea } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box style={{ width: '22rem' }}>
+      <Stack gap={3}>
+        <Stack gap={1}>
+          <Label htmlFor="textarea-invalid">Message</Label>
+          <Textarea
+            id="textarea-invalid"
+            invalid
+            defaultValue="Too short"
+            aria-describedby="textarea-invalid-error"
+          />
+          <Text as="p" size="sm" tone="danger" id="textarea-invalid-error">
+            Enter at least 20 characters.
+          </Text>
+        </Stack>
+        <Textarea disabled rows={3} placeholder="Disabled" aria-label="Disabled textarea" />
+        <Textarea
+          readOnly
+          rows={3}
+          defaultValue="Read-only content"
+          aria-label="Read-only textarea"
+        />
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <Box style={{ width: '22rem' }}>
+    <Stack gap={3}>
+      <Stack gap={1}>
+        <Label htmlFor="textarea-invalid">Message</Label>
+        <Textarea
+          id="textarea-invalid"
+          invalid
+          defaultValue="Too short"
+          aria-describedby="textarea-invalid-error"
+        />
+        <Text as="p" size="sm" tone="danger" id="textarea-invalid-error">
+          {'Enter at least 20 characters.'}
+        </Text>
+      </Stack>
+      <Textarea disabled rows={3} placeholder="Disabled" aria-label="Disabled textarea" />
+      <Textarea
+        readOnly
+        rows={3}
+        defaultValue="Read-only content"
+        aria-label="Read-only textarea"
+      />
+    </Stack>
+  </Box>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Padding, radius, and text size. The height follows rows and content.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the danger border and sets aria-invalid.',
+    },
+    {
+      name: 'rows',
+      type: 'number',
+      default: '3',
+      description: 'Initial visible line count.',
+    },
+    {
+      name: 'native attributes',
+      type: 'TextareaHTMLAttributes<HTMLTextAreaElement>',
+      description:
+        'Placeholder, value, name, required, aria-describedby, events, and ref are forwarded. The native numeric size attribute is replaced by the control size.',
+    },
+  ]}
+/>
+
+`Textarea` fills its container width and resizes vertically by default.
+
+## Accessibility
+
+- Provide an accessible name with `Label htmlFor` or `aria-label`. A placeholder is not a label.
+- Connect help and error text with `aria-describedby`.
+- `invalid` sets `aria-invalid`. Pair it with visible error text; do not rely on the border color
+  alone.
+- `disabled` and `readOnly` use the native attributes and remain distinguishable without color alone.
+- Focus is shown on the field wrapper, and invalid fields focus with the danger color.
+- Refs are forwarded to the native textarea element.
+
+## Related
+
+- [Input](/docs/components/input/) for single-line fields.
+- [Typography](/docs/components/typography/) for Label, Caption, and error text.
+- [Button](/docs/components/button/) for form actions.

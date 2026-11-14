@@ -1,5 +1,5 @@
 import rehypeShiki from '@shikijs/rehype';
-import { ArrowRight, Check, Circle, Plus, Settings, Trash2 } from 'lucide-react';
+import { ArrowRight, Check, Circle, Plus, Search, Settings, Trash2 } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypeSlug from 'rehype-slug';
 
@@ -17,6 +17,7 @@ export function MdxContent({ source }: { source: string }) {
           Check,
           Circle,
           Plus,
+          Search,
           Settings,
           Trash2,
         },
