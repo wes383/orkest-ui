@@ -13,7 +13,6 @@ import {
   Heading,
   Icon,
   IconButton,
-  Input,
   Label,
   Link as TypographyLink,
   Paragraph,
@@ -21,7 +20,6 @@ import {
   Stack,
   Strong,
   Text,
-  Textarea,
 } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
@@ -36,6 +34,7 @@ import { FontFamilySample, TypographySample } from './typography-sample';
 import { CodeBlock } from '../examples/code-block';
 import { ComponentPreview } from '../examples/component-preview';
 import { CopyButton } from '../examples/copy-button';
+import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 
 function Heading2({ id, children, ...props }: ComponentPropsWithoutRef<'h2'>) {
   return (
@@ -139,6 +138,7 @@ export const mdxComponents = {
   Icon,
   IconButton,
   Input,
+  InputIconsExample,
   Label,
   Link: TypographyLink,
   Paragraph,

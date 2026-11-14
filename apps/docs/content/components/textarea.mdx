@@ -10,11 +10,15 @@ order: 9
 heights, character counts, invalid, disabled, and read-only states, and fills the width of its
 container.
 
+`Textarea` is exported from `@orkest/ui/client` because it uses client-side state. Render it inside a
+Client Component.
+
 ## Live preview
 
 <ComponentPreview
   title="Label, textarea, and help text"
-  code={`import { Box, Caption, Label, Stack, Textarea } from '@orkest/ui';
+  code={`import { Box, Caption, Label, Stack } from '@orkest/ui';
+import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -51,7 +55,8 @@ export function Example() {
 
 <ComponentPreview
   title="Sizes"
-  code={`import { Box, Stack, Textarea } from '@orkest/ui';
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -86,7 +91,8 @@ Three modes cover the common cases:
 
 <ComponentPreview
   title="Fixed, auto-resize, and bounded"
-  code={`import { Box, Stack, Textarea } from '@orkest/ui';
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -138,7 +144,8 @@ enabled.
 
 <ComponentPreview
   title="Character count"
-  code={`import { Box, Textarea } from '@orkest/ui';
+  code={`import { Box } from '@orkest/ui';
+import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -172,7 +179,8 @@ native constraint.
 
 <ComponentPreview
   title="Invalid, disabled, and read-only"
-  code={`import { Box, Label, Stack, Text, Textarea } from '@orkest/ui';
+  code={`import { Box, Label, Stack, Text } from '@orkest/ui';
+import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
   return (

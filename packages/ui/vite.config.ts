@@ -17,9 +17,12 @@ export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
-      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+      entry: {
+        index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+        client: fileURLToPath(new URL('./src/client.ts', import.meta.url)),
+      },
       formats: ['es'],
-      fileName: 'index',
+      fileName: (_format, entryName) => `${entryName}.js`,
       cssFileName: 'style',
     },
     rollupOptions: {
@@ -30,10 +33,6 @@ export default defineConfig({
         'react/jsx-dev-runtime',
         'lucide-react',
       ],
-      // Input and Textarea use hooks, so the single bundle is a client module.
-      output: {
-        banner: "'use client';",
-      },
     },
   },
   test: {

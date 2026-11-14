@@ -49,6 +49,13 @@ import '@orkest/ui/style.css';
 The stylesheet contains the design tokens, light and dark theme mappings, and component styles. It
 does not load font files or override host application typography.
 
+## Entry points
+
+- `@orkest/ui` — server-safe primitives, typography, `Button`, and `IconButton`.
+- `@orkest/ui/client` — `Input` and `Textarea`. They use client-side state and must render inside a
+  Client Component.
+- `@orkest/ui/style.css` — the compiled stylesheet.
+
 ## Build the library first
 
 The package exports its built `dist` directory. In this monorepo the documentation app and local

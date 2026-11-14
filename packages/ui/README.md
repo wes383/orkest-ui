@@ -12,7 +12,8 @@ Currently exported:
 - Primitives: `Box`, `Stack`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
-- Components: `Button`, `IconButton`, `Input`, `Textarea`
+- Components: `Button`, `IconButton`
+- Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
 
 ## Install
 
@@ -49,6 +50,16 @@ export function Example() {
   );
 }
 ```
+
+## Client components
+
+`Input` and `Textarea` are exported from `@orkest/ui/client` because they use client-side state:
+
+```tsx
+import { Input, Textarea } from '@orkest/ui/client';
+```
+
+Render them inside a Client Component (a module with `'use client'`).
 
 ## Styling
 

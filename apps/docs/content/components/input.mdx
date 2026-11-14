@@ -8,6 +8,9 @@ order: 8
 `Input` renders a native `<input>` inside a token-styled field. It supports four sizes, leading and
 trailing icons, invalid, disabled, and read-only states, and fills the width of its container.
 
+`Input` is exported from `@orkest/ui/client` because it uses client-side state. Render it inside a
+Client Component.
+
 Pair it with [Label](/docs/components/typography/#semantic-components) for the accessible name and
 [Caption](/docs/components/typography/) for help text.
 
@@ -32,7 +35,8 @@ Native browser validation, autocomplete, and input modes remain available.
 
 <ComponentPreview
   title="Label, input, and help text"
-  code={`import { Box, Caption, Input, Label, Stack } from '@orkest/ui';
+  code={`import { Box, Caption, Label, Stack } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -69,7 +73,8 @@ export function Example() {
 
 <ComponentPreview
   title="Sizes"
-  code={`import { Box, Input, Stack } from '@orkest/ui';
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -101,7 +106,8 @@ label or `aria-label`.
 
 <ComponentPreview
   title="Leading and trailing icons"
-  code={`import { Box, Input, Stack } from '@orkest/ui';
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 import { Check, Search } from 'lucide-react';
 
 export function Example() {
@@ -119,19 +125,15 @@ export function Example() {
   );
 }`}
 >
-  <Box style={{ width: '22rem' }}>
-    <Stack gap={2}>
-      <Input leftIcon={Search} placeholder="Search components" aria-label="Search components" />
-      <Input rightIcon={Check} defaultValue="Looks good" aria-label="Validation status" />
-    </Stack>
-  </Box>
+  <InputIconsExample />
 </ComponentPreview>
 
 ## Prefix and suffix
 
 <ComponentPreview
   title="Affixes"
-  code={`import { Box, Input } from '@orkest/ui';
+  code={`import { Box } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -153,7 +155,8 @@ toggle for password fields. Both actions have accessible names and keep focus in
 
 <ComponentPreview
   title="Clear and password visibility"
-  code={`import { Box, Input, Stack } from '@orkest/ui';
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -178,7 +181,8 @@ export function Example() {
 
 <ComponentPreview
   title="Character count"
-  code={`import { Box, Input } from '@orkest/ui';
+  code={`import { Box } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -200,7 +204,8 @@ native constraint.
 
 <ComponentPreview
   title="Invalid, disabled, and read-only"
-  code={`import { Box, Input, Label, Stack, Text } from '@orkest/ui';
+  code={`import { Box, Label, Stack, Text } from '@orkest/ui';
+import { Input } from '@orkest/ui/client';
 
 export function Example() {
   return (

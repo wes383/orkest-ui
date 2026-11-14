@@ -55,9 +55,9 @@ Import components directly from `@orkest/ui` in App Router pages. They do not fe
 require a provider.
 
 `Input` and `Textarea` use client-side state for clear actions, password visibility, character
-counts, and auto-resize. The package entry is marked with `'use client'`, so importing it from a
-Server Component creates a client boundary. This is supported; the components still render on the
-server for the initial HTML.
+counts, and auto-resize. Import them from `@orkest/ui/client` and render them inside a Client
+Component (a module with `'use client'`). Other components can continue to render in Server
+Components.
 
 ## Monorepo build order
 

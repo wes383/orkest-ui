@@ -12,7 +12,8 @@ Early development. The shipped surface currently includes:
 - Primitives: `Box`, `Stack`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
-- Components: `Button`, `IconButton`, `Input`, `Textarea`
+- Components: `Button`, `IconButton`
+- Client components: `Input`, `Textarea` (exported from `@orkest/ui/client`)
 
 Core components, complex interactions, and the first public release are still in progress.
 `@orkest/ui` is not published to a registry yet.
@@ -57,6 +58,14 @@ import '@orkest/ui/style.css';
 
 Theme state belongs to the host application. Set `data-orkest-theme="light"` or `"dark"` on the
 document root or a container; without the attribute the stylesheet follows `prefers-color-scheme`.
+
+Client-only form controls are exported from `@orkest/ui/client`:
+
+```tsx
+import { Input, Textarea } from '@orkest/ui/client';
+```
+
+They use client-side state and must render inside a Client Component.
 
 ## Documentation
 
