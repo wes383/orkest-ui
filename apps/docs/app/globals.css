@@ -2019,8 +2019,27 @@ kbd {
     height: 2.75rem;
   }
 
+  .icon-button svg,
+  .search-trigger svg,
+  .copy-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .search-trigger {
     height: 2.75rem;
+    background: transparent;
+    font-size: var(--ok-font-size-sm);
+  }
+
+  .search-trigger:hover,
+  .search-trigger:focus-visible {
+    background: transparent;
+  }
+
+  .search-trigger:focus-visible {
+    outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+    outline-offset: var(--ok-focus-ring-offset);
   }
 
   .brand {
@@ -2040,6 +2059,10 @@ kbd {
   .docs-index-card,
   .search-result-link {
     min-height: 2.75rem;
+  }
+
+  .docs-index-card-title {
+    font-size: var(--ok-font-size-sm);
   }
 
   .button-link {
