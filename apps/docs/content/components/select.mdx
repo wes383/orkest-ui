@@ -14,13 +14,19 @@ Import it from `@orkest/ui/client` because the menu uses client-side state.
 
 <ComponentPreview
   title="Grouped options"
-  code={`import { Select } from '@orkest/ui/client';
+  code={`import { Palette } from 'lucide-react';
+import { Select } from '@orkest/ui/client';
 
 const options = [
   {
     label: 'Product',
     options: [
-      { value: 'design', label: 'Design', description: 'Product design and research' },
+      {
+        value: 'design',
+        label: 'Design',
+        description: 'Product design and research',
+        icon: Palette,
+      },
       { value: 'product', label: 'Product', description: 'Planning and strategy' },
       { value: 'marketing', label: 'Marketing' },
     ],
@@ -99,7 +105,8 @@ interface SelectOptionGroup {
 ```
 
 Groups render `role="group"` with the group label as the accessible name. Descriptions are visible
-secondary text and are included in the option's accessible name.
+secondary text and are included in the option's accessible name. `icon` renders a decorative leading
+icon; the trailing check is the selection indicator and is rendered automatically.
 
 ## Sizes
 
