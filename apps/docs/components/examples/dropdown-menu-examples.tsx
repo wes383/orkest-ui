@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from '@orkest/ui/client';
 import {
+  Archive,
   Copy,
   Keyboard,
   Mail,
@@ -47,6 +48,9 @@ export function DropdownMenuBasicExample() {
             <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem disabled leftIcon={Archive}>
+            Archive
+          </DropdownMenuItem>
           <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
             Delete
             <DropdownMenuShortcut>⇧⌘⌫</DropdownMenuShortcut>

@@ -25,7 +25,7 @@ the visual design and public API.
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@orkest/ui/client';
-import { Copy, Pencil, Trash2 } from 'lucide-react';
+import { Archive, Copy, Pencil, Trash2 } from 'lucide-react';
 
 export function Example() {
   return (
@@ -42,6 +42,9 @@ export function Example() {
             <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem disabled leftIcon={Archive}>
+            Archive
+          </DropdownMenuItem>
           <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
             Delete
             <DropdownMenuShortcut>⇧⌘⌫</DropdownMenuShortcut>
@@ -54,6 +57,9 @@ export function Example() {
 >
   <DropdownMenuBasicExample />
 </ComponentPreview>
+
+Use `disabled` to make an item inert. Disabled items keep their place in the menu, cannot be
+activated, and use a lower-emphasis foreground color.
 
 ## Anatomy
 

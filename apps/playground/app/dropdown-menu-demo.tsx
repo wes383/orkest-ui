@@ -20,7 +20,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@orkest/ui/client';
-import { Copy, Mail, Pencil, Share2, Trash2 } from 'lucide-react';
+import { Archive, Copy, Mail, Pencil, Share2, Trash2 } from 'lucide-react';
 
 export function DropdownMenuDemo() {
   const [density, setDensity] = useState('comfortable');
@@ -44,6 +44,9 @@ export function DropdownMenuDemo() {
                 <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem disabled leftIcon={Archive}>
+                Archive
+              </DropdownMenuItem>
               <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
                 Delete
               </DropdownMenuItem>
