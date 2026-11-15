@@ -8,8 +8,10 @@
 .field {
   --select-height: var(--ok-control-height-md);
   --select-padding-x: var(--ok-control-padding-x-md);
+  --select-edge-padding: calc(var(--select-padding-x) - var(--ok-space-1));
   --select-radius: var(--ok-radius-xl);
   --select-font-size: var(--ok-font-size-sm);
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--ok-space-2);
@@ -17,7 +19,7 @@
   width: 100%;
   height: var(--select-height);
   padding: 0 var(--select-padding-x);
-  padding-inline-end: calc(var(--select-padding-x) - var(--ok-space-1));
+  padding-inline-end: var(--select-edge-padding);
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--select-radius);
   background: var(--ui-surface);
@@ -95,6 +97,7 @@
   align-items: center;
   gap: var(--ok-space-2);
   min-width: 0;
+  height: 100%;
   padding: 0;
   border: 0;
   background: transparent;
@@ -115,6 +118,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.field[data-clearable="true"] .value {
+  padding-inline-end: calc(1.25rem + var(--ok-space-2));
 }
 
 .value[data-placeholder] {
@@ -253,6 +260,14 @@
   cursor: pointer;
 }
 
+.field[data-clearable="true"] .clear {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--select-edge-padding) + 1.25rem + var(--ok-space-2));
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
 .clear:hover,
 .iconButton:hover {
   background: var(--ui-secondary);
@@ -269,7 +284,27 @@
   display: inline-flex;
   flex: none;
   color: var(--ui-muted-foreground);
-  transition: transform var(--ok-duration-fast) var(--ok-ease-standard);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard),
+    transform var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.chevronButton {
+  display: inline-grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--ok-radius-lg);
+}
+
+.chevronButton:hover {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.root[data-disabled="true"] .chevronButton:hover {
+  background: transparent;
 }
 
 .trigger[data-popup-open] .chevron,

@@ -11,7 +11,6 @@ import {
   type MouseEvent,
 } from 'react';
 import { Select as BaseSelect } from '@base-ui/react/select';
-import type { SelectRootActions } from '@base-ui/react/select';
 import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 
 import { Icon } from '../../primitives/icon';
@@ -83,7 +82,6 @@ function PlainSelect({
   const rootRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const actionsRef = useRef<SelectRootActions | null>(null);
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
@@ -179,7 +177,6 @@ function PlainSelect({
       value={currentValue ?? null}
       onValueChange={handleValueChange}
       onOpenChange={(nextOpen) => setOpen(nextOpen)}
-      actionsRef={actionsRef}
       name={name}
       required={required}
       disabled={disabled}
@@ -200,6 +197,7 @@ function PlainSelect({
           data-open={open || undefined}
           data-disabled={disabled || undefined}
           data-invalid={invalid || undefined}
+          data-clearable={showClear || undefined}
           onClick={handleFieldClick}
         >
           {leftIcon ? (
@@ -218,6 +216,9 @@ function PlainSelect({
             aria-invalid={invalid || undefined}
           >
             <BaseSelect.Value className={styles.value} placeholder={placeholder} />
+            <span className={cx(styles.chevron, styles.chevronButton)}>
+              <Icon icon={ChevronDown} size={iconSize} />
+            </span>
           </BaseSelect.Trigger>
           {showClear ? (
             <button
@@ -229,30 +230,6 @@ function PlainSelect({
               <Icon icon={X} size={actionIconSize} />
             </button>
           ) : null}
-          <button
-            type="button"
-            className={styles.iconButton}
-            aria-label="Open options"
-            aria-expanded={open}
-            tabIndex={-1}
-            onPointerDown={(event) => event.stopPropagation()}
-            onMouseDown={(event) => event.stopPropagation()}
-            onClick={(event) => {
-              event.stopPropagation();
-
-              if (open) {
-                actionsRef.current?.close();
-                return;
-              }
-
-              triggerRef.current?.focus();
-              triggerRef.current?.click();
-            }}
-          >
-            <span className={styles.chevron}>
-              <Icon icon={ChevronDown} size={iconSize} />
-            </span>
-          </button>
         </div>
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner
