@@ -339,11 +339,11 @@
 }
 
 .group + .group {
-  margin-top: var(--ok-space-1);
+  margin-top: var(--ok-space-2);
 }
 
 .groupLabel {
-  padding: var(--ok-space-2) var(--ok-space-2) var(--ok-space-1);
+  padding: var(--ok-space-2) var(--ok-space-3) var(--ok-space-1);
   color: var(--ui-subtle-foreground);
   font-size: var(--ok-font-size-2xs);
   font-weight: var(--ok-font-weight-medium);
@@ -355,7 +355,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--ok-space-2);
-  padding: var(--ok-space-1) var(--ok-space-2);
+  padding: var(--ok-space-2) var(--ok-space-3);
   border-radius: var(--ok-radius-lg);
   color: var(--ui-foreground);
   font-size: var(--ok-font-size-sm);
@@ -400,7 +400,7 @@
 .itemText {
   display: grid;
   flex: 1;
-  gap: 2px;
+  gap: var(--ok-space-1);
   min-width: 0;
 }
 
