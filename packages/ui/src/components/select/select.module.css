@@ -338,11 +338,11 @@
 }
 
 .list > * + * {
-  margin-top: var(--ok-space-1);
+  margin-top: calc(var(--ok-space-1) / 2);
 }
 
 .item + .item {
-  margin-top: var(--ok-space-1);
+  margin-top: calc(var(--ok-space-1) / 2);
 }
 
 .group + .group {
