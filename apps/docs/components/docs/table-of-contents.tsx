@@ -8,25 +8,16 @@ import { useScrollOverflow } from './use-scroll-overflow';
 
 export function TableOfContents({ headings }: { headings: DocHeading[] }) {
   const [activeId, setActiveId] = useState<string | null>(headings[0]?.id ?? null);
-  const [pageScrolled, setPageScrolled] = useState(false);
   const { ref: scrollRef, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(
     headings,
   );
   const bodyClassName = [
     'toc-body',
-    overflowing && (!atTop || pageScrolled) ? 'toc-fade-top' : '',
+    overflowing && !atTop ? 'toc-fade-top' : '',
     overflowing && !atBottom ? 'toc-fade-bottom' : '',
   ]
     .filter(Boolean)
     .join(' ');
-
-  useEffect(() => {
-    const update = () => setPageScrolled(window.scrollY > 8);
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-
-    return () => window.removeEventListener('scroll', update);
-  }, []);
 
   useEffect(() => {
     const elements = headings
