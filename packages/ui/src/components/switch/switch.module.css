@@ -36,18 +36,9 @@
   --switch-font-size: var(--ok-font-size-md);
 }
 
-.root[data-disabled="true"] {
+.root:has([data-disabled]) {
   cursor: not-allowed;
   opacity: var(--ok-opacity-disabled);
-}
-
-.input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
 }
 
 .track {
@@ -60,6 +51,8 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-full);
   background: var(--ui-secondary);
+  cursor: inherit;
+  outline: none;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
     border-color var(--ok-duration-fast) var(--ok-ease-standard);
@@ -77,21 +70,21 @@
     transform var(--ok-duration-normal) var(--ok-ease-standard);
 }
 
-.root:not([data-disabled="true"]):hover .track {
+.root:not(:has([data-disabled])):hover .track {
   border-color: var(--ui-foreground);
 }
 
-.input:focus-visible + .track {
+.track:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: var(--ok-focus-ring-offset);
 }
 
-.input:checked + .track {
+.track[data-checked] {
   border-color: var(--ui-primary);
   background: var(--ui-primary);
 }
 
-.input:checked + .track .thumb {
+.track[data-checked] .thumb {
   background: var(--ui-primary-foreground);
   transform: translateX(
     calc(var(--switch-width) - var(--switch-thumb-size) - 6px)

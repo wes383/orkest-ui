@@ -5,18 +5,16 @@ import {
   createContext,
   forwardRef,
   isValidElement,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type HTMLAttributes,
   type ImgHTMLAttributes,
-  type SyntheticEvent,
 } from 'react';
+import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
+import type { ImageLoadingStatus } from '@base-ui/react/avatar';
 
-import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
 import styles from './avatar.module.css';
 
@@ -24,7 +22,7 @@ export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type AvatarShape = 'circle' | 'square';
 export type AvatarStatus = 'online' | 'away' | 'offline' | 'busy';
 export type AvatarGroupSpacing = 0 | 1 | 2 | 3 | 4;
-export type AvatarImageStatus = 'idle' | 'loading' | 'loaded' | 'error';
+export type AvatarImageStatus = ImageLoadingStatus;
 
 const statusLabels: Record<AvatarStatus, string> = {
   online: 'Online',
@@ -33,30 +31,12 @@ const statusLabels: Record<AvatarStatus, string> = {
   busy: 'Busy',
 };
 
-interface AvatarContextValue {
-  size: AvatarSize;
-  shape: AvatarShape;
-  imageStatus: AvatarImageStatus;
-  setImageStatus: (status: AvatarImageStatus) => void;
-}
-
 interface AvatarGroupContextValue {
   size: AvatarSize;
   shape: AvatarShape;
 }
 
-const AvatarContext = createContext<AvatarContextValue | null>(null);
 const AvatarGroupContext = createContext<AvatarGroupContextValue | null>(null);
-
-function useAvatarContext(component: string): AvatarContextValue {
-  const context = useContext(AvatarContext);
-
-  if (!context) {
-    throw new Error(`${component} must be used inside <Avatar>.`);
-  }
-
-  return context;
-}
 
 export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   /** Avatar size. Defaults to `md`, or the parent AvatarGroup size when present. */
@@ -91,34 +71,27 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
   const group = useContext(AvatarGroupContext);
   const size = sizeProp ?? group?.size ?? 'md';
   const shape = shapeProp ?? group?.shape ?? 'circle';
-  const [imageStatus, setImageStatus] = useState<AvatarImageStatus>('idle');
-  const contextValue = useMemo(
-    () => ({ size, shape, imageStatus, setImageStatus }),
-    [size, shape, imageStatus],
-  );
   const statusText = status ? (statusLabel ?? statusLabels[status]) : undefined;
 
   return (
-    <AvatarContext.Provider value={contextValue}>
-      <span
-        ref={ref}
-        {...rest}
-        className={cx(styles.root, className)}
-        data-size={size}
-        data-shape={shape}
-        data-status={status}
-      >
-        <span className={styles.frame} aria-hidden={label ? true : undefined}>
-          {children}
-        </span>
-        {label ? <span className={styles.srOnly}>{label}</span> : null}
-        {status ? (
-          <span className={styles.status} data-status={status}>
-            <span className={styles.srOnly}>{statusText}</span>
-          </span>
-        ) : null}
+    <BaseAvatar.Root
+      ref={ref}
+      {...rest}
+      className={cx(styles.root, className)}
+      data-size={size}
+      data-shape={shape}
+      data-status={status}
+    >
+      <span className={styles.frame} aria-hidden={label ? true : undefined}>
+        {children}
       </span>
-    </AvatarContext.Provider>
+      {label ? <span className={styles.srOnly}>{label}</span> : null}
+      {status ? (
+        <span className={styles.status} data-status={status}>
+          <span className={styles.srOnly}>{statusText}</span>
+        </span>
+      ) : null}
+    </BaseAvatar.Root>
   );
 });
 
@@ -127,102 +100,74 @@ export interface AvatarImageProps
   src: string;
   /** Accessible description of the avatar image. Use an empty string when decorative. */
   alt: string;
+  /**
+   * Keeps the image mounted while it loads instead of preloading it off-screen.
+   * Defaults to `true` so the fallback and image can stack and transition in place.
+   */
+  keepMounted?: boolean;
+  /** Called with the Base UI image loading status. */
+  onLoadingStatusChange?: (status: AvatarImageStatus) => void;
 }
 
-/** Avatar image that reports loading failures so AvatarFallback can take over. */
-export const AvatarImage = forwardRef<HTMLImageElement, AvatarImageProps>(function AvatarImage(
-  { src, alt, className, onLoad, onError, ...rest },
-  ref,
-) {
-  const { setImageStatus } = useAvatarContext('AvatarImage');
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
-  const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const failed = failedSrc === src;
-  const loaded = loadedSrc === src;
-
-  const setImageRef = useCallback(
-    (node: HTMLImageElement | null) => {
-      imageRef.current = node;
-      assignRef(ref, node);
+/** Avatar image backed by Base UI loading, fallback, and error handling. */
+export const AvatarImage = forwardRef<HTMLImageElement, AvatarImageProps>(
+  function AvatarImage(
+    {
+      src,
+      alt,
+      className,
+      keepMounted = true,
+      onLoadingStatusChange,
+      ...rest
     },
-    [ref],
-  );
+    ref,
+  ) {
+    const [status, setStatus] = useState<AvatarImageStatus>('loading');
 
-  // Cached images can finish before hydration, so the load event may never fire.
-  useEffect(() => {
-    const image = imageRef.current;
-
-    if (!image || !image.complete) {
-      return;
-    }
-
-    if (image.naturalWidth > 0) {
-      setFailedSrc(null);
-      setLoadedSrc(src);
-    } else {
-      setLoadedSrc(null);
-      setFailedSrc(src);
-    }
-  }, [src]);
-
-  useEffect(() => {
-    setImageStatus(failed ? 'error' : loaded ? 'loaded' : 'loading');
-  }, [failed, loaded, setImageStatus]);
-
-  useEffect(() => {
-    return () => {
-      setImageStatus('idle');
-    };
-  }, [setImageStatus]);
-
-  function handleLoad(event: SyntheticEvent<HTMLImageElement>) {
-    setFailedSrc(null);
-    setLoadedSrc(src);
-    onLoad?.(event);
-  }
-
-  function handleError(event: SyntheticEvent<HTMLImageElement>) {
-    setLoadedSrc(null);
-    setFailedSrc(src);
-    onError?.(event);
-  }
-
-  if (failed) {
-    return null;
-  }
-
-  return (
-    <img
-      ref={setImageRef}
-      {...rest}
-      src={src}
-      alt={alt}
-      className={cx(styles.image, className)}
-      data-state={loaded ? 'loaded' : 'loading'}
-      onLoad={handleLoad}
-      onError={handleError}
-    />
-  );
-});
-
-export type AvatarFallbackProps = HTMLAttributes<HTMLSpanElement>;
-
-/** Fallback content shown until the avatar image loads, or when it cannot load. */
-export const AvatarFallback = forwardRef<HTMLSpanElement, AvatarFallbackProps>(
-  function AvatarFallback({ className, ...rest }, ref) {
-    const { imageStatus } = useAvatarContext('AvatarFallback');
-
-    if (imageStatus === 'loaded') {
-      return null;
-    }
+    useEffect(() => {
+      setStatus('loading');
+    }, [src]);
 
     return (
-      <span
+      <BaseAvatar.Image
         ref={ref}
         {...rest}
+        src={src}
+        alt={alt}
+        keepMounted={keepMounted}
+        data-state={status}
+        className={cx(styles.image, className)}
+        onLoadingStatusChange={(nextStatus) => {
+          setStatus(nextStatus);
+          onLoadingStatusChange?.(nextStatus);
+        }}
+      />
+    );
+  },
+);
+
+export interface AvatarFallbackProps extends HTMLAttributes<HTMLSpanElement> {
+  /** How long to wait before showing the fallback, in milliseconds. */
+  delay?: number;
+}
+
+/** Fallback content shown while the image loads, or when it cannot load. */
+export const AvatarFallback = forwardRef<HTMLSpanElement, AvatarFallbackProps>(
+  function AvatarFallback({ className, delay, ...rest }, ref) {
+    return (
+      <BaseAvatar.Fallback
+        ref={ref}
+        {...rest}
+        delay={delay}
         className={cx(styles.fallback, className)}
-        data-state={imageStatus}
+        render={(props, state) => (
+          <span
+            {...props}
+            data-state={
+              state.imageLoadingStatus === 'error' ? 'error' : 'loading'
+            }
+          />
+        )}
       />
     );
   },
@@ -246,41 +191,45 @@ function defaultOverflowLabel(count: number): string {
 }
 
 /** Horizontally overlapping avatar list with an optional overflow count. */
-export const AvatarGroup = forwardRef<HTMLSpanElement, AvatarGroupProps>(function AvatarGroup(
-  {
-    max,
-    size = 'md',
-    shape = 'circle',
-    spacing = 2,
-    overflowLabel = defaultOverflowLabel,
-    className,
-    children,
-    ...rest
-  },
-  ref,
-) {
-  const items = Children.toArray(children).filter(isValidElement);
-  const visibleCount =
-    max === undefined ? items.length : Math.min(Math.max(0, Math.floor(max)), items.length);
-  const visibleItems = items.slice(0, visibleCount);
-  const overflow = items.length - visibleCount;
-  const contextValue = useMemo(() => ({ size, shape }), [size, shape]);
+export const AvatarGroup = forwardRef<HTMLSpanElement, AvatarGroupProps>(
+  function AvatarGroup(
+    {
+      max,
+      size = 'md',
+      shape = 'circle',
+      spacing = 2,
+      overflowLabel = defaultOverflowLabel,
+      className,
+      children,
+      ...rest
+    },
+    ref,
+  ) {
+    const items = Children.toArray(children).filter(isValidElement);
+    const visibleCount =
+      max === undefined
+        ? items.length
+        : Math.min(Math.max(0, Math.floor(max)), items.length);
+    const visibleItems = items.slice(0, visibleCount);
+    const overflow = items.length - visibleCount;
+    const contextValue = useMemo(() => ({ size, shape }), [size, shape]);
 
-  return (
-    <AvatarGroupContext.Provider value={contextValue}>
-      <span
-        ref={ref}
-        {...rest}
-        className={cx(styles.group, className)}
-        data-spacing={spacing}
-      >
-        {visibleItems}
-        {overflow > 0 ? (
-          <Avatar size={size} shape={shape} label={overflowLabel(overflow)}>
-            <AvatarFallback>+{overflow}</AvatarFallback>
-          </Avatar>
-        ) : null}
-      </span>
-    </AvatarGroupContext.Provider>
-  );
-});
+    return (
+      <AvatarGroupContext.Provider value={contextValue}>
+        <span
+          ref={ref}
+          {...rest}
+          className={cx(styles.group, className)}
+          data-spacing={spacing}
+        >
+          {visibleItems}
+          {overflow > 0 ? (
+            <Avatar size={size} shape={shape} label={overflowLabel(overflow)}>
+              <AvatarFallback>+{overflow}</AvatarFallback>
+            </Avatar>
+          ) : null}
+        </span>
+      </AvatarGroupContext.Provider>
+    );
+  },
+);

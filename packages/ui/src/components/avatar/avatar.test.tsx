@@ -90,50 +90,56 @@ describe('Avatar', () => {
 
 describe('AvatarImage', () => {
   it('renders an image and hides the fallback after loading', () => {
-    render(
+    const { container } = render(
       <Avatar>
         <AvatarImage src="/avatar.png" alt="Alex Morgan" />
         <AvatarFallback>AM</AvatarFallback>
       </Avatar>,
     );
 
-    const image = screen.getByRole('img', { name: 'Alex Morgan' });
+    const image = container.querySelector('img');
     expect(image).toHaveAttribute('src', '/avatar.png');
     expect(image).toHaveAttribute('data-state', 'loading');
+    expect(image).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByText('AM')).toBeInTheDocument();
 
-    fireEvent.load(image);
+    fireEvent.load(image!);
 
     expect(image).toHaveAttribute('data-state', 'loaded');
+    expect(image).not.toHaveAttribute('aria-hidden');
     expect(screen.queryByText('AM')).not.toBeInTheDocument();
   });
 
   it('replaces a failed image with the fallback', () => {
-    render(
+    const { container } = render(
       <Avatar>
         <AvatarImage src="/missing.png" alt="Jordan Lee" />
         <AvatarFallback>JL</AvatarFallback>
       </Avatar>,
     );
 
-    const image = screen.getByRole('img', { name: 'Jordan Lee' });
-    fireEvent.error(image);
+    const image = container.querySelector('img');
+    fireEvent.error(image!);
 
-    expect(screen.queryByRole('img', { name: 'Jordan Lee' })).not.toBeInTheDocument();
+    expect(image).toHaveAttribute('data-state', 'error');
+    expect(image).toHaveAttribute('aria-hidden', 'true');
+    expect(
+      screen.queryByRole('img', { name: 'Jordan Lee' }),
+    ).not.toBeInTheDocument();
     expect(screen.getByText('JL')).toBeInTheDocument();
     expect(screen.getByText('JL')).toHaveAttribute('data-state', 'error');
   });
 
   it('restores the image state when the source changes', () => {
-    const { rerender } = render(
+    const { container, rerender } = render(
       <Avatar>
         <AvatarImage src="/missing.png" alt="Alex Morgan" />
         <AvatarFallback>AM</AvatarFallback>
       </Avatar>,
     );
 
-    fireEvent.error(screen.getByRole('img', { name: 'Alex Morgan' }));
-    expect(screen.getByText('AM')).toBeInTheDocument();
+    fireEvent.error(container.querySelector('img')!);
+    expect(screen.getByText('AM')).toHaveAttribute('data-state', 'error');
 
     rerender(
       <Avatar>
@@ -142,16 +148,17 @@ describe('AvatarImage', () => {
       </Avatar>,
     );
 
-    expect(screen.getByRole('img', { name: 'Alex Morgan' })).toHaveAttribute(
+    expect(container.querySelector('img')).toHaveAttribute(
       'data-state',
       'loading',
     );
+    expect(screen.getByText('AM')).toHaveAttribute('data-state', 'loading');
   });
 
   it('forwards image attributes and refs', () => {
     const ref = createRef<HTMLImageElement>();
 
-    render(
+    const { container } = render(
       <Avatar>
         <AvatarImage
           ref={ref}
@@ -164,7 +171,7 @@ describe('AvatarImage', () => {
       </Avatar>,
     );
 
-    const image = screen.getByRole('img', { name: 'Alex Morgan' });
+    const image = container.querySelector('img');
     expect(image).toHaveAttribute('width', '64');
     expect(image).toHaveAttribute('height', '64');
     expect(image).toHaveClass('custom');

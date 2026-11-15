@@ -28,18 +28,9 @@
   --radio-font-size: var(--ok-font-size-md);
 }
 
-.root[data-disabled="true"] {
+.root:has([data-disabled]) {
   cursor: not-allowed;
   opacity: var(--ok-opacity-disabled);
-}
-
-.input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
 }
 
 .control {
@@ -54,25 +45,34 @@
   background: var(--ui-surface);
   color: var(--ui-primary);
   font-size: var(--radio-size);
+  cursor: inherit;
+  outline: none;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
     border-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.root:not([data-disabled="true"]):hover .control {
+.root:not(:has([data-disabled])):hover .control {
   border-color: var(--ui-foreground);
 }
 
-.input:focus-visible + .control {
+.control:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: var(--ok-focus-ring-offset);
 }
 
-.input:checked + .control {
+.control[data-checked] {
   border-color: var(--ui-primary);
 }
 
-.control::after {
+.indicator {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.indicator::after {
   width: 0.45em;
   height: 0.45em;
   border-radius: var(--ok-radius-full);
@@ -85,7 +85,7 @@
     transform var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.input:checked + .control::after {
+.control[data-checked] .indicator::after {
   opacity: 1;
   transform: scale(1);
 }
@@ -112,7 +112,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .control,
-  .control::after {
+  .indicator::after {
     transition: none;
   }
 }

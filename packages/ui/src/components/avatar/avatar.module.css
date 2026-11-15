@@ -79,6 +79,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.image[data-loading],
+.image[data-error] {
+  opacity: 0;
 }
 
 .fallback {
@@ -167,6 +173,12 @@
 
 .group > * + * {
   margin-inline-start: calc(var(--avatar-group-overlap) * -1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transition: none;
+  }
 }
 
 .srOnly {

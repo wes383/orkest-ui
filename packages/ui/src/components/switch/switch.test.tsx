@@ -9,65 +9,82 @@ import { Switch, type SwitchSize } from './switch';
 const sizes: SwitchSize[] = ['sm', 'md', 'lg'];
 
 describe('Switch', () => {
-  it('renders a labelled switch with aria-checked', () => {
+  it('renders a labelled Base UI switch', () => {
     render(<Switch label="Notifications" />);
 
     const control = screen.getByRole('switch', { name: 'Notifications' });
-    expect(control).not.toBeChecked();
     expect(control).toHaveAttribute('aria-checked', 'false');
   });
 
   it('toggles with pointer and keyboard interaction', async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
+    const onCheckedChange = vi.fn();
 
-    render(<Switch label="Notifications" onChange={onChange} />);
+    render(<Switch label="Notifications" onCheckedChange={onCheckedChange} />);
 
     await user.click(screen.getByText('Notifications'));
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole('switch')).toBeChecked();
-    expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+    expect(onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
 
     screen.getByRole('switch').blur();
     await user.tab();
     expect(screen.getByRole('switch')).toHaveFocus();
 
     await user.keyboard(' ');
-    expect(screen.getByRole('switch')).not.toBeChecked();
-    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-checked',
+      'false',
+    );
+    expect(onCheckedChange).toHaveBeenCalledTimes(2);
   });
 
   it('supports controlled checked state', async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
+    const onCheckedChange = vi.fn();
 
-    render(<Switch label="Controlled" checked onChange={onChange} />);
+    render(
+      <Switch
+        label="Controlled"
+        checked
+        onCheckedChange={onCheckedChange}
+      />,
+    );
 
     const control = screen.getByRole('switch', { name: 'Controlled' });
-    expect(control).toBeChecked();
+    expect(control).toHaveAttribute('aria-checked', 'true');
 
     await user.click(screen.getByText('Controlled'));
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(control).toBeChecked();
+    expect(onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(control).toHaveAttribute('aria-checked', 'true');
   });
 
   it('does not toggle when disabled', async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
+    const onCheckedChange = vi.fn();
 
-    render(<Switch label="Disabled" disabled onChange={onChange} />);
+    render(
+      <Switch label="Disabled" disabled onCheckedChange={onCheckedChange} />,
+    );
 
     await user.click(screen.getByText('Disabled'));
-    expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByRole('switch')).toBeDisabled();
+    expect(onCheckedChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('switch')).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('forwards form attributes, refs, and size', () => {
-    const ref = createRef<HTMLInputElement>();
+    const ref = createRef<HTMLElement>();
+    const inputRef = createRef<HTMLInputElement>();
 
     const { container } = render(
       <Switch
         ref={ref}
+        inputRef={inputRef}
         label="Weekly digest"
         name="digest"
         value="weekly"
@@ -78,9 +95,9 @@ describe('Switch', () => {
 
     const control = screen.getByRole('switch', { name: 'Weekly digest' });
     expect(ref.current).toBe(control);
-    expect(control).toHaveAttribute('name', 'digest');
-    expect(control).toHaveAttribute('value', 'weekly');
-    expect(control).toBeRequired();
+    expect(inputRef.current).toHaveAttribute('name', 'digest');
+    expect(inputRef.current).toHaveAttribute('value', 'weekly');
+    expect(inputRef.current).toBeRequired();
     expect(container.querySelector('[data-size="lg"]')).toBeInTheDocument();
   });
 
