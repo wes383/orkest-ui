@@ -7,7 +7,18 @@ export { Tag } from './components/tag';
 export type { TagProps, TagShape, TagSize, TagVariant } from './components/tag';
 
 export { Box } from './primitives/box';
-export type { BoxProps } from './primitives/box';
+export type {
+  BoxBackground,
+  BoxBorder,
+  BoxColor,
+  BoxDimension,
+  BoxOverflow,
+  BoxOwnProps,
+  BoxPadding,
+  BoxProps,
+  BoxRadius,
+  BoxShadow,
+} from './primitives/box';
 
 export { Button } from './components/button';
 export type { ButtonProps, ButtonSize, ButtonVariant } from './components/button';
@@ -27,6 +38,19 @@ export type {
   StackOwnProps,
   StackProps,
 } from './primitives/stack';
+
+export { Grid } from './primitives/grid';
+export type {
+  GridAlign,
+  GridAutoFlow,
+  GridColumns,
+  GridGap,
+  GridJustify,
+  GridOwnProps,
+  GridProps,
+  GridResponsiveValue,
+  GridRows,
+} from './primitives/grid';
 
 export { Separator } from './primitives/separator';
 export type {

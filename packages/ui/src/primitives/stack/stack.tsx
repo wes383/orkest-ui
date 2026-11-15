@@ -1,13 +1,14 @@
 import { forwardRef, type ElementType, type ForwardedRef, type ReactElement } from 'react';
 
 import { cx } from '../../utils/cx';
+import type { SpaceStep } from '../layout';
 import type { PolymorphicProps } from '../types';
 import styles from './stack.module.css';
 
 export type StackDirection = 'row' | 'column';
 export type StackAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 export type StackJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-export type StackGap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20;
+export type StackGap = SpaceStep;
 
 export interface StackOwnProps {
   /** Main axis. Defaults to `column`. */
