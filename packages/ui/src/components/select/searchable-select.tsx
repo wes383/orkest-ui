@@ -262,7 +262,11 @@ export function SearchableSelect({
           </BaseCombobox.Trigger>
         </BaseCombobox.InputGroup>
         <BaseCombobox.Portal container={rootRef}>
-          <BaseCombobox.Positioner sideOffset={4} className={styles.positioner}>
+          <BaseCombobox.Positioner
+            sideOffset={4}
+            positionMethod="fixed"
+            className={styles.positioner}
+          >
             <BaseCombobox.Popup className={styles.menu}>
               <BaseCombobox.Status className={styles.status}>
                 {loading ? (

@@ -231,6 +231,7 @@ function PlainSelect({
           <BaseSelect.Positioner
             sideOffset={4}
             alignItemWithTrigger={false}
+            positionMethod="fixed"
             className={styles.positioner}
           >
             <BaseSelect.Popup className={styles.menu}>
