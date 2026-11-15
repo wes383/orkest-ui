@@ -103,6 +103,7 @@ function MultiSelectImpl({
   const [query, setQuery] = useState('');
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isControlled = value !== undefined;
@@ -304,6 +305,7 @@ function MultiSelectImpl({
         data-invalid={invalid || undefined}
       >
         <BaseCombobox.InputGroup
+          ref={fieldRef}
           className={styles.field}
           data-size={size}
           data-multiple="true"
@@ -390,7 +392,8 @@ function MultiSelectImpl({
         </BaseCombobox.InputGroup>
         <BaseCombobox.Portal container={rootRef}>
           <BaseCombobox.Positioner
-            sideOffset={8}
+            anchor={fieldRef}
+            sideOffset={12}
             positionMethod="fixed"
             className={styles.positioner}
           >

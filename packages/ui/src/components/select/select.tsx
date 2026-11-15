@@ -80,6 +80,7 @@ function PlainSelect({
   const [open, setOpen] = useState(false);
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   const isControlled = value !== undefined;
@@ -189,6 +190,7 @@ function PlainSelect({
         data-invalid={invalid || undefined}
       >
         <div
+          ref={fieldRef}
           className={styles.field}
           data-size={size}
           data-open={open || undefined}
@@ -229,7 +231,8 @@ function PlainSelect({
         </div>
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner
-            sideOffset={8}
+            anchor={fieldRef}
+            sideOffset={12}
             alignItemWithTrigger={false}
             positionMethod="fixed"
             className={styles.positioner}
