@@ -697,11 +697,11 @@ kbd {
 }
 
 .props-table th:nth-child(1) {
-  width: 22%;
+  width: 26%;
 }
 
 .props-table th:nth-child(2) {
-  width: 60%;
+  width: 56%;
 }
 
 .props-table th:nth-child(3) {
