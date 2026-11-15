@@ -314,6 +314,53 @@ describe('DropdownMenu', () => {
     expect(edit).toHaveFocus();
   });
 
+  it('skips disabled items during arrow navigation', async () => {
+    const user = userEvent.setup();
+    render(<ActionsMenu />);
+
+    await user.tab();
+    await user.keyboard('{Enter}');
+    await screen.findByRole('menu');
+
+    await user.keyboard('{ArrowDown}');
+    expect(screen.getByRole('menuitem', { name: 'Duplicate' })).toHaveFocus();
+
+    await user.keyboard('{ArrowDown}');
+    expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus();
+
+    await user.keyboard('{ArrowUp}');
+    expect(screen.getByRole('menuitem', { name: 'Duplicate' })).toHaveFocus();
+  });
+
+  it('skips disabled items for Home and End', async () => {
+    const user = userEvent.setup();
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Menu</DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DropdownMenuItem disabled>Archive</DropdownMenuItem>
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem disabled>Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>,
+    );
+
+    await user.tab();
+    await user.keyboard('{Enter}');
+    await screen.findByRole('menu');
+
+    const edit = screen.getByRole('menuitem', { name: 'Edit' });
+    expect(edit).toHaveFocus();
+
+    await user.keyboard('{End}');
+    expect(edit).toHaveFocus();
+
+    await user.keyboard('{Home}');
+    expect(edit).toHaveFocus();
+  });
+
   it('activates the highlighted item with Enter and Space', async () => {
     const user = userEvent.setup();
     const onEdit = vi.fn();

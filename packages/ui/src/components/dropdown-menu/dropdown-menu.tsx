@@ -7,6 +7,7 @@ import {
   useState,
   type CSSProperties,
   type ComponentPropsWithoutRef,
+  type KeyboardEvent as ReactKeyboardEvent,
   type ReactElement,
   type Ref,
 } from 'react';
@@ -41,13 +42,131 @@ interface DropdownMenuFocusRingContextValue {
   setSuppressFocusRing: (value: boolean) => void;
 }
 
+interface DropdownMenuInteractionContextValue {
+  orientation: NonNullable<MenuRootProps['orientation']>;
+  loopFocus: boolean;
+}
+
 const DropdownMenuFocusRingContext =
   createContext<DropdownMenuFocusRingContextValue | null>(null);
+
+const DropdownMenuInteractionContext =
+  createContext<DropdownMenuInteractionContextValue>({
+    orientation: 'vertical',
+    loopFocus: true,
+  });
+
+const menuItemSelector =
+  '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
+
+function isMenuItemDisabled(item: HTMLElement): boolean {
+  return (
+    item.getAttribute('aria-disabled') === 'true' ||
+    item.hasAttribute('data-disabled')
+  );
+}
+
+/**
+ * Base UI keeps disabled menu items focusable so screen readers can announce
+ * them. Skip those items when the arrow keys would otherwise land on one.
+ */
+function handleMenuKeyDownCapture(
+  event: ReactKeyboardEvent<HTMLDivElement>,
+  options: DropdownMenuInteractionContextValue,
+) {
+  if (options.orientation !== 'vertical') {
+    return;
+  }
+
+  if (
+    event.defaultPrevented ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    (event.key !== 'ArrowDown' &&
+      event.key !== 'ArrowUp' &&
+      event.key !== 'Home' &&
+      event.key !== 'End')
+  ) {
+    return;
+  }
+
+  const popup = event.currentTarget;
+  const items = Array.from(
+    popup.querySelectorAll<HTMLElement>(menuItemSelector),
+  ).filter((item) => item.closest('[role="menu"]') === popup);
+
+  if (items.length === 0) {
+    return;
+  }
+
+  const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+
+  if (currentIndex === -1) {
+    return;
+  }
+
+  let targetIndex: number;
+
+  if (event.key === 'Home') {
+    targetIndex = 0;
+  } else if (event.key === 'End') {
+    targetIndex = items.length - 1;
+  } else {
+    targetIndex =
+      currentIndex + (event.key === 'ArrowDown' ? 1 : -1);
+  }
+
+  if (targetIndex < 0 || targetIndex >= items.length) {
+    if (!options.loopFocus) {
+      return;
+    }
+
+    targetIndex = targetIndex < 0 ? items.length - 1 : 0;
+  }
+
+  if (!isMenuItemDisabled(items[targetIndex]!)) {
+    return;
+  }
+
+  function findEnabled(startIndex: number, direction: 1 | -1): number {
+    for (let step = 0; step < items.length; step += 1) {
+      const index =
+        (startIndex + step * direction + items.length) % items.length;
+      const item = items[index];
+
+      if (item && !isMenuItemDisabled(item)) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+
+  const enabledIndex =
+    event.key === 'Home'
+      ? findEnabled(0, 1)
+      : event.key === 'End'
+        ? findEnabled(items.length - 1, -1)
+        : findEnabled(
+            targetIndex,
+            event.key === 'ArrowDown' ? 1 : -1,
+          );
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (enabledIndex !== -1) {
+    items[enabledIndex]?.focus({ preventScroll: true });
+  }
+}
 
 /** Root of a dropdown menu with controlled and uncontrolled open state. */
 export function DropdownMenu({
   children,
   onOpenChange,
+  orientation = 'vertical',
+  loopFocus = true,
   ...rest
 }: DropdownMenuProps) {
   const [suppressFocusRing, setSuppressFocusRing] = useState(false);
@@ -73,9 +192,18 @@ export function DropdownMenu({
     <DropdownMenuFocusRingContext.Provider
       value={{ suppressFocusRing, setSuppressFocusRing }}
     >
-      <BaseMenu.Root {...rest} onOpenChange={handleOpenChange}>
-        {children}
-      </BaseMenu.Root>
+      <DropdownMenuInteractionContext.Provider
+        value={{ orientation, loopFocus }}
+      >
+        <BaseMenu.Root
+          {...rest}
+          orientation={orientation}
+          loopFocus={loopFocus}
+          onOpenChange={handleOpenChange}
+        >
+          {children}
+        </BaseMenu.Root>
+      </DropdownMenuInteractionContext.Provider>
     </DropdownMenuFocusRingContext.Provider>
   );
 }
@@ -164,10 +292,13 @@ export const DropdownMenuContent = forwardRef<
     maxWidth,
     maxHeight,
     style,
+    onKeyDownCapture,
     ...rest
   },
   ref,
 ) {
+  const interaction = useContext(DropdownMenuInteractionContext);
+
   return (
     <BaseMenu.Positioner
       side={side}
@@ -182,6 +313,10 @@ export const DropdownMenuContent = forwardRef<
         {...rest}
         className={cx(styles.content, className)}
         style={{ ...style, minWidth, maxWidth, maxHeight }}
+        onKeyDownCapture={(event) => {
+          handleMenuKeyDownCapture(event, interaction);
+          onKeyDownCapture?.(event);
+        }}
       >
         {children}
       </BaseMenu.Popup>
@@ -494,10 +629,13 @@ export const DropdownMenuSubContent = forwardRef<
     maxWidth,
     maxHeight,
     style,
+    onKeyDownCapture,
     ...rest
   },
   ref,
 ) {
+  const interaction = useContext(DropdownMenuInteractionContext);
+
   return (
     <BaseMenu.Portal>
       <BaseMenu.Positioner
@@ -513,6 +651,10 @@ export const DropdownMenuSubContent = forwardRef<
           {...rest}
           className={cx(styles.content, className)}
           style={{ ...style, minWidth, maxWidth, maxHeight }}
+          onKeyDownCapture={(event) => {
+            handleMenuKeyDownCapture(event, interaction);
+            onKeyDownCapture?.(event);
+          }}
         >
           {children}
         </BaseMenu.Popup>
