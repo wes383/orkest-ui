@@ -344,7 +344,8 @@ Mix icon and non-icon items with `inset` so labels stay aligned:
 - `ArrowUp` and `ArrowDown` move through items, `Home` and `End` jump to the first and last items,
   and `Enter` or `Space` activates the highlighted item.
 - `Escape` closes the menu and restores focus to the trigger. `Tab` moves focus out of the menu.
-- Disabled items are exposed with `aria-disabled` and cannot be activated.
+- Disabled items are exposed with `aria-disabled`, cannot be activated, and are skipped by arrow,
+  Home, and End navigation.
 - `DropdownMenuShortcut` is hidden from assistive technology so the accessible name stays concise.
 - Destructive items keep their text label; color is not the only signal.
 - `DropdownMenuLabel` is associated with its group automatically.
