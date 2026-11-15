@@ -497,11 +497,13 @@
   display: none;
 }
 
-.limitHint {
-  padding: var(--ok-space-2) var(--ok-space-3);
-  color: var(--ui-muted-foreground);
+.selectionCount {
+  flex: none;
+  color: var(--ui-subtle-foreground);
   font-size: var(--ok-font-size-xs);
+  font-variant-numeric: tabular-nums;
   line-height: var(--ok-line-height-snug);
+  white-space: nowrap;
 }
 
 .spinner {
