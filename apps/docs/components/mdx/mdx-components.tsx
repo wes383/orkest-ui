@@ -91,6 +91,14 @@ import {
   DialogScrollExample,
   DialogSizesExample,
 } from '../examples/dialog-examples';
+import {
+  DropdownMenuBasicExample,
+  DropdownMenuControlledExample,
+  DropdownMenuGroupExample,
+  DropdownMenuRadioExample,
+  DropdownMenuSizingExample,
+  DropdownMenuSubmenuExample,
+} from '../examples/dropdown-menu-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -207,6 +215,12 @@ export const mdxComponents = {
   DialogControlledExample,
   DialogSizesExample,
   DialogScrollExample,
+  DropdownMenuBasicExample,
+  DropdownMenuControlledExample,
+  DropdownMenuGroupExample,
+  DropdownMenuRadioExample,
+  DropdownMenuSizingExample,
+  DropdownMenuSubmenuExample,
   FieldBasicExample,
   FieldCheckboxExample,
   FieldDisabledExample,

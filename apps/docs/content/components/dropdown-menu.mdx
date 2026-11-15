@@ -1,0 +1,625 @@
+---
+title: Dropdown Menu
+description: Menus that execute actions from a trigger.
+section: components
+---
+
+`DropdownMenu` displays a list of commands after a trigger is pressed. Use it for actions such as
+editing, duplicating, sharing, and deleting. It is not a Select: a menu executes commands, while a
+Select chooses a form value.
+
+The component is built on Base UI Menu and exported from `@orkest/ui/client`. Base UI owns
+positioning, collision handling, dismissal, focus management, and keyboard navigation; Orkest UI owns
+the visual design and public API.
+
+## Basic usage
+
+<ComponentPreview
+  title="Project actions"
+  code={`import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+import { Copy, Pencil, Trash2 } from 'lucide-react';
+
+export function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent>
+          <DropdownMenuItem leftIcon={Pencil}>
+            Edit
+            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem leftIcon={Copy}>
+            Duplicate
+            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
+            Delete
+            <DropdownMenuShortcut>⇧⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+}`}
+>
+  <DropdownMenuBasicExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `DropdownMenu` owns the open state and menu behavior.
+- `DropdownMenuTrigger` opens the menu. It renders a secondary Button by default.
+- `DropdownMenuPortal` moves the menu to the document body.
+- `DropdownMenuContent` positions the surface, handles collisions, and scrolls long content.
+- `DropdownMenuItem` executes an action and closes the menu.
+- `DropdownMenuGroup` groups related items; `DropdownMenuLabel` names the group.
+- `DropdownMenuSeparator` divides menu sections.
+- `DropdownMenuShortcut` renders a visual keyboard hint at the end of an item.
+- `DropdownMenuLinkItem` renders navigation as an anchor.
+- `DropdownMenuCheckboxItem` toggles a setting without closing the menu.
+- `DropdownMenuRadioGroup` and `DropdownMenuRadioItem` select one value without closing the menu.
+- `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` build nested menus.
+
+Use `render` on `DropdownMenuTrigger` when the trigger should be an icon button, an avatar button, or
+another custom element:
+
+```tsx
+<DropdownMenuTrigger render={<Button variant="ghost" aria-label="Project actions" />} />
+```
+
+## Groups, labels, and checkboxes
+
+<ComponentPreview
+  title="Grouped settings"
+  code={`import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuLinkItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+import { Keyboard, Settings } from 'lucide-react';
+
+export function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger variant="outline">View options</DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Panels</DropdownMenuLabel>
+            <DropdownMenuCheckboxItem defaultChecked>
+              Show grid
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Show ruler</DropdownMenuCheckboxItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Resources</DropdownMenuLabel>
+            <DropdownMenuItem leftIcon={Settings}>Preferences</DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Keyboard}>
+              Keyboard shortcuts
+            </DropdownMenuItem>
+            <DropdownMenuLinkItem href="/docs/components/button/">
+              Button documentation
+            </DropdownMenuLinkItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+}`}
+>
+  <DropdownMenuGroupExample />
+</ComponentPreview>
+
+`DropdownMenuCheckboxItem` supports both `checked` and `defaultChecked`, and it keeps the menu open
+by default. Pass `closeOnClick` when a setting should close the menu immediately.
+
+## Radio items
+
+<ComponentPreview
+  title="Density"
+  code={`import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [density, setDensity] = useState('comfortable');
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger variant="outline">
+        Density: {density}
+      </DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent>
+          <DropdownMenuRadioGroup
+            value={density}
+            onValueChange={(value) => setDensity(value)}
+          >
+            <DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="comfortable">
+              Comfortable
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="spacious">Spacious</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+}`}
+>
+  <DropdownMenuRadioExample />
+</ComponentPreview>
+
+`DropdownMenuRadioGroup` supports `value` / `defaultValue` / `onValueChange`. Radio items keep the
+menu open so several settings can be adjusted in one session.
+
+## Submenus
+
+<ComponentPreview
+  title="Share submenu"
+  code={`import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+import { Copy, Mail, MessageSquare, Share2 } from 'lucide-react';
+
+export function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger variant="outline">Share</DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent>
+          <DropdownMenuItem leftIcon={Copy}>Copy link</DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger leftIcon={Share2}>
+              Share via
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
+              <DropdownMenuItem leftIcon={MessageSquare}>Message</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>More options…</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+}`}
+>
+  <DropdownMenuSubmenuExample />
+</ComponentPreview>
+
+`DropdownMenuSubContent` renders its own portal and positioner. Submenus open on hover, click, or the
+right arrow key, and close with Escape or the left arrow key.
+
+## Controlled state
+
+<ComponentPreview
+  title="Controlled menu"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+import { Copy, Pencil, Trash2 } from 'lucide-react';
+
+export function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Stack direction="row" gap={3} wrap align="center">
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger variant="outline">Project actions</DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DropdownMenuItem leftIcon={Pencil}>Rename</DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Copy}>Duplicate</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
+              Delete project
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
+      <Text size="sm" tone="muted">
+        {open ? 'Status: open' : 'Status: closed'}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <DropdownMenuControlledExample />
+</ComponentPreview>
+
+## Positioning and sizing
+
+`DropdownMenuContent` places the menu on the `bottom` side with `start` alignment by default. Override
+`side`, `align`, `sideOffset`, and `alignOffset` when the trigger needs a different layout. Base UI
+automatically flips the menu when it would overflow the viewport.
+
+<ComponentPreview
+  title="Sized menu"
+  code={`import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLinkItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger variant="outline">Sized menu</DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent minWidth="18rem" maxWidth="22rem">
+          <DropdownMenuItem>Rename project</DropdownMenuItem>
+          <DropdownMenuItem>Move to folder</DropdownMenuItem>
+          <DropdownMenuItem>Duplicate project</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuLinkItem href="/docs/components/dropdown-menu/">
+            Read the documentation
+          </DropdownMenuLinkItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+}`}
+>
+  <DropdownMenuSizingExample />
+</ComponentPreview>
+
+Use `minWidth` and `maxWidth` for predictable surfaces, or leave them unset to let the menu grow with
+its content. `maxHeight` controls when the menu starts scrolling; by default it is limited by the
+available viewport height.
+
+## Item types
+
+| Type | Component | Behavior |
+| --- | --- | --- |
+| Action | `DropdownMenuItem` | Executes an action and closes the menu |
+| Link | `DropdownMenuLinkItem` | Renders an anchor and closes the menu after navigation |
+| Destructive | `DropdownMenuItem variant="destructive"` | Uses the danger color for irreversible actions |
+| Checkbox | `DropdownMenuCheckboxItem` | Toggles a setting and keeps the menu open |
+| Radio | `DropdownMenuRadioItem` | Selects one value in a `DropdownMenuRadioGroup` |
+| Submenu | `DropdownMenuSub` | Opens a nested menu |
+| Shortcut | `DropdownMenuShortcut` | Displays a keyboard hint without changing the accessible name |
+
+Mix icon and non-icon items with `inset` so labels stay aligned:
+
+```tsx
+<DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
+<DropdownMenuItem inset>Preferences</DropdownMenuItem>
+```
+
+## Accessibility
+
+- `DropdownMenuContent` renders `role="menu"` and items render `role="menuitem"`,
+  `menuitemcheckbox`, or `menuitemradio` as appropriate.
+- `ArrowUp` and `ArrowDown` move through items, `Home` and `End` jump to the first and last items,
+  and `Enter` or `Space` activates the highlighted item.
+- `Escape` closes the menu and restores focus to the trigger. `Tab` moves focus out of the menu.
+- Disabled items are exposed with `aria-disabled` and cannot be activated.
+- `DropdownMenuShortcut` is hidden from assistive technology so the accessible name stays concise.
+- Destructive items keep their text label; color is not the only signal.
+- `DropdownMenuLabel` is associated with its group automatically.
+- The menu respects `prefers-reduced-motion` for its open and close animation.
+
+## Props
+
+### DropdownMenu
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open, eventDetails) => void',
+      description: 'Called when the menu requests an open state change.',
+    },
+    {
+      name: 'modal',
+      type: 'boolean',
+      default: 'true',
+      description: 'Locks page scroll and blocks outside pointer interaction while open.',
+    },
+    {
+      name: 'loopFocus',
+      type: 'boolean',
+      default: 'true',
+      description: 'Wraps keyboard focus at the ends of the menu.',
+    },
+    {
+      name: 'orientation',
+      type: `'vertical' | 'horizontal'`,
+      default: `'vertical'`,
+      description: 'Controls which arrow keys move between items.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the trigger and the menu.',
+    },
+    {
+      name: 'onOpenChangeComplete',
+      type: '(open: boolean) => void',
+      description: 'Called after the open or close animation completes.',
+    },
+    {
+      name: 'triggerId / defaultTriggerId',
+      type: 'string',
+      description: 'Associates an external trigger with a controlled menu.',
+    },
+  ]}
+/>
+
+### DropdownMenuTrigger
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `'secondary'`,
+      description: 'Visual Button variant used by the default trigger.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Button size.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default Button, for example with an icon button.',
+    },
+    {
+      name: 'openOnHover / delay / closeDelay',
+      type: 'boolean / number / number',
+      description: 'Opens the menu on hover with optional delays.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, type, click handlers, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### DropdownMenuContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'side',
+      type: `'top' | 'bottom' | 'left' | 'right' | 'inline-start' | 'inline-end'`,
+      default: `'bottom'`,
+      description: 'Side of the trigger the menu is placed on.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end'`,
+      default: `'start'`,
+      description: 'Alignment relative to the trigger.',
+    },
+    {
+      name: 'sideOffset',
+      type: 'number',
+      default: '6',
+      description: 'Distance between the trigger and the menu.',
+    },
+    {
+      name: 'alignOffset',
+      type: 'number',
+      default: '0',
+      description: 'Offset along the alignment axis.',
+    },
+    {
+      name: 'collisionPadding',
+      type: 'number | Partial<Record<side, number>>',
+      description: 'Keeps the menu away from viewport edges.',
+    },
+    {
+      name: 'minWidth / maxWidth / maxHeight',
+      type: 'CSSProperties values',
+      description: 'Controls surface sizing and the scrolling threshold.',
+    },
+    {
+      name: 'native attributes',
+      type: 'Base UI Menu Popup props',
+      description: 'Class names, data attributes, and refs are forwarded to the popup.',
+    },
+  ]}
+/>
+
+### DropdownMenuItem
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'default' | 'destructive'`,
+      default: `'default'`,
+      description: 'Marks irreversible actions with the danger color.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the label.',
+    },
+    {
+      name: 'inset',
+      type: 'boolean',
+      default: 'false',
+      description: 'Aligns a label with items that use a leading icon.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Prevents activation and lowers visual emphasis.',
+    },
+    {
+      name: 'closeOnClick',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the menu when the item is activated.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, data attributes, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### DropdownMenuLinkItem
+
+<PropsTable
+  rows={[
+    {
+      name: 'href',
+      type: 'string',
+      description: 'Navigation target rendered on the anchor.',
+    },
+    {
+      name: 'closeOnClick',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the menu when the link is followed.',
+    },
+    {
+      name: 'leftIcon / inset / variant',
+      type: 'LucideIcon / boolean / destructive',
+      description: 'Shares the visual options of DropdownMenuItem.',
+    },
+    {
+      name: 'anchor attributes',
+      type: 'AnchorHTMLAttributes<HTMLAnchorElement>',
+      description: 'Target, rel, click handlers, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### Checkbox and radio items
+
+<PropsTable
+  rows={[
+    {
+      name: 'DropdownMenuCheckboxItem checked / defaultChecked',
+      type: 'boolean',
+      description: 'Controlled and uncontrolled checked state.',
+    },
+    {
+      name: 'DropdownMenuCheckboxItem onCheckedChange',
+      type: '(checked, eventDetails) => void',
+      description: 'Called when the checkbox item is toggled.',
+    },
+    {
+      name: 'DropdownMenuRadioGroup value / defaultValue',
+      type: 'string',
+      description: 'Controlled and uncontrolled selected value.',
+    },
+    {
+      name: 'DropdownMenuRadioGroup onValueChange',
+      type: '(value, eventDetails) => void',
+      description: 'Called when the selected radio value changes.',
+    },
+    {
+      name: 'DropdownMenuRadioItem value',
+      type: 'string',
+      description: 'Value selected in the surrounding radio group.',
+    },
+    {
+      name: 'closeOnClick',
+      type: 'boolean',
+      default: 'false',
+      description: 'Closes the menu when the item is toggled or selected.',
+    },
+  ]}
+/>
+
+### Submenu and shortcut
+
+<PropsTable
+  rows={[
+    {
+      name: 'DropdownMenuSubTrigger openOnHover',
+      type: 'boolean',
+      default: 'true',
+      description: 'Opens the submenu when the trigger is hovered.',
+    },
+    {
+      name: 'DropdownMenuSubTrigger delay / closeDelay',
+      type: 'number',
+      description: 'Hover open and close delays in milliseconds.',
+    },
+    {
+      name: 'DropdownMenuSubContent',
+      type: 'DropdownMenuContent props',
+      description: 'Accepts the same positioning and sizing props as DropdownMenuContent.',
+    },
+    {
+      name: 'DropdownMenuShortcut',
+      type: 'HTMLAttributes<HTMLElement>',
+      description: 'Rendered as a hidden keyboard hint. Content is announced through the item label.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Dialog](/docs/components/dialog/) for modal tasks and forms.
+- [Button](/docs/components/button/) for trigger styling.
+- [Select](/docs/components/select/) when the user chooses a form value instead of running a command.
