@@ -122,6 +122,46 @@ export type {
   DropdownMenuTriggerProps,
 } from './components/dropdown-menu';
 
+export {
+  Popover,
+  PopoverArrow,
+  PopoverClose,
+  PopoverContent,
+  PopoverDescription,
+  PopoverPortal,
+  PopoverPositioner,
+  PopoverTitle,
+  PopoverTrigger,
+} from './components/popover';
+export type {
+  PopoverArrowProps,
+  PopoverCloseProps,
+  PopoverContentProps,
+  PopoverDescriptionProps,
+  PopoverPortalProps,
+  PopoverPositionerProps,
+  PopoverProps,
+  PopoverTitleProps,
+  PopoverTriggerProps,
+} from './components/popover';
+
+export {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from './components/tooltip';
+export type {
+  TooltipArrowProps,
+  TooltipContentProps,
+  TooltipPortalProps,
+  TooltipProviderProps,
+  TooltipProps,
+  TooltipTriggerProps,
+} from './components/tooltip';
+
 export { Input } from './components/input';
 export type { InputProps, InputSize } from './components/input';
 
