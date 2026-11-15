@@ -123,8 +123,8 @@ function PlainSelect({
     triggerRef.current?.focus();
   }
 
-  function handleFieldMouseDown(event: MouseEvent<HTMLDivElement>) {
-    if (!(event.target instanceof HTMLElement)) {
+  function handleFieldClick(event: MouseEvent<HTMLDivElement>) {
+    if (!(event.target instanceof Element)) {
       return;
     }
 
@@ -132,7 +132,8 @@ function PlainSelect({
       return;
     }
 
-    event.preventDefault();
+    event.stopPropagation();
+    triggerRef.current?.focus();
     triggerRef.current?.click();
   }
 
@@ -196,7 +197,7 @@ function PlainSelect({
           data-open={open || undefined}
           data-disabled={disabled || undefined}
           data-invalid={invalid || undefined}
-          onMouseDown={handleFieldMouseDown}
+          onClick={handleFieldClick}
         >
           {leftIcon ? (
             <span className={styles.iconSlot}>
@@ -225,9 +226,22 @@ function PlainSelect({
               <Icon icon={X} size={actionIconSize} />
             </button>
           ) : null}
-          <span className={styles.chevron} aria-hidden="true">
-            <Icon icon={ChevronDown} size={iconSize} />
-          </span>
+          <button
+            type="button"
+            className={styles.iconButton}
+            aria-label="Open options"
+            aria-expanded={open}
+            tabIndex={-1}
+            onClick={(event) => {
+              event.stopPropagation();
+              triggerRef.current?.focus();
+              triggerRef.current?.click();
+            }}
+          >
+            <span className={styles.chevron}>
+              <Icon icon={ChevronDown} size={iconSize} />
+            </span>
+          </button>
         </div>
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner
