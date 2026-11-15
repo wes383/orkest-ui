@@ -47,6 +47,7 @@ import {
 } from '../examples/avatar-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
+import { TableScroll } from './table-scroll';
 
 function Heading2({ id, children, ...props }: ComponentPropsWithoutRef<'h2'>) {
   return (
@@ -100,9 +101,9 @@ function MdxLink({ href = '', children, ...props }: ComponentPropsWithoutRef<'a'
 
 function MdxTable(props: ComponentPropsWithoutRef<'table'>) {
   return (
-    <div className="table-wrap">
+    <TableScroll>
       <table {...props} />
-    </div>
+    </TableScroll>
   );
 }
 

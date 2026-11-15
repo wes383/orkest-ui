@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 
+import { TableScroll } from './table-scroll';
+
 export interface PropRow {
   name: string;
   type: string;
@@ -9,7 +11,7 @@ export interface PropRow {
 
 export function PropsTable({ rows }: { rows: PropRow[] }) {
   return (
-    <div className="table-wrap">
+    <TableScroll>
       <table className="props-table">
         <caption className="sr-only">Component props</caption>
         <thead>
@@ -38,6 +40,6 @@ export function PropsTable({ rows }: { rows: PropRow[] }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </TableScroll>
   );
 }

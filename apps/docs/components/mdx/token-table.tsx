@@ -4,6 +4,8 @@ import {
   type TokenRecord,
 } from '@/lib/tokens';
 
+import { TableScroll } from './table-scroll';
+
 export function TokenTable({
   title,
   prefix,
@@ -24,7 +26,7 @@ export function TokenTable({
   return (
     <div className="token-table">
       {title ? <p className="token-table-title">{title}</p> : null}
-      <div className="table-wrap">
+      <TableScroll>
         <table>
           <caption className="sr-only">{title ? `${title} tokens` : 'Design tokens'}</caption>
           <thead>
@@ -46,7 +48,7 @@ export function TokenTable({
             ))}
           </tbody>
         </table>
-      </div>
+      </TableScroll>
     </div>
   );
 }

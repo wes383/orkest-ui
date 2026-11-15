@@ -1,12 +1,14 @@
 import { getSemanticTokenGroups } from '@/lib/tokens';
 
+import { TableScroll } from './table-scroll';
+
 export function SemanticColorTable() {
   return (
     <div className="semantic-colors">
       {getSemanticTokenGroups().map((group) => (
         <section className="semantic-color-group" key={group.title}>
           <h3>{group.title}</h3>
-          <div className="table-wrap">
+          <TableScroll>
             <table>
               <caption className="sr-only">{group.title} semantic color tokens</caption>
               <thead>
@@ -23,7 +25,7 @@ export function SemanticColorTable() {
                     <th scope="row">
                       <code>{token.name}</code>
                     </th>
-                    <td data-label="Swatch">
+                    <td>
                       <span
                         className={
                           token.value.toLowerCase() === '#ffffff'
@@ -34,17 +36,17 @@ export function SemanticColorTable() {
                         aria-hidden="true"
                       />
                     </td>
-                    <td data-label="Light">
+                    <td>
                       <code>{token.light}</code>
                     </td>
-                    <td data-label="Dark">
+                    <td>
                       <code>{token.dark}</code>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableScroll>
         </section>
       ))}
     </div>

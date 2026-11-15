@@ -616,10 +616,40 @@ kbd {
 
 /* Tables */
 
-.table-wrap {
+.table-scroll-frame {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
   margin: 1.5rem 0;
+}
+
+.table-wrap {
+  margin: 0;
   background: var(--ui-background);
   overflow-x: auto;
+}
+
+.table-scroll-frame::before,
+.table-scroll-frame::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  content: '';
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.table-scroll-frame::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--ui-background), transparent);
+}
+
+.table-scroll-frame::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--ui-background), transparent);
 }
 
 .table-wrap table {
@@ -974,6 +1004,10 @@ kbd {
   margin: 0 0 12px;
   font-size: var(--ok-font-size-md);
   font-weight: var(--ok-font-weight-semibold);
+}
+
+.semantic-color-group {
+  min-width: 0;
 }
 
 .semantic-swatch {
@@ -1994,62 +2028,13 @@ kbd {
     padding: 12px;
   }
 
-  .table-wrap {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  .table-wrap table {
+    min-width: 32rem;
   }
 
-  .table-wrap::-webkit-scrollbar {
-    display: none;
-  }
-
-  .semantic-colors .table-wrap {
-    overflow-x: visible;
-  }
-
-  .semantic-colors table,
-  .semantic-colors tbody,
-  .semantic-colors tr,
-  .semantic-colors th,
-  .semantic-colors td {
-    display: block;
-    width: 100%;
-  }
-
-  .semantic-colors thead {
-    display: none;
-  }
-
-  .semantic-colors tr {
-    padding: 10px 0;
-    border-bottom: var(--ok-border-width) solid var(--docs-table-divider);
-  }
-
-  .semantic-colors tr:last-child {
-    border-bottom: 0;
-  }
-
-  .semantic-colors th,
-  .semantic-colors td {
-    padding: 4px 0;
-    border: 0;
-  }
-
-  .semantic-colors td[data-label] {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--ok-space-3);
-  }
-
-  .semantic-colors td[data-label]::before {
-    color: var(--ui-muted-foreground);
-    font-size: 11px;
-    content: attr(data-label);
-  }
-
-  .semantic-colors td[data-label] code {
-    text-align: right;
+  .table-scroll-frame[data-scrollable='true'][data-at-start='false']::before,
+  .table-scroll-frame[data-scrollable='true'][data-at-end='false']::after {
+    opacity: 1;
   }
 }
 
@@ -2065,10 +2050,6 @@ kbd {
   .table-wrap th,
   .table-wrap td {
     padding: 9px 10px;
-  }
-
-  .token-table .table-wrap tbody th code {
-    white-space: normal;
   }
 }
 
@@ -2159,6 +2140,11 @@ kbd {
   .button-link,
   .icon-button,
   .search-trigger {
+    transition: none;
+  }
+
+  .table-scroll-frame::before,
+  .table-scroll-frame::after {
     transition: none;
   }
 }
