@@ -381,6 +381,7 @@ kbd {
 }
 
 .doc-article {
+  width: 100%;
   min-width: 0;
   max-width: var(--docs-content-width);
   margin-inline: auto;
