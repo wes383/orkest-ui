@@ -68,16 +68,11 @@ shown.
 ## Selection limits
 
 `maxSelected` disables unselected options once the limit is reached. Selected options stay
-interactive so the user can replace a choice. The menu shows a status message when the limit is
-reached; customize it with `maxSelectedMessage`.
+interactive so the user can replace a choice. The field shows the current count as `selected/max`
+at the right edge.
 
 ```tsx
-<MultiSelect
-  aria-label="Skills"
-  options={skills}
-  maxSelected={3}
-  maxSelectedMessage="You can select up to 3 skills."
-/>
+<MultiSelect aria-label="Skills" options={skills} maxSelected={3} />
 ```
 
 ## Custom value content
@@ -129,13 +124,8 @@ function:
     {
       name: 'maxSelected',
       type: 'number',
-      description: 'Limits how many options can be selected.',
-    },
-    {
-      name: 'maxSelectedMessage',
-      type: 'string',
-      default: '`Selection limit reached: N selected.`',
-      description: 'Status message shown in the menu when the selection limit is reached.',
+      description:
+        'Limits how many options can be selected and shows the current count as selected/max.',
     },
     {
       name: 'hideSelected',
