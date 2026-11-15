@@ -19,45 +19,76 @@ import styles from './dialog.module.css';
 const useIsoLayoutEffect =
   typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
-let scrollbarWidthUsers = 0;
-
 /**
- * The scrollbar gutter sits outside the fixed overlay while the modal scroll
- * lock is active. Publish its width so the overlay can extend over it without
- * changing the page layout or causing a shift when the dialog closes.
+ * Base UI's modal scroll lock reserves a stable scrollbar gutter. Remove the
+ * gutter while the lock is active and compensate with padding so the page
+ * width stays the same. Restore both as soon as Base UI releases the lock so
+ * closing the dialog does not shift the page.
  */
-function useDialogScrollbarWidth(enabled: boolean): void {
+function useDialogScrollbarCompensation(enabled: boolean): void {
   useIsoLayoutEffect(() => {
     if (!enabled) {
       return undefined;
     }
 
     const html = document.documentElement;
+    const previousPaddingRight = html.style.paddingRight;
+    let compensating = false;
 
-    function apply() {
+    function measureScrollbarWidth() {
       const probe = document.createElement('div');
       probe.style.cssText =
         'position:fixed;top:0;left:0;width:100px;height:100px;overflow:scroll;visibility:hidden;pointer-events:none;';
       document.body.appendChild(probe);
-      const scrollbarWidth = probe.offsetWidth - probe.clientWidth;
+      const width = probe.offsetWidth - probe.clientWidth;
       probe.remove();
-      html.style.setProperty(
-        '--orkest-dialog-scrollbar-width',
-        `${scrollbarWidth}px`,
-      );
+      return width;
     }
 
-    scrollbarWidthUsers += 1;
-    apply();
-    window.addEventListener('resize', apply);
+    function removeCompensation() {
+      if (!compensating) {
+        return;
+      }
+
+      compensating = false;
+      html.style.paddingRight = previousPaddingRight;
+
+      if (html.style.scrollbarGutter === 'auto') {
+        html.style.removeProperty('scrollbar-gutter');
+      }
+    }
+
+    function sync() {
+      if (html.style.overflowY !== 'hidden') {
+        removeCompensation();
+        return;
+      }
+
+      if (compensating) {
+        return;
+      }
+
+      const scrollbarWidth = measureScrollbarWidth();
+
+      if (scrollbarWidth <= 0) {
+        return;
+      }
+
+      compensating = true;
+      html.style.setProperty('scrollbar-gutter', 'auto', 'important');
+      html.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    const observer = new MutationObserver(sync);
+    observer.observe(html, {
+      attributes: true,
+      attributeFilter: ['style'],
+    });
+    sync();
 
     return () => {
-      window.removeEventListener('resize', apply);
-      scrollbarWidthUsers -= 1;
-
-      if (scrollbarWidthUsers === 0) {
-        html.style.removeProperty('--orkest-dialog-scrollbar-width');
-      }
+      observer.disconnect();
+      removeCompensation();
     };
   }, [enabled]);
 }
@@ -107,7 +138,7 @@ export const DialogSurface = forwardRef<HTMLDivElement, DialogSurfaceProps>(
     ref,
   ) {
     const isModal = useContext(DialogModalContext);
-    useDialogScrollbarWidth(isModal);
+    useDialogScrollbarCompensation(isModal);
 
     return (
       <BaseDialog.Viewport className={styles.viewport} data-size={size}>
