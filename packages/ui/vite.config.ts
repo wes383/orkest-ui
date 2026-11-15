@@ -32,6 +32,7 @@ export default defineConfig({
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
         'lucide-react',
+        '@floating-ui/dom',
       ],
     },
   },

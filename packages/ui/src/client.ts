@@ -32,3 +32,13 @@ export type {
 
 export { Switch } from './components/switch';
 export type { SwitchProps, SwitchSize } from './components/switch';
+
+export { MultiSelect, Select } from './components/select';
+export type {
+  MultiSelectProps,
+  SelectItem,
+  SelectOption,
+  SelectOptionGroup,
+  SelectProps,
+  SelectSize,
+} from './components/select';
