@@ -19,11 +19,6 @@ export const docsSections = [
     label: 'Guides',
     description: 'Theming, TypeScript, accessibility, and framework integration.',
   },
-  {
-    id: 'development',
-    label: 'Development',
-    description: 'Repository architecture, testing, and contribution workflow.',
-  },
 ] as const;
 
 export type DocsSectionId = (typeof docsSections)[number]['id'];

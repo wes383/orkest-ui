@@ -29,8 +29,7 @@ registry yet.
 | `apps/docs` | `@orkest/docs` | Documentation site (Next.js App Router + MDX) |
 | `apps/playground` | `@orkest/playground` | Private Next.js consumer used to validate the built package |
 
-`Development-guide.md` and `Custom-documentation-spec.md` are local planning documents and are
-intentionally not tracked.
+`Custom-documentation-spec.md` is a local planning document and is intentionally not tracked.
 
 ## Requirements
 
