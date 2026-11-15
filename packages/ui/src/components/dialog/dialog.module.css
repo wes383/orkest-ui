@@ -172,7 +172,7 @@
   height: var(--ok-control-height-sm);
   padding: 0;
   border: 0;
-  border-radius: var(--ok-radius-full);
+  border-radius: var(--ok-radius-lg);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;
