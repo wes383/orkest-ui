@@ -9,7 +9,7 @@
   max-width: min(15rem, var(--available-width, 100vw));
   max-height: min(calc(100dvh - 2rem), var(--available-height, 100dvh));
   padding: var(--ok-space-2) var(--ok-space-3);
-  border-radius: var(--ok-radius-lg);
+  border-radius: var(--ok-radius-xl);
   background: var(--ui-foreground);
   color: var(--ui-background);
   font-family: var(--ok-font-sans);
@@ -68,6 +68,8 @@
   box-sizing: border-box;
   width: calc(6px * 1.4142);
   height: calc(6px * 1.4142);
+  /* Round the visible tip of the rotated square. */
+  border-radius: 2px;
   background: var(--ui-foreground);
   transform: translate(-50%, 50%) rotate(45deg);
 }
