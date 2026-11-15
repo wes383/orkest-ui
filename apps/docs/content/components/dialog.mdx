@@ -1,0 +1,453 @@
+---
+title: Dialog
+description: Modal dialogs for focused tasks, forms, and detail views.
+section: components
+---
+
+`Dialog` is a modal surface for content that temporarily takes over the page context. Use it for
+editing, creating, viewing details, authentication, and complex forms.
+
+The component is built on Base UI Dialog and exported from `@orkest/ui/client`. Base UI owns focus
+trapping, scroll locking, dismissal, and portal behavior; Orkest UI owns the visual design and public
+API.
+
+## Basic usage
+
+<ComponentPreview
+  title="Edit profile"
+  code={`import { Button, Stack } from '@orkest/ui';
+import {
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+  Field,
+  FieldLabel,
+  Input,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Dialog>
+      <DialogTrigger>Edit profile</DialogTrigger>
+      <DialogPortal>
+        <DialogOverlay />
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Update the name and email shown on your account.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <Stack gap={4}>
+              <Field>
+                <FieldLabel>Display name</FieldLabel>
+                <Input defaultValue="Ada Lovelace" />
+              </Field>
+              <Field>
+                <FieldLabel>Email</FieldLabel>
+                <Input type="email" defaultValue="ada@example.com" />
+              </Field>
+            </Stack>
+          </DialogBody>
+          <DialogFooter>
+            <DialogClose>Cancel</DialogClose>
+            <DialogClose render={<Button>Save changes</Button>} />
+          </DialogFooter>
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
+  );
+}`}
+>
+  <DialogBasicExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `Dialog` owns the open state and modal behavior.
+- `DialogTrigger` opens the dialog. It renders a primary Button by default.
+- `DialogPortal` moves the dialog to the document body.
+- `DialogOverlay` renders the backdrop.
+- `DialogContent` centers the dialog, limits its height, and can render the built-in close action.
+- `DialogHeader` groups `DialogTitle` and `DialogDescription`.
+- `DialogBody` scrolls when the content exceeds the available height.
+- `DialogFooter` aligns the actions.
+- `DialogClose` closes the dialog and renders a secondary Button by default.
+
+Compose `DialogTrigger` and `DialogClose` with `render` when you need a different Button variant or a
+custom element.
+
+## Controlled state
+
+<ComponentPreview
+  title="Controlled dialog"
+  code={`import { useState } from 'react';
+import { Button, Stack, Text } from '@orkest/ui';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Stack direction="row" gap={3} wrap align="center">
+      <Button onClick={() => setOpen(true)}>Open settings</Button>
+      <Text size="sm" tone="muted">
+        {open ? 'Status: open' : 'Status: closed'}
+      </Text>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogPortal>
+          <DialogOverlay />
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Workspace settings</DialogTitle>
+              <DialogDescription>
+                The dialog state is owned by the parent component.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose>Done</DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+    </Stack>
+  );
+}`}
+>
+  <DialogControlledExample />
+</ComponentPreview>
+
+## Sizes
+
+`DialogContent` supports `sm`, `md`, `lg`, `xl`, and `full`. The viewport keeps a safe gutter and the
+surface shrinks to the available width on small screens.
+
+<ComponentPreview
+  title="Size presets"
+  code={`import { Box, Stack } from '@orkest/ui';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from '@orkest/ui/client';
+
+const sizes = ['sm', 'md', 'lg', 'xl', 'full'] as const;
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="30rem">
+      <Stack direction="row" gap={2} wrap>
+        {sizes.map((size) => (
+          <Dialog key={size}>
+            <DialogTrigger variant="outline">{size}</DialogTrigger>
+            <DialogPortal>
+              <DialogOverlay />
+              <DialogContent size={size}>
+                <DialogHeader>
+                  <DialogTitle>{size} dialog</DialogTitle>
+                  <DialogDescription>
+                    Resize the viewport to see the responsive constraints.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose>Close</DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
+        ))}
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <DialogSizesExample />
+</ComponentPreview>
+
+## Scrolling content
+
+Use `DialogBody` for content that can grow. The header and footer stay visible while the body
+scrolls.
+
+<ComponentPreview
+  title="Scrollable dialog"
+  code={`import { Stack, Text } from '@orkest/ui';
+import {
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from '@orkest/ui/client';
+
+const clauses = Array.from(
+  { length: 10 },
+  (_, index) => \`Clause \${index + 1}. This section is long enough to scroll.\`,
+);
+
+export function Example() {
+  return (
+    <Dialog>
+      <DialogTrigger variant="secondary">View terms</DialogTrigger>
+      <DialogPortal>
+        <DialogOverlay />
+        <DialogContent size="lg">
+          <DialogHeader>
+            <DialogTitle>Service terms</DialogTitle>
+            <DialogDescription>
+              Review the full text before accepting.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <Stack gap={3}>
+              {clauses.map((clause) => (
+                <Text key={clause} as="p" size="sm" tone="muted">
+                  {clause}
+                </Text>
+              ))}
+            </Stack>
+          </DialogBody>
+          <DialogFooter>
+            <DialogClose>Close</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
+  );
+}`}
+>
+  <DialogScrollExample />
+</ComponentPreview>
+
+## Close behavior
+
+`Dialog` closes on Escape and overlay press by default. Disable either path when the content should
+not be dismissed accidentally:
+
+```tsx
+<Dialog closeOnEscape={false} closeOnOverlayClick={false}>
+```
+
+`DialogContent` renders an icon close action by default. Use `showCloseButton={false}` to hide it,
+or `closeLabel` to change its accessible name.
+
+## Props
+
+### Dialog
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open, eventDetails) => void',
+      description: 'Called when the dialog requests an open state change.',
+    },
+    {
+      name: 'modal',
+      type: `boolean | 'trap-focus'`,
+      default: 'true',
+      description: 'Traps focus, locks page scroll, and blocks outside interaction.',
+    },
+    {
+      name: 'closeOnOverlayClick',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the dialog when the backdrop is pressed.',
+    },
+    {
+      name: 'closeOnEscape',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the dialog when Escape is pressed.',
+    },
+    {
+      name: 'onOpenChangeComplete',
+      type: '(open: boolean) => void',
+      description: 'Called after the open or close animation completes.',
+    },
+    {
+      name: 'actionsRef',
+      type: 'RefObject<{ close: () => void; unmount: () => void }>',
+      description: 'Imperative close and unmount actions.',
+    },
+    {
+      name: 'triggerId / defaultTriggerId',
+      type: 'string',
+      description: 'Associates an external trigger with a controlled dialog.',
+    },
+  ]}
+/>
+
+### DialogContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl' | 'full'`,
+      default: `'md'`,
+      description: 'Maximum width preset. `full` fills the viewport.',
+    },
+    {
+      name: 'showCloseButton',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the built-in icon close action.',
+    },
+    {
+      name: 'closeLabel',
+      type: 'string',
+      default: `'Close'`,
+      description: 'Accessible name for the built-in close action.',
+    },
+    {
+      name: 'initialFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the dialog opens.',
+    },
+    {
+      name: 'finalFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the dialog closes.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, data attributes, and refs are forwarded to the popup.',
+    },
+  ]}
+/>
+
+### DialogTrigger and DialogClose
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `Trigger: 'primary'; Close: 'secondary'`,
+      description: 'Visual Button variant used by the default button.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Button size.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default Button, for example with a custom Button variant.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, type, click handlers, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### Layout parts
+
+<PropsTable
+  rows={[
+    {
+      name: 'DialogHeader',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Groups the title and description.',
+    },
+    {
+      name: 'DialogTitle',
+      type: 'Base UI Dialog Title props',
+      description: 'Accessible title. Use render to change the heading level.',
+    },
+    {
+      name: 'DialogDescription',
+      type: 'Base UI Dialog Description props',
+      description: 'Supporting text associated through aria-describedby.',
+    },
+    {
+      name: 'DialogBody',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Scrollable content region between the header and footer.',
+    },
+    {
+      name: 'DialogFooter',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Action row aligned to the end of the dialog.',
+    },
+    {
+      name: 'DialogOverlay',
+      type: 'Base UI Dialog Backdrop props',
+      description: 'Backdrop rendered beneath the dialog content.',
+    },
+    {
+      name: 'DialogPortal',
+      type: 'Base UI Dialog Portal props',
+      description: 'Supports a custom container and keepMounted.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Render `DialogTitle` for the accessible name and `DialogDescription` for supporting text. Base UI
+  wires `aria-labelledby` and `aria-describedby` automatically.
+- Modal dialogs trap focus, lock page scroll, and restore focus to the trigger or the previously
+  focused element when closed.
+- Use `initialFocus` to focus a specific field when the dialog opens.
+- Escape and overlay press close the dialog by default. Disable them only when the task must not be
+  dismissed accidentally.
+- The built-in close action is a labeled button (`closeLabel`). Provide an accessible name when
+  composing `DialogClose` with a custom icon button.
+- Use `DialogBody` for long content so the header and footer remain reachable.
+- `full` dialogs keep the same focus and keyboard behavior as smaller sizes.
+
+## Related
+
+- [Alert Dialog](/docs/components/alert-dialog/) for destructive or irreversible confirmations.
+- [Field](/docs/components/field/) for dialog forms.
+- [Button](/docs/components/button/) for trigger and action styling.

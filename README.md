@@ -13,10 +13,10 @@ The repository is a pnpm monorepo containing the library and its custom document
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
-- Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Field`,
-  `FieldDescription`, `FieldLabel`, `FieldMessage`, `FieldRequiredIndicator`, `Fieldset`, `Input`,
-  `Legend`, `MultiSelect`, `Radio`, `RadioGroup`, `Select`, `Switch`, `Textarea` (exported from
-  `@orkest/ui/client`)
+- Client components: `AlertDialog` (with parts), `Avatar`, `AvatarFallback`, `AvatarGroup`,
+  `AvatarImage`, `Checkbox`, `Dialog` (with parts), `Field`, `FieldDescription`, `FieldLabel`,
+  `FieldMessage`, `FieldRequiredIndicator`, `Fieldset`, `Input`, `Legend`, `MultiSelect`, `Radio`,
+  `RadioGroup`, `Select`, `Switch`, `Textarea` (exported from `@orkest/ui/client`)
 
 Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
 registry yet.

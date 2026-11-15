@@ -81,6 +81,16 @@ import {
   FieldsetDisabledExample,
   FieldsetRadioExample,
 } from '../examples/fieldset-examples';
+import {
+  AlertDialogBasicExample,
+  AlertDialogControlledExample,
+} from '../examples/alert-dialog-examples';
+import {
+  DialogBasicExample,
+  DialogControlledExample,
+  DialogScrollExample,
+  DialogSizesExample,
+} from '../examples/dialog-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -178,6 +188,8 @@ export const mdxComponents = {
   a: MdxLink,
   pre: MdxPre,
   table: MdxTable,
+  AlertDialogBasicExample,
+  AlertDialogControlledExample,
   Avatar,
   AvatarFallback,
   AvatarGroup,
@@ -191,6 +203,10 @@ export const mdxComponents = {
   Checkbox,
   Code,
   DetailedSelectExample,
+  DialogBasicExample,
+  DialogControlledExample,
+  DialogSizesExample,
+  DialogScrollExample,
   FieldBasicExample,
   FieldCheckboxExample,
   FieldDisabledExample,

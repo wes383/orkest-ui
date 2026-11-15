@@ -1,0 +1,292 @@
+---
+title: Alert Dialog
+description: Confirmations for destructive or irreversible actions that require an explicit choice.
+section: components
+---
+
+`Alert Dialog` interrupts the user only when a decision is required. Use it for destructive or
+irreversible actions such as deleting data, discarding changes, resetting state, or signing out.
+
+It is built on Base UI Alert Dialog and exported from `@orkest/ui/client`.
+
+## Dialog vs Alert Dialog
+
+| Behavior | Dialog | Alert Dialog |
+| --- | --- | --- |
+| Overlay press closes | Yes by default | No |
+| Escape closes | Yes by default | No |
+| Focus management | Yes | Yes |
+| Requires an explicit choice | No | Yes |
+| Typical use | Edit, view, create | Delete, discard, reset |
+
+Alert Dialog is intentionally stricter than Dialog. It does not render a built-in close icon, and the
+only ways out are the cancel and confirming actions.
+
+## Basic usage
+
+<ComponentPreview
+  title="Delete confirmation"
+  code={`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger variant="destructive">Delete project</AlertDialogTrigger>
+      <AlertDialogPortal>
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete project?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This permanently deletes the project and its data. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Delete project</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogPortal>
+    </AlertDialog>
+  );
+}`}
+>
+  <AlertDialogBasicExample />
+</ComponentPreview>
+
+`AlertDialogCancel` renders a secondary Button. `AlertDialogAction` renders a destructive Button.
+Both are Base UI close buttons, so pressing either action closes the dialog.
+
+## Async actions
+
+For an action that must finish before closing, control the dialog and use a regular Button with a
+loading state. The dialog stays open until the request succeeds.
+
+<ComponentPreview
+  title="Async confirmation"
+  code={`import { useState } from 'react';
+import { Button } from '@orkest/ui';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleDelete() {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    setLoading(false);
+    setOpen(false);
+  }
+
+  return (
+    <>
+      <Button variant="destructive" onClick={() => setOpen(true)}>
+        Delete account
+      </Button>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogPortal>
+          <AlertDialogOverlay />
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete account?</AlertDialogTitle>
+              <AlertDialogDescription>
+                All projects and data will be removed. This action cannot be
+                undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+              <Button
+                variant="destructive"
+                loading={loading}
+                onClick={handleDelete}
+              >
+                Delete account
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogPortal>
+      </AlertDialog>
+    </>
+  );
+}`}
+>
+  <AlertDialogControlledExample />
+</ComponentPreview>
+
+## Props
+
+### AlertDialog
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open, eventDetails) => void',
+      description:
+        'Called when the dialog requests an open state change. Escape key requests are canceled.',
+    },
+    {
+      name: 'onOpenChangeComplete',
+      type: '(open: boolean) => void',
+      description: 'Called after the open or close animation completes.',
+    },
+    {
+      name: 'actionsRef',
+      type: 'RefObject<{ close: () => void; unmount: () => void }>',
+      description: 'Imperative close and unmount actions.',
+    },
+    {
+      name: 'triggerId / defaultTriggerId',
+      type: 'string',
+      description: 'Associates an external trigger with a controlled alert dialog.',
+    },
+  ]}
+/>
+
+### AlertDialogContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl' | 'full'`,
+      default: `'sm'`,
+      description: 'Maximum width preset. Alert dialogs are compact by default.',
+    },
+    {
+      name: 'initialFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the dialog opens. Defaults to the first action.',
+    },
+    {
+      name: 'finalFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the dialog closes.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, data attributes, and refs are forwarded to the popup.',
+    },
+  ]}
+/>
+
+### AlertDialogTrigger, Cancel, and Action
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `Trigger / Cancel: 'secondary'; Action: 'destructive'`,
+      description: 'Visual Button variant used by the default button.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Button size.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default Button with a custom element or variant.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, loading, click handlers, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### Layout parts
+
+<PropsTable
+  rows={[
+    {
+      name: 'AlertDialogHeader',
+      type: 'DialogHeader props',
+      description: 'Groups the title and description.',
+    },
+    {
+      name: 'AlertDialogTitle',
+      type: 'DialogTitle props',
+      description: 'Accessible confirmation title.',
+    },
+    {
+      name: 'AlertDialogDescription',
+      type: 'DialogDescription props',
+      description: 'Explains the consequence of the action.',
+    },
+    {
+      name: 'AlertDialogFooter',
+      type: 'DialogFooter props',
+      description: 'Action row for cancel and confirm.',
+    },
+    {
+      name: 'AlertDialogOverlay',
+      type: 'DialogOverlay props',
+      description: 'Backdrop rendered beneath the content.',
+    },
+    {
+      name: 'AlertDialogPortal',
+      type: 'DialogPortal props',
+      description: 'Supports a custom container and keepMounted.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Always render `AlertDialogTitle` and `AlertDialogDescription`. The description should state the
+  consequence, not just repeat the title.
+- Focus moves into the dialog when it opens and returns to the trigger when it closes.
+- Escape and overlay press do not close the dialog. This is enforced by the component.
+- The cancel action receives initial focus by default, reducing the chance of accidental
+  confirmation.
+- `AlertDialogAction` closes the dialog immediately. For async work, use a controlled dialog and a
+  regular Button with a loading state.
+- Do not use Alert Dialog for non-blocking messages. Use Dialog or inline feedback instead.
+
+## Related
+
+- [Dialog](/docs/components/dialog/) for forms and detail views.
+- [Button](/docs/components/button/) for custom trigger and action variants.
+- [Field](/docs/components/field/) for forms inside a dialog.
