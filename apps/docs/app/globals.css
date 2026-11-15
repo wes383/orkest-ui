@@ -1,6 +1,6 @@
 :root {
   --docs-header-height: 4rem;
-  --docs-shell-width: 82rem;
+  --docs-shell-width: 83.5rem;
   --docs-sidebar-width: 16rem;
   --docs-content-width: 46rem;
   --docs-toc-width: 11rem;
@@ -318,7 +318,7 @@ kbd {
 
 .docs-main {
   min-width: 0;
-  padding: 3rem 3rem 5rem;
+  padding: 3rem 3.5rem 5rem;
   background: var(--ui-background);
 }
 
@@ -373,7 +373,7 @@ kbd {
 .page-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--docs-toc-width);
-  gap: 3rem;
+  gap: 3.5rem;
   align-items: start;
 }
 
