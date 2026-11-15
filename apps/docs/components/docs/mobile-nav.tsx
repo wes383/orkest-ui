@@ -47,7 +47,7 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
       <dialog
         ref={dialogRef}
         className="mobile-nav-dialog"
-        aria-labelledby="mobile-nav-title"
+        aria-label="Documentation navigation"
         onClick={(event) => {
           if (event.target === dialogRef.current) {
             close();
@@ -55,9 +55,6 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
         }}
       >
         <div className="mobile-nav-header">
-          <h2 className="mobile-nav-title" id="mobile-nav-title">
-            Documentation
-          </h2>
           <button
             type="button"
             className="icon-button"
