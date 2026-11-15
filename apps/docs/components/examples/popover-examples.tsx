@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Button, Stack, Text } from '@orkest/ui';
+import { Stack, Text } from '@orkest/ui';
 import {
   Field,
   FieldLabel,
@@ -72,13 +72,8 @@ export function PopoverControlledExample() {
 
   return (
     <Stack direction="row" gap={3} wrap align="center">
-      <Button onClick={() => setOpen((current) => !current)}>
-        Toggle popover
-      </Button>
-      <Text size="sm" tone="muted">
-        {open ? 'Status: open' : 'Status: closed'}
-      </Text>
       <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger>Toggle popover</PopoverTrigger>
         <PopoverPortal>
           <PopoverPositioner>
             <PopoverContent maxWidth="18rem">
@@ -93,6 +88,9 @@ export function PopoverControlledExample() {
           </PopoverPositioner>
         </PopoverPortal>
       </Popover>
+      <Text size="sm" tone="muted">
+        {open ? 'Status: open' : 'Status: closed'}
+      </Text>
     </Stack>
   );
 }

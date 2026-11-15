@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 import {
-  Button,
   Heading,
   IconButton,
   Stack,
@@ -64,10 +63,8 @@ export function PopoverDemo() {
           </PopoverPortal>
         </Popover>
 
-        <Button variant="outline" onClick={() => setOpen((current) => !current)}>
-          Controlled popover
-        </Button>
         <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger>Controlled popover</PopoverTrigger>
           <PopoverPortal>
             <PopoverPositioner side="bottom" align="start">
               <PopoverContent maxWidth="18rem">
