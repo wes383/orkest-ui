@@ -659,19 +659,19 @@ kbd {
 }
 
 .props-table th:nth-child(1) {
-  width: 20%;
+  width: 22%;
 }
 
 .props-table th:nth-child(2) {
-  width: 48%;
+  width: 54%;
 }
 
 .props-table th:nth-child(3) {
-  width: 20%;
+  width: 14%;
 }
 
 .props-table th:nth-child(4) {
-  width: 12%;
+  width: 10%;
 }
 
 .props-table tbody tr:not(.props-description) th,
