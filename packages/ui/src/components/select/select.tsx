@@ -214,9 +214,6 @@ function PlainSelect({
             aria-invalid={invalid || undefined}
           >
             <BaseSelect.Value className={styles.value} placeholder={placeholder} />
-            <span className={styles.chevron} aria-hidden="true">
-              <Icon icon={ChevronDown} size={iconSize} />
-            </span>
           </BaseSelect.Trigger>
           {showClear ? (
             <button
@@ -228,6 +225,9 @@ function PlainSelect({
               <Icon icon={X} size={actionIconSize} />
             </button>
           ) : null}
+          <span className={styles.chevron} aria-hidden="true">
+            <Icon icon={ChevronDown} size={iconSize} />
+          </span>
         </div>
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner

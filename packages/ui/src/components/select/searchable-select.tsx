@@ -1,6 +1,7 @@
-﻿'use client';
+'use client';
 
 import {
+  Fragment,
   useCallback,
   useId,
   useMemo,
@@ -179,17 +180,23 @@ export function SearchableSelect({
   }
 
   function renderGroup(group: SelectRenderGroup) {
+    if (!group.label) {
+      return (
+        <Fragment key={group.key}>
+          {group.items.map((option) => renderOption(option))}
+        </Fragment>
+      );
+    }
+
     return (
       <BaseCombobox.Group
         key={group.key}
         items={group.items}
         className={styles.group}
       >
-        {group.label ? (
-          <BaseCombobox.GroupLabel className={styles.groupLabel}>
-            {group.label}
-          </BaseCombobox.GroupLabel>
-        ) : null}
+        <BaseCombobox.GroupLabel className={styles.groupLabel}>
+          {group.label}
+        </BaseCombobox.GroupLabel>
         <BaseCombobox.Collection>
           {(option: SelectOption) => renderOption(option)}
         </BaseCombobox.Collection>

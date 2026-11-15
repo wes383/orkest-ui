@@ -273,7 +273,8 @@
 }
 
 .trigger[data-popup-open] .chevron,
-.iconButton[data-popup-open] .chevron {
+.iconButton[data-popup-open] .chevron,
+.field[data-open="true"] .chevron {
   transform: rotate(180deg);
 }
 
