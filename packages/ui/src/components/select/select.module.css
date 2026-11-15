@@ -60,6 +60,7 @@
   height: auto;
   min-height: var(--select-height);
   padding-block: var(--ok-space-1);
+  padding-inline-start: var(--ok-space-2);
 }
 
 .root:not([data-disabled="true"]):not([data-open="true"]):not([data-invalid="true"])
@@ -187,7 +188,7 @@
   align-items: center;
   gap: var(--ok-space-1);
   max-width: 100%;
-  padding: 1px 2px 1px 6px;
+  padding: 1px 2px 1px var(--ok-space-1);
   border-radius: var(--ok-radius-full);
   background: var(--ui-secondary);
   color: var(--ui-secondary-foreground);
@@ -437,10 +438,6 @@
 
 .item[data-disabled][data-highlighted] {
   background: transparent;
-}
-
-.multiSelectItem {
-  padding-inline-start: var(--ok-space-1);
 }
 
 .itemIcon {

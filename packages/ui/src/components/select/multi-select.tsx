@@ -259,7 +259,7 @@ function MultiSelectImpl({
         key={option.value}
         value={option.value}
         disabled={isOptionDisabled(option)}
-        className={cx(styles.item, styles.multiSelectItem)}
+        className={styles.item}
       >
         <SelectOptionContent option={option} />
         <BaseCombobox.ItemIndicator className={styles.itemIndicator}>
