@@ -2078,10 +2078,16 @@ kbd {
     height: 1.25rem;
   }
 
+  .icon-button svg,
+  .search-trigger svg {
+    stroke-width: 2.25;
+  }
+
   .search-trigger {
     height: 2.75rem;
     background: transparent;
     font-size: var(--ok-font-size-sm);
+    font-weight: var(--ok-font-weight-medium);
   }
 
   .search-trigger:hover,
@@ -2106,6 +2112,7 @@ kbd {
     min-height: 2.75rem;
     padding: 10px 12px;
     font-size: var(--ok-font-size-sm);
+    font-weight: var(--ok-font-weight-medium);
   }
 
   .docs-index-card,
