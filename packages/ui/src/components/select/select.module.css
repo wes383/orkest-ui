@@ -226,10 +226,11 @@
   background: transparent;
   color: inherit;
   cursor: pointer;
+  opacity: 0.7;
 }
 
 .chipRemove:hover {
-  background: var(--ui-secondary-active);
+  opacity: 1;
 }
 
 .chipRemove:focus-visible {
