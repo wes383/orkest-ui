@@ -23,7 +23,7 @@ export function SemanticColorTable() {
                     <th scope="row">
                       <code>{token.name}</code>
                     </th>
-                    <td>
+                    <td data-label="Swatch">
                       <span
                         className={
                           token.value.toLowerCase() === '#ffffff'
@@ -34,10 +34,10 @@ export function SemanticColorTable() {
                         aria-hidden="true"
                       />
                     </td>
-                    <td>
+                    <td data-label="Light">
                       <code>{token.light}</code>
                     </td>
-                    <td>
+                    <td data-label="Dark">
                       <code>{token.dark}</code>
                     </td>
                   </tr>
