@@ -17,6 +17,7 @@
   width: 100%;
   height: var(--select-height);
   padding: 0 var(--select-padding-x);
+  padding-inline-end: calc(var(--select-padding-x) - var(--ok-space-1));
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--select-radius);
   background: var(--ui-surface);
