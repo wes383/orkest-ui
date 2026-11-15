@@ -5,6 +5,10 @@
 
 .content {
   box-sizing: border-box;
+  /* Keep the popup as the arrow's containing block for the whole open/close
+     animation; a transform would otherwise become the containing block only
+     while animating and shift the arrow by the border width. */
+  position: relative;
   width: max-content;
   min-width: 12rem;
   max-width: min(25rem, var(--available-width, 100vw));
