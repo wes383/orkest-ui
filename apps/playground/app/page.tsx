@@ -14,6 +14,7 @@ import {
 } from '@orkest/ui';
 
 import { AvatarDemo } from './avatar-demo';
+import { ChoiceDemo } from './choice-demo';
 import { PlaygroundForm } from './playground-form';
 
 function Showcase({ idPrefix }: { idPrefix: string }) {
@@ -76,6 +77,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       </Stack>
       <Separator />
       <AvatarDemo />
+      <ChoiceDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>
   );

@@ -46,6 +46,15 @@ import {
   AvatarImage,
 } from '../examples/avatar-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
+import {
+  Checkbox,
+  IndeterminateCheckboxExample,
+  Radio,
+  RadioGroup,
+  RadioGroupExample,
+  Switch,
+  SwitchExample,
+} from '../examples/choice-controls';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -152,22 +161,29 @@ export const mdxComponents = {
   Box,
   Button,
   Caption,
+  Checkbox,
   Code,
   Grid,
   Heading,
   Icon,
   IconButton,
+  IndeterminateCheckboxExample,
   Input,
   InputIconsExample,
   InteractiveTagExample,
   Label,
   Link: TypographyLink,
   Paragraph,
+  Radio,
+  RadioGroup,
+  RadioGroupExample,
   RemovableTagExample,
   Separator,
   Small,
   Stack,
   Strong,
+  Switch,
+  SwitchExample,
   Tag,
   Text,
   Textarea,

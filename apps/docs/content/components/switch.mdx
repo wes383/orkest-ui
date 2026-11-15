@@ -1,0 +1,138 @@
+---
+title: Switch
+description: On/off controls with a native checkbox, switch semantics, and token styling.
+section: components
+order: 17
+---
+
+`Switch` is a native checkbox rendered as a switch. It supports controlled and uncontrolled state,
+labels, sizes, form submission, and Space-key toggling.
+
+Import it from `@orkest/ui/client`.
+
+## Live preview
+
+<ComponentPreview
+  title="Controlled switch"
+  code={`import { useState } from 'react';
+import { Switch } from '@orkest/ui/client';
+
+export function Example() {
+  const [enabled, setEnabled] = useState(true);
+
+  return (
+    <Switch
+      label="Email notifications"
+      checked={enabled}
+      onChange={(event) => setEnabled(event.currentTarget.checked)}
+    />
+  );
+}`}
+>
+  <SwitchExample />
+</ComponentPreview>
+
+## States and sizes
+
+<ComponentPreview
+  title="Off, on, disabled, and sizes"
+  code={`import { Stack } from '@orkest/ui';
+import { Switch } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Switch label="Off" />
+      <Switch label="On" defaultChecked />
+      <Switch label="Disabled" disabled />
+      <Switch label="Small" size="sm" defaultChecked />
+      <Switch label="Large" size="lg" defaultChecked />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Switch label="Off" />
+    <Switch label="On" defaultChecked />
+    <Switch label="Disabled" disabled />
+    <Switch label="Small" size="sm" defaultChecked />
+    <Switch label="Large" size="lg" defaultChecked />
+  </Stack>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'checked',
+      type: 'boolean',
+      description: 'Controlled on/off state.',
+    },
+    {
+      name: 'defaultChecked',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial state for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: 'ChangeEventHandler<HTMLInputElement>',
+      description: 'Called when the switch changes.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the switch.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Requires the switch for native form validation.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name.',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Value submitted with the form.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Track, thumb, and label size.',
+    },
+    {
+      name: 'label',
+      type: 'ReactNode',
+      description: 'Label rendered beside the switch.',
+    },
+    {
+      name: 'native attributes',
+      type: `Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>`,
+      description: 'ARIA attributes, id, className, style, and ref are forwarded to the input.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders a native `<input type="checkbox">` with `role="switch"` and an explicit `aria-checked`
+  state.
+- Space toggles the switch while focused; no custom keyboard handling is required.
+- The optional `label` is an implicit label. When omitting it, provide `aria-label` or connect an
+  external label with `id` and `htmlFor`.
+- Focus is shown on the track with `:focus-visible`.
+- The thumb transition is disabled when `prefers-reduced-motion: reduce` is active.
+
+## Related
+
+- [Checkbox](/docs/components/checkbox/) for independent choices.
+- [Radio](/docs/components/radio/) for choosing one option from a group.
+- [Label](/docs/components/typography/) for external labels.

@@ -1,0 +1,191 @@
+---
+title: Checkbox
+description: Native checkboxes with token styling, labels, sizes, and an indeterminate state.
+section: components
+order: 15
+---
+
+`Checkbox` is a native checkbox input with token styling and an optional label. It supports controlled
+and uncontrolled usage, native form submission, and an indeterminate visual state.
+
+Import it from `@orkest/ui/client` because the indeterminate state is synchronized on the client.
+
+## Live preview
+
+<ComponentPreview
+  title="Checkbox states"
+  code={`import { Stack } from '@orkest/ui';
+import { Checkbox } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Checkbox label="Unchecked" />
+      <Checkbox label="Checked" defaultChecked />
+      <Checkbox label="Disabled" disabled />
+      <Checkbox label="Disabled checked" defaultChecked disabled />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Checkbox label="Unchecked" />
+    <Checkbox label="Checked" defaultChecked />
+    <Checkbox label="Disabled" disabled />
+    <Checkbox label="Disabled checked" defaultChecked disabled />
+  </Stack>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { Stack } from '@orkest/ui';
+import { Checkbox } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Checkbox size="sm" label="Small" defaultChecked />
+      <Checkbox size="md" label="Medium" defaultChecked />
+      <Checkbox size="lg" label="Large" defaultChecked />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Checkbox size="sm" label="Small" defaultChecked />
+    <Checkbox size="md" label="Medium" defaultChecked />
+    <Checkbox size="lg" label="Large" defaultChecked />
+  </Stack>
+</ComponentPreview>
+
+## Indeterminate
+
+`indeterminate` is an independent visual and ARIA state. It does not change the checkbox's checked
+value; update `checked` yourself after a selection changes.
+
+<ComponentPreview
+  title="Select all"
+  code={`import { useState } from 'react';
+import { Stack } from '@orkest/ui';
+import { Checkbox } from '@orkest/ui/client';
+
+const teams = ['Design', 'Engineering', 'Product'];
+
+export function Example() {
+  const [selected, setSelected] = useState(['Design']);
+  const allSelected = selected.length === teams.length;
+  const partiallySelected = selected.length > 0 && !allSelected;
+
+  return (
+    <Stack gap={2}>
+      <Checkbox
+        label="All teams"
+        checked={allSelected}
+        indeterminate={partiallySelected}
+        onChange={() => setSelected(allSelected ? [] : teams)}
+      />
+      {teams.map((team) => (
+        <Checkbox
+          key={team}
+          label={team}
+          checked={selected.includes(team)}
+          onChange={() =>
+            setSelected((current) =>
+              current.includes(team)
+                ? current.filter((item) => item !== team)
+                : [...current, team],
+            )
+          }
+        />
+      ))}
+    </Stack>
+  );
+}`}
+>
+  <IndeterminateCheckboxExample />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'checked',
+      type: 'boolean',
+      description: 'Controlled checked state.',
+    },
+    {
+      name: 'defaultChecked',
+      type: 'boolean',
+      description: 'Initial checked state for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: 'ChangeEventHandler<HTMLInputElement>',
+      description: 'Called when the checked state changes.',
+    },
+    {
+      name: 'indeterminate',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Shows the mixed state without changing the checked value. Sets aria-checked="mixed".',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the checkbox.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Requires the checkbox for native form validation.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name.',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Value submitted with the form.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Control and label size.',
+    },
+    {
+      name: 'label',
+      type: 'ReactNode',
+      description: 'Label rendered beside the control.',
+    },
+    {
+      name: 'native attributes',
+      type: `Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>`,
+      description: 'ARIA attributes, id, className, style, and ref are forwarded to the input.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders a native `<input type="checkbox">`, so Space toggles it and `required` participates in
+  native form validation.
+- The optional `label` is an implicit label. When omitting it, provide `aria-label` or connect an
+  external label with `id` and `htmlFor`.
+- `indeterminate` sets both the DOM indeterminate property and `aria-checked="mixed"`.
+- Focus is shown on the custom control with `:focus-visible`.
+- Disabled controls are removed from form submission and cannot be toggled.
+
+## Related
+
+- [Radio](/docs/components/radio/) for choosing one option from a group.
+- [Switch](/docs/components/switch/) for an immediate on/off setting.
+- [Label](/docs/components/typography/) for external labels.
