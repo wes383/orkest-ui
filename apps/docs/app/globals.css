@@ -1990,11 +1990,6 @@ kbd {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .page-nav-next {
-    justify-content: flex-start;
-    text-align: left;
-  }
-
   .search-footer {
     display: none;
   }
