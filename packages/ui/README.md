@@ -9,7 +9,7 @@ released.
 
 Currently exported:
 
-- Primitives: `Box`, `Stack`, `Separator`, `Icon`
+- Primitives: `Box`, `Stack`, `Grid`, `Separator`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`

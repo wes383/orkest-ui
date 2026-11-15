@@ -1,6 +1,17 @@
 import { ArrowRight, Settings } from 'lucide-react';
 
-import { Badge, Button, Heading, IconButton, Separator, Stack, Tag, Text } from '@orkest/ui';
+import {
+  Badge,
+  Box,
+  Button,
+  Grid,
+  Heading,
+  IconButton,
+  Separator,
+  Stack,
+  Tag,
+  Text,
+} from '@orkest/ui';
 
 import { AvatarDemo } from './avatar-demo';
 import { PlaygroundForm } from './playground-form';
@@ -37,6 +48,22 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
           <Tag variant="info">Design</Tag>
           <Tag variant="outline">Engineering</Tag>
         </Stack>
+      </Stack>
+      <Stack gap={2}>
+        <Heading level={2} size="xl">
+          Grid
+        </Heading>
+        <Grid columns={{ base: 1, md: 3 }} gap={3}>
+          <Box padding={4} background="surface" border radius="md">
+            <Text size="sm">{'One'}</Text>
+          </Box>
+          <Box padding={4} background="surface" border radius="md">
+            <Text size="sm">{'Two'}</Text>
+          </Box>
+          <Box padding={4} background="surface" border radius="md">
+            <Text size="sm">{'Three'}</Text>
+          </Box>
+        </Grid>
       </Stack>
       <Stack direction="row" gap={4} align="center">
         <Text size="sm" tone="muted">

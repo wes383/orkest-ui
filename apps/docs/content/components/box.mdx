@@ -1,49 +1,111 @@
 ---
 title: Box
-description: A polymorphic, unstyled container for semantic composition.
+description: A token-aware, polymorphic container for surfaces, spacing, and dimensions.
 section: components
 order: 1
 ---
 
-`Box` is the neutral composition base for the library. It renders the element you choose, forwards
-native props and refs, and adds only `box-sizing: border-box`.
+`Box` is the general-purpose container. It renders the element you choose, forwards native props and
+refs, and maps common design values to semantic tokens.
 
-## Overview
-
-Use `Box` when a wrapper is needed but no layout or visual behavior should be imposed. Choose the
-semantic element with `as` instead of adding ARIA roles to a `div`.
-
-<Callout type="note" title="Box is not a layout system">
-  Use [Stack](/docs/components/stack/) for one-dimensional layout. Box intentionally exposes no
-  spacing, display, or color props.
-</Callout>
+Box handles surfaces, spacing, borders, and dimensions. Use [Stack](/docs/components/stack/) for
+one-dimensional layout and [Grid](/docs/components/grid/) for two-dimensional layout. Card
+semantics belong in a future Card component; Box does not impose a card structure.
 
 ## Live preview
 
 <ComponentPreview
-  title="Semantic container"
+  title="Token-styled container"
   code={`import { Box, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
-    <Box as="section" aria-label="Project summary">
+    <Box
+      as="section"
+      aria-label="Project summary"
+      padding={6}
+      background="surface"
+      border
+      radius="lg"
+      shadow="sm"
+    >
       <Stack gap={2}>
         <Text weight="semibold">Project summary</Text>
         <Text size="sm" tone="muted">
-          Box renders a real section element here.
+          Box maps common design values to semantic tokens.
         </Text>
       </Stack>
     </Box>
   );
 }`}
 >
-  <Box as="section" aria-label="Project summary">
+  <Box
+    as="section"
+    aria-label="Project summary"
+    padding={6}
+    background="surface"
+    border
+    radius="lg"
+    shadow="sm"
+  >
     <Stack gap={2}>
       <Text weight="semibold">Project summary</Text>
       <Text size="sm" tone="muted">
-        {'Box renders a real section element here.'}
+        {'Box maps common design values to semantic tokens.'}
       </Text>
     </Stack>
+  </Box>
+</ComponentPreview>
+
+## Dimensions and padding
+
+Numbers are treated as pixels; use any CSS length string for token-based or relative sizing.
+`padding` accepts the shared spacing scale.
+
+<ComponentPreview
+  title="Constrained width"
+  code={`import { Box, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="24rem" padding={4} background="surface-sunken" radius="md">
+      <Text size="sm" tone="muted">
+        maxWidth keeps long content readable.
+      </Text>
+    </Box>
+  );
+}`}
+>
+  <Box width="100%" maxWidth="24rem" padding={4} background="surface-sunken" radius="md">
+    <Text size="sm" tone="muted">
+      {'maxWidth keeps long content readable.'}
+    </Text>
+  </Box>
+</ComponentPreview>
+
+## Semantic colors
+
+`background` and `color` map to theme-aware semantic variables, so the same Box works in light and
+dark themes.
+
+<ComponentPreview
+  title="Surface and text tokens"
+  code={`import { Box, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box padding={4} background="accent-surface" color="accent" radius="md">
+      <Text size="sm" weight="medium">
+        Accent surface
+      </Text>
+    </Box>
+  );
+}`}
+>
+  <Box padding={4} background="accent-surface" color="accent" radius="md">
+    <Text size="sm" weight="medium">
+      {'Accent surface'}
+    </Text>
   </Box>
 </ComponentPreview>
 
@@ -58,34 +120,83 @@ export function Example() {
       description: 'Element or component to render.',
     },
     {
+      name: 'width / height',
+      type: 'number | string',
+      description: 'Dimensions. Numbers are pixels; strings pass through as CSS.',
+    },
+    {
+      name: 'minWidth / maxWidth',
+      type: 'number | string',
+      description: 'Width constraints. Numbers are pixels.',
+    },
+    {
+      name: 'minHeight / maxHeight',
+      type: 'number | string',
+      description: 'Height constraints. Numbers are pixels.',
+    },
+    {
+      name: 'padding',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20',
+      description: 'Padding step mapped to a --ok-space token.',
+    },
+    {
+      name: 'background',
+      type: `'transparent' | 'background' | 'surface' | 'surface-raised' | 'surface-sunken' | 'secondary' | 'accent-surface' | 'success-surface' | 'warning-surface' | 'danger-surface'`,
+      description: 'Semantic background token.',
+    },
+    {
+      name: 'color',
+      type: `'inherit' | 'foreground' | 'muted' | 'subtle' | 'accent' | 'success' | 'warning' | 'danger' | 'primary-foreground' | 'secondary-foreground'`,
+      description: 'Semantic text color token.',
+    },
+    {
+      name: 'border',
+      type: `boolean | 'subtle' | 'default' | 'strong'`,
+      default: 'false',
+      description: 'Border using the default or a named border token.',
+    },
+    {
+      name: 'radius',
+      type: `'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'`,
+      description: 'Corner radius token.',
+    },
+    {
+      name: 'shadow',
+      type: `'xs' | 'sm' | 'md' | 'lg'`,
+      description: 'Shadow token.',
+    },
+    {
+      name: 'overflow',
+      type: `'visible' | 'hidden' | 'auto' | 'scroll' | 'clip'`,
+      description: 'CSS overflow behavior.',
+    },
+    {
       name: 'className',
       type: 'string',
       description: 'Merged with the internal class name.',
     },
     {
-      name: 'children',
-      type: 'ReactNode',
-      description: 'Content rendered inside the element.',
-    },
-    {
       name: 'native attributes',
       type: 'ComponentPropsWithRef<T>',
-      description: 'Inherited from the element selected by as.',
+      description: 'Inherited from the element selected by as. The style prop wins over token props.',
     },
   ]}
 />
 
-`BoxProps<T>` is exported for wrapper components. The `as` prop drives the available native
-attributes and the ref type.
+`BoxProps<T>` and the individual token types are exported for wrapper components. The `as` prop
+drives the available native attributes and the ref type.
 
 ## Accessibility
 
 - `Box` adds no roles, labels, or keyboard behavior.
 - Choose an element that matches the content, such as `section`, `nav`, `article`, or `ul`.
 - Provide an accessible name when the chosen landmark needs one.
-- Do not replace a native interactive element with a clickable Box.
+- Do not use a clickable Box in place of a native button or link.
+- Check color contrast when combining `background`, `color`, and theme variants.
 
 ## Related
 
-- [Stack](/docs/components/stack/) for flex layout.
+- [Stack](/docs/components/stack/) for one-dimensional flex layout.
+- [Grid](/docs/components/grid/) for two-dimensional layout.
 - [Text](/docs/components/text/) for typographic content.
+- [Separator](/docs/components/separator/) for dividers between sections.

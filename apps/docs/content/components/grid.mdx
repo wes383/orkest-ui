@@ -1,0 +1,241 @@
+---
+title: Grid
+description: Two-dimensional CSS Grid layout with token gaps and responsive column values.
+section: components
+order: 14
+---
+
+`Grid` provides two-dimensional layout with shared spacing tokens and responsive column values.
+Responsive rules use CSS media queries, so rendering does not depend on JavaScript viewport
+measurements.
+
+## Live preview
+
+<ComponentPreview
+  title="Responsive columns"
+  code={`import { Box, Grid, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={3}>
+      <Box padding={4} background="surface" border radius="md">
+        <Text size="sm" weight="medium">{'One'}</Text>
+      </Box>
+      <Box padding={4} background="surface" border radius="md">
+        <Text size="sm" weight="medium">{'Two'}</Text>
+      </Box>
+      <Box padding={4} background="surface" border radius="md">
+        <Text size="sm" weight="medium">{'Three'}</Text>
+      </Box>
+    </Grid>
+  );
+}`}
+>
+  <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={3}>
+    <Box padding={4} background="surface" border radius="md">
+      <Text size="sm" weight="medium">
+        {'One'}
+      </Text>
+    </Box>
+    <Box padding={4} background="surface" border radius="md">
+      <Text size="sm" weight="medium">
+        {'Two'}
+      </Text>
+    </Box>
+    <Box padding={4} background="surface" border radius="md">
+      <Text size="sm" weight="medium">
+        {'Three'}
+      </Text>
+    </Box>
+  </Grid>
+</ComponentPreview>
+
+## Native templates
+
+Pass any valid `grid-template-columns` value when a fixed count is not enough. The example below
+uses `auto-fit` so the grid fills the available width without breakpoints.
+
+<ComponentPreview
+  title="Auto-fit template"
+  code={`import { Box, Grid, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Grid columns="repeat(auto-fit, minmax(12rem, 1fr))" gap={3}>
+      <Box padding={4} background="surface-sunken" radius="md">
+        <Text size="sm">{'Auto-fit item'}</Text>
+      </Box>
+      <Box padding={4} background="surface-sunken" radius="md">
+        <Text size="sm">{'Auto-fit item'}</Text>
+      </Box>
+      <Box padding={4} background="surface-sunken" radius="md">
+        <Text size="sm">{'Auto-fit item'}</Text>
+      </Box>
+    </Grid>
+  );
+}`}
+>
+  <Grid columns="repeat(auto-fit, minmax(12rem, 1fr))" gap={3}>
+    <Box padding={4} background="surface-sunken" radius="md">
+      <Text size="sm">{'Auto-fit item'}</Text>
+    </Box>
+    <Box padding={4} background="surface-sunken" radius="md">
+      <Text size="sm">{'Auto-fit item'}</Text>
+    </Box>
+    <Box padding={4} background="surface-sunken" radius="md">
+      <Text size="sm">{'Auto-fit item'}</Text>
+    </Box>
+  </Grid>
+</ComponentPreview>
+
+## Gaps and alignment
+
+`columnGap` and `rowGap` override `gap` for one axis. `align` and `justify` map to `align-items` and
+`justify-items`.
+
+<ComponentPreview
+  title="Independent gaps"
+  code={`import { Box, Grid, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Grid columns={2} columnGap={6} rowGap={2} align="center">
+      <Box padding={3} background="surface" border radius="md">
+        <Text size="sm">{'Column gap'}</Text>
+      </Box>
+      <Box padding={3} background="surface" border radius="md">
+        <Text size="sm">{'Row gap'}</Text>
+      </Box>
+      <Box padding={3} background="surface" border radius="md">
+        <Text size="sm">{'Alignment'}</Text>
+      </Box>
+      <Box padding={3} background="surface" border radius="md">
+        <Text size="sm">{'Tokens'}</Text>
+      </Box>
+    </Grid>
+  );
+}`}
+>
+  <Grid columns={2} columnGap={6} rowGap={2} align="center">
+    <Box padding={3} background="surface" border radius="md">
+      <Text size="sm">{'Column gap'}</Text>
+    </Box>
+    <Box padding={3} background="surface" border radius="md">
+      <Text size="sm">{'Row gap'}</Text>
+    </Box>
+    <Box padding={3} background="surface" border radius="md">
+      <Text size="sm">{'Alignment'}</Text>
+    </Box>
+    <Box padding={3} background="surface" border radius="md">
+      <Text size="sm">{'Tokens'}</Text>
+    </Box>
+  </Grid>
+</ComponentPreview>
+
+## Responsive values
+
+`columns`, `rows`, `gap`, `columnGap`, and `rowGap` accept an object with `base`, `sm`, `md`, `lg`,
+and `xl` keys. Values carry forward to larger breakpoints.
+
+```tsx
+<Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={{ base: 2, lg: 6 }}>
+  {/* items */}
+</Grid>
+```
+
+| Key | Media query |
+| --- | --- |
+| `base` | No media query |
+| `sm` | `min-width: 40rem` (640px) |
+| `md` | `min-width: 48rem` (768px) |
+| `lg` | `min-width: 64rem` (1024px) |
+| `xl` | `min-width: 80rem` (1280px) |
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'columns',
+      type: 'number | string | ResponsiveValue<number | string>',
+      default: '1',
+      description:
+        'Column count or any valid grid-template-columns value. Numbers become equal minmax tracks.',
+    },
+    {
+      name: 'rows',
+      type: 'number | string | ResponsiveValue<number | string>',
+      default: `'auto'`,
+      description:
+        'Row count or any valid grid-template-rows value. Numbers become equal minmax tracks.',
+    },
+    {
+      name: 'gap',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | ResponsiveValue<...>',
+      default: '0',
+      description: 'Row and column gap as a spacing token step.',
+    },
+    {
+      name: 'columnGap',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | ResponsiveValue<...>',
+      description: 'Column gap. Falls back to gap.',
+    },
+    {
+      name: 'rowGap',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | ResponsiveValue<...>',
+      description: 'Row gap. Falls back to gap.',
+    },
+    {
+      name: 'autoFlow',
+      type: `'row' | 'column' | 'dense' | 'row dense' | 'column dense'`,
+      default: `'row'`,
+      description: 'CSS grid-auto-flow behavior.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end' | 'stretch'`,
+      default: `'stretch'`,
+      description: 'Vertical alignment of grid items.',
+    },
+    {
+      name: 'justify',
+      type: `'start' | 'center' | 'end' | 'stretch'`,
+      default: `'stretch'`,
+      description: 'Horizontal alignment of grid items.',
+    },
+    {
+      name: 'as',
+      type: 'ElementType',
+      default: `'div'`,
+      description: 'Element to render, preserving native attributes.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Merged with the internal class name.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ComponentPropsWithRef<T>',
+      description: 'Inherited from the element selected by as.',
+    },
+  ]}
+/>
+
+`GridProps<T>`, `GridResponsiveValue<T>`, and the individual value types are exported for wrapper
+components.
+
+## Accessibility
+
+- `Grid` changes visual layout only. It adds no ARIA roles or keyboard behavior.
+- Reading order remains DOM order. Avoid visual reordering that contradicts the source order.
+- `autoFlow="dense"` can move items visually; use it only when the content order does not carry
+  meaning.
+- Use `as` to render semantic elements such as `section`, `ul`, or `nav` when appropriate.
+- Responsive behavior is CSS-only. There are no resize listeners and no client-side viewport reads.
+
+## Related
+
+- [Box](/docs/components/box/) for token-based surfaces and dimensions.
+- [Stack](/docs/components/stack/) for one-dimensional flex layout.
+- [Separator](/docs/components/separator/) for dividers between sections.
