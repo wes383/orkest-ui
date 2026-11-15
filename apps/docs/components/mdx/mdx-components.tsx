@@ -57,6 +57,7 @@ import {
 } from '../examples/choice-controls';
 import {
   BasicSelectExample,
+  DetailedSelectExample,
   MultiSelect,
   MultiSelectExample,
   SearchableSelectExample,
@@ -174,6 +175,7 @@ export const mdxComponents = {
   Caption,
   Checkbox,
   Code,
+  DetailedSelectExample,
   Grid,
   Heading,
   Icon,

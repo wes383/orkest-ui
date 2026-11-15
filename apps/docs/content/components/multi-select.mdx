@@ -17,20 +17,29 @@ Import it from `@orkest/ui/client`.
   code={`import { useState } from 'react';
 import { MultiSelect } from '@orkest/ui/client';
 
+const skills = [
+  { value: 'react', label: 'React' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'node', label: 'Node.js' },
+  { value: 'css', label: 'CSS' },
+  { value: 'testing', label: 'Testing' },
+  { value: 'accessibility', label: 'Accessibility' },
+];
+
 export function Example() {
-  const [selected, setSelected] = useState(['design', 'frontend']);
+  const [selected, setSelected] = useState(['react', 'typescript']);
 
   return (
     <MultiSelect
-      aria-label="Teams"
-      options={options}
+      aria-label="Skills"
+      options={skills}
       value={selected}
       onChange={(nextValues) => setSelected(nextValues)}
       searchable
       hideSelected
       clearable
       maxSelected={3}
-      placeholder="Select teams"
+      placeholder="Select skills"
     />
   );
 }`}
@@ -47,9 +56,9 @@ shown.
 
 ```tsx
 <MultiSelect
-  aria-label="Teams"
-  options={options}
-  defaultValue={['design']}
+  aria-label="Skills"
+  options={skills}
+  defaultValue={['react']}
   searchable
   hideSelected
   clearable
@@ -62,7 +71,7 @@ shown.
 interactive so the user can replace a choice.
 
 ```tsx
-<MultiSelect aria-label="Teams" options={options} maxSelected={3} />
+<MultiSelect aria-label="Skills" options={skills} maxSelected={3} />
 ```
 
 ## Custom value content
@@ -72,14 +81,14 @@ function:
 
 ```tsx
 <MultiSelect
-  aria-label="Teams"
-  options={options}
-  defaultValue={['design', 'frontend']}
+  aria-label="Skills"
+  options={skills}
+  defaultValue={['react', 'typescript']}
   renderValue={(selected, remove) => (
     <span>
       {selected.length} selected
-      <button type="button" onClick={() => remove('design')}>
-        Remove Design
+      <button type="button" onClick={() => remove('react')}>
+        Remove React
       </button>
     </span>
   )}

@@ -13,36 +13,19 @@ Import it from `@orkest/ui/client` because the menu uses client-side state.
 ## Live preview
 
 <ComponentPreview
-  title="Grouped options"
-  code={`import { Palette } from 'lucide-react';
-import { Select } from '@orkest/ui/client';
+  title="Basic select"
+  code={`import { Select } from '@orkest/ui/client';
 
-const options = [
-  {
-    label: 'Product',
-    options: [
-      {
-        value: 'design',
-        label: 'Design',
-        description: 'Product design and research',
-        icon: Palette,
-      },
-      { value: 'product', label: 'Product', description: 'Planning and strategy' },
-      { value: 'marketing', label: 'Marketing' },
-    ],
-  },
-  {
-    label: 'Engineering',
-    options: [
-      { value: 'frontend', label: 'Frontend' },
-      { value: 'backend', label: 'Backend' },
-      { value: 'platform', label: 'Platform', disabled: true },
-    ],
-  },
+const fruits = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'grape', label: 'Grape' },
+  { value: 'mango', label: 'Mango' },
 ];
 
 export function Example() {
-  return <Select aria-label="Team" options={options} defaultValue="design" clearable />;
+  return <Select aria-label="Fruit" options={fruits} defaultValue="apple" clearable />;
 }`}
 >
   <BasicSelectExample />
@@ -58,14 +41,23 @@ default matcher, or `onSearchChange` together with `loading` for async search.
   title="Searchable select"
   code={`import { Select } from '@orkest/ui/client';
 
+const languages = [
+  { value: 'javascript', label: 'JavaScript' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'python', label: 'Python' },
+  { value: 'go', label: 'Go' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'swift', label: 'Swift' },
+];
+
 export function Example() {
   return (
     <Select
-      aria-label="Team"
-      options={options}
+      aria-label="Language"
+      options={languages}
       searchable
-      searchPlaceholder="Search teams"
-      placeholder="Choose a team"
+      searchPlaceholder="Search languages"
+      placeholder="Choose a language"
     />
   );
 }`}
@@ -108,6 +100,57 @@ Groups render `role="group"` with the group label as the accessible name. Descri
 secondary text and are included in the option's accessible name. `icon` renders a decorative leading
 icon; the trailing check is the selection indicator and is rendered automatically.
 
+<ComponentPreview
+  title="Groups, descriptions, and icons"
+  code={`import { Briefcase, Code, Layers, Megaphone, Palette, Server } from 'lucide-react';
+import { Select } from '@orkest/ui/client';
+
+const teams = [
+  {
+    label: 'Product',
+    options: [
+      {
+        value: 'design',
+        label: 'Design',
+        description: 'Product design and research',
+        icon: Palette,
+      },
+      {
+        value: 'product',
+        label: 'Product',
+        description: 'Planning and strategy',
+        icon: Briefcase,
+      },
+      {
+        value: 'marketing',
+        label: 'Marketing',
+        description: 'Campaigns and brand',
+        icon: Megaphone,
+      },
+    ],
+  },
+  {
+    label: 'Engineering',
+    options: [
+      { value: 'frontend', label: 'Frontend', description: 'Web interfaces', icon: Code },
+      { value: 'backend', label: 'Backend', description: 'APIs and services', icon: Server },
+      {
+        value: 'platform',
+        label: 'Platform',
+        description: 'Infrastructure and tooling',
+        icon: Layers,
+      },
+    ],
+  },
+];
+
+export function Example() {
+  return <Select aria-label="Team" options={teams} defaultValue="design" clearable />;
+}`}
+>
+  <DetailedSelectExample />
+</ComponentPreview>
+
 ## Sizes
 
 Sizes follow the existing Input height, radius, and padding tokens.
@@ -117,12 +160,18 @@ Sizes follow the existing Input height, radius, and padding tokens.
   code={`import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
+const priorities = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+];
+
 export function Example() {
   return (
     <Stack gap={3}>
-      <Select aria-label="Small team" size="sm" options={options} defaultValue="design" />
-      <Select aria-label="Medium team" size="md" options={options} defaultValue="design" />
-      <Select aria-label="Large team" size="lg" options={options} defaultValue="design" />
+      <Select aria-label="Small priority" size="sm" options={priorities} defaultValue="medium" />
+      <Select aria-label="Medium priority" size="md" options={priorities} defaultValue="medium" />
+      <Select aria-label="Large priority" size="lg" options={priorities} defaultValue="medium" />
     </Stack>
   );
 }`}
@@ -140,12 +189,18 @@ export function Example() {
   code={`import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
+const statuses = [
+  { value: 'active', label: 'Active' },
+  { value: 'paused', label: 'Paused' },
+  { value: 'archived', label: 'Archived' },
+];
+
 export function Example() {
   return (
     <Stack gap={3}>
-      <Select aria-label="Disabled team" options={options} defaultValue="design" disabled />
-      <Select aria-label="Invalid team" options={options} placeholder="Choose a team" invalid />
-      <Select aria-label="Clearable team" options={options} defaultValue="product" clearable />
+      <Select aria-label="Disabled status" options={statuses} defaultValue="active" disabled />
+      <Select aria-label="Invalid status" options={statuses} placeholder="Choose a status" invalid />
+      <Select aria-label="Clearable status" options={statuses} defaultValue="paused" clearable />
     </Stack>
   );
 }`}
@@ -165,12 +220,12 @@ shows `emptyMessage`.
 export function Example() {
   return (
     <Select
-      aria-label="Searching teams"
+      aria-label="Searching languages"
       options={[]}
       searchable
       loading
-      searchPlaceholder="Search teams"
-      emptyMessage="No teams matched"
+      searchPlaceholder="Search languages"
+      emptyMessage="No languages matched"
     />
   );
 }`}
