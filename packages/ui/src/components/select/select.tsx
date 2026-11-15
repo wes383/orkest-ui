@@ -232,7 +232,7 @@ function PlainSelect({
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner
             anchor={fieldRef}
-            sideOffset={12}
+            sideOffset={8}
             alignItemWithTrigger={false}
             positionMethod="fixed"
             className={styles.positioner}

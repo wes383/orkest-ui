@@ -393,7 +393,7 @@ function MultiSelectImpl({
         <BaseCombobox.Portal container={rootRef}>
           <BaseCombobox.Positioner
             anchor={fieldRef}
-            sideOffset={12}
+            sideOffset={8}
             positionMethod="fixed"
             className={styles.positioner}
           >
