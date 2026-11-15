@@ -439,6 +439,10 @@
   background: transparent;
 }
 
+.multiSelectItem {
+  padding-inline-start: var(--ok-space-2);
+}
+
 .itemIcon {
   display: inline-flex;
   flex: none;
