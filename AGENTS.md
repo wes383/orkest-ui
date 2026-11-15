@@ -295,6 +295,10 @@ and cover important public states, such as:
 - Long content and layout edge cases.
 - Theme variations, where supported.
 
+Component pages are ordered alphabetically by page title. Do not add an
+`order` field to them; other sections use `order` to control their
+sequence.
+
 Import live examples from `@orkest/ui` and keep them aligned with the
 actual public API. Do not create examples that rely on private
 implementation details.

@@ -58,9 +58,11 @@ Create an MDX file with frontmatter:
 title: Button
 description: A control that triggers an action.
 section: components
-order: 1
 ---
 ```
+
+Component pages are sorted alphabetically by title, so they do not use an `order` field. Every other
+section uses `order` to control its sequence.
 
 Use an existing section id from `apps/docs/lib/docs-navigation.ts`. Navigation, previous/next links,
 and search entries are generated from the content files, so no separate navigation registry needs to

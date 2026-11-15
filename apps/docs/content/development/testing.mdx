@@ -46,7 +46,8 @@ Tests assert user-observable behavior rather than CSS class names where possible
 After a content or shell change, verify:
 
 - Every navigation entry points to a real MDX page.
-- Frontmatter includes `title`, `description`, `section`, and `order`.
+- Frontmatter includes `title`, `description`, and `section`. Pages outside the components section
+  also include `order`; component pages are sorted alphabetically by title.
 - Headings and table-of-contents anchors resolve.
 - Code examples use real imports and public props.
 - Search finds page titles, headings, and content.

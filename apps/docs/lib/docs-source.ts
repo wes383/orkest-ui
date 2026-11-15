@@ -54,6 +54,14 @@ function requireOrder(value: unknown, file: string): number {
   return value;
 }
 
+function compareDocs(a: DocPage, b: DocPage): number {
+  if (a.section === 'components' && b.section === 'components') {
+    return a.title.localeCompare(b.title);
+  }
+
+  return (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title);
+}
+
 function stripInlineMarkdown(value: string): string {
   return value
     .replace(/`([^`]+)`/g, '$1')
@@ -135,7 +143,8 @@ function parseDoc(filePath: string): DocPage {
     description: requireString(data.description, 'description', relativePath),
     section,
     sectionLabel: sectionMeta.label,
-    order: requireOrder(data.order, relativePath),
+    // Component pages are alphabetical; every other section uses an explicit order.
+    order: section === 'components' ? undefined : requireOrder(data.order, relativePath),
     headings: extractHeadings(content),
     content,
     plainText: toPlainText(content),
@@ -143,9 +152,7 @@ function parseDoc(filePath: string): DocPage {
 }
 
 export const getDocs = cache((): DocPage[] => {
-  return listMdxFiles(contentDirectory)
-    .map(parseDoc)
-    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+  return listMdxFiles(contentDirectory).map(parseDoc).sort(compareDocs);
 });
 
 export const getDocBySlug = cache((slug: string): DocPage | undefined => {
@@ -162,7 +169,7 @@ export const getNavigation = cache((): NavGroup[] => {
       description: section.description,
       items: docs
         .filter((doc) => doc.section === section.id)
-        .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title))
+        .sort(compareDocs)
         .map<NavItem>((doc) => ({
           title: doc.title,
           href: getDocHref(doc.slug),

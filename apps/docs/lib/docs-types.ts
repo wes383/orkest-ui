@@ -13,7 +13,7 @@ export interface DocPage {
   description: string;
   section: DocsSectionId;
   sectionLabel: string;
-  order: number;
+  order?: number;
   headings: DocHeading[];
   content: string;
   plainText: string;
