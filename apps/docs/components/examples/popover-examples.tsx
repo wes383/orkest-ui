@@ -25,7 +25,6 @@ export function PopoverBasicExample() {
       <PopoverPortal>
         <PopoverPositioner>
           <PopoverContent width="20rem">
-            <PopoverArrow />
             <Stack gap={3}>
               <Stack gap={1}>
                 <PopoverTitle>Filters</PopoverTitle>
