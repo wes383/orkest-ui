@@ -1937,7 +1937,8 @@ kbd {
   }
 
   .search-trigger {
-    width: 2.125rem;
+    width: 2.75rem;
+    height: 2.75rem;
     padding: 0;
     justify-content: center;
   }
@@ -2009,6 +2010,41 @@ kbd {
 
   .token-table .table-wrap tbody th code {
     white-space: normal;
+  }
+}
+
+@media (max-width: 960px) {
+  .icon-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .search-trigger {
+    height: 2.75rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .docs-nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 10px 12px;
+    font-size: var(--ok-font-size-sm);
+  }
+
+  .docs-index-card,
+  .search-result-link {
+    min-height: 2.75rem;
+  }
+
+  .copy-button {
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 
