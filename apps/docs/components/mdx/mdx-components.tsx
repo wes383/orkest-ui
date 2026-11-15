@@ -66,6 +66,21 @@ import {
   SelectSizesExample,
   SelectStatesExample,
 } from '../examples/select-examples';
+import {
+  FieldBasicExample,
+  FieldCheckboxExample,
+  FieldDisabledExample,
+  FieldHorizontalExample,
+  FieldMessagesExample,
+  FieldRequiredExample,
+  FieldSelectExample,
+  FieldValidationExample,
+} from '../examples/field-examples';
+import {
+  FieldsetBasicExample,
+  FieldsetDisabledExample,
+  FieldsetRadioExample,
+} from '../examples/fieldset-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -176,6 +191,17 @@ export const mdxComponents = {
   Checkbox,
   Code,
   DetailedSelectExample,
+  FieldBasicExample,
+  FieldCheckboxExample,
+  FieldDisabledExample,
+  FieldHorizontalExample,
+  FieldMessagesExample,
+  FieldRequiredExample,
+  FieldSelectExample,
+  FieldsetBasicExample,
+  FieldsetDisabledExample,
+  FieldsetRadioExample,
+  FieldValidationExample,
   Grid,
   Heading,
   Icon,

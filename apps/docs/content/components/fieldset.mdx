@@ -1,0 +1,172 @@
+---
+title: Fieldset
+description: Group related fields with a native fieldset, legend, and shared disabled state.
+section: components
+---
+
+`Fieldset` groups related fields and renders a native `<fieldset>`. `Legend` renders the native
+`<legend>` that names the group. Both are exported from `@orkest/ui/client`.
+
+Use `Fieldset` for address blocks, radio groups, and settings sections that should be disabled
+together.
+
+## Basic usage
+
+<ComponentPreview
+  title="Grouped fields"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldLabel, Fieldset, Input, Legend } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Fieldset>
+        <Legend>Shipping address</Legend>
+        <Field>
+          <FieldLabel>Street</FieldLabel>
+          <Input placeholder="221B Baker Street" />
+        </Field>
+        <Field>
+          <FieldLabel>City</FieldLabel>
+          <Input placeholder="London" />
+        </Field>
+      </Fieldset>
+    </Box>
+  );
+}`}
+>
+  <FieldsetBasicExample />
+</ComponentPreview>
+
+The browser derives the group name from the first `<legend>`. `Fieldset` also registers the legend
+id in `aria-labelledby` for consistent behavior across browsers and assistive technology.
+
+## Disabled group
+
+Disabling a `Fieldset` disables every native control inside it and propagates the state to nested
+`Field` components.
+
+<ComponentPreview
+  title="Disabled fieldset"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldLabel, Fieldset, Input, Legend } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Fieldset disabled>
+        <Legend>Billing contact</Legend>
+        <Field>
+          <FieldLabel>Name</FieldLabel>
+          <Input defaultValue="Grace Hopper" />
+        </Field>
+        <Field>
+          <FieldLabel>Email</FieldLabel>
+          <Input defaultValue="grace@example.com" />
+        </Field>
+      </Fieldset>
+    </Box>
+  );
+}`}
+>
+  <FieldsetDisabledExample />
+</ComponentPreview>
+
+## Radio groups
+
+Pair `Fieldset` and `Legend` with `Field` and `FieldLabel` to name a radio group. The group receives
+the label through `aria-labelledby`, and the required state is propagated to the radios.
+
+<ComponentPreview
+  title="Radio group in a fieldset"
+  code={`import { useState } from 'react';
+import { Box } from '@orkest/ui';
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+  Fieldset,
+  Legend,
+  Radio,
+  RadioGroup,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [frequency, setFrequency] = useState('weekly');
+
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Fieldset>
+        <Legend>Email digest</Legend>
+        <Field required>
+          <FieldLabel>Frequency</FieldLabel>
+          <RadioGroup value={frequency} onValueChange={setFrequency}>
+            <Radio value="daily" label="Daily" />
+            <Radio value="weekly" label="Weekly" />
+            <Radio value="monthly" label="Monthly" />
+          </RadioGroup>
+          <FieldDescription>Choose when we send your summary.</FieldDescription>
+        </Field>
+      </Fieldset>
+    </Box>
+  );
+}`}
+>
+  <FieldsetRadioExample />
+</ComponentPreview>
+
+## Props
+
+### Fieldset
+
+<PropsTable
+  rows={[
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables every control in the group and nested fields.',
+    },
+    {
+      name: 'aria-labelledby',
+      type: 'string',
+      description: 'Overrides the legend association when a custom name is needed.',
+    },
+    {
+      name: 'native attributes',
+      type: 'FieldsetHTMLAttributes<HTMLFieldSetElement>',
+      description: 'Class names, event handlers, and refs are forwarded to the fieldset element.',
+    },
+  ]}
+/>
+
+### Legend
+
+<PropsTable
+  rows={[
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Legend id. Generated and registered with the surrounding Fieldset.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLLegendElement>',
+      description: 'Class names and refs are forwarded to the legend element.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `Fieldset` renders a native `<fieldset>`; `Legend` renders a native `<legend>`.
+- The legend names the group and is announced when entering the group.
+- `disabled` uses the native fieldset attribute, so all controls inside become disabled.
+- Nested fields receive the disabled state through context and use native disabled attributes.
+- Prefer one legend per fieldset and place it as the first child.
+
+## Related
+
+- [Field](/docs/components/field/) for individual field structure.
+- [Radio](/docs/components/radio/) for grouped selection controls.
+- [Checkbox](/docs/components/checkbox/) for independent selection controls.

@@ -15,6 +15,7 @@ import {
 
 import { AvatarDemo } from './avatar-demo';
 import { ChoiceDemo } from './choice-demo';
+import { FieldDemo } from './field-demo';
 import { PlaygroundForm } from './playground-form';
 import { SelectDemo } from './select-demo';
 
@@ -80,6 +81,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <AvatarDemo />
       <ChoiceDemo />
       <SelectDemo />
+      <FieldDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>
   );

@@ -1,0 +1,452 @@
+---
+title: Field
+description: Accessible field structure for labels, controls, descriptions, and validation messages.
+section: components
+---
+
+`Field` groups a label, form control, description, and message into one accessible unit. It is built
+on Base UI Field, so validation state, disabled state, and ARIA relationships stay in sync.
+
+`Field` and its parts are exported from `@orkest/ui/client`. Render them inside a Client Component.
+
+## Basic usage
+
+<ComponentPreview
+  title="Label, input, and description"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Field>
+        <FieldLabel>Email</FieldLabel>
+        <Input type="email" placeholder="you@example.com" />
+        <FieldDescription>We only use this for account notices.</FieldDescription>
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldBasicExample />
+</ComponentPreview>
+
+`FieldLabel` registers a label id that Base UI controls use for `aria-labelledby` and `htmlFor`.
+`FieldDescription` and `FieldMessage` register their ids so the control receives
+`aria-describedby` without manual wiring. Custom controls such as Checkbox and Switch receive the
+label id through `aria-labelledby`; pass `htmlFor` explicitly when you need native label-click
+behavior for a custom control.
+
+## Required and optional
+
+Set `required` on `Field` to require the control and show the required indicator. The indicator
+keeps the visual asterisk separate from a screen-reader “Required” label, so the state is not
+communicated by color alone.
+
+<ComponentPreview
+  title="Required and optional fields"
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Field, FieldLabel, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Stack gap={4}>
+        <Field required>
+          <FieldLabel>Full name</FieldLabel>
+          <Input placeholder="Ada Lovelace" />
+        </Field>
+        <Field>
+          <FieldLabel optional>Job title</FieldLabel>
+          <Input placeholder="Engineer" />
+        </Field>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <FieldRequiredExample />
+</ComponentPreview>
+
+## Horizontal layout
+
+Use `orientation="horizontal"` for settings pages where the label sits beside the control.
+
+<ComponentPreview
+  title="Horizontal field"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="26rem">
+      <Field orientation="horizontal">
+        <FieldLabel>Display name</FieldLabel>
+        <Input placeholder="Ada Lovelace" />
+        <FieldDescription>Shown on your profile.</FieldDescription>
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldHorizontalExample />
+</ComponentPreview>
+
+## Validation
+
+`validate` and `validationMode` are delegated to Base UI Field. When the control participates in
+the field, `FieldMessage` shows the validation message automatically and hides it again once the
+field becomes valid.
+
+<ComponentPreview
+  title="Validation on change"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldDescription, FieldLabel, FieldMessage, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Field
+        validate={(value) =>
+          value === 'admin' ? 'This workspace name is reserved.' : null
+        }
+        validationMode="onChange"
+      >
+        <FieldLabel>Workspace URL</FieldLabel>
+        <Input placeholder="acme" />
+        <FieldDescription>Try typing admin to see validation.</FieldDescription>
+        <FieldMessage icon />
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldValidationExample />
+</ComponentPreview>
+
+The same pattern works with `Select` and `Textarea`, which also register with Base UI Field. Type
+`admin` in the example above to see the error appear and then disappear.
+
+## Messages
+
+`FieldMessage` handles error, success, warning, and info tones. Error messages are announced with
+`role="alert"`; the other tones use `role="status"`.
+
+<ComponentPreview
+  title="Message tones"
+  code={`import { Box, Stack } from '@orkest/ui';
+import { Field, FieldLabel, FieldMessage, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Stack gap={4}>
+        <Field>
+          <FieldLabel>API key</FieldLabel>
+          <Input defaultValue="ok_live_9f2c" />
+          <FieldMessage type="success" icon>
+            Your key is active.
+          </FieldMessage>
+        </Field>
+        <Field>
+          <FieldLabel>Storage</FieldLabel>
+          <Input defaultValue="8.4 GB" />
+          <FieldMessage type="warning" icon>
+            You are close to your quota.
+          </FieldMessage>
+        </Field>
+        <Field>
+          <FieldLabel>Region</FieldLabel>
+          <Input defaultValue="eu-west-1" />
+          <FieldMessage type="info" icon>
+            Data stays in the EU.
+          </FieldMessage>
+        </Field>
+      </Stack>
+    </Box>
+  );
+}`}
+>
+  <FieldMessagesExample />
+</ComponentPreview>
+
+Error messages are only shown while the field is invalid and enabled. Render one message per field;
+descriptions and messages are appended to `aria-describedby` in registration order.
+
+## Composing with controls
+
+Controls that render their own label should use that label instead of `FieldLabel`. The field still
+links descriptions, messages, names, disabled state, and required state.
+
+<ComponentPreview
+  title="Checkbox with help text"
+  code={`import { Box } from '@orkest/ui';
+import { Checkbox, Field, FieldDescription, FieldMessage } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Field>
+        <Checkbox label="Product updates" defaultChecked />
+        <FieldDescription>At most one email per month.</FieldDescription>
+        <FieldMessage type="info">You can unsubscribe at any time.</FieldMessage>
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldCheckboxExample />
+</ComponentPreview>
+
+<ComponentPreview
+  title="Select with a field label"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldDescription, FieldLabel, Select } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Field>
+        <FieldLabel>Country</FieldLabel>
+        <Select
+          options={[
+            { value: 'us', label: 'United States' },
+            { value: 'ca', label: 'Canada' },
+            { value: 'gb', label: 'United Kingdom' },
+          ]}
+        />
+        <FieldDescription>Used to calculate tax.</FieldDescription>
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldSelectExample />
+</ComponentPreview>
+
+For radio groups, prefer `Fieldset` and `Legend`. A `FieldLabel` inside `Field` also names the group
+through `aria-labelledby`.
+
+## Disabled
+
+<ComponentPreview
+  title="Disabled field"
+  code={`import { Box } from '@orkest/ui';
+import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Box width="100%" maxWidth="22rem">
+      <Field disabled>
+        <FieldLabel>Account ID</FieldLabel>
+        <Input defaultValue="acct_9f2c" />
+        <FieldDescription>Managed by your organization.</FieldDescription>
+      </Field>
+    </Box>
+  );
+}`}
+>
+  <FieldDisabledExample />
+</ComponentPreview>
+
+## Props
+
+### Field
+
+<PropsTable
+  rows={[
+    {
+      name: 'orientation',
+      type: `'vertical' | 'horizontal'`,
+      default: `'vertical'`,
+      description: 'Places the label above the control or beside it.',
+    },
+    {
+      name: 'controlId',
+      type: 'string',
+      description: 'Stable id assigned to the control. Generated when omitted.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Requires the control and shows the required indicator in FieldLabel.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the field and its controls.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Marks the field invalid. Also accepts validation results from Base UI.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name inherited by controls.',
+    },
+    {
+      name: 'validate',
+      type: '(value, formValues) => string | string[] | null | void | Promise<...>',
+      description: 'Custom validation delegated to Base UI Field.',
+    },
+    {
+      name: 'validationMode',
+      type: `'onSubmit' | 'onBlur' | 'onChange'`,
+      default: `'onSubmit'`,
+      description: 'When Base UI Field runs validation.',
+    },
+    {
+      name: 'validationDebounceTime',
+      type: 'number',
+      default: '0',
+      description: 'Debounce in milliseconds for onChange validation.',
+    },
+    {
+      name: 'actionsRef',
+      type: 'RefObject<{ validate: () => void }>',
+      description: 'Imperative Base UI Field actions.',
+    },
+    {
+      name: 'dirty / touched',
+      type: 'boolean',
+      description: 'External state for validation libraries.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, styles, data attributes, and refs are forwarded to the root div.',
+    },
+  ]}
+/>
+
+### FieldLabel
+
+<PropsTable
+  rows={[
+    {
+      name: 'htmlFor',
+      type: 'string',
+      description: 'Explicit control id for native label association.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      description: 'Shows the required indicator. Defaults to Field.required.',
+    },
+    {
+      name: 'optional',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows an Optional marker when the field is not required.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Dims the label without disabling the control.',
+    },
+    {
+      name: 'native attributes',
+      type: 'LabelHTMLAttributes<HTMLLabelElement>',
+      description: 'Class names, styles, and refs are forwarded to the label element.',
+    },
+  ]}
+/>
+
+### FieldDescription
+
+<PropsTable
+  rows={[
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Description id. Generated and registered with the field when omitted.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLParagraphElement>',
+      description: 'Class names and refs are forwarded to the paragraph.',
+    },
+  ]}
+/>
+
+### FieldMessage
+
+<PropsTable
+  rows={[
+    {
+      name: 'type',
+      type: `'error' | 'success' | 'warning' | 'info'`,
+      default: `'error'`,
+      description: 'Tone and status role of the message.',
+    },
+    {
+      name: 'icon',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows the icon that matches the message type.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Message content. Error messages fall back to Base UI validation errors.',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Message id. Generated and registered with the field when omitted.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, roles, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### FieldRequiredIndicator
+
+<PropsTable
+  rows={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: `'*'`,
+      description: 'Visual marker, hidden from assistive technology.',
+    },
+    {
+      name: 'srLabel',
+      type: 'string',
+      default: `'Required'`,
+      description: 'Screen-reader text that carries the required meaning.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `FieldLabel` registers a label id. Base UI controls use it for `htmlFor` and `aria-labelledby`;
+  custom controls such as Checkbox and Switch receive `aria-labelledby`. Pass `htmlFor` explicitly
+  when a custom control needs native label-click behavior.
+- Descriptions and messages are added to `aria-describedby`. Multiple ids are supported.
+- Invalid fields set `aria-invalid` on the control. Error messages use `role="alert"`; success,
+  warning, and info messages use `role="status"`.
+- Required fields set the native `required` attribute and include screen-reader text in the label.
+- `Fieldset` uses a native `<fieldset>` with a native `<legend>`, so the group has an accessible
+  name and shared disabled state.
+- Disabled state uses native attributes and muted text, not color alone.
+- The horizontal layout uses a grid; DOM order remains label, control, description, message, so
+  keyboard and screen-reader order do not change.
+
+## Related
+
+- [Fieldset](/docs/components/fieldset/) for related fields and grouped controls.
+- [Input](/docs/components/input/) and [Textarea](/docs/components/textarea/) for text controls.
+- [Select](/docs/components/select/) for choice controls.
+- [Checkbox](/docs/components/checkbox/), [Radio](/docs/components/radio/), and
+  [Switch](/docs/components/switch/) for selection controls.
