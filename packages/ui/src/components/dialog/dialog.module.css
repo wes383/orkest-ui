@@ -1,0 +1,214 @@
+.viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ok-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ok-space-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.viewport[data-size="full"] {
+  padding: 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ok-z-overlay);
+  background: var(--ui-overlay);
+  transition: opacity var(--ok-duration-normal) var(--ok-ease-standard);
+}
+
+.overlay[data-starting-style],
+.overlay[data-ending-style] {
+  opacity: 0;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-5);
+  width: 100%;
+  max-width: 32rem;
+  max-height: calc(100dvh - (var(--ok-space-4) * 2));
+  padding: var(--ok-space-6);
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--ok-radius-2xl);
+  background: var(--ui-surface-raised);
+  box-shadow: var(--ok-shadow-lg);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  outline: none;
+  overflow: hidden;
+  transition:
+    opacity var(--ok-duration-normal) var(--ok-ease-standard),
+    transform var(--ok-duration-normal) var(--ok-ease-emphasized);
+}
+
+.content:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.content[data-size="sm"] {
+  max-width: 24rem;
+}
+
+.content[data-size="md"] {
+  max-width: 32rem;
+}
+
+.content[data-size="lg"] {
+  max-width: 42rem;
+}
+
+.content[data-size="xl"] {
+  max-width: 52rem;
+}
+
+.content[data-size="full"] {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.content[data-starting-style],
+.content[data-ending-style] {
+  opacity: 0;
+  transform: translateY(var(--ok-space-2)) scale(0.98);
+}
+
+.content[data-size="full"][data-starting-style],
+.content[data-size="full"][data-ending-style] {
+  transform: none;
+}
+
+.content[data-close-button] .header {
+  padding-inline-end: var(--ok-space-8);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+}
+
+.title {
+  margin: 0;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-display);
+  font-size: var(--ok-font-size-xl);
+  font-weight: var(--ok-font-weight-semibold);
+  line-height: var(--ok-line-height-tight);
+  letter-spacing: var(--ok-letter-spacing-tight);
+}
+
+.description {
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-subtle-foreground) transparent;
+}
+
+.body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.body::-webkit-scrollbar-track,
+.body::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-subtle-foreground);
+  background-clip: content-box;
+}
+
+.body::-webkit-scrollbar-thumb:hover {
+  background: var(--ui-muted-foreground);
+  background-clip: content-box;
+}
+
+.body::-webkit-scrollbar-button {
+  display: none;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ok-space-2);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--ok-space-4);
+  right: var(--ok-space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ok-control-height-sm);
+  height: var(--ok-control-height-sm);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ok-radius-full);
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.closeButton:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: 0;
+}
+
+@media (max-width: 30rem) {
+  .viewport {
+    padding: var(--ok-space-2);
+  }
+
+  .content {
+    max-height: calc(100dvh - (var(--ok-space-2) * 2));
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+  }
+
+  .footer > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .content {
+    transition: none;
+  }
+}
