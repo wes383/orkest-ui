@@ -2042,6 +2042,10 @@ kbd {
     min-height: 2.75rem;
   }
 
+  .button-link {
+    height: 2.75rem;
+  }
+
   .copy-button {
     width: 2.75rem;
     height: 2.75rem;
