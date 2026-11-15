@@ -440,7 +440,7 @@
 }
 
 .multiSelectItem {
-  padding-inline-start: var(--ok-space-2);
+  padding-inline-start: var(--ok-space-1);
 }
 
 .itemIcon {
