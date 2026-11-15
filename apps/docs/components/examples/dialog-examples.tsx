@@ -131,9 +131,9 @@ export function DialogSizesExample() {
 }
 
 const clauses = Array.from(
-  { length: 10 },
+  { length: 40 },
   (_, index) =>
-    `Clause ${index + 1}. This section is long enough to demonstrate a scrollable dialog body while the header and footer stay visible.`,
+    `Clause ${index + 1}. This section is long enough to demonstrate a scrollable dialog body while the header and footer stay visible. It includes additional wording so the example overflows on large screens as well.`,
 );
 
 export function DialogScrollExample() {
