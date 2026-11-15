@@ -3,34 +3,28 @@
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
-  type ChangeEvent,
-  type KeyboardEvent,
+  type ForwardedRef,
   type MouseEvent,
 } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 
-import { Icon, type IconSize } from '../../primitives/icon';
+import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { SearchableSelect } from './searchable-select';
+import { SelectOptionContent } from './select-option';
 import {
-  SelectMenu,
-  filterSelectItems,
-  findFirstEnabledOption,
-  findLastEnabledOption,
-  findNextEnabledOption,
   flattenSelectOptions,
-  getSelectOptionId,
-  useActiveOptionScroll,
-  useSelectDismiss,
-  useSelectPosition,
-  useSelectTypeahead,
-} from './select-menu';
-import type { SelectBaseProps, SelectOption, SelectSize } from './select-types';
+  isSelectOptionGroup,
+  selectActionIconSizeBySize,
+  selectIconSizeBySize,
+} from './select-utils';
+import type { SelectBaseProps, SelectItem, SelectOption } from './select-types';
 import styles from './select.module.css';
 
 export interface SelectProps extends SelectBaseProps {
@@ -42,491 +36,220 @@ export interface SelectProps extends SelectBaseProps {
   onChange?: (value: string | undefined, option?: SelectOption) => void;
 }
 
-const iconSizeBySelectSize: Record<SelectSize, IconSize> = {
-  sm: 'sm',
-  md: 'sm',
-  lg: 'md',
-};
-
-const actionIconSizeBySelectSize: Record<SelectSize, IconSize> = {
-  sm: 'xs',
-  md: 'sm',
-  lg: 'md',
-};
-
 /** Single-value select with optional search, groups, and clearable state. */
-export const Select = forwardRef<HTMLElement, SelectProps>(function Select(
-  {
-    options,
-    value,
-    defaultValue,
-    onChange,
-    placeholder = 'Select an option',
-    disabled = false,
-    required = false,
-    size = 'md',
-    clearable = false,
-    invalid = false,
-    name,
-    id: idProp,
-    className,
-    leftIcon,
-    searchable = false,
-    searchPlaceholder = 'Search…',
-    onSearchChange,
-    filterOption,
-    emptyMessage,
-    loading = false,
-    clearLabel = 'Clear selection',
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    'aria-describedby': ariaDescribedBy,
-    'aria-errormessage': ariaErrorMessage,
-  },
-  ref,
-) {
+export const Select = forwardRef<HTMLElement, SelectProps>(function Select(props, ref) {
+  if (props.searchable) {
+    return <SearchableSelect {...props} forwardedRef={ref} />;
+  }
+
+  return <PlainSelect {...props} forwardedRef={ref} />;
+});
+
+interface InternalSelectProps extends SelectProps {
+  forwardedRef: ForwardedRef<HTMLElement>;
+}
+
+function PlainSelect({
+  options,
+  value,
+  defaultValue,
+  onChange,
+  placeholder = 'Select an option',
+  disabled = false,
+  required = false,
+  size = 'md',
+  clearable = false,
+  invalid = false,
+  name,
+  id: idProp,
+  className,
+  leftIcon,
+  emptyMessage = 'No options',
+  loading = false,
+  clearLabel = 'Clear selection',
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-errormessage': ariaErrorMessage,
+  forwardedRef,
+}: InternalSelectProps) {
   const generatedId = useId().replace(/:/g, '');
-  const baseId = `select-${generatedId}`;
-  const comboboxId = idProp ?? baseId;
-  const listboxId = `${baseId}-listbox`;
+  const comboboxId = idProp ?? `select-${generatedId}`;
 
   const [internalValue, setInternalValue] = useState<string | undefined>(defaultValue);
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const [activeIndex, setActiveIndex] = useState(-1);
 
   const rootRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
-
   const allOptions = useMemo(() => flattenSelectOptions(options), [options]);
-  const selectedOption = useMemo(
-    () => allOptions.find((option) => option.value === currentValue),
-    [allOptions, currentValue],
-  );
 
-  const isOptionDisabled = useCallback(
-    (option: SelectOption) => Boolean(option.disabled),
-    [],
-  );
-
-  const trimmedQuery = query.trim().toLowerCase();
-  const visibleItems = useMemo(() => {
-    if (!searchable || trimmedQuery === '') {
-      return options;
-    }
-
-    return filterSelectItems(options, (option) =>
-      filterOption
-        ? filterOption(option, query)
-        : option.label.toLowerCase().includes(trimmedQuery),
-    );
-  }, [options, searchable, trimmedQuery, query, filterOption]);
-
-  const visibleOptions = useMemo(
-    () => flattenSelectOptions(visibleItems),
-    [visibleItems],
-  );
+  const iconSize = selectIconSizeBySize[size];
+  const actionIconSize = selectActionIconSizeBySize[size];
+  const showClear = clearable && currentValue !== undefined && !disabled;
 
   const setTriggerRef = useCallback(
-    (node: HTMLElement | null) => {
+    (node: HTMLButtonElement | null) => {
       triggerRef.current = node;
-      assignRef(ref, node);
+      assignRef(forwardedRef, node);
     },
-    [ref],
+    [forwardedRef],
   );
 
-  const openMenu = useCallback(
-    (edge: 'selected' | 'first' | 'last' = 'selected') => {
-      if (disabled) {
-        return;
-      }
+  const handleValueChange = useCallback(
+    (nextValue: string | null) => {
+      const resolvedValue = nextValue ?? undefined;
 
-      const fullOptions = flattenSelectOptions(options);
-      const selectedIndex = fullOptions.findIndex(
-        (option) => option.value === currentValue,
-      );
-      let nextIndex = -1;
-
-      if (edge === 'last') {
-        nextIndex = findLastEnabledOption(fullOptions, isOptionDisabled);
-      } else if (edge === 'first') {
-        nextIndex = findFirstEnabledOption(fullOptions, isOptionDisabled);
-      } else if (
-        selectedIndex >= 0 &&
-        fullOptions[selectedIndex] &&
-        !isOptionDisabled(fullOptions[selectedIndex])
-      ) {
-        nextIndex = selectedIndex;
-      } else {
-        nextIndex = findFirstEnabledOption(fullOptions, isOptionDisabled);
-      }
-
-      setQuery('');
-      setOpen(true);
-      setActiveIndex(nextIndex);
-    },
-    [currentValue, disabled, isOptionDisabled, options],
-  );
-
-  const resetSearch = useCallback(() => {
-    setQuery('');
-
-    if (query !== '') {
-      onSearchChange?.('');
-    }
-  }, [onSearchChange, query]);
-
-  const closeMenu = useCallback(
-    (restoreFocus = false) => {
-      setOpen(false);
-      resetSearch();
-
-      if (restoreFocus) {
-        triggerRef.current?.focus();
-      }
-    },
-    [resetSearch],
-  );
-
-  const dismiss = useCallback(() => {
-    setOpen(false);
-    resetSearch();
-  }, [resetSearch]);
-
-  useSelectPosition(open, triggerRef, menuRef);
-  useSelectDismiss(open, rootRef, dismiss);
-  useActiveOptionScroll(open, activeIndex, menuRef);
-
-  const handleTypeahead = useSelectTypeahead(
-    visibleOptions,
-    activeIndex,
-    setActiveIndex,
-    !searchable,
-  );
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    setActiveIndex((current) => {
-      const currentOption = visibleOptions[current];
-
-      if (currentOption && !isOptionDisabled(currentOption)) {
-        return current;
-      }
-
-      return findFirstEnabledOption(visibleOptions, isOptionDisabled);
-    });
-  }, [open, visibleOptions, isOptionDisabled]);
-
-  const commitValue = useCallback(
-    (nextValue: string | undefined, option?: SelectOption) => {
       if (!isControlled) {
-        setInternalValue(nextValue);
+        setInternalValue(resolvedValue);
       }
 
-      onChange?.(nextValue, option);
+      onChange?.(
+        resolvedValue,
+        resolvedValue === undefined
+          ? undefined
+          : allOptions.find((option) => option.value === resolvedValue),
+      );
     },
-    [isControlled, onChange],
-  );
-
-  const handleSelect = useCallback(
-    (option: SelectOption) => {
-      if (isOptionDisabled(option)) {
-        return;
-      }
-
-      commitValue(option.value, option);
-      setOpen(false);
-      resetSearch();
-      triggerRef.current?.focus();
-    },
-    [commitValue, isOptionDisabled, resetSearch],
+    [allOptions, isControlled, onChange],
   );
 
   function handleClear(event: MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
-    commitValue(undefined, undefined);
+    handleValueChange(null);
     triggerRef.current?.focus();
   }
 
-  function handleFieldClick() {
-    if (disabled) {
+  function handleFieldMouseDown(event: MouseEvent<HTMLDivElement>) {
+    if (!(event.target instanceof HTMLElement)) {
       return;
     }
 
-    if (searchable) {
-      if (!open) {
-        openMenu();
-      }
-
-      triggerRef.current?.focus();
+    if (event.target.closest('button')) {
       return;
     }
 
-    if (open) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-
-    triggerRef.current?.focus();
+    event.preventDefault();
+    triggerRef.current?.click();
   }
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const nextQuery = event.target.value;
-
-    if (!open) {
-      openMenu();
-    }
-
-    setQuery(nextQuery);
-    onSearchChange?.(nextQuery);
+  function renderOption(option: SelectOption) {
+    return (
+      <BaseSelect.Item
+        key={option.value}
+        value={option.value}
+        label={option.label}
+        disabled={option.disabled}
+        className={styles.item}
+      >
+        <SelectOptionContent option={option} />
+        <BaseSelect.ItemIndicator className={styles.itemIndicator}>
+          <Icon icon={Check} size="sm" />
+        </BaseSelect.ItemIndicator>
+      </BaseSelect.Item>
+    );
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
-
-    const key = event.key;
-
-    if (key === 'ArrowDown' || key === 'ArrowUp') {
-      event.preventDefault();
-
-      if (!open) {
-        openMenu(key === 'ArrowDown' ? 'selected' : 'last');
-      } else {
-        setActiveIndex(
-          findNextEnabledOption(
-            visibleOptions,
-            activeIndex,
-            key === 'ArrowDown' ? 1 : -1,
-            isOptionDisabled,
-          ),
+  function renderOptions(items: SelectItem[]) {
+    return items.map((item, index) => {
+      if (isSelectOptionGroup(item)) {
+        return (
+          <BaseSelect.Group key={`group-${index}`} className={styles.group}>
+            <BaseSelect.GroupLabel className={styles.groupLabel}>
+              {item.label}
+            </BaseSelect.GroupLabel>
+            {item.options.map(renderOption)}
+          </BaseSelect.Group>
         );
       }
 
-      return;
-    }
-
-    if (key === 'Home' || key === 'End') {
-      if (!open) {
-        return;
-      }
-
-      event.preventDefault();
-      setActiveIndex(
-        key === 'Home'
-          ? findFirstEnabledOption(visibleOptions, isOptionDisabled)
-          : findLastEnabledOption(visibleOptions, isOptionDisabled),
-      );
-      return;
-    }
-
-    if (key === 'Enter') {
-      event.preventDefault();
-
-      if (!open) {
-        openMenu();
-        return;
-      }
-
-      const option = visibleOptions[activeIndex];
-
-      if (option && !isOptionDisabled(option)) {
-        handleSelect(option);
-      }
-
-      return;
-    }
-
-    if (key === ' ') {
-      if (searchable && open) {
-        return;
-      }
-
-      event.preventDefault();
-
-      if (!open) {
-        openMenu();
-        return;
-      }
-
-      const option = visibleOptions[activeIndex];
-
-      if (option && !isOptionDisabled(option)) {
-        handleSelect(option);
-      }
-
-      return;
-    }
-
-    if (key === 'Escape') {
-      if (!open) {
-        return;
-      }
-
-      event.preventDefault();
-      closeMenu(true);
-      return;
-    }
-
-    if (key === 'Tab') {
-      if (open) {
-        closeMenu();
-      }
-
-      return;
-    }
-
-    if (
-      searchable &&
-      !open &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      (key === 'Backspace' || key === 'Delete')
-    ) {
-      event.preventDefault();
-      openMenu();
-      return;
-    }
-
-    if (
-      searchable &&
-      !open &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey &&
-      key.length === 1
-    ) {
-      event.preventDefault();
-      openMenu();
-      setQuery(key);
-      onSearchChange?.(key);
-      return;
-    }
-
-    if (handleTypeahead(key)) {
-      event.preventDefault();
-    }
+      return renderOption(item);
+    });
   }
 
-  const iconSize = iconSizeBySelectSize[size];
-  const actionIconSize = actionIconSizeBySelectSize[size];
-  const showClear = clearable && currentValue !== undefined && !disabled;
-
-  const ariaProps = {
-    'aria-expanded': open,
-    'aria-controls': listboxId,
-    'aria-haspopup': 'listbox' as const,
-    'aria-required': required || undefined,
-    'aria-invalid': invalid || undefined,
-    'aria-describedby': ariaDescribedBy,
-    'aria-errormessage': ariaErrorMessage,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    'aria-activedescendant':
-      open && activeIndex >= 0
-        ? getSelectOptionId(baseId, activeIndex)
-        : undefined,
-  };
-
   return (
-    <div
-      ref={rootRef}
-      className={cx(styles.root, className)}
-      data-size={size}
-      data-open={open || undefined}
-      data-disabled={disabled || undefined}
-      data-invalid={invalid || undefined}
+    <BaseSelect.Root
+      items={allOptions}
+      value={currentValue ?? null}
+      onValueChange={handleValueChange}
+      onOpenChange={(nextOpen) => setOpen(nextOpen)}
+      name={name}
+      required={required}
+      disabled={disabled}
+      modal={false}
     >
-      <div className={styles.field} data-size={size} onClick={handleFieldClick}>
-        {leftIcon ? (
-          <span className={styles.iconSlot}>
-            <Icon icon={leftIcon} size={iconSize} />
-          </span>
-        ) : null}
-        {searchable ? (
-          <input
-            ref={setTriggerRef}
-            id={comboboxId}
-            type="text"
-            role="combobox"
-            className={styles.input}
-            value={open ? query : (selectedOption?.label ?? '')}
-            placeholder={open ? searchPlaceholder : placeholder}
-            autoComplete="off"
-            spellCheck={false}
-            disabled={disabled}
-            aria-autocomplete="list"
-            {...ariaProps}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
-        ) : (
-          <button
-            ref={setTriggerRef}
-            id={comboboxId}
-            type="button"
-            role="combobox"
-            className={styles.trigger}
-            disabled={disabled}
-            {...ariaProps}
-            onKeyDown={handleKeyDown}
-          >
-            <span
-              className={cx(styles.value, !selectedOption && styles.placeholder)}
-            >
-              {selectedOption?.label ?? placeholder}
+      <div
+        ref={rootRef}
+        className={cx(styles.root, className)}
+        data-size={size}
+        data-open={open || undefined}
+        data-disabled={disabled || undefined}
+        data-invalid={invalid || undefined}
+      >
+        <div
+          className={styles.field}
+          data-size={size}
+          data-open={open || undefined}
+          data-disabled={disabled || undefined}
+          data-invalid={invalid || undefined}
+          onMouseDown={handleFieldMouseDown}
+        >
+          {leftIcon ? (
+            <span className={styles.iconSlot}>
+              <Icon icon={leftIcon} size={iconSize} />
             </span>
-          </button>
-        )}
-        {showClear ? (
-          <button
-            type="button"
-            className={styles.clear}
-            aria-label={clearLabel}
-            onClick={handleClear}
+          ) : null}
+          <BaseSelect.Trigger
+            ref={setTriggerRef}
+            id={comboboxId}
+            className={styles.trigger}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={ariaDescribedBy}
+            aria-errormessage={ariaErrorMessage}
+            aria-invalid={invalid || undefined}
           >
-            <Icon icon={X} size={actionIconSize} />
-          </button>
-        ) : null}
-        <span className={styles.chevron} aria-hidden="true">
-          <Icon icon={ChevronDown} size={iconSize} />
-        </span>
+            <BaseSelect.Value className={styles.value} placeholder={placeholder} />
+            <span className={styles.chevron} aria-hidden="true">
+              <Icon icon={ChevronDown} size={iconSize} />
+            </span>
+          </BaseSelect.Trigger>
+          {showClear ? (
+            <button
+              type="button"
+              className={styles.clear}
+              aria-label={clearLabel}
+              onClick={handleClear}
+            >
+              <Icon icon={X} size={actionIconSize} />
+            </button>
+          ) : null}
+        </div>
+        <BaseSelect.Portal container={rootRef}>
+          <BaseSelect.Positioner
+            sideOffset={4}
+            alignItemWithTrigger={false}
+            className={styles.positioner}
+          >
+            <BaseSelect.Popup className={styles.menu}>
+              {loading ? (
+                <div className={styles.status} role="status">
+                  <Icon icon={LoaderCircle} size="sm" className={styles.spinner} />
+                  <span>Loading options…</span>
+                </div>
+              ) : null}
+              {!loading && allOptions.length === 0 ? (
+                <div className={styles.status}>{emptyMessage}</div>
+              ) : null}
+              <BaseSelect.List className={styles.list}>
+                {renderOptions(options)}
+              </BaseSelect.List>
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
       </div>
-      {name && currentValue !== undefined ? (
-        <input
-          type="hidden"
-          name={name}
-          value={currentValue}
-          disabled={disabled}
-        />
-      ) : null}
-      {open ? (
-        <SelectMenu
-          baseId={baseId}
-          menuRef={menuRef}
-          items={visibleItems}
-          options={visibleOptions}
-          activeIndex={activeIndex}
-          selectedValues={currentValue !== undefined ? [currentValue] : []}
-          loading={loading}
-          emptyMessage={emptyMessage}
-          labelledBy={ariaLabelledBy}
-          ariaLabel={ariaLabel}
-          onActiveIndexChange={setActiveIndex}
-          onSelect={handleSelect}
-          isOptionDisabled={isOptionDisabled}
-        />
-      ) : null}
-    </div>
+    </BaseSelect.Root>
   );
-});
+}

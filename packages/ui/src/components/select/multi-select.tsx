@@ -3,37 +3,31 @@
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
-  type ChangeEvent,
-  type KeyboardEvent,
+  type ForwardedRef,
   type MouseEvent,
   type ReactNode,
 } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 
-import { Icon, type IconSize } from '../../primitives/icon';
-import { Tag } from '../tag';
+import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { SelectOptionContent } from './select-option';
 import {
-  SelectMenu,
   excludeSelectValues,
-  filterSelectItems,
-  findFirstEnabledOption,
-  findLastEnabledOption,
-  findNextEnabledOption,
+  filterItemsForQuery,
   flattenSelectOptions,
-  getSelectOptionId,
-  useActiveOptionScroll,
-  useSelectDismiss,
-  useSelectPosition,
-  useSelectTypeahead,
-} from './select-menu';
-import type { SelectBaseProps, SelectOption, SelectSize } from './select-types';
+  selectActionIconSizeBySize,
+  selectIconSizeBySize,
+  toSelectRenderGroups,
+  type SelectRenderGroup,
+} from './select-utils';
+import type { SelectBaseProps, SelectOption } from './select-types';
 import styles from './select.module.css';
 
 export interface MultiSelectProps extends SelectBaseProps {
@@ -56,426 +50,251 @@ export interface MultiSelectProps extends SelectBaseProps {
   removeLabel?: string;
 }
 
-const iconSizeBySelectSize: Record<SelectSize, IconSize> = {
-  sm: 'sm',
-  md: 'sm',
-  lg: 'md',
-};
-
-const actionIconSizeBySelectSize: Record<SelectSize, IconSize> = {
-  sm: 'xs',
-  md: 'sm',
-  lg: 'md',
-};
-
 /** Multi-value select with tags, search, limits, and a clear action. */
 export const MultiSelect = forwardRef<HTMLElement, MultiSelectProps>(
-  function MultiSelect(
-    {
-      options,
-      value,
-      defaultValue,
-      onChange,
-      placeholder = 'Select options',
-      disabled = false,
-      required = false,
-      size = 'md',
-      clearable = false,
-      invalid = false,
-      name,
-      id: idProp,
-      className,
-      leftIcon,
-      searchable = false,
-      searchPlaceholder = 'Search…',
-      onSearchChange,
-      filterOption,
-      emptyMessage,
-      loading = false,
-      clearLabel = 'Clear selection',
-      removeLabel = 'Remove',
-      maxSelected,
-      hideSelected = false,
-      renderValue,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-describedby': ariaDescribedBy,
-      'aria-errormessage': ariaErrorMessage,
+  function MultiSelect(props, ref) {
+    return <MultiSelectImpl {...props} forwardedRef={ref} />;
+  },
+);
+
+interface MultiSelectImplProps extends MultiSelectProps {
+  forwardedRef: ForwardedRef<HTMLElement>;
+}
+
+function MultiSelectImpl({
+  options,
+  value,
+  defaultValue,
+  onChange,
+  placeholder = 'Select options',
+  disabled = false,
+  required = false,
+  size = 'md',
+  clearable = false,
+  invalid = false,
+  name,
+  id: idProp,
+  className,
+  leftIcon,
+  searchable = false,
+  searchPlaceholder = 'Search…',
+  onSearchChange,
+  filterOption,
+  emptyMessage = 'No options',
+  loading = false,
+  clearLabel = 'Clear selection',
+  removeLabel = 'Remove',
+  maxSelected,
+  hideSelected = false,
+  renderValue,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-errormessage': ariaErrorMessage,
+  forwardedRef,
+}: MultiSelectImplProps) {
+  const generatedId = useId().replace(/:/g, '');
+  const comboboxId = idProp ?? `multi-select-${generatedId}`;
+
+  const [internalValues, setInternalValues] = useState<string[]>(
+    defaultValue ?? [],
+  );
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const isControlled = value !== undefined;
+  const currentValues = isControlled ? value : internalValues;
+  const selectedSet = useMemo(() => new Set(currentValues), [currentValues]);
+
+  const allOptions = useMemo(() => flattenSelectOptions(options), [options]);
+  const allGroups = useMemo(() => toSelectRenderGroups(options), [options]);
+  const optionByValue = useMemo(
+    () => new Map(allOptions.map((option) => [option.value, option])),
+    [allOptions],
+  );
+  const selectedOptions = useMemo(
+    () =>
+      currentValues.flatMap((selectedValue) => {
+        const option = optionByValue.get(selectedValue);
+        return option ? [option] : [];
+      }),
+    [currentValues, optionByValue],
+  );
+
+  const atLimit =
+    maxSelected !== undefined && currentValues.length >= maxSelected;
+
+  const visibleItems = useMemo(() => {
+    let items = options;
+
+    if (hideSelected && selectedSet.size > 0) {
+      items = excludeSelectValues(items, selectedSet);
+    }
+
+    return filterItemsForQuery(items, query, filterOption);
+  }, [options, hideSelected, selectedSet, query, filterOption]);
+  const visibleGroups = useMemo(
+    () => toSelectRenderGroups(visibleItems),
+    [visibleItems],
+  );
+
+  const iconSize = selectIconSizeBySize[size];
+  const actionIconSize = selectActionIconSizeBySize[size];
+  const showClear = clearable && currentValues.length > 0 && !disabled;
+  const inputPlaceholder = searchable
+    ? open
+      ? searchPlaceholder
+      : currentValues.length === 0
+        ? placeholder
+        : undefined
+    : currentValues.length === 0
+      ? placeholder
+      : undefined;
+
+  const setInputRef = useCallback(
+    (node: HTMLInputElement | null) => {
+      inputRef.current = node;
+      assignRef(forwardedRef, node);
     },
-    ref,
-  ) {
-    const generatedId = useId().replace(/:/g, '');
-    const baseId = `multi-select-${generatedId}`;
-    const comboboxId = idProp ?? baseId;
-    const listboxId = `${baseId}-listbox`;
+    [forwardedRef],
+  );
 
-    const [internalValues, setInternalValues] = useState<string[]>(
-      defaultValue ?? [],
-    );
-    const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState('');
-    const [activeIndex, setActiveIndex] = useState(-1);
+  const commitValues = useCallback(
+    (nextValues: string[]) => {
+      if (!isControlled) {
+        setInternalValues(nextValues);
+      }
 
-    const rootRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLElement | null>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    const isControlled = value !== undefined;
-    const currentValues = isControlled ? value : internalValues;
-    const selectedSet = useMemo(() => new Set(currentValues), [currentValues]);
-
-    const allOptions = useMemo(() => flattenSelectOptions(options), [options]);
-    const selectedOptions = useMemo(() => {
-      const byValue = new Map(allOptions.map((option) => [option.value, option]));
-
-      return currentValues.flatMap((selectedValue) => {
-        const option = byValue.get(selectedValue);
+      const nextOptions = nextValues.flatMap((nextValue) => {
+        const option = optionByValue.get(nextValue);
         return option ? [option] : [];
       });
-    }, [allOptions, currentValues]);
 
-    const atLimit =
-      maxSelected !== undefined && currentValues.length >= maxSelected;
+      onChange?.(nextValues, nextOptions);
+    },
+    [isControlled, onChange, optionByValue],
+  );
 
-    const isOptionDisabled = useCallback(
-      (option: SelectOption) =>
-        Boolean(option.disabled) ||
-        (atLimit && !selectedSet.has(option.value)),
-      [atLimit, selectedSet],
-    );
+  const handleValueChange = useCallback(
+    (nextValues: string[]) => {
+      commitValues([...nextValues]);
+    },
+    [commitValues],
+  );
 
-    const trimmedQuery = query.trim().toLowerCase();
-    const visibleItems = useMemo(() => {
-      let items = options;
+  const removeValue = useCallback(
+    (removedValue: string) => {
+      commitValues(
+        currentValues.filter((currentValue) => currentValue !== removedValue),
+      );
+    },
+    [commitValues, currentValues],
+  );
 
-      if (hideSelected && selectedSet.size > 0) {
-        items = excludeSelectValues(items, selectedSet);
+  const handleInputValueChange = useCallback(
+    (inputValue: string, details: { reason: string }) => {
+      if (
+        details.reason === 'input-change' ||
+        details.reason === 'input-clear' ||
+        details.reason === 'clear-press'
+      ) {
+        setQuery(inputValue);
+        onSearchChange?.(inputValue);
       }
+    },
+    [onSearchChange],
+  );
 
-      if (searchable && trimmedQuery !== '') {
-        items = filterSelectItems(items, (option) =>
-          filterOption
-            ? filterOption(option, query)
-            : option.label.toLowerCase().includes(trimmedQuery),
-        );
-      }
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      setOpen(nextOpen);
 
-      return items;
-    }, [
-      options,
-      hideSelected,
-      selectedSet,
-      searchable,
-      trimmedQuery,
-      query,
-      filterOption,
-    ]);
-
-    const visibleOptions = useMemo(
-      () => flattenSelectOptions(visibleItems),
-      [visibleItems],
-    );
-
-    const setTriggerRef = useCallback(
-      (node: HTMLElement | null) => {
-        triggerRef.current = node;
-        assignRef(ref, node);
-      },
-      [ref],
-    );
-
-    const openMenu = useCallback(
-      (edge: 'selected' | 'first' | 'last' = 'selected') => {
-        if (disabled) {
-          return;
-        }
-
-        const selectedIndex = visibleOptions.findIndex((option) =>
-          selectedSet.has(option.value),
-        );
-        let nextIndex = -1;
-
-        if (edge === 'last') {
-          nextIndex = findLastEnabledOption(visibleOptions, isOptionDisabled);
-        } else if (edge === 'first') {
-          nextIndex = findFirstEnabledOption(visibleOptions, isOptionDisabled);
-        } else if (
-          selectedIndex >= 0 &&
-          visibleOptions[selectedIndex] &&
-          !isOptionDisabled(visibleOptions[selectedIndex])
-        ) {
-          nextIndex = selectedIndex;
-        } else {
-          nextIndex = findFirstEnabledOption(visibleOptions, isOptionDisabled);
+      if (!nextOpen) {
+        if (query !== '') {
+          onSearchChange?.('');
         }
 
         setQuery('');
-        setOpen(true);
-        setActiveIndex(nextIndex);
-      },
-      [disabled, isOptionDisabled, selectedSet, visibleOptions],
-    );
-
-    const resetSearch = useCallback(() => {
-      setQuery('');
-
-      if (query !== '') {
-        onSearchChange?.('');
       }
-    }, [onSearchChange, query]);
+    },
+    [onSearchChange, query],
+  );
 
-    const closeMenu = useCallback(
-      (restoreFocus = false) => {
-        setOpen(false);
-        resetSearch();
-
-        if (restoreFocus) {
-          triggerRef.current?.focus();
-        }
-      },
-      [resetSearch],
-    );
-
-    const dismiss = useCallback(() => {
-      setOpen(false);
-      resetSearch();
-    }, [resetSearch]);
-
-    useSelectPosition(open, triggerRef, menuRef);
-    useSelectDismiss(open, rootRef, dismiss);
-    useActiveOptionScroll(open, activeIndex, menuRef);
-
-    const handleTypeahead = useSelectTypeahead(
-      visibleOptions,
-      activeIndex,
-      setActiveIndex,
-      !searchable,
-    );
-
-    useEffect(() => {
-      if (!open) {
-        return;
-      }
-
-      setActiveIndex((current) => {
-        const currentOption = visibleOptions[current];
-
-        if (currentOption && !isOptionDisabled(currentOption)) {
-          return current;
-        }
-
-        return findFirstEnabledOption(visibleOptions, isOptionDisabled);
-      });
-    }, [open, visibleOptions, isOptionDisabled]);
-
-    const commitValues = useCallback(
-      (nextValues: string[]) => {
-        if (!isControlled) {
-          setInternalValues(nextValues);
-        }
-
-        const byValue = new Map(
-          allOptions.map((option) => [option.value, option]),
-        );
-        const nextOptions = nextValues.flatMap((nextValue) => {
-          const option = byValue.get(nextValue);
-          return option ? [option] : [];
-        });
-
-        onChange?.(nextValues, nextOptions);
-      },
-      [allOptions, isControlled, onChange],
-    );
-
-    const toggleOption = useCallback(
-      (option: SelectOption) => {
-        if (isOptionDisabled(option)) {
-          return;
-        }
-
-        const nextValues = selectedSet.has(option.value)
-          ? currentValues.filter((currentValue) => currentValue !== option.value)
-          : [...currentValues, option.value];
-
-        commitValues(nextValues);
-        triggerRef.current?.focus();
-      },
-      [commitValues, currentValues, isOptionDisabled, selectedSet],
-    );
-
-    const removeValue = useCallback(
-      (removedValue: string) => {
-        commitValues(
-          currentValues.filter((currentValue) => currentValue !== removedValue),
-        );
-        triggerRef.current?.focus();
-      },
-      [commitValues, currentValues],
-    );
-
-    function handleClear(event: MouseEvent<HTMLButtonElement>) {
-      event.stopPropagation();
-      commitValues([]);
-      triggerRef.current?.focus();
+  function handleGroupMouseDown(event: MouseEvent<HTMLDivElement>) {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
     }
 
-    function handleFieldClick() {
-      if (disabled) {
-        return;
-      }
-
-      if (open && !searchable) {
-        closeMenu();
-        return;
-      }
-
-      if (!open) {
-        openMenu();
-      }
-
-      triggerRef.current?.focus();
+    if (event.target.closest('button, input')) {
+      return;
     }
 
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-      const nextQuery = event.target.value;
+    event.preventDefault();
+    inputRef.current?.focus();
+  }
 
-      if (!open) {
-        openMenu();
-      }
-
-      setQuery(nextQuery);
-      onSearchChange?.(nextQuery);
-    }
-
-    function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
-      if (event.nativeEvent.isComposing) {
-        return;
-      }
-
-      const key = event.key;
-
-      if (key === 'ArrowDown' || key === 'ArrowUp') {
-        event.preventDefault();
-
-        if (!open) {
-          openMenu(key === 'ArrowDown' ? 'selected' : 'last');
-        } else {
-          setActiveIndex(
-            findNextEnabledOption(
-              visibleOptions,
-              activeIndex,
-              key === 'ArrowDown' ? 1 : -1,
-              isOptionDisabled,
-            ),
-          );
-        }
-
-        return;
-      }
-
-      if (key === 'Home' || key === 'End') {
-        if (!open) {
-          return;
-        }
-
-        event.preventDefault();
-        setActiveIndex(
-          key === 'Home'
-            ? findFirstEnabledOption(visibleOptions, isOptionDisabled)
-            : findLastEnabledOption(visibleOptions, isOptionDisabled),
-        );
-        return;
-      }
-
-      if (key === 'Enter' || key === ' ') {
-        if (searchable && key === ' ' && open) {
-          return;
-        }
-
-        event.preventDefault();
-
-        if (!open) {
-          openMenu();
-          return;
-        }
-
-        const option = visibleOptions[activeIndex];
-
-        if (option) {
-          toggleOption(option);
-        }
-
-        return;
-      }
-
-      if (key === 'Escape') {
-        if (!open) {
-          return;
-        }
-
-        event.preventDefault();
-        closeMenu(true);
-        return;
-      }
-
-      if (key === 'Tab') {
-        if (open) {
-          closeMenu();
-        }
-
-        return;
-      }
-
-      if (
-        searchable &&
-        !open &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey &&
-        key.length === 1
-      ) {
-        event.preventDefault();
-        openMenu();
-        setQuery(key);
-        onSearchChange?.(key);
-        return;
-      }
-
-      if (handleTypeahead(key)) {
-        event.preventDefault();
-      }
-    }
-
-    const iconSize = iconSizeBySelectSize[size];
-    const actionIconSize = actionIconSizeBySelectSize[size];
-    const showClear = clearable && currentValues.length > 0 && !disabled;
-    const inputPlaceholder = searchable
-      ? open
-        ? searchPlaceholder
-        : currentValues.length === 0
-          ? placeholder
-          : undefined
-      : currentValues.length === 0
-        ? placeholder
-        : undefined;
-
-    const ariaProps = {
-      'aria-expanded': open,
-      'aria-controls': listboxId,
-      'aria-haspopup': 'listbox' as const,
-      'aria-required': required || undefined,
-      'aria-invalid': invalid || undefined,
-      'aria-describedby': ariaDescribedBy,
-      'aria-errormessage': ariaErrorMessage,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-activedescendant':
-        open && activeIndex >= 0
-          ? getSelectOptionId(baseId, activeIndex)
-          : undefined,
-    };
-
+  function isOptionDisabled(option: SelectOption) {
     return (
+      Boolean(option.disabled) ||
+      (atLimit && !selectedSet.has(option.value))
+    );
+  }
+
+  function renderOption(option: SelectOption) {
+    return (
+      <BaseCombobox.Item
+        key={option.value}
+        value={option.value}
+        disabled={isOptionDisabled(option)}
+        className={styles.item}
+      >
+        <SelectOptionContent option={option} />
+        <BaseCombobox.ItemIndicator className={styles.itemIndicator}>
+          <Icon icon={Check} size="sm" />
+        </BaseCombobox.ItemIndicator>
+      </BaseCombobox.Item>
+    );
+  }
+
+  function renderGroup(group: SelectRenderGroup) {
+    return (
+      <BaseCombobox.Group
+        key={group.key}
+        items={group.items}
+        className={styles.group}
+      >
+        {group.label ? (
+          <BaseCombobox.GroupLabel className={styles.groupLabel}>
+            {group.label}
+          </BaseCombobox.GroupLabel>
+        ) : null}
+        <BaseCombobox.Collection>
+          {(option: SelectOption) => renderOption(option)}
+        </BaseCombobox.Collection>
+      </BaseCombobox.Group>
+    );
+  }
+
+  return (
+    <BaseCombobox.Root
+      items={allGroups}
+      filteredItems={visibleGroups}
+      multiple
+      value={currentValues}
+      onValueChange={handleValueChange}
+      onInputValueChange={handleInputValueChange}
+      onOpenChange={handleOpenChange}
+      open={open}
+      inputValue={searchable ? query : ''}
+      name={name}
+      required={required}
+      disabled={disabled}
+      modal={false}
+      openOnInputClick
+    >
       <div
         ref={rootRef}
         className={cx(styles.root, className)}
@@ -484,106 +303,115 @@ export const MultiSelect = forwardRef<HTMLElement, MultiSelectProps>(
         data-disabled={disabled || undefined}
         data-invalid={invalid || undefined}
       >
-        <div
+        <BaseCombobox.InputGroup
           className={styles.field}
           data-size={size}
           data-multiple="true"
-          onClick={handleFieldClick}
+          data-open={open || undefined}
+          data-disabled={disabled || undefined}
+          data-invalid={invalid || undefined}
+          onMouseDown={handleGroupMouseDown}
         >
           {leftIcon ? (
             <span className={styles.iconSlot}>
               <Icon icon={leftIcon} size={iconSize} />
             </span>
           ) : null}
-          <div className={styles.multiContent}>
-            {renderValue ? (
-              <span
-                className={styles.customValue}
-                onClick={(event) => event.stopPropagation()}
-              >
-                {renderValue(selectedOptions, removeValue)}
-              </span>
-            ) : (
-              selectedOptions.map((option) => (
-                <Tag
-                  key={option.value}
-                  size={size === 'lg' ? 'md' : 'sm'}
-                  removable
-                  disabled={disabled}
-                  removeLabel={`${removeLabel} ${option.label}`}
-                  onRemove={() => removeValue(option.value)}
-                >
-                  {option.label}
-                </Tag>
-              ))
+          <BaseCombobox.Value>
+            {(selectedValues: string[]) => (
+              <BaseCombobox.Chips className={styles.chips}>
+                {renderValue ? (
+                  <span
+                    className={styles.customValue}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    {renderValue(selectedOptions, removeValue)}
+                  </span>
+                ) : (
+                  selectedValues.map((selectedValue) => {
+                    const option = optionByValue.get(selectedValue);
+                    const label = option?.label ?? selectedValue;
+
+                    return (
+                      <BaseCombobox.Chip
+                        key={selectedValue}
+                        className={styles.chip}
+                        aria-label={label}
+                      >
+                        {option?.icon ? (
+                          <span className={styles.chipIcon}>
+                            <Icon icon={option.icon} size="xs" />
+                          </span>
+                        ) : null}
+                        <span className={styles.chipLabel}>{label}</span>
+                        <BaseCombobox.ChipRemove
+                          className={styles.chipRemove}
+                          disabled={disabled}
+                          aria-label={`${removeLabel} ${label}`}
+                        >
+                          <Icon icon={X} size="xs" />
+                        </BaseCombobox.ChipRemove>
+                      </BaseCombobox.Chip>
+                    );
+                  })
+                )}
+                <BaseCombobox.Input
+                  ref={setInputRef}
+                  id={comboboxId}
+                  className={cx(styles.input, styles.multiInput)}
+                  placeholder={inputPlaceholder}
+                  readOnly={!searchable}
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-label={ariaLabel}
+                  aria-labelledby={ariaLabelledBy}
+                  aria-describedby={ariaDescribedBy}
+                  aria-errormessage={ariaErrorMessage}
+                  aria-invalid={invalid || undefined}
+                  aria-description={
+                    currentValues.length > 0
+                      ? `${currentValues.length} selected`
+                      : undefined
+                  }
+                />
+              </BaseCombobox.Chips>
             )}
-            <input
-              ref={setTriggerRef}
-              id={comboboxId}
-              type="text"
-              role="combobox"
-              className={cx(styles.input, styles.multiInput)}
-              value={open && searchable ? query : ''}
-              placeholder={inputPlaceholder}
-              autoComplete="off"
-              spellCheck={false}
-              readOnly={!searchable}
-              disabled={disabled}
-              aria-autocomplete={searchable ? 'list' : undefined}
-              {...ariaProps}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-          </div>
+          </BaseCombobox.Value>
           {showClear ? (
-            <button
-              type="button"
-              className={styles.clear}
-              aria-label={clearLabel}
-              onClick={handleClear}
-            >
+            <BaseCombobox.Clear className={styles.clear} aria-label={clearLabel}>
               <Icon icon={X} size={actionIconSize} />
-            </button>
+            </BaseCombobox.Clear>
           ) : null}
-          <span className={styles.chevron} aria-hidden="true">
-            <Icon icon={ChevronDown} size={iconSize} />
-          </span>
-        </div>
-        <span className={styles.visuallyHidden} role="status" aria-live="polite">
-          {currentValues.length === 0
-            ? 'No options selected'
-            : `${currentValues.length} selected`}
-        </span>
-        {name
-          ? currentValues.map((selectedValue) => (
-              <input
-                key={selectedValue}
-                type="hidden"
-                name={name}
-                value={selectedValue}
-                disabled={disabled}
-              />
-            ))
-          : null}
-        {open ? (
-          <SelectMenu
-            baseId={baseId}
-            menuRef={menuRef}
-            items={visibleItems}
-            options={visibleOptions}
-            activeIndex={activeIndex}
-            selectedValues={currentValues}
-            multiple
-            loading={loading}
-            emptyMessage={emptyMessage}
-            labelledBy={ariaLabelledBy}
-            ariaLabel={ariaLabel}
-            onActiveIndexChange={setActiveIndex}
-            onSelect={toggleOption}
-            isOptionDisabled={isOptionDisabled}
-          />
-        ) : null}
+          <BaseCombobox.Trigger className={styles.iconButton} aria-label="Open options">
+            <span className={styles.chevron}>
+              <Icon icon={ChevronDown} size={iconSize} />
+            </span>
+          </BaseCombobox.Trigger>
+        </BaseCombobox.InputGroup>
+        <BaseCombobox.Portal container={rootRef}>
+          <BaseCombobox.Positioner sideOffset={4} className={styles.positioner}>
+            <BaseCombobox.Popup className={styles.menu}>
+              <BaseCombobox.Status className={styles.status}>
+                {loading ? (
+                  <>
+                    <Icon icon={LoaderCircle} size="sm" className={styles.spinner} />
+                    <span>Loading options…</span>
+                  </>
+                ) : null}
+              </BaseCombobox.Status>
+              <BaseCombobox.Empty className={styles.status}>
+                {loading ? null : emptyMessage}
+              </BaseCombobox.Empty>
+              <BaseCombobox.List
+                className={styles.list}
+                aria-busy={loading || undefined}
+              >
+                {visibleGroups.map(renderGroup)}
+              </BaseCombobox.List>
+            </BaseCombobox.Popup>
+          </BaseCombobox.Positioner>
+        </BaseCombobox.Portal>
       </div>
-    );
-  },
-);
+    </BaseCombobox.Root>
+  );
+}

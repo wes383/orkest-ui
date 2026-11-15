@@ -53,7 +53,7 @@ describe('Select', () => {
       'engineering',
       expect.objectContaining({ value: 'engineering' }),
     );
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
     expect(combobox).toHaveTextContent('Engineering');
   });
 
@@ -146,38 +146,38 @@ describe('Select', () => {
     await user.keyboard('{ArrowDown}');
     expect(screen.getByRole('listbox')).toBeInTheDocument();
 
-    const activeId = combobox.getAttribute('aria-activedescendant');
-    expect(activeId).not.toBeNull();
-    expect(document.getElementById(activeId ?? '')).toHaveTextContent('Design');
-
-    await user.keyboard('{ArrowDown}');
-    await user.keyboard('{Enter}');
+    await user.keyboard('{ArrowDown}{Enter}');
 
     expect(onChange).toHaveBeenCalledWith(
       'engineering',
       expect.objectContaining({ value: 'engineering' }),
     );
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
   });
 
-  it('supports Home, End, and Escape keys', async () => {
+  it('opens with Space', async () => {
     render(<Select aria-label="Team" options={options} />);
 
     const user = userEvent.setup();
     const combobox = screen.getByRole('combobox', { name: 'Team' });
     combobox.focus();
 
-    await user.keyboard('{ArrowDown}{End}');
+    await user.keyboard(' ');
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+  });
 
-    let activeId = combobox.getAttribute('aria-activedescendant');
-    expect(document.getElementById(activeId ?? '')).toHaveTextContent('Engineering');
+  it('closes with Escape and keeps focus on the trigger', async () => {
+    render(<Select aria-label="Team" options={options} />);
 
-    await user.keyboard('{Home}');
-    activeId = combobox.getAttribute('aria-activedescendant');
-    expect(document.getElementById(activeId ?? '')).toHaveTextContent('Design');
+    const user = userEvent.setup();
+    const combobox = screen.getByRole('combobox', { name: 'Team' });
+
+    await user.click(combobox);
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
 
     await user.keyboard('{Escape}');
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
     expect(combobox).toHaveFocus();
   });
 
@@ -190,11 +190,8 @@ describe('Select', () => {
 
     await user.keyboard('{ArrowDown}');
     await user.keyboard('e');
-
-    const activeId = combobox.getAttribute('aria-activedescendant');
-    expect(document.getElementById(activeId ?? '')).toHaveTextContent('Engineering');
-
     await user.keyboard('{Enter}');
+
     expect(combobox).toHaveTextContent('Engineering');
   });
 
@@ -223,7 +220,7 @@ describe('Select', () => {
     await user.click(screen.getByRole('option', { name: /Engineering/ }));
 
     expect(combobox).toHaveValue('Engineering');
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('shows an empty state and loading row', async () => {
@@ -297,7 +294,10 @@ describe('Select', () => {
     expect(screen.getByRole('option', { name: 'No team' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('option', { name: 'No team' }));
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Team' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
   });
 
   it('closes on outside click and Tab', async () => {
@@ -306,15 +306,17 @@ describe('Select', () => {
     const user = userEvent.setup();
     const combobox = screen.getByRole('combobox', { name: 'Team' });
 
-    await user.click(combobox);
+    combobox.focus();
+    await user.keyboard('{ArrowDown}');
     expect(screen.getByRole('listbox')).toBeInTheDocument();
 
     await user.click(document.body);
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
 
-    await user.click(combobox);
+    combobox.focus();
+    await user.keyboard('{ArrowDown}');
     await user.tab();
-    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('forwards ids, refs, classes, and form attributes', () => {
@@ -344,6 +346,7 @@ describe('Select', () => {
 
     const hidden = container.querySelector<HTMLInputElement>('input[name="team"]');
     expect(hidden?.value).toBe('design');
+    expect(hidden).toBeRequired();
 
     expect(container.firstElementChild).toHaveClass('custom');
     expect(container.querySelector('[data-size="lg"]')).toBeInTheDocument();
