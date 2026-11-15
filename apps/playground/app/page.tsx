@@ -1,6 +1,6 @@
 import { ArrowRight, Settings } from 'lucide-react';
 
-import { Badge, Button, Heading, IconButton, Stack, Tag, Text } from '@orkest/ui';
+import { Badge, Button, Heading, IconButton, Separator, Stack, Tag, Text } from '@orkest/ui';
 
 import { AvatarDemo } from './avatar-demo';
 import { PlaygroundForm } from './playground-form';
@@ -38,6 +38,16 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
           <Tag variant="outline">Engineering</Tag>
         </Stack>
       </Stack>
+      <Stack direction="row" gap={4} align="center">
+        <Text size="sm" tone="muted">
+          Server-safe
+        </Text>
+        <Separator orientation="vertical" />
+        <Text size="sm" tone="muted">
+          Token-driven
+        </Text>
+      </Stack>
+      <Separator />
       <AvatarDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>

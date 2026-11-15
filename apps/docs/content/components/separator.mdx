@@ -1,0 +1,163 @@
+---
+title: Separator
+description: Horizontal and vertical dividers with decorative or meaningful separator semantics.
+section: components
+order: 13
+---
+
+`Separator` draws a horizontal or vertical divider. It is decorative by default. Set
+`decorative={false}` when the break conveys document structure rather than visual rhythm.
+
+## Live preview
+
+<ComponentPreview
+  title="Horizontal and vertical"
+  code={`import { Separator, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={4}>
+      <Stack gap={2}>
+        <Text size="sm" tone="muted">{'Account settings'}</Text>
+        <Separator />
+        <Text size="sm" tone="muted">{'Notifications'}</Text>
+      </Stack>
+      <Stack direction="row" gap={4} align="center">
+        <Text size="sm" tone="muted">{'Docs'}</Text>
+        <Separator orientation="vertical" />
+        <Text size="sm" tone="muted">{'Components'}</Text>
+      </Stack>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Stack gap={2}>
+      <Text size="sm" tone="muted">
+        {'Account settings'}
+      </Text>
+      <Separator />
+      <Text size="sm" tone="muted">
+        {'Notifications'}
+      </Text>
+    </Stack>
+    <Stack direction="row" gap={4} align="center">
+      <Text size="sm" tone="muted">
+        {'Docs'}
+      </Text>
+      <Separator orientation="vertical" />
+      <Text size="sm" tone="muted">
+        {'Components'}
+      </Text>
+    </Stack>
+  </Stack>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Line styles"
+  code={`import { Separator, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={4}>
+      <Stack gap={2}>
+        <Text size="sm" tone="muted">{'Solid'}</Text>
+        <Separator variant="solid" />
+      </Stack>
+      <Stack gap={2}>
+        <Text size="sm" tone="muted">{'Dashed'}</Text>
+        <Separator variant="dashed" />
+      </Stack>
+      <Stack gap={2}>
+        <Text size="sm" tone="muted">{'Dotted'}</Text>
+        <Separator variant="dotted" />
+      </Stack>
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Stack gap={2}>
+      <Text size="sm" tone="muted">
+        {'Solid'}
+      </Text>
+      <Separator variant="solid" />
+    </Stack>
+    <Stack gap={2}>
+      <Text size="sm" tone="muted">
+        {'Dashed'}
+      </Text>
+      <Separator variant="dashed" />
+    </Stack>
+    <Stack gap={2}>
+      <Text size="sm" tone="muted">
+        {'Dotted'}
+      </Text>
+      <Separator variant="dotted" />
+    </Stack>
+  </Stack>
+</ComponentPreview>
+
+## Semantic separators
+
+Decorative separators are hidden from assistive technology. When the divider marks a meaningful break,
+opt into separator semantics:
+
+```tsx
+<Separator decorative={false} />
+<Separator orientation="vertical" decorative={false} />
+```
+
+Both render `role="separator"` and set `aria-orientation` from `orientation`. Use this only when the
+break is part of the content structure; purely visual lines should stay decorative.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'orientation',
+      type: `'horizontal' | 'vertical'`,
+      default: `'horizontal'`,
+      description: 'Separator direction.',
+    },
+    {
+      name: 'decorative',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Treats the separator as purely visual. When false, exposes separator semantics to assistive technology.',
+    },
+    {
+      name: 'variant',
+      type: `'solid' | 'dashed' | 'dotted'`,
+      default: `'solid'`,
+      description: 'Line style.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `decorative` defaults to `true`, which renders `aria-hidden="true"` and no role. Screen readers
+  ignore the line.
+- With `decorative={false}`, the separator renders `role="separator"` and sets `aria-orientation` to
+  `horizontal` or `vertical`.
+- Do not simulate a meaningful divider with a plain CSS border on a decorative element. Use
+  `decorative={false}` so the break is exposed in the accessibility tree.
+- The separator is not interactive and never receives keyboard focus.
+- Vertical separators stretch in flex layouts and keep a minimum height when the parent does not
+  stretch its children.
+
+## Related
+
+- [Stack](/docs/components/stack/) for spacing and layout around dividers.
+- [Text](/docs/components/text/) for the content being separated.
+- [Box](/docs/components/box/) for custom container styling.
