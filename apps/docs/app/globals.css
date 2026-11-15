@@ -659,19 +659,36 @@ kbd {
 }
 
 .props-table th:nth-child(1) {
-  width: 19%;
+  width: 22%;
 }
 
 .props-table th:nth-child(2) {
-  width: 30%;
+  width: 40%;
 }
 
 .props-table th:nth-child(3) {
-  width: 17%;
+  width: 22%;
 }
 
 .props-table th:nth-child(4) {
-  width: 12%;
+  width: 16%;
+}
+
+.props-table tbody tr:not(.props-description) th,
+.props-table tbody tr:not(.props-description) td {
+  border-bottom: 0;
+}
+
+.props-table .props-description td {
+  padding-top: 0;
+  padding-bottom: 14px;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+  line-height: var(--ok-line-height-normal);
+}
+
+.props-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .props-table tbody th {

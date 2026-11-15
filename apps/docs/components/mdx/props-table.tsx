@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 export interface PropRow {
   name: string;
   type: string;
@@ -17,22 +19,25 @@ export function PropsTable({ rows }: { rows: PropRow[] }) {
             <th scope="col">Type</th>
             <th scope="col">Default</th>
             <th scope="col">Required</th>
-            <th scope="col">Description</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.name}>
-              <th scope="row">
-                <code>{row.name}</code>
-              </th>
-              <td>
-                <code>{row.type}</code>
-              </td>
-              <td>{row.default ? <code>{row.default}</code> : '—'}</td>
-              <td>{row.required ? 'Yes' : 'No'}</td>
-              <td>{row.description}</td>
-            </tr>
+            <Fragment key={row.name}>
+              <tr>
+                <th scope="row">
+                  <code>{row.name}</code>
+                </th>
+                <td>
+                  <code>{row.type}</code>
+                </td>
+                <td>{row.default ? <code>{row.default}</code> : '—'}</td>
+                <td>{row.required ? 'Yes' : 'No'}</td>
+              </tr>
+              <tr className="props-description">
+                <td colSpan={4}>{row.description}</td>
+              </tr>
+            </Fragment>
           ))}
         </tbody>
       </table>
