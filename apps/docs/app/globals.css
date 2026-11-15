@@ -1146,7 +1146,7 @@ kbd {
   top: calc(var(--docs-header-height) + 3rem);
   display: flex;
   flex-direction: column;
-  max-height: calc(100dvh - var(--docs-header-height) - 4rem);
+  max-height: min(28rem, calc(100dvh - var(--docs-header-height) - 4rem));
 }
 
 .toc-title {
