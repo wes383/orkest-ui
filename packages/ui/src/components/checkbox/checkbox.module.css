@@ -1,0 +1,119 @@
+.root {
+  --checkbox-size: 1.125rem;
+  --checkbox-font-size: var(--ok-font-size-sm);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--checkbox-font-size);
+  line-height: var(--ok-line-height-normal);
+  cursor: pointer;
+  user-select: none;
+}
+
+.root[data-size="sm"] {
+  --checkbox-size: 1rem;
+  --checkbox-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="md"] {
+  --checkbox-size: 1.125rem;
+  --checkbox-font-size: var(--ok-font-size-sm);
+}
+
+.root[data-size="lg"] {
+  --checkbox-size: 1.25rem;
+  --checkbox-font-size: var(--ok-font-size-md);
+}
+
+.root[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: var(--ok-opacity-disabled);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.control {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border: var(--ok-border-width) solid var(--ui-border-strong);
+  border-radius: var(--ok-radius-sm);
+  background: var(--ui-surface);
+  color: var(--ui-primary-foreground);
+  font-size: var(--checkbox-size);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.root:not([data-disabled="true"]):hover .control {
+  border-color: var(--ui-foreground);
+}
+
+.input:focus-visible + .control {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.input:checked + .control,
+.input:indeterminate + .control {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+}
+
+.control::before,
+.control::after {
+  grid-area: 1 / 1;
+  content: "";
+  opacity: 0;
+}
+
+.control::before {
+  width: 0.55em;
+  height: 0;
+  border-top: 2px solid currentColor;
+}
+
+.control::after {
+  width: 0.3em;
+  height: 0.55em;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-0.03em, -0.06em);
+}
+
+.input:checked + .control::after {
+  opacity: 1;
+}
+
+.input:indeterminate + .control::before {
+  opacity: 1;
+}
+
+.input:indeterminate + .control::after {
+  opacity: 0;
+}
+
+.label {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control {
+    transition: none;
+  }
+}

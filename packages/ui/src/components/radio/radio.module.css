@@ -1,0 +1,118 @@
+.root {
+  --radio-size: 1.125rem;
+  --radio-font-size: var(--ok-font-size-sm);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--radio-font-size);
+  line-height: var(--ok-line-height-normal);
+  cursor: pointer;
+  user-select: none;
+}
+
+.root[data-size="sm"] {
+  --radio-size: 1rem;
+  --radio-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="md"] {
+  --radio-size: 1.125rem;
+  --radio-font-size: var(--ok-font-size-sm);
+}
+
+.root[data-size="lg"] {
+  --radio-size: 1.25rem;
+  --radio-font-size: var(--ok-font-size-md);
+}
+
+.root[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: var(--ok-opacity-disabled);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.control {
+  display: grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  border: var(--ok-border-width) solid var(--ui-border-strong);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-surface);
+  color: var(--ui-primary);
+  font-size: var(--radio-size);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.root:not([data-disabled="true"]):hover .control {
+  border-color: var(--ui-foreground);
+}
+
+.input:focus-visible + .control {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.input:checked + .control {
+  border-color: var(--ui-primary);
+}
+
+.control::after {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: var(--ok-radius-full);
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--ok-duration-fast) var(--ok-ease-standard),
+    transform var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.input:checked + .control::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.label {
+  min-width: 0;
+}
+
+.group {
+  display: flex;
+  gap: var(--ok-space-2);
+}
+
+.group[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.group[data-orientation="horizontal"] {
+  flex-flow: row wrap;
+  align-items: center;
+  gap: var(--ok-space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control,
+  .control::after {
+    transition: none;
+  }
+}

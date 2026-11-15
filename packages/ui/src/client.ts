@@ -18,3 +18,17 @@ export type { InputProps, InputSize } from './components/input';
 
 export { Textarea } from './components/input';
 export type { TextareaProps, TextareaSize } from './components/input';
+
+export { Checkbox } from './components/checkbox';
+export type { CheckboxProps, CheckboxSize } from './components/checkbox';
+
+export { Radio, RadioGroup } from './components/radio';
+export type {
+  RadioGroupProps,
+  RadioOrientation,
+  RadioProps,
+  RadioSize,
+} from './components/radio';
+
+export { Switch } from './components/switch';
+export type { SwitchProps, SwitchSize } from './components/switch';

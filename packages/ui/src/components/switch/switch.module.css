@@ -1,0 +1,110 @@
+.root {
+  --switch-width: 2.5rem;
+  --switch-height: 1.5rem;
+  --switch-thumb-size: 1.125rem;
+  --switch-font-size: var(--ok-font-size-sm);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--switch-font-size);
+  line-height: var(--ok-line-height-normal);
+  cursor: pointer;
+  user-select: none;
+}
+
+.root[data-size="sm"] {
+  --switch-width: 2rem;
+  --switch-height: 1.25rem;
+  --switch-thumb-size: 0.875rem;
+  --switch-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="md"] {
+  --switch-width: 2.5rem;
+  --switch-height: 1.5rem;
+  --switch-thumb-size: 1.125rem;
+  --switch-font-size: var(--ok-font-size-sm);
+}
+
+.root[data-size="lg"] {
+  --switch-width: 3rem;
+  --switch-height: 1.75rem;
+  --switch-thumb-size: 1.375rem;
+  --switch-font-size: var(--ok-font-size-md);
+}
+
+.root[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: var(--ok-opacity-disabled);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.track {
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  padding: 2px;
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-secondary);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.thumb {
+  display: block;
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-secondary-foreground);
+  box-shadow: var(--ok-shadow-xs);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    transform var(--ok-duration-normal) var(--ok-ease-standard);
+}
+
+.root:not([data-disabled="true"]):hover .track {
+  border-color: var(--ui-foreground);
+}
+
+.input:focus-visible + .track {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.input:checked + .track {
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+}
+
+.input:checked + .track .thumb {
+  background: var(--ui-primary-foreground);
+  transform: translateX(
+    calc(var(--switch-width) - var(--switch-thumb-size) - 6px)
+  );
+}
+
+.label {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .thumb {
+    transition: none;
+  }
+}
