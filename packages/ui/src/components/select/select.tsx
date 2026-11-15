@@ -11,6 +11,7 @@ import {
   type MouseEvent,
 } from 'react';
 import { Select as BaseSelect } from '@base-ui/react/select';
+import type { SelectRootActions } from '@base-ui/react/select';
 import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 
 import { Icon } from '../../primitives/icon';
@@ -82,6 +83,7 @@ function PlainSelect({
   const rootRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const actionsRef = useRef<SelectRootActions | null>(null);
 
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
@@ -177,6 +179,7 @@ function PlainSelect({
       value={currentValue ?? null}
       onValueChange={handleValueChange}
       onOpenChange={(nextOpen) => setOpen(nextOpen)}
+      actionsRef={actionsRef}
       name={name}
       required={required}
       disabled={disabled}
@@ -232,8 +235,16 @@ function PlainSelect({
             aria-label="Open options"
             aria-expanded={open}
             tabIndex={-1}
+            onPointerDown={(event) => event.stopPropagation()}
+            onMouseDown={(event) => event.stopPropagation()}
             onClick={(event) => {
               event.stopPropagation();
+
+              if (open) {
+                actionsRef.current?.close();
+                return;
+              }
+
               triggerRef.current?.focus();
               triggerRef.current?.click();
             }}

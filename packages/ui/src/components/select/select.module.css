@@ -298,6 +298,7 @@
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface-raised);
   box-shadow: var(--ok-shadow-md);
+  outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-color: var(--ui-subtle-foreground) transparent;
@@ -337,6 +338,7 @@
 
 .list {
   display: block;
+  outline: none;
 }
 
 .list > * + * {
