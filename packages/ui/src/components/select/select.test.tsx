@@ -223,6 +223,24 @@ describe('Select', () => {
     expect(combobox).toHaveAttribute('aria-expanded', 'false');
   });
 
+  it('keeps the menu and query when Enter has no matching option', async () => {
+    const user = userEvent.setup();
+
+    render(<Select aria-label="Team" options={options} searchable />);
+
+    const combobox = screen.getByRole('combobox', { name: 'Team' });
+
+    await user.click(combobox);
+    await user.type(combobox, 'zzz');
+
+    expect(screen.getByText('No options')).toBeInTheDocument();
+
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    expect(combobox).toHaveValue('zzz');
+  });
+
   it('shows an empty state and loading row', async () => {
     const { rerender } = render(
       <Select aria-label="Team" options={options} searchable />,

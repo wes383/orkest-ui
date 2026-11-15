@@ -329,6 +329,20 @@ function MultiSelectImpl({
           data-disabled={control.disabled || undefined}
           data-invalid={control.invalid || undefined}
           onMouseDown={handleGroupMouseDown}
+          onKeyDownCapture={(event) => {
+            if (
+              event.key === 'Enter' &&
+              open &&
+              visibleItems.length === 0 &&
+              !event.nativeEvent.isComposing &&
+              !event.altKey &&
+              !event.ctrlKey &&
+              !event.metaKey
+            ) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          }}
         >
           {leftIcon ? (
             <span className={styles.iconSlot}>

@@ -256,6 +256,26 @@ describe('MultiSelect', () => {
     );
   });
 
+  it('keeps the menu and query when Enter has no matching option', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MultiSelect aria-label="Teams" options={options} searchable />,
+    );
+
+    const combobox = screen.getByRole('combobox', { name: 'Teams' });
+
+    await user.click(combobox);
+    await user.type(combobox, 'zzz');
+
+    expect(screen.getByText('No options')).toBeInTheDocument();
+
+    await user.keyboard('{Enter}');
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    expect(combobox).toHaveValue('zzz');
+  });
+
   it('does not select disabled options', async () => {
     const onChange = vi.fn();
 
