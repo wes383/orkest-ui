@@ -41,6 +41,11 @@ export interface MultiSelectProps extends SelectBaseProps {
   onChange?: (value: string[], options: SelectOption[]) => void;
   /** Limits how many options can be selected. */
   maxSelected?: number;
+  /**
+   * Message shown when `maxSelected` is reached.
+   * Defaults to "Selection limit reached: N selected."
+   */
+  maxSelectedMessage?: string;
   /** Removes selected options from the menu. */
   hideSelected?: boolean;
   /** Replaces the default tag display for selected values. */
@@ -87,6 +92,7 @@ function MultiSelectImpl({
   clearLabel = 'Clear selection',
   removeLabel = 'Remove',
   maxSelected,
+  maxSelectedMessage,
   hideSelected = false,
   renderValue,
   'aria-label': ariaLabel,
@@ -136,6 +142,11 @@ function MultiSelectImpl({
 
   const atLimit =
     maxSelected !== undefined && currentValues.length >= maxSelected;
+  const limitMessage =
+    maxSelectedMessage ??
+    (maxSelected !== undefined
+      ? `Selection limit reached: ${maxSelected} selected.`
+      : undefined);
 
   const visibleItems = useMemo(() => {
     let items = options;
@@ -402,7 +413,9 @@ function MultiSelectImpl({
                   aria-invalid={control.invalid || undefined}
                   aria-description={
                     currentValues.length > 0
-                      ? `${currentValues.length} selected`
+                      ? maxSelected !== undefined
+                        ? `${currentValues.length} of ${maxSelected} selected`
+                        : `${currentValues.length} selected`
                       : undefined
                   }
                 />
@@ -439,6 +452,11 @@ function MultiSelectImpl({
               <BaseCombobox.Empty className={styles.status}>
                 {loading ? null : emptyMessage}
               </BaseCombobox.Empty>
+              {atLimit && limitMessage ? (
+                <div className={styles.limitHint} role="status">
+                  {limitMessage}
+                </div>
+              ) : null}
               <BaseCombobox.List
                 className={styles.list}
                 aria-busy={loading || undefined}

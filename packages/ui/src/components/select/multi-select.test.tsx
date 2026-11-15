@@ -117,13 +117,48 @@ describe('MultiSelect', () => {
       />,
     );
 
-    const { user } = await openMultiSelect();
+    const { user, combobox } = await openMultiSelect();
     const engineering = screen.getByRole('option', { name: 'Engineering' });
 
+    expect(
+      screen.getByText('Selection limit reached: 1 selected.'),
+    ).toBeInTheDocument();
+    expect(combobox).toHaveAttribute('aria-description', '1 of 1 selected');
     expect(engineering).toHaveAttribute('aria-disabled', 'true');
     await user.click(engineering);
 
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('supports a custom maxSelected message', async () => {
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={options}
+        defaultValue={['design']}
+        maxSelected={1}
+        maxSelectedMessage="Only one team allowed."
+      />,
+    );
+
+    await openMultiSelect();
+
+    expect(screen.getByText('Only one team allowed.')).toBeInTheDocument();
+  });
+
+  it('does not show the limit message below the limit', async () => {
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={options}
+        defaultValue={['design']}
+        maxSelected={2}
+      />,
+    );
+
+    await openMultiSelect();
+
+    expect(screen.queryByText(/Selection limit reached/)).not.toBeInTheDocument();
   });
 
   it('hides selected options when hideSelected is set', async () => {
