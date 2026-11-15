@@ -76,7 +76,8 @@ The stylesheet does not load font files or override host application typography.
 ## Peer dependencies
 
 React and React DOM `^18.2.0 || ^19.0.0`. `lucide-react` is a regular dependency because `Icon`
-renders Lucide components.
+renders Lucide components. `@base-ui/react` is a regular dependency that provides overlay and popup
+behavior for interactive components.
 
 ## Documentation
 

@@ -4,9 +4,9 @@ description: A multi-value combobox with removable tags, search, selection limit
 section: components
 ---
 
-`MultiSelect` extends the Select interaction model to multiple values. Selected options render as
-removable tags, the listbox exposes `aria-multiselectable`, and the menu stays open while toggling
-options.
+`MultiSelect` extends the Select interaction model to multiple values using Base UI's Combobox
+primitives with chip rendering. Selected options render as removable chips, and the listbox exposes
+`aria-multiselectable`.
 
 Import it from `@orkest/ui/client`.
 
@@ -195,7 +195,8 @@ function:
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Sets aria-required on the combobox.',
+      description:
+        'Marks the field required and forwards it to Base UI hidden form inputs.',
     },
     {
       name: 'invalid',
@@ -244,16 +245,17 @@ function:
 
 ## Accessibility
 
-- The combobox input renders `role="combobox"` with `aria-expanded`, `aria-controls`, and
-  `aria-activedescendant`. The popup renders `role="listbox"` with `aria-multiselectable="true"`.
-- Selected options expose `aria-selected="true"`; `Space` and `Enter` toggle the active option without
-  closing the menu. `Escape` closes and restores focus.
-- When `searchable` is false, letter keys perform typeahead. When it is true, typing filters instead.
-- Default tags include a labelled remove action. `renderValue` replaces this content; the wrapper
-  stops click propagation so custom controls do not toggle the menu.
-- `required` sets `aria-required`. The `name` prop renders one hidden input per selected value. Native
-  constraint validation is not triggered by this custom control; validate in the form submit handler.
-- A visually hidden live region announces the number of selected values.
+- Base UI renders the combobox input and the popup uses `role="listbox"` with
+  `aria-multiselectable="true"`. Selected options expose `aria-selected="true"`.
+- `ArrowDown` / `ArrowUp` browse options, `Enter` toggles the highlighted option, and `Escape` closes
+  the popup and restores focus. `Tab` leaves the field.
+- When `searchable` is true, typing filters options and `Space` inserts a space. Without search, the
+  input is read-only and the chevron trigger opens the popup.
+- Default chips include a labelled remove action, and Base UI handles Backspace/Delete removal while
+  a chip is focused. `renderValue` replaces the chip content; its wrapper stops click propagation so
+  custom controls do not toggle the popup.
+- `required` and `name` are forwarded to the hidden form inputs managed by Base UI.
+- The input exposes the selected count through `aria-description`.
 
 ## Related
 

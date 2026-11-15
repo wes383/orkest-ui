@@ -96,9 +96,10 @@ Before adding a dependency:
 - Explain why a new dependency is necessary in the task summary and,
   where appropriate, the commit body.
 
-For complex interaction primitives such as Dialog, Popover, Select, and
-Dropdown Menu, consider the project's existing primitive library (for
-example, Radix UI) before implementing interaction behavior from
+For complex interaction primitives such as Dialog, Popover, Select,
+Combobox, and Dropdown Menu, use the project's adopted primitive
+library, Base UI (`@base-ui/react`). Do not add a second primitive
+library or implement positioning, dismissal, and focus management from
 scratch. The library must still own its visual design, public API,
 composition patterns, and documentation.
 

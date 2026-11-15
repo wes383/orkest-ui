@@ -4,11 +4,11 @@ description: A single-value combobox with search, groups, descriptions, and coll
 section: components
 ---
 
-`Select` is a single-value combobox built on a native button or text input and a custom listbox. It
-renders selected values, supports keyboard navigation, and positions the menu with viewport
-collision handling.
+`Select` is a single-value combobox built on Base UI's Select and Combobox primitives. Non-searchable
+use renders a select button; `searchable` renders a filterable combobox input. Base UI owns
+positioning, collision handling, dismissal, highlight, and listbox semantics.
 
-Import it from `@orkest/ui/client` because the menu uses client-side state and positioning.
+Import it from `@orkest/ui/client` because the menu uses client-side state.
 
 ## Live preview
 
@@ -257,7 +257,8 @@ export function Example() {
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Sets aria-required on the combobox.',
+      description:
+        'Marks the field required and forwards it to Base UI hidden form input.',
     },
     {
       name: 'invalid',
@@ -306,26 +307,25 @@ export function Example() {
 
 ## Accessibility
 
-- The trigger renders `role="combobox"` with `aria-expanded`, `aria-controls`, and
-  `aria-haspopup="listbox"`. The popup renders `role="listbox"` and each item `role="option"` with
-  `aria-selected` and `aria-disabled`.
-- The active option is tracked with `aria-activedescendant`; focus stays on the combobox.
-- The menu is positioned below the trigger and flips or shifts to stay inside the viewport. It is
-  rendered inside the component root, so scoped themes apply.
-- Outside pointer interactions close the menu. Selecting an option closes it and restores focus.
-- Disabled options are skipped by arrow keys and typeahead.
-- `required` sets `aria-required` and the `name` prop renders a hidden input. Because this is a custom
-  combobox, browsers do not run native constraint validation; validate in the form submit handler.
+- Base UI renders the combobox and listbox semantics, including `role="option"`, `aria-expanded`,
+  `aria-selected`, and `aria-disabled`. Option highlighting is managed by the primitive.
+- The popup uses Base UI collision handling and is portaled inside the component root, so scoped
+  themes still apply.
+- Outside pointer interactions, Escape, Tab, and selecting an option close the popup and restore
+  focus.
+- Disabled options are skipped by keyboard navigation.
+- `required` is forwarded to Base UI's hidden form input and participates in native form validation
+  for single selection. `name` identifies the field.
 - Associate a visible label with `id` and `htmlFor`, or use `aria-label` / `aria-labelledby`.
 
 | Key | Behavior |
 | --- | --- |
-| `Enter` / `Space` | Opens the menu or selects the active option |
-| `ArrowDown` / `ArrowUp` | Moves the active option |
-| `Home` / `End` | Moves to the first or last enabled option |
+| `Enter` | Opens the menu or selects the highlighted option |
+| `Space` | Opens the menu; inserts a space in searchable mode |
+| `ArrowDown` / `ArrowUp` | Opens the menu or moves the highlight |
 | `Escape` | Closes the menu and restores focus |
 | `Tab` | Closes the menu and moves focus |
-| Letter keys | Typeahead when closed or not searchable; filters when searchable |
+| Letter keys | Typeahead; filters when searchable |
 
 ## Related
 
