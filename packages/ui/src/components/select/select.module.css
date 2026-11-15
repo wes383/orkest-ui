@@ -189,7 +189,7 @@
   gap: var(--ok-space-1);
   max-width: 100%;
   padding: 1px 2px 1px var(--ok-space-1);
-  border-radius: var(--ok-radius-full);
+  border-radius: var(--ok-radius-md);
   background: var(--ui-secondary);
   color: var(--ui-secondary-foreground);
   font-size: var(--ok-font-size-xs);
