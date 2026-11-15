@@ -18,7 +18,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: calc(100vw + var(--orkest-dialog-scrollbar-width, 0px));
   height: 100dvh;
   z-index: var(--ok-z-overlay);
   background: var(--ui-overlay);

@@ -19,70 +19,44 @@ import styles from './dialog.module.css';
 const useIsoLayoutEffect =
   typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
+let scrollbarWidthUsers = 0;
+
 /**
- * Base UI's scroll lock keeps a stable scrollbar gutter while the dialog is open.
- * Remove that gutter and compensate with padding so the page does not shift and
- * the fixed overlay can cover the full viewport.
+ * The scrollbar gutter sits outside the fixed overlay while the modal scroll
+ * lock is active. Publish its width so the overlay can extend over it without
+ * changing the page layout or causing a shift when the dialog closes.
  */
-function useScrollbarCompensation(enabled: boolean): void {
+function useDialogScrollbarWidth(enabled: boolean): void {
   useIsoLayoutEffect(() => {
     if (!enabled) {
       return undefined;
     }
 
     const html = document.documentElement;
-    const previousPaddingRight = html.style.paddingRight;
-    let timeout = 0;
 
     function apply() {
-      if (html.style.scrollbarGutter === 'auto') {
-        return;
-      }
-
       const probe = document.createElement('div');
       probe.style.cssText =
         'position:fixed;top:0;left:0;width:100px;height:100px;overflow:scroll;visibility:hidden;pointer-events:none;';
       document.body.appendChild(probe);
       const scrollbarWidth = probe.offsetWidth - probe.clientWidth;
       probe.remove();
-
-      if (scrollbarWidth <= 0) {
-        html.style.removeProperty('padding-right');
-        return;
-      }
-
-      html.style.setProperty('scrollbar-gutter', 'auto', 'important');
-      html.style.paddingRight = `${scrollbarWidth}px`;
+      html.style.setProperty(
+        '--orkest-dialog-scrollbar-width',
+        `${scrollbarWidth}px`,
+      );
     }
 
-    function scheduleApply() {
-      window.clearTimeout(timeout);
-      timeout = window.setTimeout(apply, 0);
-    }
-
-    // Base UI applies its scroll lock asynchronously. Reapply after its style
-    // changes so the reserved gutter does not outlive the compensation.
-    const observer = new MutationObserver(() => {
-      if (html.style.scrollbarGutter !== 'auto') {
-        apply();
-      }
-    });
-    observer.observe(html, {
-      attributes: true,
-      attributeFilter: ['style'],
-    });
-
-    scheduleApply();
-    window.addEventListener('resize', scheduleApply);
+    scrollbarWidthUsers += 1;
+    apply();
+    window.addEventListener('resize', apply);
 
     return () => {
-      window.clearTimeout(timeout);
-      observer.disconnect();
-      window.removeEventListener('resize', scheduleApply);
-      html.style.paddingRight = previousPaddingRight;
+      window.removeEventListener('resize', apply);
+      scrollbarWidthUsers -= 1;
 
-      if (html.style.scrollbarGutter === 'auto') {
-        html.style.removeProperty('scrollbar-gutter');
+      if (scrollbarWidthUsers === 0) {
+        html.style.removeProperty('--orkest-dialog-scrollbar-width');
       }
     };
   }, [enabled]);
@@ -133,7 +107,7 @@ export const DialogSurface = forwardRef<HTMLDivElement, DialogSurfaceProps>(
     ref,
   ) {
     const isModal = useContext(DialogModalContext);
-    useScrollbarCompensation(isModal);
+    useDialogScrollbarWidth(isModal);
 
     return (
       <BaseDialog.Viewport className={styles.viewport} data-size={size}>
