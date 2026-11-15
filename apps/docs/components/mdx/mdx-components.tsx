@@ -99,6 +99,17 @@ import {
   DropdownMenuSizingExample,
   DropdownMenuSubmenuExample,
 } from '../examples/dropdown-menu-examples';
+import {
+  PopoverBasicExample,
+  PopoverControlledExample,
+  PopoverPositionExample,
+  PopoverRegionExample,
+} from '../examples/popover-examples';
+import {
+  TooltipBasicExample,
+  TooltipPositionExample,
+  TooltipTextTriggerExample,
+} from '../examples/tooltip-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -221,6 +232,13 @@ export const mdxComponents = {
   DropdownMenuRadioExample,
   DropdownMenuSizingExample,
   DropdownMenuSubmenuExample,
+  PopoverBasicExample,
+  PopoverControlledExample,
+  PopoverPositionExample,
+  PopoverRegionExample,
+  TooltipBasicExample,
+  TooltipPositionExample,
+  TooltipTextTriggerExample,
   FieldBasicExample,
   FieldCheckboxExample,
   FieldDisabledExample,

@@ -1,0 +1,295 @@
+---
+title: Tooltip
+description: Short hints shown on hover or keyboard focus.
+section: components
+---
+
+`Tooltip` explains an element with a short piece of text. Use it for icon buttons, shortcut hints,
+and brief clarification. Do not put buttons, links, forms, or other interactive content inside a
+tooltip; use [Popover](/docs/components/popover/) instead.
+
+The component is built on Base UI Tooltip. Import it from `@orkest/ui/client`.
+
+## Basic usage
+
+Wrap tooltips in `TooltipProvider` to share the hover delay. The provider defaults to a `500ms` open
+delay and no close delay.
+
+<ComponentPreview
+  title="Icon button tooltips"
+  code={`import { IconButton, Stack } from '@orkest/ui';
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@orkest/ui/client';
+import { Copy, Settings, SlidersHorizontal } from 'lucide-react';
+
+export function Example() {
+  return (
+    <TooltipProvider delay={300}>
+      <Stack direction="row" gap={3} align="center">
+        <Tooltip>
+          <TooltipTrigger
+            render={<IconButton icon={Settings} label="Settings" variant="outline" />}
+          />
+          <TooltipPortal>
+            <TooltipContent>
+              Manage workspace settings
+              <TooltipArrow />
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger
+            render={<IconButton icon={SlidersHorizontal} label="Filters" variant="outline" />}
+          />
+          <TooltipPortal>
+            <TooltipContent>Filter the current results</TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger
+            render={<IconButton icon={Copy} label="Copy link" variant="outline" />}
+          />
+          <TooltipPortal>
+            <TooltipContent>Copy link ⌘C</TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+      </Stack>
+    </TooltipProvider>
+  );
+}`}
+>
+  <TooltipBasicExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `TooltipProvider` configures the shared delay and close delay.
+- `Tooltip` owns the open state.
+- `TooltipTrigger` shows the tooltip on hover and keyboard focus.
+- `TooltipPortal` moves the tooltip to the document body.
+- `TooltipContent` renders the short hint.
+- `TooltipArrow` adds an optional arrow.
+
+## Text triggers and shortcuts
+
+`TooltipContent` accepts short text and inline shortcut hints. Avoid block-level interactive
+components.
+
+<ComponentPreview
+  title="Text trigger"
+  code={`import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <TooltipProvider delay={200}>
+      <Tooltip>
+        <TooltipTrigger variant="link">What is a workspace?</TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent maxWidth="14rem">
+            A workspace groups projects, members, and billing in one place.
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}`}
+>
+  <TooltipTextTriggerExample />
+</ComponentPreview>
+
+## Positioning and arrow
+
+`TooltipContent` defaults to `side="top"`, `align="center"`, and `sideOffset={6}`. It flips
+automatically when the tooltip would overflow the viewport.
+
+<ComponentPreview
+  title="Right-aligned tooltip"
+  code={`import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <TooltipProvider delay={0}>
+      <Tooltip>
+        <TooltipTrigger variant="outline">Hover for details</TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent side="right" align="start" sideOffset={10}>
+            <TooltipArrow />
+            Prefers the right side and aligns to the start of the trigger.
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}`}
+>
+  <TooltipPositionExample />
+</ComponentPreview>
+
+## Accessibility
+
+- `TooltipContent` uses `role="tooltip"`.
+- `TooltipTrigger` receives `aria-describedby` pointing to the tooltip.
+- A tooltip is supplemental. Keep the trigger's own accessible name with `aria-label` or visible
+  text; do not use the tooltip as the only label.
+- Tooltips appear for pointer hover and keyboard focus. Do not hide essential information behind a
+  tooltip, because touch users may not discover it.
+- For an information icon that reveals interactive content, prefer a [Popover](/docs/components/popover/)
+  with `openOnHover` so touch users can also click it.
+- Escape closes the tooltip.
+- The tooltip respects `prefers-reduced-motion` for its open and close animation.
+
+## Props
+
+### TooltipProvider
+
+<PropsTable
+  rows={[
+    {
+      name: 'delay',
+      type: 'number',
+      default: '500',
+      description: 'Shared hover and focus delay before opening.',
+    },
+    {
+      name: 'closeDelay',
+      type: 'number',
+      default: '0',
+      description: 'Shared delay before closing.',
+    },
+    {
+      name: 'timeout',
+      type: 'number',
+      default: '400',
+      description: 'Window in which the next tooltip opens instantly.',
+    },
+  ]}
+/>
+
+### Tooltip
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open, eventDetails) => void',
+      description: 'Called when the tooltip requests an open state change.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Prevents the tooltip from opening.',
+    },
+  ]}
+/>
+
+### TooltipTrigger
+
+<PropsTable
+  rows={[
+    {
+      name: 'delay / closeDelay',
+      type: 'number',
+      description: 'Overrides the provider timing for this trigger.',
+    },
+    {
+      name: 'closeOnClick',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the tooltip when the trigger is clicked.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description:
+        'Replaces the default ghost Button, for example with an IconButton or a custom element.',
+    },
+    {
+      name: 'aria-describedby',
+      type: 'string',
+      description: 'Merged with the tooltip ID.',
+    },
+  ]}
+/>
+
+### TooltipContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'side',
+      type: `'top' | 'bottom' | 'left' | 'right' | 'inline-start' | 'inline-end'`,
+      default: `'top'`,
+      description: 'Side of the trigger the tooltip is placed on.',
+    },
+    {
+      name: 'align',
+      type: `'start' | 'center' | 'end'`,
+      default: `'center'`,
+      description: 'Alignment relative to the trigger.',
+    },
+    {
+      name: 'sideOffset',
+      type: 'number',
+      default: '6',
+      description: 'Distance between the trigger and the tooltip.',
+    },
+    {
+      name: 'alignOffset',
+      type: 'number',
+      default: '0',
+      description: 'Offset along the alignment axis.',
+    },
+    {
+      name: 'width / minWidth / maxWidth',
+      type: 'CSSProperties values',
+      description: 'Controls tooltip width. The default maximum is 15rem (240px).',
+    },
+    {
+      name: 'maxHeight',
+      type: 'CSSProperties value',
+      description: 'Controls the tooltip height before it scrolls.',
+    },
+    {
+      name: 'native attributes',
+      type: 'Base UI Tooltip Popup props',
+      description: 'Class names, data attributes, and refs are forwarded to the popup.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Popover](/docs/components/popover/) for interactive floating content.
+- [Icon Button](/docs/components/icon-button/) for icon-only triggers.
+- [Button](/docs/components/button/) for regular triggers.

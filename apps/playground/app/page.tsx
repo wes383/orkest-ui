@@ -19,6 +19,7 @@ import { DialogDemo } from './dialog-demo';
 import { DropdownMenuDemo } from './dropdown-menu-demo';
 import { FieldDemo } from './field-demo';
 import { PlaygroundForm } from './playground-form';
+import { PopoverDemo } from './popover-demo';
 import { SelectDemo } from './select-demo';
 
 function Showcase({ idPrefix }: { idPrefix: string }) {
@@ -86,6 +87,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <FieldDemo />
       <DialogDemo />
       <DropdownMenuDemo />
+      <PopoverDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>
   );
