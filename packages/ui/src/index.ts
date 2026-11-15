@@ -28,6 +28,13 @@ export type {
   StackProps,
 } from './primitives/stack';
 
+export { Separator } from './primitives/separator';
+export type {
+  SeparatorOrientation,
+  SeparatorProps,
+  SeparatorVariant,
+} from './primitives/separator';
+
 export { Text } from './primitives/text';
 export type {
   TextAlign,
