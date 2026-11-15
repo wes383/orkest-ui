@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   forwardRef,
@@ -390,7 +390,7 @@ function MultiSelectImpl({
         </BaseCombobox.InputGroup>
         <BaseCombobox.Portal container={rootRef}>
           <BaseCombobox.Positioner
-            sideOffset={4}
+            sideOffset={8}
             positionMethod="fixed"
             className={styles.positioner}
           >

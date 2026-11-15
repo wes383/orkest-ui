@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   forwardRef,
@@ -229,7 +229,7 @@ function PlainSelect({
         </div>
         <BaseSelect.Portal container={rootRef}>
           <BaseSelect.Positioner
-            sideOffset={4}
+            sideOffset={8}
             alignItemWithTrigger={false}
             positionMethod="fixed"
             className={styles.positioner}

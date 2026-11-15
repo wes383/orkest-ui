@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   useCallback,
@@ -263,7 +263,7 @@ export function SearchableSelect({
         </BaseCombobox.InputGroup>
         <BaseCombobox.Portal container={rootRef}>
           <BaseCombobox.Positioner
-            sideOffset={4}
+            sideOffset={8}
             positionMethod="fixed"
             className={styles.positioner}
           >

@@ -62,13 +62,12 @@
   border-color: var(--ui-border-strong);
 }
 
-.field:focus-within,
+.field:has(:focus-visible),
 .field[data-open="true"] {
   border-color: var(--ui-subtle-foreground);
 }
 
-.root[data-invalid="true"] .field,
-.root[data-invalid="true"] .field:focus-within {
+.root[data-invalid="true"] .field {
   border-color: var(--ui-danger);
 }
 
@@ -336,6 +335,14 @@
 
 .list {
   display: block;
+}
+
+.list > * + * {
+  margin-top: var(--ok-space-1);
+}
+
+.item + .item {
+  margin-top: var(--ok-space-1);
 }
 
 .group + .group {
