@@ -145,13 +145,33 @@ export interface PopoverArrowProps
 
 /** Optional arrow pointing from the popover to its trigger. */
 export const PopoverArrow = forwardRef<HTMLDivElement, PopoverArrowProps>(
-  function PopoverArrow({ className, ...rest }, ref) {
+  function PopoverArrow({ className, children, ...rest }, ref) {
     return (
       <BasePopover.Arrow
         ref={ref}
         {...rest}
         className={cx(styles.arrow, className)}
-      />
+      >
+        {children ?? (
+          <svg
+            className={styles.arrowSvg}
+            viewBox="0 0 12 6"
+            aria-hidden="true"
+          >
+            <rect
+              className={styles.arrowFill}
+              x="0"
+              y="5"
+              width="12"
+              height="2"
+            />
+            <path
+              className={styles.arrowShape}
+              d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6"
+            />
+          </svg>
+        )}
+      </BasePopover.Arrow>
     );
   },
 );

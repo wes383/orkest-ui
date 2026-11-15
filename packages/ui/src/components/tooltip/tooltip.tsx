@@ -180,13 +180,26 @@ export interface TooltipArrowProps
 
 /** Optional arrow pointing from the tooltip to its trigger. */
 export const TooltipArrow = forwardRef<HTMLDivElement, TooltipArrowProps>(
-  function TooltipArrow({ className, ...rest }, ref) {
+  function TooltipArrow({ className, children, ...rest }, ref) {
     return (
       <BaseTooltip.Arrow
         ref={ref}
         {...rest}
         className={cx(styles.arrow, className)}
-      />
+      >
+        {children ?? (
+          <svg
+            className={styles.arrowSvg}
+            viewBox="0 0 12 6"
+            aria-hidden="true"
+          >
+            <path
+              className={styles.arrowShape}
+              d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6"
+            />
+          </svg>
+        )}
+      </BaseTooltip.Arrow>
     );
   },
 );
