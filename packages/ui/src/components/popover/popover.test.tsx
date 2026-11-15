@@ -61,7 +61,11 @@ describe('Popover', () => {
     expect(popover).toHaveAccessibleDescription(
       'Choose how results are filtered.',
     );
-    expect(screen.getByTestId('arrow')).toBeInTheDocument();
+    const arrow = screen.getByTestId('arrow');
+    expect(arrow).toBeInTheDocument();
+    // The arrow must sit directly in the popup, outside the scrolling body,
+    // so it is not clipped and animates together with the surface.
+    expect(arrow.parentElement).toBe(popover);
   });
 
   it('moves focus into the content and restores it on Escape', async () => {

@@ -1,7 +1,9 @@
 'use client';
 
 import {
+  Children,
   forwardRef,
+  isValidElement,
   type CSSProperties,
   type ReactElement,
 } from 'react';
@@ -125,6 +127,14 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
     },
     ref,
   ) {
+    const childArray = Children.toArray(children);
+    const arrow = childArray.find(
+      (child) => isValidElement(child) && child.type === PopoverArrow,
+    );
+    const bodyChildren = arrow
+      ? childArray.filter((child) => child !== arrow)
+      : childArray;
+
     return (
       <BasePopover.Popup
         ref={ref}
@@ -132,7 +142,8 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         className={cx(styles.content, className)}
         style={{ ...style, width, minWidth, maxWidth, maxHeight }}
       >
-        {children}
+        {arrow}
+        <div className={styles.body}>{bodyChildren}</div>
       </BasePopover.Popup>
     );
   },

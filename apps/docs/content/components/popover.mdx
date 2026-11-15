@@ -69,8 +69,9 @@ export function Example() {
 - `PopoverTrigger` toggles the popover. It renders a secondary Button by default.
 - `PopoverPortal` moves the popover to the document body.
 - `PopoverPositioner` positions the content and handles viewport collisions.
-- `PopoverContent` is the interactive surface.
-- `PopoverArrow` adds an optional arrow.
+- `PopoverContent` is the interactive surface. Its children scroll inside the surface.
+- `PopoverArrow` adds an optional arrow. Keep it as a direct child of `PopoverContent` so it stays
+  outside the scrollable body and animates with the surface.
 - `PopoverTitle` and `PopoverDescription` provide the accessible name and description.
 - `PopoverClose` closes the popover and renders a secondary Button by default.
 
