@@ -10,6 +10,7 @@ import { searchDocs } from '@/lib/search';
 
 export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const backdropPointerDownRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState('');
@@ -110,8 +111,20 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
         aria-labelledby="search-dialog-title"
         onClose={() => setQuery('')}
         onKeyDown={handleDialogKeyDown}
+        onPointerDown={(event) => {
+          backdropPointerDownRef.current = event.target === dialogRef.current;
+        }}
         onClick={(event) => {
-          if (event.target === dialogRef.current) {
+          // A drag from the dialog onto the backdrop also produces a click
+          // whose target is the dialog. Only close when the press started on
+          // the backdrop itself.
+          const clickedBackdrop =
+            event.target === dialogRef.current &&
+            backdropPointerDownRef.current;
+
+          backdropPointerDownRef.current = false;
+
+          if (clickedBackdrop) {
             closeDialog();
           }
         }}
