@@ -33,7 +33,7 @@ export function IndeterminateCheckboxExample() {
         label="All teams"
         checked={allSelected}
         indeterminate={partiallySelected}
-        onChange={() => setSelected(allSelected ? [] : teams)}
+        onCheckedChange={() => setSelected(allSelected ? [] : teams)}
       />
       <Stack gap={2} style={{ paddingInlineStart: '1.5rem' }}>
         {teams.map((team) => (
@@ -41,7 +41,7 @@ export function IndeterminateCheckboxExample() {
             key={team}
             label={team}
             checked={selected.includes(team)}
-            onChange={() => toggleTeam(team)}
+            onCheckedChange={() => toggleTeam(team)}
           />
         ))}
       </Stack>
@@ -73,7 +73,7 @@ export function SwitchExample() {
     <Switch
       label="Email notifications"
       checked={enabled}
-      onChange={(event) => setEnabled(event.currentTarget.checked)}
+      onCheckedChange={setEnabled}
     />
   );
 }

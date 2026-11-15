@@ -18,7 +18,7 @@ export function ChoiceDemo() {
       <Checkbox
         label="Accept terms"
         checked={accepted}
-        onChange={(event) => setAccepted(event.currentTarget.checked)}
+        onCheckedChange={setAccepted}
       />
       <RadioGroup
         aria-label="Plan"
@@ -33,7 +33,7 @@ export function ChoiceDemo() {
       <Switch
         label="Email notifications"
         checked={notifications}
-        onChange={(event) => setNotifications(event.currentTarget.checked)}
+        onCheckedChange={setNotifications}
       />
     </Stack>
   );

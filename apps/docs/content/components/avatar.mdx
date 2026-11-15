@@ -1,13 +1,14 @@
 ---
 title: Avatar
-description: User and entity avatars with images, fallbacks, status indicators, and overlapping groups.
+description: Base UI avatars with images, fallbacks, status indicators, and overlapping groups.
 section: components
 ---
 
 `Avatar` represents a person or entity with an image, initials, or an icon. It also provides presence
 status and overlapping groups.
 
-Avatar components track image loading with React state, so import them from `@orkest/ui/client`.
+The image and fallback are built on Base UI Avatar, which owns loading status, cached image detection,
+and fallback timing. Import the components from `@orkest/ui/client`.
 
 ## Live preview
 
@@ -37,7 +38,8 @@ export function Example() {
 ## Image and fallback
 
 `AvatarFallback` is visible while the image loads, when no image is provided, and after a load
-failure. `AvatarImage` removes itself from the layout after an error so the fallback remains visible.
+failure. By default the image stays mounted while loading or failed, but is hidden from assistive
+technology until it loads, so the fallback remains the accessible content.
 
 <ComponentPreview
   title="Image, failed image, and initials"
@@ -326,7 +328,7 @@ export function Example() {
     },
     {
       name: 'native attributes',
-      type: 'HTMLAttributes<HTMLSpanElement>',
+      type: 'Base UI Avatar Root props',
       description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
     },
   ]}
@@ -358,6 +360,18 @@ export function Example() {
       description: 'Called when the image fails to load. The fallback takes over.',
     },
     {
+      name: 'keepMounted',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Keeps the image mounted while it loads. Set to false to preload off-screen before mounting.',
+    },
+    {
+      name: 'onLoadingStatusChange',
+      type: `(status: 'idle' | 'loading' | 'loaded' | 'error') => void`,
+      description: 'Called when the Base UI image loading status changes.',
+    },
+    {
       name: 'native attributes',
       type: `Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>`,
       description: 'Image attributes, className, style, and ref are forwarded.',
@@ -373,6 +387,12 @@ export function Example() {
       name: 'children',
       type: 'ReactNode',
       description: 'Initials, an icon, or other fallback content.',
+    },
+    {
+      name: 'delay',
+      type: 'number',
+      default: '0',
+      description: 'How long to wait before showing the fallback, in milliseconds.',
     },
     {
       name: 'native attributes',

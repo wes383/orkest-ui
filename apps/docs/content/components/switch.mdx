@@ -1,10 +1,10 @@
 ---
 title: Switch
-description: On/off controls with a native checkbox, switch semantics, and token styling.
+description: Base UI on/off controls with accessible switch semantics and token styling.
 section: components
 ---
 
-`Switch` is a native checkbox rendered as a switch. It supports controlled and uncontrolled state,
+`Switch` is a Base UI switch with token styling. It supports controlled and uncontrolled state,
 labels, sizes, form submission, and Space-key toggling.
 
 Import it from `@orkest/ui/client`.
@@ -23,7 +23,7 @@ export function Example() {
     <Switch
       label="Email notifications"
       checked={enabled}
-      onChange={(event) => setEnabled(event.currentTarget.checked)}
+      onCheckedChange={setEnabled}
     />
   );
 }`}
@@ -75,8 +75,8 @@ export function Example() {
       description: 'Initial state for uncontrolled usage.',
     },
     {
-      name: 'onChange',
-      type: 'ChangeEventHandler<HTMLInputElement>',
+      name: 'onCheckedChange',
+      type: '(checked: boolean, eventDetails) => void',
       description: 'Called when the switch changes.',
     },
     {
@@ -86,10 +86,16 @@ export function Example() {
       description: 'Disables the switch.',
     },
     {
+      name: 'readOnly',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows focus but prevents changing the value.',
+    },
+    {
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Requires the switch for native form validation.',
+      description: 'Requires the switch for form validation.',
     },
     {
       name: 'name',
@@ -100,6 +106,11 @@ export function Example() {
       name: 'value',
       type: 'string',
       description: 'Value submitted with the form.',
+    },
+    {
+      name: 'inputRef',
+      type: 'Ref<HTMLInputElement>',
+      description: 'Ref to the hidden native input used for form submission.',
     },
     {
       name: 'size',
@@ -114,19 +125,19 @@ export function Example() {
     },
     {
       name: 'native attributes',
-      type: `Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>`,
-      description: 'ARIA attributes, id, className, style, and ref are forwarded to the input.',
+      type: 'Base UI Switch Root props',
+      description:
+        'ARIA attributes, id, form, style, and ref are forwarded to the switch root. className styles the label wrapper.',
     },
   ]}
 />
 
 ## Accessibility
 
-- Renders a native `<input type="checkbox">` with `role="switch"` and an explicit `aria-checked`
-  state.
-- Space toggles the switch while focused; no custom keyboard handling is required.
-- The optional `label` is an implicit label. When omitting it, provide `aria-label` or connect an
-  external label with `id` and `htmlFor`.
+- Renders a Base UI switch with `role="switch"` and a hidden native input for form submission.
+- Space toggles the switch while focused; Base UI handles the keyboard interaction.
+- The optional `label` is an implicit label. When omitting it, provide `aria-label`,
+  `aria-labelledby`, or use `FieldLabel`.
 - Focus is shown on the track with `:focus-visible`.
 - The thumb transition is disabled when `prefers-reduced-motion: reduce` is active.
 

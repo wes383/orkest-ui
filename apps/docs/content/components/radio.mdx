@@ -1,13 +1,14 @@
 ---
 title: Radio
-description: Native radio inputs and a managed RadioGroup with keyboard navigation.
+description: Base UI radios and a managed RadioGroup with keyboard navigation.
 section: components
 ---
 
-`Radio` is a native radio input. `RadioGroup` manages a set of radios with a shared name, controlled
-or uncontrolled value, orientation, disabled and required states, and native arrow-key navigation.
+`Radio` is a Base UI radio. `RadioGroup` manages a set of radios with a shared name, controlled or
+uncontrolled value, orientation, disabled, required, and read-only states, plus Base UI keyboard
+navigation and form integration.
 
-Import both from `@orkest/ui/client`.
+Render `Radio` inside a `RadioGroup`. Import both from `@orkest/ui/client`.
 
 ## Live preview
 
@@ -108,24 +109,9 @@ export function Example() {
 <PropsTable
   rows={[
     {
-      name: 'checked',
-      type: 'boolean',
-      description: 'Controlled checked state for a standalone radio.',
-    },
-    {
-      name: 'defaultChecked',
-      type: 'boolean',
-      description: 'Initial checked state for a standalone radio.',
-    },
-    {
       name: 'value',
       type: 'string',
-      description: 'Option value submitted with the form and used by RadioGroup.',
-    },
-    {
-      name: 'onChange',
-      type: 'ChangeEventHandler<HTMLInputElement>',
-      description: 'Called when the radio changes.',
+      description: 'Option value used by RadioGroup for selection and form submission.',
     },
     {
       name: 'disabled',
@@ -140,9 +126,10 @@ export function Example() {
       description: 'Requires a selection in the group.',
     },
     {
-      name: 'name',
-      type: 'string',
-      description: 'Shared radio group name. RadioGroup provides this automatically.',
+      name: 'readOnly',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows focus but prevents changing the selected value.',
     },
     {
       name: 'size',
@@ -156,9 +143,15 @@ export function Example() {
       description: 'Label rendered beside the control.',
     },
     {
+      name: 'inputRef',
+      type: 'Ref<HTMLInputElement>',
+      description: 'Ref to the hidden native input used for form submission.',
+    },
+    {
       name: 'native attributes',
-      type: `Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type' | 'value'>`,
-      description: 'ARIA attributes, id, className, style, and ref are forwarded to the input.',
+      type: 'Base UI Radio Root props',
+      description:
+        'ARIA attributes, id, style, and ref are forwarded to the radio root. className styles the label wrapper.',
     },
   ]}
 />
@@ -197,13 +190,25 @@ export function Example() {
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Requires a selection for native form validation.',
+      description: 'Requires a selection for form validation.',
+    },
+    {
+      name: 'readOnly',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows focus but prevents changing the selected value.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Exposes the group as invalid through aria-invalid.',
     },
     {
       name: 'orientation',
       type: `'horizontal' | 'vertical'`,
       default: `'vertical'`,
-      description: 'Layout direction.',
+      description: 'Layout direction and aria-orientation.',
     },
     {
       name: 'size',
@@ -213,20 +218,21 @@ export function Example() {
     },
     {
       name: 'native attributes',
-      type: 'HTMLAttributes<HTMLDivElement>',
-      description: 'ARIA attributes, className, style, and ref are forwarded to the group.',
+      type: 'Base UI RadioGroup props',
+      description:
+        'ARIA attributes, form, inputRef, className, style, and ref are forwarded to the group.',
     },
   ]}
 />
 
 ## Accessibility
 
-- Radios render native `<input type="radio">` elements with the same generated `name`, so browser
-  arrow-key navigation and form semantics work without custom keyboard handlers.
-- Give `RadioGroup` an accessible name with `aria-label` or `aria-labelledby`; it renders
-  `role="radiogroup"` and `aria-orientation`.
+- `RadioGroup` renders `role="radiogroup"`; radios render `role="radio"` with hidden native inputs
+  for form submission.
+- Give `RadioGroup` an accessible name with `aria-label`, `aria-labelledby`, or `FieldLabel`.
+- Base UI handles arrow-key navigation and selection within the group.
 - A radio cannot be unchecked by clicking it again. The user must select another option.
-- `disabled` and `required` are exposed on the group and applied to each radio.
+- `disabled`, `required`, and `readOnly` are exposed on the group and applied to each radio.
 - Focus is shown on the custom control with `:focus-visible`.
 
 ## Related
