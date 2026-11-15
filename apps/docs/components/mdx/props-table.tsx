@@ -4,7 +4,6 @@ export interface PropRow {
   name: string;
   type: string;
   default?: string;
-  required?: boolean;
   description: string;
 }
 
@@ -18,7 +17,6 @@ export function PropsTable({ rows }: { rows: PropRow[] }) {
             <th scope="col">Prop</th>
             <th scope="col">Type</th>
             <th scope="col">Default</th>
-            <th scope="col">Required</th>
           </tr>
         </thead>
         <tbody>
@@ -32,10 +30,9 @@ export function PropsTable({ rows }: { rows: PropRow[] }) {
                   <code>{row.type}</code>
                 </td>
                 <td>{row.default ? <code>{row.default}</code> : '—'}</td>
-                <td>{row.required ? 'Yes' : 'No'}</td>
               </tr>
               <tr className="props-description">
-                <td colSpan={4}>{row.description}</td>
+                <td colSpan={3}>{row.description}</td>
               </tr>
             </Fragment>
           ))}
