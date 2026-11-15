@@ -55,6 +55,16 @@ import {
   Switch,
   SwitchExample,
 } from '../examples/choice-controls';
+import {
+  BasicSelectExample,
+  MultiSelect,
+  MultiSelectExample,
+  SearchableSelectExample,
+  Select,
+  SelectLoadingExample,
+  SelectSizesExample,
+  SelectStatesExample,
+} from '../examples/select-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -158,6 +168,7 @@ export const mdxComponents = {
   AvatarIconExample,
   AvatarImage,
   Badge,
+  BasicSelectExample,
   Box,
   Button,
   Caption,
@@ -173,11 +184,18 @@ export const mdxComponents = {
   InteractiveTagExample,
   Label,
   Link: TypographyLink,
+  MultiSelect,
+  MultiSelectExample,
   Paragraph,
   Radio,
   RadioGroup,
   RadioGroupExample,
   RemovableTagExample,
+  SearchableSelectExample,
+  Select,
+  SelectLoadingExample,
+  SelectSizesExample,
+  SelectStatesExample,
   Separator,
   Small,
   Stack,

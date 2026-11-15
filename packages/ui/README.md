@@ -14,7 +14,8 @@ Currently exported:
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
 - Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Input`,
-  `Radio`, `RadioGroup`, `Switch`, `Textarea` (exported from `@orkest/ui/client`)
+  `MultiSelect`, `Radio`, `RadioGroup`, `Select`, `Switch`, `Textarea` (exported from
+  `@orkest/ui/client`)
 
 ## Install
 
@@ -54,11 +55,11 @@ export function Example() {
 
 ## Client components
 
-`Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Input`, and `Textarea` are exported from
-`@orkest/ui/client` because they use client-side state:
+`Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `MultiSelect`, `Select`, `Input`, and
+`Textarea` are exported from `@orkest/ui/client` because they use client-side state:
 
 ```tsx
-import { Avatar, AvatarFallback, Input, Textarea } from '@orkest/ui/client';
+import { Avatar, AvatarFallback, Input, MultiSelect, Select, Textarea } from '@orkest/ui/client';
 ```
 
 Render them inside a Client Component (a module with `'use client'`).

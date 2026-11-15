@@ -1,0 +1,262 @@
+---
+title: MultiSelect
+description: A multi-value combobox with removable tags, search, selection limits, and custom value rendering.
+section: components
+---
+
+`MultiSelect` extends the Select interaction model to multiple values. Selected options render as
+removable tags, the listbox exposes `aria-multiselectable`, and the menu stays open while toggling
+options.
+
+Import it from `@orkest/ui/client`.
+
+## Live preview
+
+<ComponentPreview
+  title="Searchable multi-select"
+  code={`import { useState } from 'react';
+import { MultiSelect } from '@orkest/ui/client';
+
+export function Example() {
+  const [selected, setSelected] = useState(['design', 'frontend']);
+
+  return (
+    <MultiSelect
+      aria-label="Teams"
+      options={options}
+      value={selected}
+      onChange={(nextValues) => setSelected(nextValues)}
+      searchable
+      hideSelected
+      clearable
+      maxSelected={3}
+      placeholder="Select teams"
+    />
+  );
+}`}
+>
+  <MultiSelectExample />
+</ComponentPreview>
+
+## Selection, search, and tags
+
+Each selected value renders as a removable tag. Removing a tag updates the value array immediately.
+`clearable` adds a clear action that removes every selection. With `searchable`, typing filters the
+menu; `hideSelected` removes already selected options from the menu so only remaining choices are
+shown.
+
+```tsx
+<MultiSelect
+  aria-label="Teams"
+  options={options}
+  defaultValue={['design']}
+  searchable
+  hideSelected
+  clearable
+/>
+```
+
+## Selection limits
+
+`maxSelected` disables unselected options once the limit is reached. Selected options stay
+interactive so the user can replace a choice.
+
+```tsx
+<MultiSelect aria-label="Teams" options={options} maxSelected={3} />
+```
+
+## Custom value content
+
+Override the default tags with `renderValue`. The callback receives selected options and a `remove`
+function:
+
+```tsx
+<MultiSelect
+  aria-label="Teams"
+  options={options}
+  defaultValue={['design', 'frontend']}
+  renderValue={(selected, remove) => (
+    <span>
+      {selected.length} selected
+      <button type="button" onClick={() => remove('design')}>
+        Remove Design
+      </button>
+    </span>
+  )}
+/>
+```
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'options',
+      type: 'Array<SelectOption | SelectOptionGroup>',
+      description: 'Options and option groups rendered in the listbox.',
+    },
+    {
+      name: 'value',
+      type: 'string[]',
+      description: 'Controlled selected values.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string[]',
+      default: '[]',
+      description: 'Initial values for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string[], options: SelectOption[]) => void',
+      description: 'Called with the next values and their options.',
+    },
+    {
+      name: 'maxSelected',
+      type: 'number',
+      description: 'Limits how many options can be selected.',
+    },
+    {
+      name: 'hideSelected',
+      type: 'boolean',
+      default: 'false',
+      description: 'Removes selected options from the menu.',
+    },
+    {
+      name: 'renderValue',
+      type: '(selected: SelectOption[], remove: (value: string) => void) => ReactNode',
+      description: 'Replaces the default tag display.',
+    },
+    {
+      name: 'removeLabel',
+      type: 'string',
+      default: `'Remove'`,
+      description: 'Accessible label prefix for tag remove actions.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: `'Select options'`,
+      description: 'Text shown when nothing is selected.',
+    },
+    {
+      name: 'searchable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Enables the search input and local filtering.',
+    },
+    {
+      name: 'searchPlaceholder',
+      type: 'string',
+      default: `'Search…'`,
+      description: 'Placeholder for the search input while the menu is open.',
+    },
+    {
+      name: 'onSearchChange',
+      type: '(query: string) => void',
+      description: 'Called when the query changes, including reset on close.',
+    },
+    {
+      name: 'filterOption',
+      type: '(option: SelectOption, query: string) => boolean',
+      description: 'Replaces the default case-insensitive label filter.',
+    },
+    {
+      name: 'emptyMessage',
+      type: 'ReactNode',
+      default: `'No options'`,
+      description: 'Content shown when no options match.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a loading row and sets aria-busy on the listbox.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a clear action while values are selected.',
+    },
+    {
+      name: 'clearLabel',
+      type: 'string',
+      default: `'Clear selection'`,
+      description: 'Accessible name for the clear action.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the entire control and its remove actions.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Sets aria-required on the combobox.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the danger border and aria-invalid.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Control and tag size using the shared control tokens.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name applied to one hidden input per value.',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Id applied to the combobox input.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Class name applied to the root element.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the selected values.',
+    },
+    {
+      name: 'aria-label / aria-labelledby',
+      type: 'string',
+      description: 'Accessible name for the combobox and listbox.',
+    },
+    {
+      name: 'aria-describedby / aria-errormessage',
+      type: 'string',
+      description: 'Connects help text and validation messages.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The combobox input renders `role="combobox"` with `aria-expanded`, `aria-controls`, and
+  `aria-activedescendant`. The popup renders `role="listbox"` with `aria-multiselectable="true"`.
+- Selected options expose `aria-selected="true"`; `Space` and `Enter` toggle the active option without
+  closing the menu. `Escape` closes and restores focus.
+- When `searchable` is false, letter keys perform typeahead. When it is true, typing filters instead.
+- Default tags include a labelled remove action. `renderValue` replaces this content; the wrapper
+  stops click propagation so custom controls do not toggle the menu.
+- `required` sets `aria-required`. The `name` prop renders one hidden input per selected value. Native
+  constraint validation is not triggered by this custom control; validate in the form submit handler.
+- A visually hidden live region announces the number of selected values.
+
+## Related
+
+- [Select](/docs/components/select/) for single-value selection.
+- [Tag](/docs/components/tag/) for the removable chip used by default.
+- [Input](/docs/components/input/) for the shared field styling.

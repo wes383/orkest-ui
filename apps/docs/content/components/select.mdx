@@ -1,0 +1,334 @@
+---
+title: Select
+description: A single-value combobox with search, groups, descriptions, and collision-aware positioning.
+section: components
+---
+
+`Select` is a single-value combobox built on a native button or text input and a custom listbox. It
+renders selected values, supports keyboard navigation, and positions the menu with viewport
+collision handling.
+
+Import it from `@orkest/ui/client` because the menu uses client-side state and positioning.
+
+## Live preview
+
+<ComponentPreview
+  title="Grouped options"
+  code={`import { Select } from '@orkest/ui/client';
+
+const options = [
+  {
+    label: 'Product',
+    options: [
+      { value: 'design', label: 'Design', description: 'Product design and research' },
+      { value: 'product', label: 'Product', description: 'Planning and strategy' },
+      { value: 'marketing', label: 'Marketing' },
+    ],
+  },
+  {
+    label: 'Engineering',
+    options: [
+      { value: 'frontend', label: 'Frontend' },
+      { value: 'backend', label: 'Backend' },
+      { value: 'platform', label: 'Platform', disabled: true },
+    ],
+  },
+];
+
+export function Example() {
+  return <Select aria-label="Team" options={options} defaultValue="design" clearable />;
+}`}
+>
+  <BasicSelectExample />
+</ComponentPreview>
+
+## Searchable
+
+Set `searchable` to turn the trigger into a text input. Typing filters option labels with a
+case-insensitive match; clear the query to restore the full list. Pass `filterOption` to replace the
+default matcher, or `onSearchChange` together with `loading` for async search.
+
+<ComponentPreview
+  title="Searchable select"
+  code={`import { Select } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Select
+      aria-label="Team"
+      options={options}
+      searchable
+      searchPlaceholder="Search teams"
+      placeholder="Choose a team"
+    />
+  );
+}`}
+>
+  <SearchableSelectExample />
+</ComponentPreview>
+
+For async search, return `true` from `filterOption` when the server already filtered the options:
+
+```tsx
+<Select
+  searchable
+  options={results}
+  loading={loading}
+  filterOption={() => true}
+  onSearchChange={(query) => fetchOptions(query)}
+/>
+```
+
+## Groups, descriptions, and icons
+
+Options can be grouped and extended with `description`, `icon`, and `disabled`:
+
+```ts
+interface SelectOption {
+  value: string;
+  label: string;
+  description?: ReactNode;
+  icon?: LucideIcon;
+  disabled?: boolean;
+}
+
+interface SelectOptionGroup {
+  label: string;
+  options: SelectOption[];
+}
+```
+
+Groups render `role="group"` with the group label as the accessible name. Descriptions are visible
+secondary text and are included in the option's accessible name.
+
+## Sizes
+
+Sizes follow the existing Input height, radius, and padding tokens.
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { Stack } from '@orkest/ui';
+import { Select } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Select aria-label="Small team" size="sm" options={options} defaultValue="design" />
+      <Select aria-label="Medium team" size="md" options={options} defaultValue="design" />
+      <Select aria-label="Large team" size="lg" options={options} defaultValue="design" />
+    </Stack>
+  );
+}`}
+>
+  <SelectSizesExample />
+</ComponentPreview>
+
+## States
+
+`disabled` blocks interaction, `invalid` applies the danger border and `aria-invalid`, and
+`clearable` adds a clear action while a value is selected.
+
+<ComponentPreview
+  title="Disabled, invalid, and clearable"
+  code={`import { Stack } from '@orkest/ui';
+import { Select } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Select aria-label="Disabled team" options={options} defaultValue="design" disabled />
+      <Select aria-label="Invalid team" options={options} placeholder="Choose a team" invalid />
+      <Select aria-label="Clearable team" options={options} defaultValue="product" clearable />
+    </Stack>
+  );
+}`}
+>
+  <SelectStatesExample />
+</ComponentPreview>
+
+## Loading and empty states
+
+`loading` renders a status row and marks the listbox busy. When filtering returns nothing, the menu
+shows `emptyMessage`.
+
+<ComponentPreview
+  title="Loading options"
+  code={`import { Select } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Select
+      aria-label="Searching teams"
+      options={[]}
+      searchable
+      loading
+      searchPlaceholder="Search teams"
+      emptyMessage="No teams matched"
+    />
+  );
+}`}
+>
+  <SelectLoadingExample />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'options',
+      type: 'Array<SelectOption | SelectOptionGroup>',
+      description: 'Options and option groups rendered in the listbox.',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Controlled selected value.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial value for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string | undefined, option?: SelectOption) => void',
+      description: 'Called with the next value, or undefined when cleared.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: `'Select an option'`,
+      description: 'Text shown when nothing is selected.',
+    },
+    {
+      name: 'searchable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Enables the search input and local filtering.',
+    },
+    {
+      name: 'searchPlaceholder',
+      type: 'string',
+      default: `'Search…'`,
+      description: 'Placeholder for the search input while the menu is open.',
+    },
+    {
+      name: 'onSearchChange',
+      type: '(query: string) => void',
+      description: 'Called when the query changes, including reset on close.',
+    },
+    {
+      name: 'filterOption',
+      type: '(option: SelectOption, query: string) => boolean',
+      description: 'Replaces the default case-insensitive label filter.',
+    },
+    {
+      name: 'emptyMessage',
+      type: 'ReactNode',
+      default: `'No options'`,
+      description: 'Content shown when no options match.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a loading row and sets aria-busy on the listbox.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a clear action while a value is selected.',
+    },
+    {
+      name: 'clearLabel',
+      type: 'string',
+      default: `'Clear selection'`,
+      description: 'Accessible name for the clear action.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the entire control.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Sets aria-required on the combobox.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the danger border and aria-invalid.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Control size using Input height and radius tokens.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name for the hidden input.',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Id applied to the combobox element.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Class name applied to the root element.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the value.',
+    },
+    {
+      name: 'aria-label / aria-labelledby',
+      type: 'string',
+      description: 'Accessible name for the combobox and listbox.',
+    },
+    {
+      name: 'aria-describedby / aria-errormessage',
+      type: 'string',
+      description: 'Connects help text and validation messages.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The trigger renders `role="combobox"` with `aria-expanded`, `aria-controls`, and
+  `aria-haspopup="listbox"`. The popup renders `role="listbox"` and each item `role="option"` with
+  `aria-selected` and `aria-disabled`.
+- The active option is tracked with `aria-activedescendant`; focus stays on the combobox.
+- The menu is positioned below the trigger and flips or shifts to stay inside the viewport. It is
+  rendered inside the component root, so scoped themes apply.
+- Outside pointer interactions close the menu. Selecting an option closes it and restores focus.
+- Disabled options are skipped by arrow keys and typeahead.
+- `required` sets `aria-required` and the `name` prop renders a hidden input. Because this is a custom
+  combobox, browsers do not run native constraint validation; validate in the form submit handler.
+- Associate a visible label with `id` and `htmlFor`, or use `aria-label` / `aria-labelledby`.
+
+| Key | Behavior |
+| --- | --- |
+| `Enter` / `Space` | Opens the menu or selects the active option |
+| `ArrowDown` / `ArrowUp` | Moves the active option |
+| `Home` / `End` | Moves to the first or last enabled option |
+| `Escape` | Closes the menu and restores focus |
+| `Tab` | Closes the menu and moves focus |
+| Letter keys | Typeahead when closed or not searchable; filters when searchable |
+
+## Related
+
+- [MultiSelect](/docs/components/multi-select/) for multiple values with tags.
+- [Input](/docs/components/input/) for the shared field styling.
+- [Label](/docs/components/typography/) for external labels.

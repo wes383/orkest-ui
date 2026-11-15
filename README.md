@@ -14,7 +14,8 @@ The repository is a pnpm monorepo containing the library and its custom document
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
 - Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Input`,
-  `Radio`, `RadioGroup`, `Switch`, `Textarea` (exported from `@orkest/ui/client`)
+  `MultiSelect`, `Radio`, `RadioGroup`, `Select`, `Switch`, `Textarea` (exported from
+  `@orkest/ui/client`)
 
 Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
 registry yet.
@@ -65,7 +66,7 @@ document root or a container; without the attribute the stylesheet follows `pref
 Client-only components are exported from `@orkest/ui/client`:
 
 ```tsx
-import { Avatar, AvatarFallback, Input, Textarea } from '@orkest/ui/client';
+import { Avatar, AvatarFallback, Input, MultiSelect, Select, Textarea } from '@orkest/ui/client';
 ```
 
 They use client-side state and must render inside a Client Component.
