@@ -15,6 +15,11 @@ import {
 } from 'react';
 
 import { cx } from '../../utils/cx';
+import {
+  mergeIds,
+  useFieldContext,
+  useFieldControl,
+} from '../field/field-context';
 import styles from './radio.module.css';
 
 export type RadioSize = 'sm' | 'md' | 'lg';
@@ -54,14 +59,25 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
     defaultChecked,
     name,
     onChange,
+    'aria-labelledby': ariaLabelledBy,
     ...rest
   },
   ref,
 ) {
   const group = useContext(RadioGroupContext);
+  const field = useFieldContext();
+  const control = useFieldControl({
+    id: rest.id,
+    name: group ? group.name : name,
+    disabled: disabled || group?.disabled,
+    required: required || group?.required,
+    describedBy: rest['aria-describedby'],
+    inheritId: !group,
+  });
   const resolvedSize = size ?? group?.size ?? 'md';
-  const resolvedDisabled = disabled || (group?.disabled ?? false);
-  const resolvedRequired = required || (group?.required ?? false);
+  const resolvedDisabled = control.disabled;
+  const resolvedRequired = control.required;
+  const resolvedName = group?.name ?? control.name;
   const checkedProps = group
     ? { checked: value !== undefined && group.value === value }
     : { checked, defaultChecked };
@@ -85,10 +101,16 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio(
         {...rest}
         {...checkedProps}
         type="radio"
-        name={group?.name ?? name}
+        id={control.id}
+        name={resolvedName}
         value={value}
         disabled={resolvedDisabled}
         required={resolvedRequired}
+        aria-describedby={control.describedBy}
+        aria-labelledby={
+          ariaLabelledBy ?? (group ? undefined : field?.labelId)
+        }
+        {...(control.invalid ? { 'aria-invalid': true as const } : {})}
         className={styles.input}
         onChange={handleChange}
       />
@@ -111,6 +133,8 @@ export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   /** Requires a selection in the group. */
   required?: boolean;
+  /** Applies the invalid state to the group. */
+  invalid?: boolean;
   /** Layout direction. Defaults to `vertical`. */
   orientation?: RadioOrientation;
   /** Size applied to radios that do not set their own size. */
@@ -126,16 +150,28 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
     onValueChange,
     disabled = false,
     required = false,
+    invalid = false,
     orientation = 'vertical',
     size = 'md',
     className,
     children,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     ...rest
   },
   ref,
 ) {
+  const field = useFieldContext();
   const generatedId = useId();
-  const name = nameProp ?? `radio-group-${generatedId.replace(/:/g, '')}`;
+  const name =
+    nameProp ??
+    field?.name ??
+    `radio-group-${generatedId.replace(/:/g, '')}`;
+  const resolvedDisabled = disabled || field?.disabled || false;
+  const resolvedRequired = required || field?.required || false;
+  const resolvedInvalid = invalid || field?.invalid || false;
+  const resolvedDescribedBy = mergeIds(ariaDescribedBy, field?.describedBy);
+  const resolvedLabelledBy = ariaLabelledBy ?? field?.labelId;
   const [internalValue, setInternalValue] = useState(defaultValue);
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
@@ -152,8 +188,15 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
   );
 
   const contextValue = useMemo(
-    () => ({ name, value: currentValue, setValue, disabled, required, size }),
-    [name, currentValue, setValue, disabled, required, size],
+    () => ({
+      name,
+      value: currentValue,
+      setValue,
+      disabled: resolvedDisabled,
+      required: resolvedRequired,
+      size,
+    }),
+    [name, currentValue, setValue, resolvedDisabled, resolvedRequired, size],
   );
 
   return (
@@ -162,11 +205,15 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function R
         ref={ref}
         {...rest}
         role="radiogroup"
-        aria-disabled={disabled || undefined}
-        aria-required={required || undefined}
+        aria-disabled={resolvedDisabled || undefined}
+        aria-required={resolvedRequired || undefined}
+        aria-invalid={resolvedInvalid || undefined}
+        aria-labelledby={resolvedLabelledBy}
+        aria-describedby={resolvedDescribedBy}
         aria-orientation={orientation}
         className={cx(styles.group, className)}
         data-orientation={orientation}
+        data-invalid={resolvedInvalid || undefined}
       >
         {children}
       </div>

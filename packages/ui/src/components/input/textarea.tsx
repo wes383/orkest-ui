@@ -7,11 +7,14 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  type Ref,
   type TextareaHTMLAttributes,
 } from 'react';
+import { Field as BaseField } from '@base-ui/react/field';
 
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { useFieldContext, useFieldControl } from '../field/field-context';
 import type { InputSize } from './input';
 import styles from './input.module.css';
 
@@ -59,6 +62,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   ref,
 ) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const field = useFieldContext();
+  const control = useFieldControl({
+    id: rest.id,
+    name: rest.name,
+    disabled,
+    required: rest.required,
+    invalid,
+  });
   const [uncontrolledLength, setUncontrolledLength] = useState(
     () => String(defaultValue ?? '').length,
   );
@@ -128,30 +139,41 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
 
   const countText = maxLength === undefined ? String(length) : `${length} / ${maxLength}`;
 
+  const textareaProps = {
+    ...rest,
+    id: control.id,
+    name: control.name,
+    rows,
+    value,
+    defaultValue,
+    maxLength,
+    className: cx(styles.input, styles.textarea, className),
+    'data-auto-resize': autoResize || undefined,
+    'data-resize': autoResize ? 'none' : resize,
+    disabled: control.disabled,
+    readOnly,
+    required: control.required,
+    ...(control.invalid ? { 'aria-invalid': true as const } : {}),
+    onChange: handleChange,
+  };
+
   return (
-    <div className={styles.root} data-disabled={disabled || undefined}>
+    <div className={styles.root} data-disabled={control.disabled || undefined}>
       <div
         className={cx(styles.field, styles.textareaField)}
         data-size={size}
-        data-invalid={invalid || undefined}
-        data-disabled={disabled || undefined}
+        data-invalid={control.invalid || undefined}
+        data-disabled={control.disabled || undefined}
         data-read-only={readOnly || undefined}
       >
-        <textarea
-          ref={setTextareaRef}
-          {...rest}
-          rows={rows}
-          value={value}
-          defaultValue={defaultValue}
-          maxLength={maxLength}
-          className={cx(styles.input, styles.textarea, className)}
-          data-auto-resize={autoResize || undefined}
-          data-resize={autoResize ? 'none' : resize}
-          disabled={disabled}
-          readOnly={readOnly}
-          aria-invalid={invalid || undefined}
-          onChange={handleChange}
-        />
+        {field ? (
+          <BaseField.Control
+            ref={setTextareaRef as unknown as Ref<HTMLElement>}
+            render={<textarea {...textareaProps} />}
+          />
+        ) : (
+          <textarea ref={setTextareaRef} {...textareaProps} />
+        )}
       </div>
       {showCount ? <span className={styles.countBelow}>{countText}</span> : null}
     </div>

@@ -9,6 +9,7 @@ import {
 } from 'react';
 
 import { cx } from '../../utils/cx';
+import { useFieldContext, useFieldControl } from '../field/field-context';
 import styles from './switch.module.css';
 
 export type SwitchSize = 'sm' | 'md' | 'lg';
@@ -31,6 +32,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     defaultChecked = false,
     disabled,
     onChange,
+    'aria-describedby': ariaDescribedBy,
+    'aria-labelledby': ariaLabelledBy,
     ...rest
   },
   ref,
@@ -38,6 +41,14 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   const isControlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
   const isChecked = isControlled ? checked : internalChecked;
+  const field = useFieldContext();
+  const control = useFieldControl({
+    id: rest.id,
+    name: rest.name,
+    disabled,
+    required: rest.required,
+    describedBy: ariaDescribedBy,
+  });
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (!isControlled) {
@@ -51,7 +62,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     <label
       className={cx(styles.root, className)}
       data-size={size}
-      data-disabled={disabled || undefined}
+      data-disabled={control.disabled || undefined}
       data-checked={isChecked || undefined}
     >
       <input
@@ -59,9 +70,15 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         {...rest}
         type="checkbox"
         role="switch"
+        id={control.id}
+        name={control.name}
         aria-checked={isChecked}
+        aria-describedby={control.describedBy}
+        aria-labelledby={ariaLabelledBy ?? field?.labelId}
+        {...(control.invalid ? { 'aria-invalid': true as const } : {})}
         checked={isChecked}
-        disabled={disabled}
+        disabled={control.disabled}
+        required={control.required}
         className={styles.input}
         onChange={handleChange}
       />

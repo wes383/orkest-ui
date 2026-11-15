@@ -16,6 +16,7 @@ import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { useFieldControl } from '../field/field-context';
 import type { SelectProps } from './select';
 import { SelectOptionContent } from './select-option';
 import {
@@ -61,7 +62,14 @@ export function SearchableSelect({
   forwardedRef,
 }: SearchableSelectProps) {
   const generatedId = useId().replace(/:/g, '');
-  const comboboxId = idProp ?? `select-${generatedId}`;
+  const control = useFieldControl({
+    id: idProp,
+    name,
+    disabled,
+    required,
+    invalid,
+  });
+  const comboboxId = control.id ?? `select-${generatedId}`;
 
   const [internalValue, setInternalValue] = useState<string | undefined>(defaultValue);
   const [open, setOpen] = useState(false);
@@ -90,7 +98,7 @@ export function SearchableSelect({
 
   const iconSize = selectIconSizeBySize[size];
   const actionIconSize = selectActionIconSizeBySize[size];
-  const showClear = clearable && currentValue !== undefined && !disabled;
+  const showClear = clearable && currentValue !== undefined && !control.disabled;
 
   const setInputRef = useCallback(
     (node: HTMLInputElement | null) => {
@@ -214,9 +222,9 @@ export function SearchableSelect({
       onOpenChange={handleOpenChange}
       open={open}
       inputValue={open ? query : (selectedOption?.label ?? '')}
-      name={name}
-      required={required}
-      disabled={disabled}
+      name={control.name}
+      required={control.required}
+      disabled={control.disabled}
       modal={false}
       autoHighlight
       openOnInputClick
@@ -226,16 +234,16 @@ export function SearchableSelect({
         className={cx(styles.root, className)}
         data-size={size}
         data-open={open || undefined}
-        data-disabled={disabled || undefined}
-        data-invalid={invalid || undefined}
+        data-disabled={control.disabled || undefined}
+        data-invalid={control.invalid || undefined}
       >
         <BaseCombobox.InputGroup
           ref={fieldRef}
           className={styles.field}
           data-size={size}
           data-open={open || undefined}
-          data-disabled={disabled || undefined}
-          data-invalid={invalid || undefined}
+          data-disabled={control.disabled || undefined}
+          data-invalid={control.invalid || undefined}
           onMouseDown={handleGroupMouseDown}
         >
           {leftIcon ? (
@@ -254,7 +262,7 @@ export function SearchableSelect({
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
             aria-errormessage={ariaErrorMessage}
-            aria-invalid={invalid || undefined}
+            aria-invalid={control.invalid || undefined}
           />
           {showClear ? (
             <BaseCombobox.Clear

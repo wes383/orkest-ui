@@ -1,0 +1,134 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  width: 100%;
+  min-inline-size: 0;
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-orientation="horizontal"] {
+  display: grid;
+  grid-template-columns: minmax(6rem, max-content) minmax(0, 1fr);
+  column-gap: var(--ok-space-4);
+  row-gap: var(--ok-space-1);
+  align-items: start;
+}
+
+.root[data-orientation="horizontal"] > * {
+  grid-column: 2;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-1);
+  color: var(--ui-foreground);
+  font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: var(--ok-line-height-snug);
+}
+
+.root[data-orientation="horizontal"] > .label {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  min-height: var(--ok-control-height-md);
+}
+
+.label[data-disabled] {
+  color: var(--ui-disabled-foreground);
+}
+
+.requiredIndicator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--ui-danger);
+  line-height: 1;
+}
+
+.optional {
+  color: var(--ui-subtle-foreground);
+  font-size: var(--ok-font-size-xs);
+  font-weight: var(--ok-font-weight-regular);
+}
+
+.description {
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+  line-height: var(--ok-line-height-snug);
+}
+
+.description[data-disabled] {
+  color: var(--ui-disabled-foreground);
+}
+
+.message {
+  display: flex;
+  gap: var(--ok-space-1);
+  align-items: flex-start;
+  margin: 0;
+  font-size: var(--ok-font-size-xs);
+  line-height: var(--ok-line-height-snug);
+}
+
+.message[data-type="error"] {
+  color: var(--ui-danger);
+}
+
+.message[data-type="success"] {
+  color: var(--ui-success);
+}
+
+.message[data-type="warning"] {
+  color: var(--ui-warning);
+}
+
+.message[data-type="info"] {
+  color: var(--ui-accent);
+}
+
+.messageIcon {
+  flex: none;
+}
+
+.messageList {
+  margin: 0;
+  padding-inline-start: var(--ok-space-4);
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-4);
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  color: var(--ui-foreground);
+  font-size: var(--ok-font-size-md);
+  font-weight: var(--ok-font-weight-semibold);
+  line-height: var(--ok-line-height-tight);
+}
+
+.legend[data-disabled] {
+  color: var(--ui-disabled-foreground);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

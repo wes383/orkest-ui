@@ -13,6 +13,27 @@ export type {
   AvatarStatus,
 } from './components/avatar';
 
+export {
+  Field,
+  FieldDescription,
+  FieldLabel,
+  FieldMessage,
+  FieldRequiredIndicator,
+  Fieldset,
+  Legend,
+} from './components/field';
+export type {
+  FieldDescriptionProps,
+  FieldLabelProps,
+  FieldMessageProps,
+  FieldMessageType,
+  FieldOrientation,
+  FieldProps,
+  FieldRequiredIndicatorProps,
+  FieldsetProps,
+  LegendProps,
+} from './components/field';
+
 export { Input } from './components/input';
 export type { InputProps, InputSize } from './components/input';
 

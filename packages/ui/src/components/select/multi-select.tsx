@@ -18,6 +18,7 @@ import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { useFieldControl } from '../field/field-context';
 import { SelectOptionContent } from './select-option';
 import {
   excludeSelectValues,
@@ -95,7 +96,14 @@ function MultiSelectImpl({
   forwardedRef,
 }: MultiSelectImplProps) {
   const generatedId = useId().replace(/:/g, '');
-  const comboboxId = idProp ?? `multi-select-${generatedId}`;
+  const control = useFieldControl({
+    id: idProp,
+    name,
+    disabled,
+    required,
+    invalid,
+  });
+  const comboboxId = control.id ?? `multi-select-${generatedId}`;
 
   const [internalValues, setInternalValues] = useState<string[]>(
     defaultValue ?? [],
@@ -145,7 +153,7 @@ function MultiSelectImpl({
 
   const iconSize = selectIconSizeBySize[size];
   const actionIconSize = selectActionIconSizeBySize[size];
-  const showClear = clearable && currentValues.length > 0 && !disabled;
+  const showClear = clearable && currentValues.length > 0 && !control.disabled;
   const inputPlaceholder = searchable
     ? open
       ? searchPlaceholder
@@ -297,9 +305,9 @@ function MultiSelectImpl({
       onOpenChange={handleOpenChange}
       open={open}
       inputValue={searchable ? query : ''}
-      name={name}
-      required={required}
-      disabled={disabled}
+      name={control.name}
+      required={control.required}
+      disabled={control.disabled}
       modal={false}
       openOnInputClick
     >
@@ -308,8 +316,8 @@ function MultiSelectImpl({
         className={cx(styles.root, className)}
         data-size={size}
         data-open={open || undefined}
-        data-disabled={disabled || undefined}
-        data-invalid={invalid || undefined}
+        data-disabled={control.disabled || undefined}
+        data-invalid={control.invalid || undefined}
       >
         <BaseCombobox.InputGroup
           ref={fieldRef}
@@ -317,8 +325,8 @@ function MultiSelectImpl({
           data-size={size}
           data-multiple="true"
           data-open={open || undefined}
-          data-disabled={disabled || undefined}
-          data-invalid={invalid || undefined}
+          data-disabled={control.disabled || undefined}
+          data-invalid={control.invalid || undefined}
           onMouseDown={handleGroupMouseDown}
         >
           {leftIcon ? (
@@ -355,7 +363,7 @@ function MultiSelectImpl({
                         <span className={styles.chipLabel}>{label}</span>
                         <BaseCombobox.ChipRemove
                           className={styles.chipRemove}
-                          disabled={disabled}
+                          disabled={control.disabled}
                           aria-label={`${removeLabel} ${label}`}
                         >
                           <Icon icon={X} size="xs" />
@@ -376,7 +384,7 @@ function MultiSelectImpl({
                   aria-labelledby={ariaLabelledBy}
                   aria-describedby={ariaDescribedBy}
                   aria-errormessage={ariaErrorMessage}
-                  aria-invalid={invalid || undefined}
+                  aria-invalid={control.invalid || undefined}
                   aria-description={
                     currentValues.length > 0
                       ? `${currentValues.length} selected`

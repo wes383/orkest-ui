@@ -16,6 +16,7 @@ import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { useFieldControl } from '../field/field-context';
 import { SearchableSelect } from './searchable-select';
 import { SelectOptionContent } from './select-option';
 import {
@@ -74,7 +75,14 @@ function PlainSelect({
   forwardedRef,
 }: InternalSelectProps) {
   const generatedId = useId().replace(/:/g, '');
-  const comboboxId = idProp ?? `select-${generatedId}`;
+  const control = useFieldControl({
+    id: idProp,
+    name,
+    disabled,
+    required,
+    invalid,
+  });
+  const comboboxId = control.id ?? `select-${generatedId}`;
 
   const [internalValue, setInternalValue] = useState<string | undefined>(defaultValue);
   const [open, setOpen] = useState(false);
@@ -89,7 +97,7 @@ function PlainSelect({
 
   const iconSize = selectIconSizeBySize[size];
   const actionIconSize = selectActionIconSizeBySize[size];
-  const showClear = clearable && currentValue !== undefined && !disabled;
+  const showClear = clearable && currentValue !== undefined && !control.disabled;
 
   const setTriggerRef = useCallback(
     (node: HTMLButtonElement | null) => {
@@ -177,9 +185,9 @@ function PlainSelect({
       value={currentValue ?? null}
       onValueChange={handleValueChange}
       onOpenChange={(nextOpen) => setOpen(nextOpen)}
-      name={name}
-      required={required}
-      disabled={disabled}
+      name={control.name}
+      required={control.required}
+      disabled={control.disabled}
       modal={false}
     >
       <div
@@ -187,16 +195,16 @@ function PlainSelect({
         className={cx(styles.root, className)}
         data-size={size}
         data-open={open || undefined}
-        data-disabled={disabled || undefined}
-        data-invalid={invalid || undefined}
+        data-disabled={control.disabled || undefined}
+        data-invalid={control.invalid || undefined}
       >
         <div
           ref={fieldRef}
           className={styles.field}
           data-size={size}
           data-open={open || undefined}
-          data-disabled={disabled || undefined}
-          data-invalid={invalid || undefined}
+          data-disabled={control.disabled || undefined}
+          data-invalid={control.invalid || undefined}
           data-clearable={showClear || undefined}
           onClick={handleFieldClick}
         >
@@ -213,7 +221,7 @@ function PlainSelect({
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
             aria-errormessage={ariaErrorMessage}
-            aria-invalid={invalid || undefined}
+            aria-invalid={control.invalid || undefined}
           >
             <BaseSelect.Value className={styles.value} placeholder={placeholder} />
             <span className={cx(styles.chevron, styles.chevronButton)}>

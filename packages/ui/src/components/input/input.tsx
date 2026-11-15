@@ -8,12 +8,15 @@ import {
   type ChangeEvent,
   type InputHTMLAttributes,
   type ReactNode,
+  type Ref,
 } from 'react';
+import { Input as BaseInput } from '@base-ui/react/input';
 import { Eye, EyeOff, X, type LucideIcon } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
+import { useFieldContext, useFieldControl } from '../field/field-context';
 import styles from './input.module.css';
 
 export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -88,6 +91,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   ref,
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const field = useFieldContext();
+  const control = useFieldControl({
+    id: rest.id,
+    name: rest.name,
+    disabled,
+    required: rest.required,
+    invalid,
+  });
   const [uncontrolledLength, setUncontrolledLength] = useState(
     () => String(defaultValue ?? '').length,
   );
@@ -97,8 +108,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const iconSize = iconSizeByInputSize[size];
   const actionIconSize = actionIconSizeByInputSize[size];
   const resolvedType = type === 'password' && passwordVisible ? 'text' : type;
-  const showClear = clearable && length > 0 && !disabled && !readOnly;
-  const showPasswordAction = passwordToggle && type === 'password' && !disabled;
+  const showClear = clearable && length > 0 && !control.disabled && !readOnly;
+  const showPasswordAction =
+    passwordToggle && type === 'password' && !control.disabled;
   const hasActions = showClear || showPasswordAction;
   const countText = maxLength === undefined ? String(length) : `${length} / ${maxLength}`;
 
@@ -109,6 +121,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     },
     [ref],
   );
+
+  const inputProps = {
+    ...rest,
+    id: control.id,
+    name: control.name,
+    type: resolvedType,
+    value,
+    defaultValue,
+    maxLength,
+    className: cx(styles.input, className),
+    disabled: control.disabled,
+    readOnly,
+    required: control.required,
+    ...(control.invalid ? { 'aria-invalid': true as const } : {}),
+    onChange: handleChange,
+  };
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (value === undefined) {
@@ -144,12 +172,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   }
 
   return (
-    <div className={styles.root} data-disabled={disabled || undefined}>
+    <div className={styles.root} data-disabled={control.disabled || undefined}>
       <div
         className={styles.field}
         data-size={size}
-        data-invalid={invalid || undefined}
-        data-disabled={disabled || undefined}
+        data-invalid={control.invalid || undefined}
+        data-disabled={control.disabled || undefined}
         data-read-only={readOnly || undefined}
         data-actions={hasActions || undefined}
       >
@@ -161,19 +189,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         {prefix !== undefined && prefix !== null ? (
           <span className={styles.affix}>{prefix}</span>
         ) : null}
-        <input
-          ref={setInputRef}
-          {...rest}
-          type={resolvedType}
-          value={value}
-          defaultValue={defaultValue}
-          maxLength={maxLength}
-          className={cx(styles.input, className)}
-          disabled={disabled}
-          readOnly={readOnly}
-          aria-invalid={invalid || undefined}
-          onChange={handleChange}
-        />
+        {field ? (
+          <BaseInput
+            ref={setInputRef as unknown as Ref<HTMLElement>}
+            {...inputProps}
+          />
+        ) : (
+          <input ref={setInputRef} {...inputProps} />
+        )}
         {suffix !== undefined && suffix !== null ? (
           <span className={styles.affix}>{suffix}</span>
         ) : null}
