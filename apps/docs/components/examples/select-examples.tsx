@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Palette } from 'lucide-react';
 
 import { Stack } from '@orkest/ui';
 import { MultiSelect, Select, type SelectItem } from '@orkest/ui/client';
@@ -16,7 +16,7 @@ const teamOptions: SelectItem[] = [
         value: 'design',
         label: 'Design',
         description: 'Product design and research',
-        icon: Check,
+        icon: Palette,
       },
       { value: 'product', label: 'Product', description: 'Planning and strategy' },
       { value: 'marketing', label: 'Marketing' },
