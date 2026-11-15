@@ -178,6 +178,40 @@ describe('DropdownMenu', () => {
     expect(trigger).toHaveFocus();
   });
 
+  it('suppresses the trigger focus ring after a keyboard selection', async () => {
+    const user = userEvent.setup();
+    render(
+      <div>
+        <ActionsMenu />
+        <button type="button">After</button>
+      </div>,
+    );
+    const trigger = screen.getByRole('button', { name: 'Actions' });
+
+    await user.tab();
+    await user.keyboard('{Enter}');
+    await screen.findByRole('menu');
+    await user.keyboard('{ArrowDown}{Enter}');
+
+    await waitFor(() => {
+      expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    });
+    expect(trigger).toHaveFocus();
+    expect(trigger).toHaveAttribute('data-focus-ring', 'none');
+
+    await user.tab();
+
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+    await waitFor(() => {
+      expect(trigger).not.toHaveAttribute('data-focus-ring');
+    });
+
+    await user.click(trigger);
+    await screen.findByRole('menu');
+
+    expect(trigger).not.toHaveAttribute('data-focus-ring');
+  });
+
   it('closes when clicking outside', async () => {
     const user = userEvent.setup();
     render(

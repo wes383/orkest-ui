@@ -1,7 +1,10 @@
 'use client';
 
 import {
+  createContext,
   forwardRef,
+  useContext,
+  useState,
   type CSSProperties,
   type ComponentPropsWithoutRef,
   type ReactElement,
@@ -33,9 +36,48 @@ import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuProps = MenuRootProps;
 
+interface DropdownMenuFocusRingContextValue {
+  suppressFocusRing: boolean;
+  setSuppressFocusRing: (value: boolean) => void;
+}
+
+const DropdownMenuFocusRingContext =
+  createContext<DropdownMenuFocusRingContextValue | null>(null);
+
 /** Root of a dropdown menu with controlled and uncontrolled open state. */
-export function DropdownMenu(props: DropdownMenuProps) {
-  return <BaseMenu.Root {...props} />;
+export function DropdownMenu({
+  children,
+  onOpenChange,
+  ...rest
+}: DropdownMenuProps) {
+  const [suppressFocusRing, setSuppressFocusRing] = useState(false);
+
+  function handleOpenChange(
+    nextOpen: boolean,
+    eventDetails: Parameters<NonNullable<MenuRootProps['onOpenChange']>>[1],
+  ) {
+    onOpenChange?.(nextOpen, eventDetails);
+
+    if (eventDetails.isCanceled) {
+      return;
+    }
+
+    if (nextOpen) {
+      setSuppressFocusRing(false);
+    } else if (eventDetails.reason === 'item-press') {
+      setSuppressFocusRing(true);
+    }
+  }
+
+  return (
+    <DropdownMenuFocusRingContext.Provider
+      value={{ suppressFocusRing, setSuppressFocusRing }}
+    >
+      <BaseMenu.Root {...rest} onOpenChange={handleOpenChange}>
+        {children}
+      </BaseMenu.Root>
+    </DropdownMenuFocusRingContext.Provider>
+  );
 }
 
 export interface DropdownMenuTriggerProps extends ButtonProps {
@@ -53,11 +95,22 @@ export interface DropdownMenuTriggerProps extends ButtonProps {
 export const DropdownMenuTrigger = forwardRef<
   HTMLButtonElement,
   DropdownMenuTriggerProps
->(function DropdownMenuTrigger({ variant = 'secondary', render, ...rest }, ref) {
+>(function DropdownMenuTrigger(
+  { variant = 'secondary', render, className, onBlur, ...rest },
+  ref,
+) {
+  const focusRing = useContext(DropdownMenuFocusRingContext);
+
   return (
     <BaseMenu.Trigger
       ref={ref}
       render={render ?? <Button variant={variant} />}
+      className={cx(styles.trigger, className)}
+      data-focus-ring={focusRing?.suppressFocusRing ? 'none' : undefined}
+      onBlur={(event) => {
+        focusRing?.setSuppressFocusRing(false);
+        onBlur?.(event);
+      }}
       {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
     />
   );
