@@ -131,24 +131,21 @@
   min-width: 0;
 }
 
+/* Mirrors the compact keyboard hint used by the documentation shell. */
 .shortcut {
+  display: inline-flex;
   flex: none;
+  justify-content: center;
+  min-width: var(--ok-space-5);
   margin-inline-start: auto;
-  color: var(--ui-subtle-foreground);
-  font-family: var(--ok-font-mono);
-  font-size: var(--ok-font-size-2xs);
-  font-weight: var(--ok-font-weight-medium);
-  letter-spacing: var(--ok-letter-spacing-wide);
-  line-height: var(--ok-line-height-snug);
-}
-
-.item[data-variant="destructive"] .shortcut {
-  color: inherit;
-  opacity: 0.8;
-}
-
-.item[data-disabled] .shortcut {
-  color: inherit;
+  padding: 1px var(--ok-space-1);
+  border: 0;
+  border-radius: var(--ok-radius-sm);
+  background: var(--ui-secondary);
+  color: var(--ui-muted-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: 0.625rem;
+  line-height: 1.4;
 }
 
 .indicatorSlot {
