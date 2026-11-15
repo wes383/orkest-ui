@@ -305,6 +305,7 @@ function MultiSelectImpl({
       onOpenChange={handleOpenChange}
       open={open}
       inputValue={searchable ? query : ''}
+      autoHighlight={searchable}
       name={control.name}
       required={control.required}
       disabled={control.disabled}

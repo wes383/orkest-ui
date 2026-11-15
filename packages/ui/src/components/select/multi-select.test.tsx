@@ -226,6 +226,36 @@ describe('MultiSelect', () => {
     ).toBeInTheDocument();
   });
 
+  it('auto-highlights the first search result for Enter selection', async () => {
+    const onChange = vi.fn();
+
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={options}
+        searchable
+        onChange={onChange}
+      />,
+    );
+
+    const user = userEvent.setup();
+    const combobox = screen.getByRole('combobox', { name: 'Teams' });
+
+    await user.click(combobox);
+    await user.type(combobox, 'eng');
+
+    expect(
+      screen.getByRole('option', { name: 'Engineering' }),
+    ).toHaveAttribute('data-highlighted');
+
+    await user.keyboard('{Enter}');
+
+    expect(onChange).toHaveBeenCalledWith(
+      ['engineering'],
+      [expect.objectContaining({ value: 'engineering' })],
+    );
+  });
+
   it('does not select disabled options', async () => {
     const onChange = vi.fn();
 
