@@ -72,7 +72,7 @@
 
 .list[data-variant="enclosed"] {
   gap: calc(var(--ok-space-1) / 2);
-  padding: calc(var(--ok-space-1) / 2);
+  padding: var(--ok-space-1);
   border-radius: var(--tabs-radius);
   background: var(--ui-surface-sunken);
   box-shadow: inset 0 0 0 var(--ok-border-width) var(--ui-border);
@@ -142,7 +142,7 @@
 }
 
 .list[data-variant="enclosed"] .trigger {
-  border-radius: calc(var(--tabs-radius) - var(--ok-space-1) / 2);
+  border-radius: calc(var(--tabs-radius) - var(--ok-space-1));
 }
 
 .list[data-variant="enclosed"] .trigger[data-active] {
@@ -228,7 +228,7 @@
 }
 
 .list[data-variant="enclosed"] .indicator {
-  border-radius: calc(var(--tabs-radius) - var(--ok-space-1) / 2);
+  border-radius: calc(var(--tabs-radius) - var(--ok-space-1));
   background: var(--ui-surface-raised);
   box-shadow: var(--ok-shadow-xs);
 }
