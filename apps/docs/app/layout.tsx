@@ -9,6 +9,7 @@ import './globals.css';
 
 import { DocsHeader } from '@/components/docs/docs-header';
 import { ThemeScript } from '@/components/docs/theme-script';
+import { ToastHost } from '@/components/docs/toast-host';
 import { getNavigation, getSearchIndex } from '@/lib/docs-source';
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <DocsHeader navigation={navigation} searchIndex={searchIndex} />
         <main id="main-content">{children}</main>
+        <ToastHost />
       </body>
     </html>
   );

@@ -121,6 +121,13 @@ import {
   TabsSizesExample,
   TabsVerticalExample,
 } from '../examples/tabs-examples';
+import {
+  ToastActionExample,
+  ToastPositionsExample,
+  ToastPromiseExample,
+  ToastQueueExample,
+  ToastTypesExample,
+} from '../examples/toast-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -259,6 +266,11 @@ export const mdxComponents = {
   TabsPillsExample,
   TabsSizesExample,
   TabsVerticalExample,
+  ToastActionExample,
+  ToastPositionsExample,
+  ToastPromiseExample,
+  ToastQueueExample,
+  ToastTypesExample,
   FieldBasicExample,
   FieldCheckboxExample,
   FieldDisabledExample,

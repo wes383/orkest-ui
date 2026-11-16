@@ -1,0 +1,451 @@
+---
+title: Toast
+description: Short, non-blocking feedback for actions and background work.
+section: components
+---
+
+`Toast` shows brief, non-blocking feedback such as a saved record, a failed request, or a finished
+upload. Use it for results the user does not need to confirm. For decisions that require an answer,
+use `AlertDialog`; for persistent warnings inside the page, use an inline alert.
+
+The component is built on Base UI Toast. Base UI owns the queue, timers, swipe gestures, and live
+region announcements; Orkest UI owns the visual design and the imperative API.
+
+Import the components from `@orkest/ui/client`.
+
+## Setup
+
+Render one `ToastProvider` and one `ToastViewport` at the application root. The provider connects
+the imperative `toast` API to the viewport.
+
+```tsx
+import { ToastProvider, ToastViewport } from '@orkest/ui/client';
+
+export function App() {
+  return (
+    <ToastProvider>
+      {/* application */}
+      <ToastViewport position="top-right" />
+    </ToastProvider>
+  );
+}
+```
+
+## Basic usage
+
+The imperative API works from event handlers, async functions, and modules outside React.
+
+<ComponentPreview
+  title="Types"
+  code={`import { Button, Stack } from '@orkest/ui';
+import { toast } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      <Button
+        variant="outline"
+        onClick={() => toast.success('Changes saved')}
+      >
+        Success
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.error('Could not save')}
+      >
+        Error
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.warning('Unsaved changes')}
+      >
+        Warning
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() => toast.info('Copied to clipboard')}
+      >
+        Info
+      </Button>
+    </Stack>
+  );
+}`}
+>
+  <ToastTypesExample />
+</ComponentPreview>
+
+## Types
+
+| Type | Default icon | Use |
+| --- | --- | --- |
+| `success` | CircleCheck | The operation succeeded. |
+| `error` | CircleX | The operation failed. |
+| `warning` | TriangleAlert | The user should pay attention. |
+| `info` | Info | Neutral confirmation or status. |
+| `loading` | LoaderCircle | Work is still running. Loading toasts never auto-dismiss. |
+
+Only the icon carries the status color; the surface stays neutral in both themes.
+
+## Anatomy
+
+- `ToastProvider` owns the queue, timeout, and limit.
+- `ToastViewport` renders the fixed stack and manages the live region.
+- `Toast` is one notification root.
+- `ToastContent` lays out the icon, text, action, and close button.
+- `ToastTitle` and `ToastDescription` render the accessible title and description.
+- `ToastAction` adds one optional action such as Undo.
+- `ToastClose` dismisses the toast.
+- `ToastIcon` derives its icon from the toast type.
+
+## Descriptions and actions
+
+<ComponentPreview
+  title="Undo action"
+  code={`import { Button } from '@orkest/ui';
+import { toast } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Button
+      variant="outline"
+      onClick={() =>
+        toast.show({
+          title: 'Task deleted',
+          description: 'The task moved to Trash.',
+          action: {
+            label: 'Undo',
+            onClick: () => toast.success('Task restored'),
+          },
+        })
+      }
+    >
+      Delete task
+    </Button>
+  );
+}`}
+>
+  <ToastActionExample />
+</ComponentPreview>
+
+Keep toasts short. Do not put forms or multi-step flows inside a toast.
+
+## Promise tracking
+
+`toast.promise` creates a loading toast and updates it in place when the promise settles.
+
+<ComponentPreview
+  title="Upload state"
+  code={`import { Button } from '@orkest/ui';
+import { toast } from '@orkest/ui/client';
+
+function simulateUpload() {
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, 1600);
+  });
+}
+
+export function Example() {
+  return (
+    <Button
+      onClick={() =>
+        toast.promise(simulateUpload(), {
+          loading: 'Uploading file…',
+          success: 'Upload complete',
+          error: 'Upload failed',
+        })
+      }
+    >
+      Upload file
+    </Button>
+  );
+}`}
+>
+  <ToastPromiseExample />
+</ComponentPreview>
+
+## Managing toasts
+
+```tsx
+const id = toast.show({ title: 'Saving…', type: 'loading' });
+
+toast.update(id, { title: 'Saved', type: 'success', duration: 4000 });
+
+toast.dismiss(id); // close one toast
+toast.dismissAll(); // close every toast
+```
+
+Adding a toast with an existing `id` updates it instead of creating a duplicate. `duration={0}`
+keeps a toast open until it is closed.
+
+## Positions
+
+<ComponentPreview
+  title="Viewport positions"
+  code={`import { useState } from 'react';
+import { Button, Stack, Text } from '@orkest/ui';
+import {
+  createToast,
+  ToastProvider,
+  ToastViewport,
+  type ToastPosition,
+} from '@orkest/ui/client';
+
+const positions: ToastPosition[] = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+];
+
+export function Example() {
+  const [host] = useState(() => createToast());
+  const [position, setPosition] = useState<ToastPosition>('bottom-right');
+
+  return (
+    <ToastProvider toastManager={host.manager}>
+      <Stack gap={3}>
+        <Stack direction="row" gap={2} wrap>
+          {positions.map((item) => (
+            <Button
+              key={item}
+              size="sm"
+              variant={position === item ? 'primary' : 'outline'}
+              onClick={() => {
+                setPosition(item);
+                host.toast.info('Position: ' + item);
+              }}
+            >
+              {item}
+            </Button>
+          ))}
+        </Stack>
+        <Text size="sm" tone="muted">
+          A local viewport opens in the selected corner.
+        </Text>
+      </Stack>
+      <ToastViewport position={position} />
+    </ToastProvider>
+  );
+}`}
+>
+  <ToastPositionsExample />
+</ComponentPreview>
+
+## Queue and limit
+
+`ToastProvider` shows at most `limit` toasts (default `3`) and keeps older ones inert. `timeout`
+sets the default auto-dismiss delay in milliseconds (default `5000`).
+
+<ComponentPreview
+  title="Limited queue"
+  code={`import { useState } from 'react';
+import { Button, Stack } from '@orkest/ui';
+import {
+  createToast,
+  ToastProvider,
+  ToastViewport,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [host] = useState(() => createToast());
+  const [count, setCount] = useState(0);
+
+  return (
+    <ToastProvider toastManager={host.manager} limit={2}>
+      <Stack direction="row" gap={2} wrap>
+        <Button
+          variant="outline"
+          onClick={() => {
+            const next = count + 1;
+            setCount(next);
+            host.toast.info('Notification ' + next);
+          }}
+        >
+          Add notification
+        </Button>
+        <Button variant="ghost" onClick={() => host.toast.dismissAll()}>
+          Dismiss all
+        </Button>
+      </Stack>
+      <ToastViewport position="bottom-left" />
+    </ToastProvider>
+  );
+}`}
+>
+  <ToastQueueExample />
+</ComponentPreview>
+
+Hovering the viewport or focusing it with the keyboard pauses the timers. Press `F6` to move focus
+into the toast region and `F6` again to return to the previous element.
+
+## Custom rendering
+
+Pass a render function to `ToastViewport` to replace the default item. Keep `Toast` as the root so
+swipe behavior and timers stay intact.
+
+```tsx
+<ToastViewport position="top-right">
+  {(toastObject) => (
+    <Toast toast={toastObject}>
+      <ToastContent>
+        <ToastIcon />
+        <div>
+          <ToastTitle />
+          <ToastDescription />
+        </div>
+        <ToastAction />
+        <ToastClose />
+      </ToastContent>
+    </Toast>
+  )}
+</ToastViewport>
+```
+
+## Accessibility
+
+- The viewport is a labelled `region` with `aria-live="polite"`.
+- Toasts use `role="dialog"` by default; `priority: 'high'` uses an alert announcement.
+- Toasts never steal focus. `F6` moves focus into the region on demand.
+- The close button has the accessible name `Close notification` by default. Override it with
+  `label` on `ToastClose`.
+- Actions are real buttons and are reachable with the keyboard.
+- Status is conveyed by an icon shape and text, not by color alone.
+- Motion respects `prefers-reduced-motion`; swipe-to-dismiss remains available.
+
+## Props
+
+### ToastProvider
+
+<PropsTable
+  rows={[
+    {
+      name: 'timeout',
+      type: 'number',
+      default: '5000',
+      description: 'Default auto-dismiss delay in milliseconds. `0` keeps toasts open.',
+    },
+    {
+      name: 'limit',
+      type: 'number',
+      default: '3',
+      description: 'Maximum number of visible toasts.',
+    },
+    {
+      name: 'toastManager',
+      type: 'ToastManager',
+      description:
+        'Connects the imperative API to this provider. Defaults to the shared `toast` manager.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Application content. The viewport is usually rendered as a sibling.',
+    },
+  ]}
+/>
+
+### ToastViewport
+
+<PropsTable
+  rows={[
+    {
+      name: 'position',
+      type: `'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'`,
+      default: `'top-right'`,
+      description: 'Corner or edge where the toast stack is anchored.',
+    },
+    {
+      name: 'children',
+      type: '(toast) => ReactNode',
+      description: 'Optional custom renderer for every toast.',
+    },
+    {
+      name: 'container',
+      type: 'HTMLElement | ShadowRoot | RefObject | null',
+      description: 'Portal container. Defaults to the document body.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the viewport element.',
+    },
+  ]}
+/>
+
+### Toast and parts
+
+<PropsTable
+  rows={[
+    {
+      name: 'toast',
+      type: 'ToastObject',
+      description: 'Toast object from `ToastViewport` or `useToast`. Required on `Toast`.',
+    },
+    {
+      name: 'swipeDirection',
+      type: `'up' | 'down' | 'left' | 'right' | Array`,
+      default: `['down', 'right']`,
+      description: 'Directions in which the toast can be swiped to dismiss.',
+    },
+    {
+      name: 'ToastIcon.type',
+      type: 'ToastType',
+      description: 'Overrides the type inherited from the surrounding `Toast`.',
+    },
+    {
+      name: 'ToastIcon.icon',
+      type: 'LucideIcon',
+      description: 'Overrides the default icon for the type.',
+    },
+    {
+      name: 'ToastClose.label',
+      type: 'string',
+      default: `'Close notification'`,
+      description: 'Accessible name of the close button.',
+    },
+  ]}
+/>
+
+### Imperative API
+
+<PropsTable
+  rows={[
+    {
+      name: 'toast.show',
+      type: '(options) => string',
+      description: 'Adds a toast and returns its ID.',
+    },
+    {
+      name: 'toast.success / error / warning / info / loading',
+      type: '(title, options?) => string',
+      description: 'Adds a typed toast. Loading toasts stay open until updated or dismissed.',
+    },
+    {
+      name: 'toast.promise',
+      type: '(promise, messages, options?) => Promise',
+      description: 'Shows loading, then updates the same toast to success or error.',
+    },
+    {
+      name: 'toast.update',
+      type: '(id, options) => void',
+      description: 'Updates a toast in place.',
+    },
+    {
+      name: 'toast.dismiss',
+      type: '(id?) => void',
+      description: 'Closes one toast, or every toast when the ID is omitted.',
+    },
+    {
+      name: 'toast.dismissAll',
+      type: '() => void',
+      description: 'Closes every toast.',
+    },
+    {
+      name: 'createToast',
+      type: '() => { manager, toast }',
+      description: 'Creates an isolated manager and API for a nested provider.',
+    },
+  ]}
+/>
