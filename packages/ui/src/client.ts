@@ -182,6 +182,25 @@ export type {
 export { Switch } from './components/switch';
 export type { SwitchProps, SwitchSize } from './components/switch';
 
+export {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from './components/tabs';
+export type {
+  TabsActivationMode,
+  TabsContentProps,
+  TabsIndicatorProps,
+  TabsListProps,
+  TabsOrientation,
+  TabsProps,
+  TabsSize,
+  TabsTriggerProps,
+  TabsVariant,
+} from './components/tabs';
+
 export { MultiSelect, Select } from './components/select';
 export type {
   MultiSelectProps,

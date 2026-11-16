@@ -1,0 +1,255 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  min-width: 0;
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-orientation="vertical"] {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--ok-space-6);
+}
+
+.root[data-disabled] .list {
+  opacity: 0.5;
+}
+
+.root[data-disabled] .trigger {
+  cursor: not-allowed;
+}
+
+.list {
+  --tabs-height: var(--ok-control-height-md);
+  --tabs-padding-x: var(--ok-space-3);
+  --tabs-font-size: var(--ok-font-size-sm);
+  --tabs-radius: var(--ok-radius-lg);
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: var(--ok-space-1);
+  min-width: 0;
+  isolation: isolate;
+}
+
+.list[data-size="sm"] {
+  --tabs-height: var(--ok-control-height-sm);
+  --tabs-padding-x: var(--ok-space-2);
+  --tabs-font-size: var(--ok-font-size-xs);
+  --tabs-radius: var(--ok-radius-md);
+}
+
+.list[data-size="md"] {
+  --tabs-height: var(--ok-control-height-md);
+  --tabs-padding-x: var(--ok-space-3);
+  --tabs-font-size: var(--ok-font-size-sm);
+  --tabs-radius: var(--ok-radius-lg);
+}
+
+.list[data-size="lg"] {
+  --tabs-height: var(--ok-control-height-lg);
+  --tabs-padding-x: var(--ok-space-4);
+  --tabs-font-size: var(--ok-font-size-md);
+  --tabs-radius: var(--ok-radius-xl);
+}
+
+.list[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.list[data-variant="underline"][data-orientation="horizontal"] {
+  box-shadow: inset 0 calc(var(--ok-border-width) * -1) 0 var(--ui-border);
+}
+
+.list[data-variant="underline"][data-orientation="vertical"] {
+  box-shadow: inset var(--ok-border-width) 0 0 var(--ui-border);
+}
+
+.list[data-variant="enclosed"] {
+  gap: calc(var(--ok-space-1) / 2);
+  padding: calc(var(--ok-space-1) / 2);
+  border-radius: var(--ok-radius-lg);
+  background: var(--ui-surface-sunken);
+  box-shadow: inset 0 0 0 var(--ok-border-width) var(--ui-border);
+}
+
+.list[data-orientation="horizontal"][data-full-width] {
+  width: 100%;
+}
+
+.list[data-orientation="horizontal"][data-full-width] .trigger {
+  flex: 1 1 0;
+}
+
+.trigger {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ok-space-2);
+  box-sizing: border-box;
+  min-height: var(--tabs-height);
+  margin: 0;
+  padding: 0 var(--tabs-padding-x);
+  border: 0;
+  border-radius: var(--tabs-radius);
+  appearance: none;
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--tabs-font-size);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.list[data-orientation="vertical"] .trigger {
+  justify-content: flex-start;
+  text-align: start;
+}
+
+.trigger:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: calc(var(--ok-focus-ring-offset) * -1);
+}
+
+.trigger:hover:not([data-active]):not(:disabled) {
+  color: var(--ui-foreground);
+}
+
+.list[data-variant="underline"] .trigger {
+  border-radius: 0;
+}
+
+.list[data-variant="pills"] .trigger:hover:not([data-active]):not(:disabled) {
+  background: var(--ui-surface-sunken);
+}
+
+.list[data-variant="enclosed"] .trigger:hover:not([data-active]):not(:disabled) {
+  background: var(--ui-secondary);
+}
+
+.list[data-variant="pills"] .trigger[data-active] {
+  background: var(--ui-primary);
+  color: var(--ui-primary-foreground);
+}
+
+.list[data-variant="enclosed"] .trigger[data-active] {
+  background: var(--ui-surface-raised);
+  box-shadow: var(--ok-shadow-xs);
+  color: var(--ui-foreground);
+}
+
+/*
+ * When a rendered indicator is present, the trigger stays transparent so the
+ * indicator can animate between tabs. The indicator is hidden until Base UI
+ * measures the active tab, so the trigger keeps its own active surface during
+ * that first frame.
+ */
+.list[data-variant="pills"]:has(.indicator:not([hidden])) .trigger[data-active] {
+  background: transparent;
+}
+
+.list[data-variant="enclosed"]:has(.indicator:not([hidden])) .trigger[data-active] {
+  background: transparent;
+  box-shadow: none;
+}
+
+.trigger:disabled {
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ok-space-5);
+  height: var(--ok-space-5);
+  padding: 0 var(--ok-space-1);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-secondary);
+  color: var(--ui-secondary-foreground);
+  font-size: var(--ok-font-size-2xs);
+  font-weight: var(--ok-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: var(--active-tab-width);
+  height: var(--active-tab-height);
+  border-radius: var(--tabs-radius);
+  pointer-events: none;
+  translate: var(--active-tab-left) var(--active-tab-top);
+  transition:
+    translate var(--ok-duration-normal) var(--ok-ease-emphasized),
+    width var(--ok-duration-normal) var(--ok-ease-emphasized),
+    height var(--ok-duration-normal) var(--ok-ease-emphasized);
+}
+
+.list[data-variant="underline"][data-orientation="horizontal"] .indicator {
+  top: auto;
+  bottom: 0;
+  width: var(--active-tab-width);
+  height: var(--ok-border-width-strong);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-foreground);
+  translate: var(--active-tab-left) 0;
+}
+
+.list[data-variant="underline"][data-orientation="vertical"] .indicator {
+  left: 0;
+  width: var(--ok-border-width-strong);
+  height: var(--active-tab-height);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-foreground);
+  translate: 0 var(--active-tab-top);
+}
+
+.list[data-variant="pills"] .indicator {
+  background: var(--ui-primary);
+}
+
+.list[data-variant="enclosed"] .indicator {
+  border-radius: var(--ok-radius-md);
+  background: var(--ui-surface-raised);
+  box-shadow: var(--ok-shadow-xs);
+}
+
+.content {
+  min-width: 0;
+  outline: none;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+}
+
+.root[data-orientation="vertical"] .content {
+  flex: 1 1 auto;
+}
+
+.content:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .indicator {
+    transition: none;
+  }
+}
