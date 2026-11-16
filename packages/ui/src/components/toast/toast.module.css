@@ -126,12 +126,20 @@
   transform: translateY(150%);
 }
 
+.viewport[data-position^="bottom"] .toast[data-ending-style]:not([data-swipe-direction]) {
+  transform: translateY(150%);
+}
+
 .viewport[data-position^="top"] .toast[data-starting-style],
 .viewport[data-position^="top"] .toast[data-ending-style] {
   opacity: 0;
 }
 
 .viewport[data-position^="top"] .toast[data-starting-style] {
+  transform: translateY(-150%);
+}
+
+.viewport[data-position^="top"] .toast[data-ending-style]:not([data-swipe-direction]) {
   transform: translateY(-150%);
 }
 
