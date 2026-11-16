@@ -14,7 +14,7 @@
 }
 
 .root[data-disabled] .list {
-  opacity: 0.5;
+  opacity: var(--ok-opacity-disabled);
 }
 
 .root[data-disabled] .trigger {
@@ -116,15 +116,15 @@
   outline-offset: calc(var(--ok-focus-ring-offset) * -1);
 }
 
-.trigger:hover:not([data-active]):not(:disabled) {
+.trigger:hover:not([data-active]):not([data-disabled]) {
   color: var(--ui-foreground);
 }
 
-.list[data-variant="pills"] .trigger:hover:not([data-active]):not(:disabled) {
+.list[data-variant="pills"] .trigger:hover:not([data-active]):not([data-disabled]) {
   background: var(--ui-surface-sunken);
 }
 
-.list[data-variant="enclosed"] .trigger:hover:not([data-active]):not(:disabled) {
+.list[data-variant="enclosed"] .trigger:hover:not([data-active]):not([data-disabled]) {
   background: var(--ui-secondary);
 }
 
@@ -159,8 +159,8 @@
   box-shadow: none;
 }
 
-.trigger:disabled {
-  color: var(--ui-disabled-foreground);
+.trigger[data-disabled] {
+  opacity: var(--ok-opacity-disabled);
   cursor: not-allowed;
 }
 

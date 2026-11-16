@@ -180,6 +180,7 @@ describe('Tabs', () => {
 
     const disabledTab = screen.getByRole('tab', { name: 'Two' });
     expect(disabledTab).toHaveAttribute('aria-disabled', 'true');
+    expect(disabledTab).toHaveAttribute('data-disabled');
 
     screen.getByRole('tab', { name: 'One' }).focus();
     await user.keyboard('{ArrowRight}');
