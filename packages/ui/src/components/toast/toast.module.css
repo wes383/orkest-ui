@@ -49,7 +49,7 @@
   box-sizing: border-box;
   width: 100%;
   height: var(--toast-current-height);
-  border: var(--ok-border-width) solid var(--ui-border);
+  border: var(--ok-border-width) solid var(--ui-border-subtle);
   border-radius: var(--ok-radius-2xl);
   background: var(--ui-surface-raised);
   box-shadow: var(--ok-shadow-lg);
