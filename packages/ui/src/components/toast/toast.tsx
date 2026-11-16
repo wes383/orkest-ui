@@ -233,7 +233,7 @@ export function ToastProvider({
 export interface ToastViewportProps
   extends Omit<BaseToastViewportProps, 'children' | 'className'> {
   className?: string;
-  /** Corner or edge where toasts stack. Defaults to `top-right`. */
+  /** Corner or edge where toasts stack. Defaults to `bottom-right`. */
   position?: ToastPosition;
   /** Replaces the default toast rendering for every item. */
   children?: (toastObject: ToastObject<ToastData>) => ReactNode;
@@ -441,7 +441,7 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
   function ToastViewport(
     {
       className,
-      position = 'top-right',
+      position = 'bottom-right',
       children,
       container,
       ...rest

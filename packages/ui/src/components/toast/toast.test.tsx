@@ -162,7 +162,20 @@ describe('Toast', () => {
     });
   });
 
-  it('applies the requested viewport position', () => {
+  it('defaults to bottom-right and applies the requested position', () => {
+    const { unmount } = render(
+      <ToastProvider>
+        <ToastViewport />
+      </ToastProvider>,
+    );
+
+    expect(screen.getByRole('region', { name: 'Notifications' })).toHaveAttribute(
+      'data-position',
+      'bottom-right',
+    );
+
+    unmount();
+
     renderToastHost({ position: 'bottom-left' });
 
     expect(screen.getByRole('region', { name: 'Notifications' })).toHaveAttribute(

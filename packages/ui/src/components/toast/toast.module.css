@@ -50,7 +50,7 @@
   width: 100%;
   height: var(--toast-current-height);
   border: var(--ok-border-width) solid var(--ui-border);
-  border-radius: var(--ok-radius-xl);
+  border-radius: var(--ok-radius-2xl);
   background: var(--ui-surface-raised);
   box-shadow: var(--ok-shadow-lg);
   color: var(--ui-foreground);
@@ -144,6 +144,23 @@
   transition: none;
 }
 
+/*
+ * Bridges the visual gap between stacked toasts so moving the pointer between
+ * them stays inside the viewport and does not collapse the expanded stack.
+ */
+.toast::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: var(--toast-peek);
+  content: '';
+}
+
+.toast[data-expanded]::after {
+  height: var(--toast-gap);
+}
+
 .toast:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: calc(var(--ok-focus-ring-offset) * -1);
@@ -151,7 +168,7 @@
 
 .content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--ok-space-2);
   box-sizing: border-box;
   height: 100%;
@@ -229,12 +246,12 @@
   flex: none;
   height: var(--ok-control-height-sm);
   margin: 0;
-  padding: 0 var(--ok-space-2);
-  border: 0;
-  border-radius: var(--ok-radius-md);
+  padding: 0 var(--ok-control-padding-x-sm);
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--ok-radius-lg);
   appearance: none;
   background: transparent;
-  color: var(--ui-accent);
+  color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-xs);
   font-weight: var(--ok-font-weight-medium);
@@ -243,11 +260,13 @@
   cursor: pointer;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
 .action:hover {
   background: var(--ui-secondary);
+  border-color: var(--ui-border-strong);
   color: var(--ui-foreground);
 }
 

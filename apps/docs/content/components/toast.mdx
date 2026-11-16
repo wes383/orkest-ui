@@ -25,7 +25,7 @@ export function App() {
   return (
     <ToastProvider>
       {/* application */}
-      <ToastViewport position="top-right" />
+      <ToastViewport position="bottom-right" />
     </ToastProvider>
   );
 }
@@ -286,7 +286,7 @@ Pass a render function to `ToastViewport` to replace the default item. Keep `Toa
 swipe behavior and timers stay intact.
 
 ```tsx
-<ToastViewport position="top-right">
+<ToastViewport position="bottom-right">
   {(toastObject) => (
     <Toast toast={toastObject}>
       <ToastContent>
@@ -353,7 +353,7 @@ swipe behavior and timers stay intact.
     {
       name: 'position',
       type: `'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'`,
-      default: `'top-right'`,
+      default: `'bottom-right'`,
       description: 'Corner or edge where the toast stack is anchored.',
     },
     {
