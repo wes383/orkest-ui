@@ -197,6 +197,7 @@
 .icon {
   display: inline-flex;
   flex: none;
+  margin-inline-end: var(--ok-space-1);
   color: var(--ui-muted-foreground);
 }
 
