@@ -62,14 +62,6 @@
   align-items: stretch;
 }
 
-.list[data-variant="underline"][data-orientation="horizontal"] {
-  box-shadow: inset 0 calc(var(--ok-border-width) * -1) 0 var(--ui-border);
-}
-
-.list[data-variant="underline"][data-orientation="vertical"] {
-  box-shadow: inset var(--ok-border-width) 0 0 var(--ui-border);
-}
-
 .list[data-variant="enclosed"] {
   gap: calc(var(--ok-space-1) / 2);
   padding: var(--ok-space-1);
@@ -142,6 +134,7 @@
 }
 
 .list[data-variant="enclosed"] .trigger {
+  min-height: calc(var(--tabs-height) - var(--ok-space-2));
   border-radius: calc(var(--tabs-radius) - var(--ok-space-1));
 }
 
