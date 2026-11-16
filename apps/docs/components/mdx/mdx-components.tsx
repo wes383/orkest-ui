@@ -110,6 +110,17 @@ import {
   TooltipPositionExample,
   TooltipTextTriggerExample,
 } from '../examples/tooltip-examples';
+import {
+  TabsBasicExample,
+  TabsControlledExample,
+  TabsDisabledExample,
+  TabsEnclosedExample,
+  TabsFullWidthExample,
+  TabsManualExample,
+  TabsPillsExample,
+  TabsSizesExample,
+  TabsVerticalExample,
+} from '../examples/tabs-examples';
 import { InteractiveTagExample, RemovableTagExample } from '../examples/tag-examples';
 import { TableScroll } from './table-scroll';
 
@@ -239,6 +250,15 @@ export const mdxComponents = {
   TooltipBasicExample,
   TooltipPositionExample,
   TooltipTextTriggerExample,
+  TabsBasicExample,
+  TabsControlledExample,
+  TabsDisabledExample,
+  TabsEnclosedExample,
+  TabsFullWidthExample,
+  TabsManualExample,
+  TabsPillsExample,
+  TabsSizesExample,
+  TabsVerticalExample,
   FieldBasicExample,
   FieldCheckboxExample,
   FieldDisabledExample,

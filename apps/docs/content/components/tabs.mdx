@@ -1,0 +1,588 @@
+---
+title: Tabs
+description: Switch between related views inside the same page region.
+section: components
+---
+
+`Tabs` switches between related panels without navigating away. Use underline tabs for regular
+content navigation, pills for compact view switching, and enclosed tabs for settings or segmented
+panels.
+
+The component is built on Base UI Tabs. Base UI owns selection state, roving focus, keyboard
+navigation, and tab-to-panel relationships; Orkest UI owns the visual design and public API.
+
+Import the components from `@orkest/ui/client`.
+
+## Basic usage
+
+<ComponentPreview
+  title="Underline tabs"
+  code={`import { Stack, Text } from '@orkest/ui';
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="overview">
+      <TabsList>
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="activity">Activity</TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="overview">
+        <Text size="sm" tone="muted">
+          A summary of the project, recent changes, and open work.
+        </Text>
+      </TabsContent>
+      <TabsContent value="activity">
+        <Text size="sm" tone="muted">
+          Commits, reviews, and comments from the last seven days.
+        </Text>
+      </TabsContent>
+      <TabsContent value="settings">
+        <Text size="sm" tone="muted">
+          Visibility, members, and notification preferences.
+        </Text>
+      </TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsBasicExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `Tabs` owns the selected value and connects tabs to their panels.
+- `TabsList` is the tab strip. It also controls keyboard behavior through `activationMode` and
+  `loop`.
+- `TabsTrigger` is one tab. The `value` prop must match the corresponding `TabsContent`.
+- `TabsContent` is the panel for a value. Only the active panel is rendered by default.
+- `TabsIndicator` is an optional moving highlight. Place it inside `TabsList`, after the triggers.
+
+String values keep state stable when tabs are added, removed, or reordered. Avoid array indexes.
+
+## Variants
+
+`underline` is the default and fits regular content navigation.
+
+`pills` uses a filled active tab and works well for compact view switching.
+
+<ComponentPreview
+  title="Pills"
+  code={`import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="day">
+      <TabsList variant="pills">
+        <TabsTrigger value="day">Day</TabsTrigger>
+        <TabsTrigger value="week">Week</TabsTrigger>
+        <TabsTrigger value="month">Month</TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="day">Today's activity.</TabsContent>
+      <TabsContent value="week">This week's activity.</TabsContent>
+      <TabsContent value="month">This month's activity.</TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsPillsExample />
+</ComponentPreview>
+
+`enclosed` places the tabs in a sunken segmented container, which suits settings and layout
+switchers.
+
+<ComponentPreview
+  title="Enclosed"
+  code={`import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="list">
+      <TabsList variant="enclosed">
+        <TabsTrigger value="list">List</TabsTrigger>
+        <TabsTrigger value="board">Board</TabsTrigger>
+        <TabsTrigger value="timeline">Timeline</TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="list">Tasks grouped in a list.</TabsContent>
+      <TabsContent value="board">Tasks grouped by status.</TabsContent>
+      <TabsContent value="timeline">Tasks ordered by date.</TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsEnclosedExample />
+</ComponentPreview>
+
+## Vertical tabs
+
+Set `orientation="vertical"` on `Tabs`. The root lays the list beside the active panel by default,
+and the arrow keys switch to ArrowUp and ArrowDown.
+
+<ComponentPreview
+  title="Vertical settings navigation"
+  code={`import { Stack, Text } from '@orkest/ui';
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+import { Bell, Settings, User } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="profile" orientation="vertical">
+      <TabsList variant="pills">
+        <TabsTrigger value="profile" icon={User}>
+          Profile
+        </TabsTrigger>
+        <TabsTrigger value="notifications" icon={Bell} badge={2}>
+          Notifications
+        </TabsTrigger>
+        <TabsTrigger value="preferences" icon={Settings}>
+          Preferences
+        </TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="profile">
+        <Text size="sm" tone="muted">Name, avatar, and contact details.</Text>
+      </TabsContent>
+      <TabsContent value="notifications">
+        <Text size="sm" tone="muted">Two unread notifications.</Text>
+      </TabsContent>
+      <TabsContent value="preferences">
+        <Text size="sm" tone="muted">Language, time zone, and keyboard shortcuts.</Text>
+      </TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsVerticalExample />
+</ComponentPreview>
+
+## Sizes and full width
+
+`size` accepts `sm`, `md`, and `lg`. `fullWidth` stretches a horizontal list and divides its width
+evenly between the tabs.
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Stack } from '@orkest/ui';
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={5}>
+      <Tabs defaultValue="first">
+        <TabsList size="sm" variant="pills">
+          <TabsTrigger value="first">Small</TabsTrigger>
+          <TabsTrigger value="second">Tabs</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="first">Small size.</TabsContent>
+        <TabsContent value="second">Small size.</TabsContent>
+      </Tabs>
+      <Tabs defaultValue="first">
+        <TabsList size="md" variant="pills">
+          <TabsTrigger value="first">Medium</TabsTrigger>
+          <TabsTrigger value="second">Tabs</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="first">Medium size.</TabsContent>
+        <TabsContent value="second">Medium size.</TabsContent>
+      </Tabs>
+      <Tabs defaultValue="first">
+        <TabsList size="lg" variant="pills">
+          <TabsTrigger value="first">Large</TabsTrigger>
+          <TabsTrigger value="second">Tabs</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="first">Large size.</TabsContent>
+        <TabsContent value="second">Large size.</TabsContent>
+      </Tabs>
+    </Stack>
+  );
+}`}
+>
+  <TabsSizesExample />
+</ComponentPreview>
+
+<ComponentPreview
+  title="Full width"
+  code={`import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="all">
+      <TabsList fullWidth variant="pills">
+        <TabsTrigger value="all">All</TabsTrigger>
+        <TabsTrigger value="active">Active</TabsTrigger>
+        <TabsTrigger value="archived">Archived</TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="all">All projects.</TabsContent>
+      <TabsContent value="active">Active projects.</TabsContent>
+      <TabsContent value="archived">Archived projects.</TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsFullWidthExample />
+</ComponentPreview>
+
+## Activation mode
+
+`activationMode` controls what happens when an arrow key moves focus.
+
+- `automatic` (default) activates the focused tab immediately. Use it when panels are already
+  available.
+- `manual` moves focus only and waits for Enter or Space. Use it when switching triggers expensive
+  work such as a network request.
+
+<ComponentPreview
+  title="Manual activation"
+  code={`import { Stack, Text } from '@orkest/ui';
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Tabs defaultValue="details">
+      <TabsList activationMode="manual">
+        <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsTrigger value="members">Members</TabsTrigger>
+        <TabsTrigger value="history">History</TabsTrigger>
+        <TabsIndicator />
+      </TabsList>
+      <TabsContent value="details">
+        <Text size="sm" tone="muted">
+          Arrow keys move focus. Press Enter or Space to load a panel.
+        </Text>
+      </TabsContent>
+      <TabsContent value="members">
+        <Text size="sm" tone="muted">
+          Members load only after you confirm the selection.
+        </Text>
+      </TabsContent>
+      <TabsContent value="history">
+        <Text size="sm" tone="muted">
+          History keeps the current panel until you activate it.
+        </Text>
+      </TabsContent>
+    </Tabs>
+  );
+}`}
+>
+  <TabsManualExample />
+</ComponentPreview>
+
+## Controlled state
+
+<ComponentPreview
+  title="Controlled tabs"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState('overview');
+
+  return (
+    <Stack gap={2}>
+      <Tabs value={value} onValueChange={setValue}>
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="activity">Activity</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="overview">Overview panel.</TabsContent>
+        <TabsContent value="activity">Activity panel.</TabsContent>
+      </Tabs>
+      <Text size="sm" tone="muted">Active tab: {value}</Text>
+    </Stack>
+  );
+}`}
+>
+  <TabsControlledExample />
+</ComponentPreview>
+
+## Disabled tabs
+
+Disable a single tab with `TabsTrigger disabled`. Disable the whole list with `Tabs disabled`; the
+active panel stays visible but the list no longer accepts pointer or keyboard interaction.
+
+Disabled tabs are skipped by arrow-key navigation, Home, and End.
+
+<ComponentPreview
+  title="Disabled states"
+  code={`import { useState } from 'react';
+import { Stack } from '@orkest/ui';
+import {
+  Switch,
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [disabled, setDisabled] = useState(false);
+
+  return (
+    <Stack gap={3}>
+      <Switch
+        label="Disable the whole tab list"
+        checked={disabled}
+        onCheckedChange={setDisabled}
+      />
+      <Tabs defaultValue="general" disabled={disabled}>
+        <TabsList>
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="billing" disabled>
+            Billing
+          </TabsTrigger>
+          <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="general">General settings.</TabsContent>
+        <TabsContent value="billing">Billing settings.</TabsContent>
+        <TabsContent value="advanced">Advanced settings.</TabsContent>
+      </Tabs>
+    </Stack>
+  );
+}`}
+>
+  <TabsDisabledExample />
+</ComponentPreview>
+
+## Keyboard interaction
+
+| Key                     | Behavior                                              |
+| ----------------------- | ----------------------------------------------------- |
+| ArrowLeft / ArrowRight  | Move focus between horizontal tabs                    |
+| ArrowUp / ArrowDown     | Move focus between vertical tabs                      |
+| Home / End              | Move to the first or last enabled tab                 |
+| Enter / Space           | Activate the focused tab in manual mode                |
+| Tab                     | Move into or out of the tab list                      |
+
+Focus wraps at the ends by default. Set `loop={false}` on `TabsList` to stop at the last tab.
+Disabled tabs are skipped.
+
+## Accessibility
+
+- `TabsList` renders `role="tablist"` and exposes the orientation to assistive technology.
+- Each `TabsTrigger` renders `role="tab"` with `aria-selected`, and is linked to its panel through
+  `aria-controls`.
+- Each `TabsContent` renders `role="tabpanel"` and is named by its tab.
+- Only the active panel is focusable and exposed; inactive panels are inert.
+- Disabled tabs use `aria-disabled` and cannot be activated.
+- Focus is always visible through the shared focus ring token.
+- The indicator is decorative and does not affect the accessible name.
+- Motion respects `prefers-reduced-motion`.
+
+## Props
+
+### Tabs
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Controlled value of the active tab.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial value for uncontrolled usage. Defaults to the first enabled tab.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value, eventDetails) => void',
+      description: 'Called when the active tab changes.',
+    },
+    {
+      name: 'orientation',
+      type: `'horizontal' | 'vertical'`,
+      default: `'horizontal'`,
+      description: 'Layout and keyboard axis of the tabs.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the whole tab list while keeping the active panel visible.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the root element.',
+    },
+  ]}
+/>
+
+### TabsList
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'underline' | 'pills' | 'enclosed'`,
+      default: `'underline'`,
+      description: 'Visual style of the tab strip.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Tab size.',
+    },
+    {
+      name: 'fullWidth',
+      type: 'boolean',
+      default: 'false',
+      description: 'Stretches a horizontal list and divides its width between the tabs.',
+    },
+    {
+      name: 'activationMode',
+      type: `'automatic' | 'manual'`,
+      default: `'automatic'`,
+      description: 'Whether arrow-key focus activates a tab or waits for Enter or Space.',
+    },
+    {
+      name: 'loop',
+      type: 'boolean',
+      default: 'true',
+      description: 'Wraps keyboard focus at the ends of the list.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the list element.',
+    },
+  ]}
+/>
+
+### TabsTrigger
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Value that links the tab to its panel. Required.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables this tab.',
+    },
+    {
+      name: 'icon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the label.',
+    },
+    {
+      name: 'badge',
+      type: 'ReactNode',
+      description: 'Count or status marker rendered after the label.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the trigger.',
+    },
+  ]}
+/>
+
+### TabsContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Value of the tab that shows this panel. Required.',
+    },
+    {
+      name: 'keepMounted',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Keeps the panel in the DOM while hidden. Use with care: it preserves form and component state but also costs runtime memory.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the panel.',
+    },
+  ]}
+/>
+
+### TabsIndicator
+
+`TabsIndicator` accepts native span attributes and `render`. Place it inside `TabsList`; placing it
+elsewhere means it cannot measure the active tab.
+
+<PropsTable
+  rows={[
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default span element.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the indicator.',
+    },
+  ]}
+/>

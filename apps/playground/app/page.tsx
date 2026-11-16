@@ -21,6 +21,7 @@ import { FieldDemo } from './field-demo';
 import { PlaygroundForm } from './playground-form';
 import { PopoverDemo } from './popover-demo';
 import { SelectDemo } from './select-demo';
+import { TabsDemo } from './tabs-demo';
 
 function Showcase({ idPrefix }: { idPrefix: string }) {
   return (
@@ -88,6 +89,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <DialogDemo />
       <DropdownMenuDemo />
       <PopoverDemo />
+      <TabsDemo />
       <PlaygroundForm idPrefix={idPrefix} />
     </Stack>
   );
