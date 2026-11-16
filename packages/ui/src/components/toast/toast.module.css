@@ -172,7 +172,7 @@
   gap: var(--ok-space-2);
   box-sizing: border-box;
   height: 100%;
-  padding: var(--ok-space-3) var(--ok-space-3) var(--ok-space-3)
+  padding: var(--ok-space-4) var(--ok-space-3) var(--ok-space-4)
     var(--ok-space-4);
   overflow: hidden;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
