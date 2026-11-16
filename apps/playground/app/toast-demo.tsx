@@ -28,16 +28,17 @@ export function ToastDemo() {
         </Button>
         <Button
           variant="outline"
-          onClick={() =>
-            toast.show({
+          onClick={() => {
+            let toastId = '';
+            toastId = toast.show({
               title: 'Task deleted',
               description: 'The task moved to Trash.',
               action: {
                 label: 'Undo',
-                onClick: () => toast.success('Task restored'),
+                onClick: () => toast.dismiss(toastId),
               },
-            })
-          }
+            });
+          }}
         >
           Toast with action
         </Button>

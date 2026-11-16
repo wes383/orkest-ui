@@ -105,20 +105,21 @@ Only the icon carries the status color; the surface stays neutral in both themes
 import { toast } from '@orkest/ui/client';
 
 export function Example() {
+  function deleteTask() {
+    let toastId = '';
+
+    toastId = toast.show({
+      title: 'Task deleted',
+      description: 'The task moved to Trash.',
+      action: {
+        label: 'Undo',
+        onClick: () => toast.dismiss(toastId),
+      },
+    });
+  }
+
   return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        toast.show({
-          title: 'Task deleted',
-          description: 'The task moved to Trash.',
-          action: {
-            label: 'Undo',
-            onClick: () => toast.success('Task restored'),
-          },
-        })
-      }
-    >
+    <Button variant="outline" onClick={deleteTask}>
       Delete task
     </Button>
   );

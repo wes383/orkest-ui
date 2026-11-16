@@ -68,20 +68,21 @@ export function ToastTypesExample() {
 }
 
 export function ToastActionExample() {
+  function deleteTask() {
+    let toastId = '';
+
+    toastId = toast.show({
+      title: 'Task deleted',
+      description: 'The task moved to Trash.',
+      action: {
+        label: 'Undo',
+        onClick: () => toast.dismiss(toastId),
+      },
+    });
+  }
+
   return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        toast.show({
-          title: 'Task deleted',
-          description: 'The task moved to Trash.',
-          action: {
-            label: 'Undo',
-            onClick: () => toast.success('Task restored'),
-          },
-        })
-      }
-    >
+    <Button variant="outline" onClick={deleteTask}>
       Delete task
     </Button>
   );
