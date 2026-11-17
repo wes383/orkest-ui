@@ -33,7 +33,7 @@ export function EmptyStateSizesExample() {
   return (
     <Stack gap={3}>
       {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Box key={size} background="surface" border radius="md">
+        <Box key={size} background="surface" border radius="xl">
           <EmptyState
             size={size}
             title={'No activity (' + size + ')'}
@@ -48,7 +48,7 @@ export function EmptyStateSizesExample() {
 export function EmptyStateAlignExample() {
   return (
     <Grid columns={{ base: 1, md: 2 }} gap={3}>
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState
           align="center"
           icon={Search}
@@ -56,7 +56,7 @@ export function EmptyStateAlignExample() {
           description="The default. Use it for a region or a whole page."
         />
       </Box>
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState
           align="start"
           icon={Search}
@@ -87,7 +87,7 @@ export function EmptyStateCompositionExample() {
 
 export function EmptyStateEmbeddedExample() {
   return (
-    <Box background="surface" border radius="md">
+    <Box background="surface" border radius="xl">
       <Box as="header" padding={4}>
         <Stack direction="row" gap={3} align="center" justify="between">
           <Text weight="semibold">Team members</Text>

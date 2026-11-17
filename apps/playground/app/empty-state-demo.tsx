@@ -18,7 +18,7 @@ export function EmptyStateDemo() {
         Empty State
       </Heading>
 
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState
           icon={Inbox}
           title="No invoices yet"
@@ -33,10 +33,10 @@ export function EmptyStateDemo() {
       </Box>
 
       <Stack direction="row" gap={3} wrap align="stretch">
-        <Box background="surface" border radius="md">
+        <Box background="surface" border radius="xl">
           <EmptyState size="sm" title="No activity" description="Nothing happened today." />
         </Box>
-        <Box background="surface" border radius="md">
+        <Box background="surface" border radius="xl">
           <EmptyState
             size="sm"
             align="start"
@@ -47,7 +47,7 @@ export function EmptyStateDemo() {
         </Box>
       </Stack>
 
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState size="lg" align="start">
           <EmptyStateIcon icon={FileSearch} />
           <EmptyStateTitle level={3}>No results for this filter</EmptyStateTitle>

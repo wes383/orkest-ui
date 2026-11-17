@@ -8,13 +8,6 @@ section: components
 next step. It is purely presentational: no data fetching, no state, no extra dependency, and no
 Base UI. A single icon is enough for most cases; an illustration is optional.
 
-<Callout type="warning" title="Not for loading or failures">
-  While data is on its way, hold the layout with [Skeleton](/docs/components/skeleton/) (or a
-  [Spinner](/docs/components/spinner/) for work in progress). A failed request is an error state:
-  keep the error message and a retry action instead of showing an empty state. Those three states
-  need different words and different actions.
-</Callout>
-
 ## Live preview
 
 <ComponentPreview
@@ -55,7 +48,7 @@ export function Example() {
   return (
     <Stack gap={3}>
       {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Box key={size} background="surface" border radius="md">
+        <Box key={size} background="surface" border radius="xl">
           <EmptyState
             size={size}
             title={'No activity (' + size + ')'}
@@ -89,7 +82,7 @@ import { Search } from 'lucide-react';
 export function Example() {
   return (
     <Grid columns={{ base: 1, md: 2 }} gap={3}>
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState
           align="center"
           icon={Search}
@@ -97,7 +90,7 @@ export function Example() {
           description="The default. Use it for a region or a whole page."
         />
       </Box>
-      <Box background="surface" border radius="md">
+      <Box background="surface" border radius="xl">
         <EmptyState
           align="start"
           icon={Search}
@@ -200,7 +193,7 @@ with no icon and no action:
 
 export function Example() {
   return (
-    <Box background="surface" border radius="md">
+    <Box background="surface" border radius="xl">
       <Box as="header" padding={4}>
         <Stack direction="row" gap={3} align="center" justify="between">
           <Text weight="semibold">Team members</Text>
@@ -292,7 +285,7 @@ export function Example() {
     {
       name: 'EmptyStateIcon',
       type: "HTMLAttributes<HTMLSpanElement> & { icon?: LucideIcon }",
-      description: 'Rounded surface for an icon or any custom children.',
+      description: 'Rounded rectangle surface for an icon or any custom children.',
     },
     {
       name: 'EmptyStateTitle',
