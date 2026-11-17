@@ -1,0 +1,69 @@
+.root {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  flex: none;
+  width: var(--skeleton-width, 100%);
+  height: var(--skeleton-height, 1em);
+  border-radius: var(--skeleton-radius, var(--ok-radius-sm));
+  background: var(--ui-surface-sunken);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.root[data-variant='text'] {
+  border-radius: var(--skeleton-radius, var(--ok-radius-sm));
+}
+
+.root[data-variant='rectangular'] {
+  height: var(--skeleton-height, var(--ok-space-12));
+  border-radius: var(--skeleton-radius, var(--ok-radius-md));
+}
+
+.root[data-variant='circular'] {
+  width: var(--skeleton-width, var(--ok-space-10));
+  height: var(--skeleton-height, var(--ok-space-10));
+  border-radius: var(--skeleton-radius, var(--ok-radius-full));
+}
+
+.root[data-animation='pulse'] {
+  animation: skeleton-pulse 1.6s var(--ok-ease-standard) infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.root[data-animation='wave']::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(90deg, transparent, var(--ui-secondary), transparent);
+  transform: translateX(-100%);
+  animation: skeleton-wave 1.6s var(--ok-ease-standard) infinite;
+  pointer-events: none;
+}
+
+@keyframes skeleton-wave {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-animation='pulse'] {
+    animation: none;
+  }
+
+  .root[data-animation='wave']::after {
+    content: none;
+    animation: none;
+  }
+}

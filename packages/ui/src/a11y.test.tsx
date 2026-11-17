@@ -24,6 +24,8 @@ import { IconButton } from './components/icon-button';
 import { Input, Textarea } from './components/input';
 import { Radio, RadioGroup } from './components/radio';
 import { Select } from './components/select';
+import { Skeleton } from './components/skeleton';
+import { Spinner } from './components/spinner';
 import { Switch } from './components/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/tabs';
 import { Tag } from './components/tag';
@@ -53,6 +55,8 @@ describe('accessibility', () => {
         <Avatar>
           <AvatarFallback>AL</AvatarFallback>
         </Avatar>
+        <Skeleton width={160} />
+        <Spinner label="Loading" />
       </main>,
     );
 
