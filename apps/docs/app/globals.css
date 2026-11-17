@@ -522,15 +522,17 @@ kbd {
   margin: 0;
 }
 
-.prose ul,
-.prose ol {
+/* Unclassed lists are article content; a component's own list keeps its
+   display and padding. */
+.prose ul:not([class]),
+.prose ol:not([class]) {
   display: grid;
   gap: 6px;
   margin: 0;
   padding-left: var(--ok-space-6);
 }
 
-.prose li::marker {
+.prose li:not([class])::marker {
   color: var(--ui-subtle-foreground);
 }
 
