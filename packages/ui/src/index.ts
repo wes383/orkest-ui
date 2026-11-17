@@ -139,6 +139,24 @@ export type {
   PaginationSize,
 } from './components/pagination';
 
+export {
+  EmptyState,
+  EmptyStateAction,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from './components/empty-state';
+export type {
+  EmptyStateActionProps,
+  EmptyStateAlign,
+  EmptyStateDescriptionProps,
+  EmptyStateIconProps,
+  EmptyStateProps,
+  EmptyStateSize,
+  EmptyStateTitleLevel,
+  EmptyStateTitleProps,
+} from './components/empty-state';
+
 export { Skeleton } from './components/skeleton';
 export type {
   SkeletonAnimation,

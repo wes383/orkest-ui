@@ -1,0 +1,83 @@
+.root {
+  --empty-state-padding: var(--ok-space-8);
+  --empty-state-gap: var(--ok-space-3);
+  --empty-state-title-size: var(--ok-font-size-md);
+  --empty-state-icon-size: calc(var(--ok-space-12) + var(--ok-space-2));
+  --empty-state-image-height: calc(var(--ok-space-20) * 2);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--empty-state-gap);
+  padding: var(--empty-state-padding);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+}
+
+.root[data-align="center"] {
+  align-items: center;
+  text-align: center;
+}
+
+.root[data-align="start"] {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.root[data-size="sm"] {
+  --empty-state-padding: var(--ok-space-4);
+  --empty-state-gap: var(--ok-space-2);
+  --empty-state-title-size: var(--ok-font-size-sm);
+  --empty-state-icon-size: var(--ok-space-10);
+  --empty-state-image-height: calc(var(--ok-space-20) + var(--ok-space-8));
+}
+
+.root[data-size="lg"] {
+  --empty-state-padding: var(--ok-space-12);
+  --empty-state-gap: var(--ok-space-4);
+  --empty-state-title-size: var(--ok-font-size-lg);
+  --empty-state-icon-size: calc(var(--ok-space-16) + var(--ok-space-2));
+  --empty-state-image-height: calc(var(--ok-space-20) * 3);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--empty-state-icon-size);
+  height: var(--empty-state-icon-size);
+  border-radius: var(--ok-radius-full);
+  background: color-mix(in srgb, var(--ui-foreground) 6%, transparent);
+  color: var(--ui-muted-foreground);
+}
+
+.image {
+  max-width: 100%;
+  max-height: var(--empty-state-image-height);
+  border-radius: var(--ok-radius-lg);
+  object-fit: contain;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--empty-state-title-size);
+  font-weight: var(--ok-font-weight-semibold);
+  line-height: var(--ok-line-height-snug);
+}
+
+.description {
+  max-width: 42ch;
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+}
+
+.action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-2);
+  margin-top: var(--ok-space-1);
+}

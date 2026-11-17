@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { Settings } from 'lucide-react';
+import { Inbox, Settings } from 'lucide-react';
 import { describe, expect, it } from 'vitest';
 
 import { Alert, AlertDescription, AlertTitle } from './components/alert';
@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './components/dialog';
+import { EmptyState } from './components/empty-state';
 import { Field, FieldDescription, FieldLabel, FieldMessage } from './components/field';
 import { IconButton } from './components/icon-button';
 import { Input, Textarea } from './components/input';
@@ -98,6 +99,12 @@ describe('accessibility', () => {
           getRowId={(row) => row.name}
         />
         <Pagination page={2} totalPages={5} onPageChange={() => {}} />
+        <EmptyState
+          icon={Inbox}
+          title="No invoices"
+          description="Invoices appear here once a customer is billed."
+          action={<Button>Create invoice</Button>}
+        />
       </main>,
     );
 
