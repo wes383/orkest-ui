@@ -23,6 +23,7 @@ import { DropdownMenuDemo } from './dropdown-menu-demo';
 import { FieldDemo } from './field-demo';
 import { LoadingDemo } from './loading-demo';
 import { PlaygroundForm } from './playground-form';
+import { PaginationDemo } from './pagination-demo';
 import { PopoverDemo } from './popover-demo';
 import { SelectDemo } from './select-demo';
 import { TableDemo } from './table-demo';
@@ -93,6 +94,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <CardDemo />
       <ChoiceDemo />
       <DataTableDemo />
+      <PaginationDemo />
       <SelectDemo />
       <FieldDemo />
       <DialogDemo />
