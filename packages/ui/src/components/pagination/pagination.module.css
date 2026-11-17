@@ -1,5 +1,6 @@
 .root {
   --pagination-size: 2rem;
+  --pagination-radius: var(--ok-radius-xl);
   --pagination-font-size: var(--ok-font-size-sm);
   display: block;
   color: var(--ui-foreground);
@@ -8,6 +9,7 @@
 
 .root[data-size="sm"] {
   --pagination-size: 1.75rem;
+  --pagination-radius: var(--ok-radius-lg);
   --pagination-font-size: var(--ok-font-size-xs);
 }
 
@@ -40,7 +42,7 @@
   height: var(--pagination-size);
   padding-inline: var(--ok-space-2);
   border: var(--ok-border-width) solid transparent;
-  border-radius: var(--ok-radius-md);
+  border-radius: var(--pagination-radius);
   background: transparent;
   color: var(--ui-muted-foreground);
   font-family: inherit;
