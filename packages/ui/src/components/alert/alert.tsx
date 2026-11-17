@@ -91,7 +91,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
     >
       <AlertVariantContext.Provider value={variant}>
         {icon === null ? null : <AlertIcon icon={icon} />}
-        {children}
+        <div className={styles.content}>{children}</div>
         {closable ? <AlertClose onClick={onClose} label={closeLabel} /> : null}
       </AlertVariantContext.Provider>
     </div>

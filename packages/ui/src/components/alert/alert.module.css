@@ -1,20 +1,19 @@
 .alert {
   --alert-accent: var(--ui-accent);
   --alert-surface: var(--ui-accent-surface);
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: start;
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
   box-sizing: border-box;
   padding: var(--ok-space-3) var(--ok-space-4);
   border: var(--ok-border-width) solid
     color-mix(in srgb, var(--alert-accent) 24%, transparent);
-  border-radius: var(--ok-radius-xl);
+  border-radius: var(--ok-radius-2xl);
   background: var(--alert-surface);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-sm);
   line-height: var(--ok-line-height-normal);
-  row-gap: var(--ok-space-1);
 }
 
 .alert[data-variant="info"] {
@@ -37,21 +36,18 @@
   --alert-surface: var(--ui-danger-surface);
 }
 
-/*
- * Direct children default to the content column. The icon and close button
- * override the column so authors can compose parts in any order.
- */
-.alert > * {
-  grid-column: 2;
+.icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--ui-muted-foreground);
 }
 
-.icon {
-  grid-column: 1;
-  grid-row: 1;
-  display: inline-flex;
-  margin-block-start: calc(var(--ok-space-1) * 0.5);
-  margin-inline-end: var(--ok-space-3);
-  color: var(--ui-muted-foreground);
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  min-width: 0;
 }
 
 .icon[data-variant="info"] {
@@ -87,7 +83,7 @@
 }
 
 /* A description without a title is the primary message. */
-.alert:not(:has(> .title)) > .description {
+.content:not(:has(> .title)) > .description {
   color: var(--ui-foreground);
 }
 
@@ -99,9 +95,9 @@
 }
 
 .close {
-  grid-column: 3;
-  grid-row: 1;
   display: inline-flex;
+  flex: none;
+  align-self: flex-start;
   align-items: center;
   justify-content: center;
   width: var(--ok-space-6);
