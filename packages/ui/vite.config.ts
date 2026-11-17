@@ -38,6 +38,8 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    // Reuse one jsdom per worker rather than creating it per test file; setup cost dominates the run.
+    pool: 'vmThreads',
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
   },
