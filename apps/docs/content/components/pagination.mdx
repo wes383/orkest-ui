@@ -14,35 +14,67 @@ part of this component.
 
 ## Live preview
 
-<div className="demo">
-  <PaginationBasicExample />
-</div>
-
-```tsx
-import { useState } from 'react';
-import { Pagination } from '@orkest/ui';
+<ComponentPreview
+  title="Basic pagination"
+  code={`import { useState } from 'react';
+import { Pagination, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   const [page, setPage] = useState(1);
 
-  return <Pagination page={page} totalPages={5} onPageChange={setPage} />;
-}
-```
+  return (
+    <Stack gap={2} align="center">
+      <Pagination page={page} totalPages={5} onPageChange={setPage} />
+      <Text size="sm" tone="muted">
+        Page {page} of 5
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <PaginationBasicExample />
+</ComponentPreview>
 
 ## Sizes
 
-<div className="demo">
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { useState } from 'react';
+import { Pagination, Stack } from '@orkest/ui';
+
+export function Example() {
+  const [page, setPage] = useState(2);
+
+  return (
+    <Stack gap={3} align="start">
+      <Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
+    </Stack>
+  );
+}`}
+>
   <PaginationSizesExample />
-</div>
+</ComponentPreview>
 
 `md` is the default. All three sizes share the same footprint rules, so switching size never changes
 how many pages fit before the list wraps.
 
 ## Long lists
 
-<div className="demo">
+<ComponentPreview
+  title="Twenty pages"
+  code={`import { useState } from 'react';
+import { Pagination } from '@orkest/ui';
+
+export function Example() {
+  const [page, setPage] = useState(1);
+
+  return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
+}`}
+>
   <PaginationManyPagesExample />
-</div>
+</ComponentPreview>
 
 With a large page count the list keeps the boundary pages and a window around the current page,
 collapsing everything else into a single ellipsis per side. `siblingCount` controls the window — `1`
@@ -50,13 +82,19 @@ shows one page on each side of the current one, `2` shows two.
 
 First and last jumps are off by default; a long list only gets them when you ask for them:
 
-<div className="demo">
-  <PaginationFirstLastExample />
-</div>
+<ComponentPreview
+  title="First and last jumps"
+  code={`import { useState } from 'react';
+import { Pagination } from '@orkest/ui';
 
-```tsx
-<Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />
-```
+export function Example() {
+  const [page, setPage] = useState(10);
+
+  return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
+}`}
+>
+  <PaginationFirstLastExample />
+</ComponentPreview>
 
 The range is also exported, so a custom layout can reuse the same rules:
 

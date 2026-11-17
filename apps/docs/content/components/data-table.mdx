@@ -13,9 +13,38 @@ through, so a data table looks exactly like a hand-built one. Import the compone
 
 ## Live preview
 
-<div className="demo">
+<ComponentPreview
+  title="Invoice table"
+  code={`import { DataTable, type DataColumn } from '@orkest/ui/client';
+
+interface Invoice {
+  id: string;
+  customer: string;
+  amount: number;
+}
+
+const invoices: Invoice[] = [
+  { id: 'INV-1042', customer: 'Northwind', amount: 2400 },
+  { id: 'INV-1043', customer: 'Contoso', amount: 980 },
+];
+
+const columns: DataColumn<Invoice>[] = [
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 160 },
+  {
+    id: 'amount',
+    header: 'Amount',
+    accessor: (row) => row.amount,
+    align: 'right',
+    cell: (row) => row.amount.toFixed(2),
+  },
+];
+
+export function Example() {
+  return <DataTable columns={columns} data={invoices} getRowId={(row) => row.id} caption="Invoices" />;
+}`}
+>
   <DataTableExample />
-</div>
+</ComponentPreview>
 
 ## Columns
 
@@ -78,9 +107,39 @@ valid page instead of showing an empty one.
 
 ## Selection
 
-<div className="demo">
+<ComponentPreview
+  title="Row selection"
+  code={`import { useState } from 'react';
+import { DataTable, type DataColumn } from '@orkest/ui/client';
+
+const rows = [
+  { id: 'INV-1042', customer: 'Northwind' },
+  { id: 'INV-1043', customer: 'Contoso' },
+];
+
+const columns: DataColumn<(typeof rows)[number]>[] = [
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+];
+
+export function Example() {
+  const [selected, setSelected] = useState<typeof rows>([]);
+
+  return (
+    <DataTable
+      columns={columns}
+      data={rows}
+      caption="Invoices"
+      selectable
+      variant="bordered"
+      paginated={false}
+      getRowId={(row) => row.id}
+      onSelectionChange={setSelected}
+    />
+  );
+}`}
+>
   <DataTableSelectionExample />
-</div>
+</ComponentPreview>
 
 Selecting is opt-in with `selectable`. The header checkbox covers the rows on the current page, not
 the whole data set — a predictable scope when results span several pages. `onSelectionChange`
@@ -89,9 +148,36 @@ receives the selected rows, so the caller owns what happens next. The example ab
 
 ## Row expansion
 
-<div className="demo">
+<ComponentPreview
+  title="Expandable rows"
+  code={`import { Text } from '@orkest/ui';
+import { DataTable, type DataColumn } from '@orkest/ui/client';
+
+const rows = [
+  { id: 'INV-1042', customer: 'Northwind', owner: 'Ada' },
+  { id: 'INV-1043', customer: 'Contoso', owner: 'Grace' },
+];
+
+const columns: DataColumn<(typeof rows)[number]>[] = [
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+];
+
+export function Example() {
+  return (
+    <DataTable
+      columns={columns}
+      data={rows}
+      caption="Invoices"
+      expandable
+      paginated={false}
+      getRowId={(row) => row.id}
+      renderExpanded={(row) => <Text size="sm">Owner: {row.owner}</Text>}
+    />
+  );
+}`}
+>
   <DataTableExpandableExample />
-</div>
+</ComponentPreview>
 
 `expandable` adds a toggle column and renders `renderExpanded(row)` in an extra row underneath.
 Only the toggle button carries `aria-expanded`, so the extra row never joins the row count that
@@ -108,44 +194,58 @@ There is no actions prop, and none is needed: an actions column is a column whos
 menu. `DropdownMenu` portals its content, so the menu escapes the table's horizontal scroll container
 instead of being clipped by a cell.
 
-<div className="demo">
-  <DataTableActionsExample />
-</div>
-
-```tsx
-import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+<ComponentPreview
+  title="Row actions column"
+  code={`import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import { IconButton } from '@orkest/ui';
 import {
-  type DataColumn,
+  DataTable,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuTrigger,
+  type DataColumn,
 } from '@orkest/ui/client';
 
-const actions: DataColumn<Invoice> = {
-  id: 'actions',
-  header: 'Actions',
-  accessor: () => null,
-  sortable: false,
-  searchable: false,
-  align: 'right',
-  cell: (row) => (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={<IconButton icon={Ellipsis} label={`Actions for ${row.id}`} size="sm" variant="ghost" />}
-      />
-      <DropdownMenuPortal>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
-          <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenuPortal>
-    </DropdownMenu>
-  ),
-};
-```
+const rows = [
+  { id: 'INV-1042', customer: 'Northwind' },
+  { id: 'INV-1043', customer: 'Contoso' },
+];
+
+const columns: DataColumn<(typeof rows)[number]>[] = [
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+  {
+    id: 'actions',
+    header: 'Actions',
+    accessor: () => null,
+    sortable: false,
+    searchable: false,
+    align: 'right',
+    cell: (row) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <IconButton icon={Ellipsis} label={'Actions for ' + row.id} size="sm" variant="ghost" />
+          }
+        />
+        <DropdownMenuPortal>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem leftIcon={Pencil}>Edit invoice</DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
+    ),
+  },
+];
+
+export function Example() {
+  return <DataTable columns={columns} data={rows} caption="Invoices" paginated={false} />;
+}`}
+>
+  <DataTableActionsExample />
+</ComponentPreview>
 
 Three details matter: `sortable` and `searchable` are off because the column has no value to sort or
 search, `align="right"` keeps the trigger next to the row edge, and the trigger carries a per-row
@@ -160,19 +260,28 @@ exceed the available width. Body cells do wrap by default, so a table whose head
 whose content is long will compress instead of scrolling — give those columns a `minWidth` to keep
 them readable and let the container scroll.
 
-<div className="demo">
-  <DataTableWideExample />
-</div>
+<ComponentPreview
+  title="Wide table with horizontal scroll"
+  code={`import { DataTable, type DataColumn } from '@orkest/ui/client';
 
-```tsx
-const columns: DataColumn<Invoice>[] = [
+const rows = [
+  { id: 'INV-1042', customer: 'Northwind', email: 'billing@northwind.example', region: 'EMEA' },
+];
+
+const columns: DataColumn<(typeof rows)[number]>[] = [
   { id: 'id', header: 'Invoice', accessor: (row) => row.id, minWidth: 110 },
   { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 170 },
   { id: 'email', header: 'Billing email', accessor: (row) => row.email, minWidth: 220 },
   { id: 'region', header: 'Region', accessor: (row) => row.region, minWidth: 120 },
-  // …
+  // …more columns with explicit minWidth
 ];
-```
+
+export function Example() {
+  return <DataTable columns={columns} data={rows} caption="Invoices" pageSize={5} size="sm" />;
+}`}
+>
+  <DataTableWideExample />
+</ComponentPreview>
 
 Ten columns with explicit `minWidth` cannot fit, so the container scrolls while the toolbar and the
 pagination stay put. Nothing is truncated and no column is squeezed into a one-character stack.
