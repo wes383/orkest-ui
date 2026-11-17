@@ -7,8 +7,9 @@ section: components
 `DataTable` layers behaviour over the presentational [Table](/docs/components/table/): column
 definitions, sorting, global search, pagination, row selection, row expansion, and column
 visibility. All of it runs on the client against the data you pass in — no fetching, no caching, and
-no data source assumptions. Import the component and the `DataColumn` type from
-`@orkest/ui/client`.
+no data source assumptions. Table styling (`variant`, `size`, `striped`, `hoverable`) passes straight
+through, so a data table looks exactly like a hand-built one. Import the component and the
+`DataColumn` type from `@orkest/ui/client`.
 
 ## Live preview
 
@@ -121,6 +122,13 @@ keep their state; nothing about sorting or selection is lost when a column is hi
       description: 'Rendered in a single row when nothing matches.',
     },
     { name: 'pageSize', type: 'number', default: '10', description: 'Rows per page.' },
+    {
+      name: 'variant',
+      type: "'default' | 'bordered'",
+      default: "'default'",
+      description:
+        'Separator treatment, passed to Table. `bordered` adds an outer frame and vertical rules.',
+    },
     {
       name: 'size',
       type: "'sm' | 'md' | 'lg'",

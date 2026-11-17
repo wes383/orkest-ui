@@ -181,6 +181,17 @@ describe('DataTable', () => {
     expect(screen.getByRole('columnheader', { name: /Name/ })).toBeInTheDocument();
   });
 
+  it('passes the table variant through to the table', () => {
+    const { container } = render(
+      <DataTable columns={columns} data={people} variant="bordered" getRowId={(row) => row.id} />,
+    );
+
+    expect(container.querySelector('table')?.parentElement).toHaveAttribute(
+      'data-variant',
+      'bordered',
+    );
+  });
+
   it('renders an empty state when nothing matches', async () => {
     const user = userEvent.setup();
     render(<DataTable columns={columns} data={people} getRowId={(row) => row.id} />);

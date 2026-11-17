@@ -27,6 +27,7 @@ import {
   TableRow,
   type TableAlign,
   type TableSize,
+  type TableVariant,
 } from '../table';
 
 import styles from './data-table.module.css';
@@ -63,6 +64,8 @@ export interface DataTableProps<TData> {
   emptyState?: ReactNode;
   /** Rows per page. Defaults to `10`. */
   pageSize?: number;
+  /** Separator treatment, passed to the table. Defaults to `default`. */
+  variant?: TableVariant;
   /** Passed through to the table. Defaults to `md`. */
   size?: TableSize;
   striped?: boolean;
@@ -130,6 +133,7 @@ export function DataTable<TData>({
   caption,
   emptyState,
   pageSize = 10,
+  variant = 'default',
   size = 'md',
   striped = false,
   hoverable = true,
@@ -331,7 +335,7 @@ export function DataTable<TData>({
         ) : null}
       </div>
 
-      <Table size={size} striped={striped} hoverable={hoverable}>
+      <Table variant={variant} size={size} striped={striped} hoverable={hoverable}>
         {caption ? <TableCaption>{caption}</TableCaption> : null}
         <TableHeader>
           <TableRow>
