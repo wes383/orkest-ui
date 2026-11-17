@@ -22,6 +22,8 @@ async function openSelect(name = 'Team') {
   const combobox = screen.getByRole('combobox', { name });
 
   await user.click(combobox);
+  // The popup mounts after the click resolves, so wait for it before querying options.
+  await screen.findByRole('listbox');
   return { user, combobox };
 }
 
