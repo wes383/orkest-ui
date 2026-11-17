@@ -112,7 +112,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagi
   },
   ref,
 ) {
-  if (totalPages < 1) {
+  if (totalPages <= 1) {
     return null;
   }
 

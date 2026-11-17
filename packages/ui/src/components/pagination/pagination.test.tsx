@@ -121,6 +121,13 @@ describe('Pagination', () => {
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
   });
 
+  it('renders nothing when a single page holds everything', () => {
+    const { container } = render(<Pagination page={1} totalPages={1} onPageChange={() => {}} />);
+
+    expect(container).toBeEmptyDOMElement();
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+  });
+
   it('collapses long ranges into non-interactive ellipses', () => {
     render(<Pagination page={10} totalPages={20} onPageChange={() => {}} />);
 
