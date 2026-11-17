@@ -1,42 +1,24 @@
 ---
 title: Installation
-description: Add Orkest UI to a React or Next.js workspace and load its styles.
+description: Add Orkest UI to a React or Next.js application and load its styles.
 section: getting-started
 order: 2
 ---
 
-Orkest UI is currently developed inside this monorepo. It is not published to a public registry
-yet, so the installation instructions below describe the workspace workflow.
-
-<Callout type="warning" title="Package availability">
-  Do not install a similarly named package from a public registry. Add `@orkest/ui` as a workspace
-  dependency until the first release is published.
-</Callout>
+`@orkest/ui` is published on npm. Install it with the package manager your application already uses.
 
 ## Requirements
 
-- React 18.2 or React 19.
-- React DOM with a matching version.
+- React 18.2 or React 19, with a matching React DOM version.
 - TypeScript is recommended for the public prop types.
-- pnpm for workspace operations.
 
-## Add the package
-
-Add `@orkest/ui` to the application `package.json`:
-
-```json
-{
-  "dependencies": {
-    "@orkest/ui": "workspace:*"
-  }
-}
-```
-
-Then install the workspace dependencies:
+## Install the package
 
 ```bash
-pnpm install
+pnpm add @orkest/ui
 ```
+
+`npm install @orkest/ui`, `yarn add @orkest/ui`, and `bun add @orkest/ui` work the same way.
 
 ## Load the styles
 
@@ -51,15 +33,18 @@ does not load font files or override host application typography.
 
 ## Entry points
 
-- `@orkest/ui` — server-safe primitives, typography, `Button`, and `IconButton`.
-- `@orkest/ui/client` — `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Input`, and
-  `Textarea`. They use client-side state and must render inside a Client Component.
+- `@orkest/ui` — server-safe primitives, typography, `Badge`, `Tag`, `Button`, and `IconButton`.
+- `@orkest/ui/client` — every interactive component: form controls, `Select`, `MultiSelect`, `Tabs`,
+  `Dialog`, `AlertDialog`, `DropdownMenu`, `Popover`, `Tooltip`, `Toast`, `Alert`, `Avatar`, and the
+  `Field` parts. They use client-side state and must render inside a Client Component.
 - `@orkest/ui/style.css` — the compiled stylesheet.
 
-## Build the library first
+The component reference lists every export.
 
-The package exports its built `dist` directory. In this monorepo the documentation app and local
-consumers must build `packages/ui` before starting or building their own app:
+## Working inside this repository
+
+The documentation site and the playground consume the built `dist` output, so build the library
+before starting them:
 
 ```bash
 pnpm --filter @orkest/ui build

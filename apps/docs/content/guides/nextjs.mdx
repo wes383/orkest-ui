@@ -51,25 +51,15 @@ import '@fontsource-variable/jetbrains-mono';
 
 ## Server and client components
 
-Import components directly from `@orkest/ui` in App Router pages. They do not fetch data and do not
-require a provider.
+Components exported from `@orkest/ui` are server-safe. They do not fetch data, so App Router pages
+can render them directly.
 
-`Input` and `Textarea` use client-side state for clear actions, password visibility, character
-counts, and auto-resize. Import them from `@orkest/ui/client` and render them inside a Client
-Component (a module with `'use client'`). Other components can continue to render in Server
-Components.
+Components exported from `@orkest/ui/client` keep client-side state: form controls, `Select`,
+`MultiSelect`, `Tabs`, `Dialog`, `AlertDialog`, `DropdownMenu`, `Popover`, `Tooltip`, `Toast`,
+`Alert`, `Avatar`, and the `Field` parts. Import them from `@orkest/ui/client` inside a Client
+Component (a module with `'use client'`).
 
-## Monorepo build order
-
-When consuming the workspace package, build the UI package before building the application:
-
-```bash
-pnpm --filter @orkest/ui build
-pnpm --filter your-app build
-```
-
-The package exports `dist`, so the stylesheet and declarations are not available until the library
-has been built.
+Wrap tooltips in `TooltipProvider` to share the hover delay across a subtree.
 
 ## Verify the integration
 
