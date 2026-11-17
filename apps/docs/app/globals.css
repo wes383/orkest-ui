@@ -492,20 +492,21 @@ kbd {
   margin-top: var(--ok-space-4);
 }
 
-.prose h2,
-.prose h3 {
+/* Article typography applies to the headings MDX renders, not to headings a
+   component renders inside a preview. */
+.prose .mdx-heading {
   scroll-margin-top: calc(var(--docs-header-height) + var(--ok-space-6));
   font-weight: var(--ok-font-weight-semibold);
   letter-spacing: -0.02em;
 }
 
-.prose h2 {
+.prose h2.mdx-heading {
   margin: 3.5rem 0 var(--ok-space-4);
   font-size: 1.75rem;
   line-height: 1.2;
 }
 
-.prose h3 {
+.prose h3.mdx-heading {
   margin: 2.25rem 0 0;
   font-size: 1.1875rem;
   line-height: 1.35;
@@ -527,7 +528,8 @@ kbd {
   color: var(--ui-subtle-foreground);
 }
 
-.prose a {
+/* Only article links carry no class; component anchors keep their own styles. */
+.prose a:not([class]) {
   color: var(--ui-accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -535,7 +537,7 @@ kbd {
   text-decoration-skip-ink: none;
 }
 
-.prose a:hover {
+.prose a:not([class]):hover {
   color: var(--ui-accent-hover);
 }
 
