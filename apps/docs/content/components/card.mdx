@@ -1,0 +1,326 @@
+---
+title: Card
+description: Group related content into one surface with optional media and actions.
+section: components
+---
+
+`Card` groups related content into one visual region: a product, an article, a settings panel, or a
+statistic. It owns the surface, the radius, and the inner spacing; the parts own the structure.
+Every part is optional, so you can drop arbitrary content straight into the card.
+
+## Live preview
+
+<ComponentPreview
+  title="Account card"
+  code={`import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Stack,
+  Text,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Card style={{ width: 320 }}>
+      <CardHeader>
+        <CardTitle>Workspace billing</CardTitle>
+        <CardDescription>Invoices, plan changes, and the payment method on file.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Stack gap={2}>
+          <Stack direction="row" justify="between" align="center">
+            <Text size="sm" tone="muted">
+              Current plan
+            </Text>
+            <Badge variant="success">Team</Badge>
+          </Stack>
+          <Text size="sm" tone="muted">
+            The next invoice is issued on the first day of each month.
+          </Text>
+        </Stack>
+      </CardContent>
+      <CardFooter>
+        <Button size="sm">Manage plan</Button>
+        <Button size="sm" variant="ghost">
+          View invoices
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}`}
+>
+  <Card style={{ width: 320 }}>
+    <CardHeader>
+      <CardTitle>Workspace billing</CardTitle>
+      <CardDescription>Invoices, plan changes, and the payment method on file.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <Stack gap={2}>
+        <Stack direction="row" justify="between" align="center">
+          <Text size="sm" tone="muted">
+            Current plan
+          </Text>
+          <Badge variant="success">Team</Badge>
+        </Stack>
+        <Text size="sm" tone="muted">
+          The next invoice is issued on the first day of each month.
+        </Text>
+      </Stack>
+    </CardContent>
+    <CardFooter>
+      <Button size="sm">Manage plan</Button>
+      <Button size="sm" variant="ghost">
+        View invoices
+      </Button>
+    </CardFooter>
+  </Card>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Default, elevated, and outline"
+  code={`import { Card, CardContent, CardDescription, CardHeader, CardTitle, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={3} wrap>
+      {(['default', 'elevated', 'outline'] as const).map((variant) => (
+        <Card key={variant} variant={variant} style={{ width: 200 }}>
+          <CardHeader>
+            <CardTitle>{variant}</CardTitle>
+            <CardDescription>Card variant.</CardDescription>
+          </CardHeader>
+          <CardContent>Content area.</CardContent>
+        </Card>
+      ))}
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} wrap>
+    <Card variant="default" style={{ width: 200 }}>
+      <CardHeader>
+        <CardTitle>default</CardTitle>
+        <CardDescription>Card variant.</CardDescription>
+      </CardHeader>
+      <CardContent>Content area.</CardContent>
+    </Card>
+    <Card variant="elevated" style={{ width: 200 }}>
+      <CardHeader>
+        <CardTitle>elevated</CardTitle>
+        <CardDescription>Card variant.</CardDescription>
+      </CardHeader>
+      <CardContent>Content area.</CardContent>
+    </Card>
+    <Card variant="outline" style={{ width: 200 }}>
+      <CardHeader>
+        <CardTitle>outline</CardTitle>
+        <CardDescription>Card variant.</CardDescription>
+      </CardHeader>
+      <CardContent>Content area.</CardContent>
+    </Card>
+  </Stack>
+</ComponentPreview>
+
+`default` sits on the page surface with a border. `elevated` raises the card with a shadow and adds
+no border. `outline` keeps the border but removes the background, which suits cards placed on an
+already tinted surface. Shadow is the only elevation control — hover and pressed states belong to
+whatever element performs the action, not to the surface.
+
+## Padding and radius
+
+<ComponentPreview
+  title="Density"
+  code={`import { Card, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={3} wrap align="start">
+      <Card padding="sm" style={{ width: 150 }}>
+        <Text size="sm">padding="sm"</Text>
+      </Card>
+      <Card padding="md" style={{ width: 150 }}>
+        <Text size="sm">padding="md"</Text>
+      </Card>
+      <Card padding="lg" radius={24} style={{ width: 150 }}>
+        <Text size="sm">padding="lg", radius={24}</Text>
+      </Card>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} wrap align="start">
+    <Card padding="sm" style={{ width: 150 }}>
+      <Text size="sm">padding="sm"</Text>
+    </Card>
+    <Card padding="md" style={{ width: 150 }}>
+      <Text size="sm">padding="md"</Text>
+    </Card>
+    <Card padding="lg" radius={24} style={{ width: 150 }}>
+      <Text size="sm">padding="lg", radius={24}</Text>
+    </Card>
+  </Stack>
+</ComponentPreview>
+
+`padding` is a single shared value: the parts do not add their own, so the card keeps one rhythm.
+Use `padding="none"` when the content needs to control its own spacing, for example a table or a
+full-bleed list.
+
+## Media
+
+<ComponentPreview
+  title="Full-bleed media"
+  code={`import { Card, CardContent, CardDescription, CardHeader, CardMedia, CardTitle } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Card style={{ width: 280 }}>
+      <CardMedia>
+        <img
+          src="/media/cover.png"
+          alt=""
+          style={{ aspectRatio: '16 / 9', background: 'var(--ui-surface-sunken)' }}
+        />
+      </CardMedia>
+      <CardHeader>
+        <CardTitle>Retention report</CardTitle>
+        <CardDescription>What changed for customers last quarter.</CardDescription>
+      </CardHeader>
+      <CardContent>Twelve pages on activation and churn.</CardContent>
+    </Card>
+  );
+}`}
+>
+  <Card style={{ width: 280 }}>
+    <CardMedia>
+      <div
+        style={{
+          aspectRatio: '16 / 9',
+          background: 'linear-gradient(135deg, var(--ui-accent-surface), var(--ui-surface-sunken))',
+        }}
+      />
+    </CardMedia>
+    <CardHeader>
+      <CardTitle>Retention report</CardTitle>
+      <CardDescription>What changed for customers last quarter.</CardDescription>
+    </CardHeader>
+    <CardContent>Twelve pages on activation and churn.</CardContent>
+  </Card>
+</ComponentPreview>
+
+`CardMedia` cancels the card padding on the sides it touches, so images reach the edges and are
+clipped by the card radius. Give images an empty `alt` when they are decorative, and a descriptive
+one when they carry meaning.
+
+## Cards that link
+
+Render the card as an anchor instead of wrapping it in one. The card then keeps native focus,
+keyboard activation, and context-menu behavior:
+
+<ComponentPreview
+  title="Linked card"
+  code={`import { Card, CardDescription, CardHeader, CardTitle } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Card as="a" href="/docs/components/button/" style={{ width: 260 }}>
+      <CardHeader>
+        <CardTitle>Buttons</CardTitle>
+        <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
+      </CardHeader>
+    </Card>
+  );
+}`}
+>
+  <Card as="a" href="/docs/components/button/" style={{ width: 260 }}>
+    <CardHeader>
+      <CardTitle>Buttons</CardTitle>
+      <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
+    </CardHeader>
+  </Card>
+</ComponentPreview>
+
+Do not nest links or buttons inside a card that is itself a link — the nested target becomes
+unreachable for pointer and screen-reader users. When a card needs several actions, keep the card a
+`div` and place the actions in `CardFooter`.
+
+## Accessibility
+
+- `Card` renders a `div` and carries no role. It is a visual grouping, not a landmark; add
+  `aria-labelledby` pointing at the title only when the grouping needs an accessible name.
+- `CardTitle` renders an `h3` by default. Pass `level` to match the surrounding document outline
+  instead of skipping heading levels.
+- Render a clickable card as `a` or `button` through `as`, so focus, Enter, and Space work without
+  extra handlers. Avoid `onClick` on the default `div` root.
+- Focus is visible on the card itself (`:focus-visible`), so a linked card needs no extra styling.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: "'default' | 'elevated' | 'outline'",
+      default: "'default'",
+      description: 'Surface treatment: border, shadow, or both.',
+    },
+    {
+      name: 'padding',
+      type: "'none' | 'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Inner spacing shared by every part.',
+    },
+    {
+      name: 'radius',
+      type: 'number | string',
+      description: 'Corner radius in CSS units. Numbers are treated as pixels. Defaults to `0.75rem`.',
+    },
+    {
+      name: 'shadow',
+      type: "'none' | 'sm' | 'md' | 'lg'",
+      description: 'Elevation override. Defaults to `md` for `elevated` and `none` otherwise.',
+    },
+    {
+      name: 'as',
+      type: 'ElementType',
+      default: "'div'",
+      description: 'Rendered element. Use `a` or `button` when the whole card is an action.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    {
+      name: 'level',
+      type: '1 | 2 | 3 | 4 | 5 | 6',
+      default: '3',
+      description: 'CardTitle only. Sets the rendered heading element.',
+    },
+    {
+      name: 'part props',
+      type: 'HTMLAttributes<HTMLElement>',
+      description:
+        'CardHeader, CardContent, CardFooter, and CardMedia render a div; CardDescription renders a p. All accept native attributes, className, and ref.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Box](/docs/components/box/) for layout without a surface.
+- [Separator](/docs/components/separator/) for dividing regions inside a card.
+- [Button](/docs/components/button/) for the actions in `CardFooter`.
+- [Skeleton](/docs/components/skeleton/) for the card placeholder while data loads.
