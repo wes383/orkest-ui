@@ -143,6 +143,14 @@ search, `align="right"` keeps the trigger next to the row edge, and the trigger 
 accessible name so it is not announced as a nameless button. The same pattern works with a plain
 [Table](/docs/components/table/): render the menu inside a `TableCell`.
 
+## Narrow screens
+
+The table scrolls horizontally inside its own container, so the page never scrolls sideways. Header
+cells never wrap, which means a table with many columns starts scrolling as soon as the headers
+exceed the available width. Body cells do wrap by default, so a table whose headers are short but
+whose content is long will compress instead of scrolling — give those columns a `minWidth` to keep
+them readable and let the container scroll.
+
 ## Props
 
 <PropsTable
