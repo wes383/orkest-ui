@@ -1,0 +1,259 @@
+---
+title: Empty State
+description: A composable placeholder for regions with nothing to show yet.
+section: components
+---
+
+`EmptyState` explains why a region has nothing in it and, when there is something to do, offers the
+next step. It is purely presentational: no data fetching, no state, no extra dependency, and no
+Base UI. A single icon is enough for most cases; an illustration is optional.
+
+<Callout type="warning" title="Not for loading or failures">
+  While data is on its way, hold the layout with [Skeleton](/docs/components/skeleton/) (or a
+  [Spinner](/docs/components/spinner/) for work in progress). A failed request is an error state:
+  keep the error message and a retry action instead of showing an empty state. Those three states
+  need different words and different actions.
+</Callout>
+
+## Live preview
+
+<div className="demo">
+  <EmptyStateBasicExample />
+</div>
+
+```tsx
+import { Button, EmptyState } from '@orkest/ui';
+import { Inbox } from 'lucide-react';
+
+<EmptyState
+  icon={Inbox}
+  title="No invoices yet"
+  description="Invoices appear here once a customer is billed."
+  action={
+    <>
+      <Button>Create invoice</Button>
+      <Button variant="outline">Learn about billing</Button>
+    </>
+  }
+/>
+```
+
+This is the shorthand API: `title`, `description`, `icon`, `image`, and `action`. Leave out whatever
+you do not need. A state with only a sentence is perfectly valid, and every shorthand prop builds the
+same parts you can compose by hand.
+
+## Sizes
+
+<div className="demo">
+  <EmptyStateSizesExample />
+</div>
+
+From top to bottom: `sm`, `md`, `lg`. Size controls how much room the state takes, not what it is:
+
+- `sm` fits a compact region, such as a widget or an empty table body.
+- `md` is the default for a normal content area.
+- `lg` suits a full-page, first-run state.
+
+Padding, gaps, title size, and the icon surface all scale together. The DOM and the available parts
+stay the same, so a size change never forces a different API.
+
+## Alignment
+
+<div className="demo">
+  <EmptyStateAlignExample />
+</div>
+
+`align="center"` is the default. Use `align="start"` when the surrounding content is left aligned —
+for example a panel that already has a left-aligned header. Alignment only changes `align-items` and
+`text-align`; the parts and their order are unchanged.
+
+## Composition
+
+When you need several descriptions, more than one action row, a different heading level, or a custom
+visual, pass the parts as children. `children` replaces the shorthand content, while `size` and
+`align` still style the container.
+
+<div className="demo">
+  <EmptyStateCompositionExample />
+</div>
+
+```tsx
+import {
+  Button,
+  EmptyState,
+  EmptyStateAction,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from '@orkest/ui';
+import { Search } from 'lucide-react';
+
+<EmptyState size="lg" align="start">
+  <EmptyStateIcon icon={Search} />
+  <EmptyStateTitle level={2}>No results for "quarterly report"</EmptyStateTitle>
+  <EmptyStateDescription>Check the spelling or try a broader keyword.</EmptyStateDescription>
+  <EmptyStateAction>
+    <Button>Clear filters</Button>
+    <Button variant="outline">Browse all files</Button>
+  </EmptyStateAction>
+  <EmptyStateDescription>Search also supports file type and date filters.</EmptyStateDescription>
+</EmptyState>;
+```
+
+There is no limit on how many titles, descriptions, or actions you use. The parts are ordinary
+elements:
+
+- `EmptyStateTitle` is a heading, `h3` by default. Set `level` to keep the page outline correct —
+  use `2` for a full-page state directly under the `h1`.
+- `EmptyStateIcon` accepts a Lucide component through `icon`, or any custom node as children.
+- `EmptyStateDescription` is a paragraph you can repeat when the copy needs a second block.
+- `EmptyStateAction` is a wrapping flex row; put any number of buttons in it, or omit it entirely.
+
+## Illustrations
+
+<div className="demo">
+  <EmptyStateImageExample />
+</div>
+
+```tsx
+<EmptyState
+  size="lg"
+  image={{ src: '/empty-inbox.svg', alt: 'An empty inbox with no documents' }}
+  title="Your inbox is all caught up"
+  description="New messages will land here as soon as someone writes to you."
+  action={<Button variant="outline">Compose a message</Button>}
+/>
+```
+
+`image` is optional and takes precedence over `icon` when both are supplied. `alt` is required: it
+carries any meaning the illustration adds. If the picture is purely decorative, use `alt=""` and make
+sure the title and description say everything on their own. Do not make a custom illustration a
+prerequisite for using the component.
+
+## Embedding
+
+`EmptyState` is not built into [Table](/docs/components/table/) or
+[Card](/docs/components/card/). It works on its own, and it also drops into whatever region happens
+to be empty. This example uses a custom panel with its own header, and also shows a text-only state
+with no icon and no action:
+
+<div className="demo">
+  <EmptyStateEmbeddedExample />
+</div>
+
+```tsx
+import { Box, Button, EmptyState, Separator, Stack, Text } from '@orkest/ui';
+
+<Box background="surface" border radius="md">
+  <Box as="header" padding={4}>
+    <Stack direction="row" gap={3} align="center" justify="between">
+      <Text weight="semibold">Team members</Text>
+      <Button size="sm" variant="outline">Invite</Button>
+    </Stack>
+  </Box>
+  <Separator />
+  <EmptyState
+    size="sm"
+    title="No members yet"
+    description="Invite someone to collaborate in this workspace."
+  />
+</Box>;
+```
+
+## Accessibility
+
+- The title is a real heading. Keep the outline in order with `level` when composing; the shorthand
+  uses `h3`, which fits a state nested under a section heading.
+- The default icon is decorative and hidden from assistive technology. If a custom visual carries
+  meaning, give it a name (`label` on `Icon`, or `alt` on an image). An illustration with `alt=""`
+  must not be the only explanation of the state.
+- Actions are real buttons with visible focus, so keyboard and screen-reader users get the same path
+  forward. Do not add click handlers to the container.
+- The component deliberately has no `role="status"` or `aria-live`: an empty state is static content,
+  not an announcement. If the state appears after a client-side filter change, announce the change on
+  the region that owns the content instead.
+- Text uses semantic theme colors, so light and dark themes keep their contrast. State is described
+  in words, never by color alone.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Space around the content. Scales padding, gaps, title size, and icon size.',
+    },
+    {
+      name: 'align',
+      type: "'center' | 'start'",
+      default: "'center'",
+      description: 'Content alignment, horizontal and text.',
+    },
+    { name: 'title', type: 'ReactNode', description: 'Shorthand for EmptyStateTitle.' },
+    {
+      name: 'description',
+      type: 'ReactNode',
+      description: 'Shorthand for EmptyStateDescription.',
+    },
+    {
+      name: 'icon',
+      type: 'LucideIcon',
+      description: 'Decorative Lucide icon component. Omit it for a text-only state. Use EmptyStateIcon with children for a custom visual.',
+    },
+    {
+      name: 'image',
+      type: '{ src: string; alt: string }',
+      description: 'Optional illustration. Takes precedence over icon. alt is required.',
+    },
+    {
+      name: 'action',
+      type: 'ReactNode',
+      description: 'Shorthand for EmptyStateAction. Nothing is rendered when omitted.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Custom composition built from the parts. Replaces all shorthand content but keeps size and align.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'className, style, ARIA attributes, event handlers, and ref are forwarded to the root div. The native title attribute is replaced by the ReactNode title prop.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    {
+      name: 'EmptyStateIcon',
+      type: "HTMLAttributes<HTMLSpanElement> & { icon?: LucideIcon }",
+      description: 'Rounded surface for an icon or any custom children.',
+    },
+    {
+      name: 'EmptyStateTitle',
+      type: "HTMLAttributes<HTMLHeadingElement> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }",
+      description: 'Heading, h3 by default.',
+    },
+    {
+      name: 'EmptyStateDescription',
+      type: 'HTMLAttributes<HTMLParagraphElement>',
+      description: 'Supporting paragraph with a comfortable measure.',
+    },
+    {
+      name: 'EmptyStateAction',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Wrapping flex row for actions.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Skeleton](/docs/components/skeleton/) for holding layout while content loads.
+- [Spinner](/docs/components/spinner/) for work that is already in progress.
+- [Alert](/docs/components/alert/) for error and warning messages that include a retry.
+- [Button](/docs/components/button/) for the actions in a state.
+- [Card](/docs/components/card/) for a surface that can contain a state.

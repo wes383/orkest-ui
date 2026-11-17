@@ -83,6 +83,14 @@ import {
   PaginationManyPagesExample,
   PaginationSizesExample,
 } from '../examples/pagination-examples';
+import {
+  EmptyStateAlignExample,
+  EmptyStateBasicExample,
+  EmptyStateCompositionExample,
+  EmptyStateEmbeddedExample,
+  EmptyStateImageExample,
+  EmptyStateSizesExample,
+} from '../examples/empty-state-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -380,6 +388,12 @@ export const mdxComponents = {
   PaginationFirstLastExample,
   PaginationManyPagesExample,
   PaginationSizesExample,
+  EmptyStateAlignExample,
+  EmptyStateBasicExample,
+  EmptyStateCompositionExample,
+  EmptyStateEmbeddedExample,
+  EmptyStateImageExample,
+  EmptyStateSizesExample,
   Tag,
   Text,
   Textarea,
