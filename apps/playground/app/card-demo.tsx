@@ -9,9 +9,11 @@ import {
   CardMedia,
   CardTitle,
   Heading,
+  Icon,
   Stack,
   Text,
 } from '@orkest/ui';
+import { ArrowUpRight } from 'lucide-react';
 
 export function CardDemo() {
   return (
@@ -72,10 +74,13 @@ export function CardDemo() {
         </Card>
 
         <Card as="a" href="/" style={{ width: 240 }}>
-          <CardHeader>
-            <CardTitle>Linked card</CardTitle>
-            <CardDescription>Rendered as an anchor.</CardDescription>
-          </CardHeader>
+          <Stack direction="row" justify="between" align="start" gap={3}>
+            <CardHeader>
+              <CardTitle>Linked card</CardTitle>
+              <CardDescription>Rendered as an anchor.</CardDescription>
+            </CardHeader>
+            <Icon icon={ArrowUpRight} size="sm" tone="muted" />
+          </Stack>
         </Card>
       </Stack>
     </Stack>

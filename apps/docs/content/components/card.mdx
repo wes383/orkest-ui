@@ -226,24 +226,31 @@ keyboard activation, and context-menu behavior:
 
 <ComponentPreview
   title="Linked card"
-  code={`import { Card, CardDescription, CardHeader, CardTitle } from '@orkest/ui';
+  code={`import { Card, CardDescription, CardHeader, CardTitle, Icon, Stack } from '@orkest/ui';
+import { ArrowUpRight } from 'lucide-react';
 
 export function Example() {
   return (
     <Card as="a" href="/docs/components/button/" style={{ width: 260 }}>
-      <CardHeader>
-        <CardTitle>Buttons</CardTitle>
-        <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
-      </CardHeader>
+      <Stack direction="row" justify="between" align="start" gap={3}>
+        <CardHeader>
+          <CardTitle>Buttons</CardTitle>
+          <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
+        </CardHeader>
+        <Icon icon={ArrowUpRight} size="sm" tone="muted" />
+      </Stack>
     </Card>
   );
 }`}
 >
   <Card as="a" href="/docs/components/button/" style={{ width: 260 }}>
-    <CardHeader>
-      <CardTitle>Buttons</CardTitle>
-      <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
-    </CardHeader>
+    <Stack direction="row" justify="between" align="start" gap={3}>
+      <CardHeader>
+        <CardTitle>Buttons</CardTitle>
+        <CardDescription>Sizes, variants, icons, and loading states.</CardDescription>
+      </CardHeader>
+      <Icon icon={ArrowUpRight} size="sm" tone="muted" />
+    </Stack>
   </Card>
 </ComponentPreview>
 
