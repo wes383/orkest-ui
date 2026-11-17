@@ -7,7 +7,7 @@ Documentation: [ui.wesluma.com/docs](https://ui.wesluma.com/docs/)
 
 ## Status
 
-`0.1.0` is published on npm. The public API may still change before `1.0.0`.
+Published on npm. The public API may still change before `1.0.0`.
 
 ## Install
 
