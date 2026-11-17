@@ -29,11 +29,12 @@ export default function HomePage() {
       <section className="landing-hero">
         <div className="landing-hero-copy">
           <h1 className="landing-title">
-            Interfaces that stay <span className="landing-title-accent">quiet,</span> by design.
+            Thoughtfully crafted components for{' '}
+            <span className="landing-title-accent">modern interfaces.</span>
           </h1>
           <p className="landing-lede">
-            A small, opinionated React component library built around restraint: neutral surfaces,
-            precise spacing, and interactions that stay out of the way.
+            A lightweight, accessible, and flexible React component library designed to help
+            developers build consistent, beautiful user interfaces with ease.
           </p>
           <div className="landing-actions">
             <Link className="button-link" href="/docs/installation/">
