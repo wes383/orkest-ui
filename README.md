@@ -1,5 +1,8 @@
 # Orkest UI
 
+[![CI](https://github.com/wes383/orkest-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/wes383/orkest-ui/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@orkest/ui.svg)](https://www.npmjs.com/package/@orkest/ui)
+
 A neutral-first React component library with semantic design tokens, accessible primitives, and
 light and dark themes.
 
@@ -7,7 +10,7 @@ The repository is a pnpm monorepo containing the library and its custom document
 
 ## Status
 
-`0.1.0` is the next release and has not been published yet. The current surface includes:
+`0.1.0` is published on npm. The current surface includes:
 
 - Primitives: `Box`, `Stack`, `Grid`, `Separator`, `Icon`
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
@@ -21,8 +24,8 @@ The repository is a pnpm monorepo containing the library and its custom document
   and the `toast` API), `Tooltip` (with parts), `TooltipProvider` (exported from
   `@orkest/ui/client`)
 
-Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
-registry yet.
+Core components and complex interactions are still in progress, and the public API may still change
+before `1.0.0`.
 
 ## Workspace
 
@@ -55,9 +58,15 @@ pnpm playground:dev  # build the library, then start the consumer playground on 
 React, and `jsx-a11y` rules. Inline disables are limited to pointer-only affordances that have
 no keyboard equivalent, such as native dialog backdrops.
 
-## Consuming the package
+## Install
 
-The package exports its built `dist` directory, so build it first:
+```bash
+pnpm add @orkest/ui
+```
+
+React 18.2 or React 19 is required. The published package ships its built `dist` output, so nothing
+else needs building. Inside this repository, run `pnpm build` once before starting the documentation
+site or the playground, since both consume `dist`.
 
 ```tsx
 import { Box, Stack, Text } from '@orkest/ui';

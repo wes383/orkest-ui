@@ -1,39 +1,19 @@
 # @orkest/ui
 
-Neutral-first React primitives with semantic design tokens and light and dark themes.
+Neutral-first React component library with semantic design tokens, accessible primitives, and light
+and dark themes.
 
 ## Status
 
-`0.1.0` is the next release and has not been published yet. The public API may still change before
-the package is released.
-
-Currently exported:
-
-- Primitives: `Box`, `Stack`, `Grid`, `Separator`, `Icon`
-- Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
-  `Link`
-- Components: `Badge`, `Button`, `IconButton`, `Tag`
-- Client components: `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Input`,
-  `MultiSelect`, `Radio`, `RadioGroup`, `Select`, `Switch`, `Textarea` (exported from
-  `@orkest/ui/client`)
+`0.1.0` is published on npm. The public API may still change before `1.0.0`.
 
 ## Install
 
-Add the package as a workspace dependency:
-
-```json
-{
-  "dependencies": {
-    "@orkest/ui": "workspace:*"
-  }
-}
-```
-
-The package exports its built `dist` directory, so build it before starting or building a consumer:
-
 ```bash
-pnpm --filter @orkest/ui build
+pnpm add @orkest/ui
 ```
+
+React 18.2 or React 19 is required.
 
 ## Usage
 
@@ -53,13 +33,25 @@ export function Example() {
 }
 ```
 
+## Components
+
+- Primitives: `Box`, `Stack`, `Grid`, `Separator`, `Icon`
+- Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
+  `Link`
+- Components: `Badge`, `Button`, `IconButton`, `Tag`
+- Client components, exported from `@orkest/ui/client`: `Alert` (with parts), `AlertDialog` (with
+  parts), `Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Dialog` (with
+  parts), `DropdownMenu` (with parts), `Field`, `FieldDescription`, `FieldLabel`, `FieldMessage`,
+  `FieldRequiredIndicator`, `Fieldset`, `Input`, `Legend`, `MultiSelect`, `Popover` (with parts),
+  `Radio`, `RadioGroup`, `Select`, `Switch`, `Tabs` (with parts), `Textarea`, `Toast` (with parts
+  and the `toast` API), `Tooltip` (with parts), and `TooltipProvider`
+
 ## Client components
 
-`Avatar`, `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `MultiSelect`, `Select`, `Input`, and
-`Textarea` are exported from `@orkest/ui/client` because they use client-side state:
+Components that use client-side state are exported from `@orkest/ui/client`:
 
 ```tsx
-import { Avatar, AvatarFallback, Input, MultiSelect, Select, Textarea } from '@orkest/ui/client';
+import { Avatar, AvatarFallback, Input, Select, Textarea, toast } from '@orkest/ui/client';
 ```
 
 Render them inside a Client Component (a module with `'use client'`).
@@ -81,7 +73,7 @@ behavior for interactive components.
 
 ## Documentation
 
-Run the documentation site from the repository root:
+The documentation site lives in this repository. Run it from the repository root:
 
 ```bash
 pnpm docs:dev
