@@ -105,6 +105,8 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
         <kbd className="search-shortcut">Ctrl K</kbd>
       </button>
 
+      {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
         ref={dialogRef}
         className="search-dialog"
@@ -157,6 +159,8 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
             </button>
           </div>
 
+          {/* Arrow key handling is delegated from the focusable input and result links inside this region. */}
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div className="search-body" onKeyDown={handleResultsKeyDown}>
             {query.trim() === '' ? (
               <p className="search-empty">

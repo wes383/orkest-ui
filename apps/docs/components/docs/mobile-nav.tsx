@@ -44,6 +44,8 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
       >
         <Icon icon={Menu} size="sm" />
       </button>
+      {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
         ref={dialogRef}
         className="mobile-nav-dialog"

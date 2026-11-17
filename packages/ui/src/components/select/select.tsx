@@ -198,6 +198,8 @@ function PlainSelect({
         data-disabled={control.disabled || undefined}
         data-invalid={control.invalid || undefined}
       >
+        {/* The wrapper only forwards pointer clicks on padding and icon slots to the trigger; keyboard access belongs to the trigger button. */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
           ref={fieldRef}
           className={styles.field}

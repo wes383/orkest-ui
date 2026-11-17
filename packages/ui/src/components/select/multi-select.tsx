@@ -355,6 +355,7 @@ function MultiSelectImpl({
                 {renderValue ? (
                   <span
                     className={styles.customValue}
+                    role="presentation"
                     onClick={(event) => event.stopPropagation()}
                   >
                     {renderValue(selectedOptions, removeValue)}

@@ -98,6 +98,8 @@ describe('Alert', () => {
     unmount();
 
     const { container } = render(
+      // `role={null}` is a supported API that removes the live region role.
+      // eslint-disable-next-line jsx-a11y/aria-role
       <Alert role={null}>
         <AlertTitle>Static</AlertTitle>
       </Alert>,
