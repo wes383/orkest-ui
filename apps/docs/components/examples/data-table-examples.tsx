@@ -228,6 +228,7 @@ export function DataTableWideExample() {
       caption="Invoices in a wide table"
       pageSize={5}
       size="sm"
+      paginationLabel="Wide table pages"
       getRowId={(row) => row.id}
     />
   );

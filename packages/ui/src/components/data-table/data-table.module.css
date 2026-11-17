@@ -104,18 +104,6 @@
   font-size: var(--ok-font-size-xs);
 }
 
-.pager {
-  display: flex;
-  align-items: center;
-  gap: var(--ok-space-2);
-}
-
-.pageLabel {
-  color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-xs);
-  font-variant-numeric: tabular-nums;
-}
-
 .srOnly {
   position: absolute;
   width: 1px;

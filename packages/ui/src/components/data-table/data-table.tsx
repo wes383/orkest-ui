@@ -17,6 +17,7 @@ import {
 } from '../dropdown-menu';
 import { IconButton } from '../icon-button';
 import { Input } from '../input';
+import { Pagination } from '../pagination';
 import {
   Table,
   TableBody,
@@ -64,6 +65,8 @@ export interface DataTableProps<TData> {
   emptyState?: ReactNode;
   /** Rows per page. Defaults to `10`. */
   pageSize?: number;
+  /** Accessible name for the pagination landmark, useful when a page has several tables. */
+  paginationLabel?: string;
   /** Separator treatment, passed to the table. Defaults to `default`. */
   variant?: TableVariant;
   /** Passed through to the table. Defaults to `md`. */
@@ -133,6 +136,7 @@ export function DataTable<TData>({
   caption,
   emptyState,
   pageSize = 10,
+  paginationLabel,
   variant = 'default',
   size = 'md',
   striped = false,
@@ -462,27 +466,13 @@ export function DataTable<TData>({
           <p className={styles.summary} aria-live="polite">
             {total === 0 ? 'No results' : `Showing ${firstRow}–${lastRow} of ${total}`}
           </p>
-          <div className={styles.pager}>
-            <Button
-              size="sm"
-              variant="outline"
-              disabled={currentPage <= 1}
-              onClick={() => setPage(currentPage - 1)}
-            >
-              Previous
-            </Button>
-            <span className={styles.pageLabel}>
-              Page {currentPage} of {pageCount}
-            </span>
-            <Button
-              size="sm"
-              variant="outline"
-              disabled={currentPage >= pageCount}
-              onClick={() => setPage(currentPage + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          <Pagination
+            page={currentPage}
+            totalPages={pageCount}
+            size="sm"
+            label={paginationLabel}
+            onPageChange={setPage}
+          />
         </div>
       ) : null}
     </div>

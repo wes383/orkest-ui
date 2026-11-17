@@ -113,18 +113,19 @@ describe('DataTable', () => {
     );
 
     expect(screen.getByText('Showing 1–5 of 12')).toBeInTheDocument();
-    expect(screen.getByText('Page 1 of 3')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '1' })).toHaveAttribute('aria-current', 'page');
 
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Next page' }));
 
     expect(screen.getByText('Showing 6–10 of 12')).toBeInTheDocument();
     expect(bodyNames()[0]).toBe('Person 6');
 
     await user.type(screen.getByLabelText('Search rows'), 'Designer');
 
-    expect(screen.getByText('Page 1 of 2')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+    expect(screen.getByText('Showing 1–5 of 6')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '1' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
   });
 
   it('selects rows on the page and reports them', async () => {
@@ -238,6 +239,20 @@ describe('DataTable', () => {
     expect(screen.getByText('No results')).toBeInTheDocument();
   });
 
+  it('labels the pagination landmark', () => {
+    render(
+      <DataTable
+        columns={columns}
+        data={manyPeople}
+        pageSize={5}
+        paginationLabel="Team pages"
+        getRowId={(row) => row.id}
+      />,
+    );
+
+    expect(screen.getByRole('navigation', { name: 'Team pages' })).toBeInTheDocument();
+  });
+
   it('supports disabling search and pagination', () => {
     render(
       <DataTable
@@ -250,7 +265,7 @@ describe('DataTable', () => {
     );
 
     expect(screen.queryByLabelText('Search rows')).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'Next' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument();
     expect(bodyRows()).toHaveLength(3);
   });
 });

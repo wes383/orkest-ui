@@ -71,9 +71,10 @@ runs before sorting and pagination, and changing it resets the table to the firs
 
 ## Pagination
 
-`pageSize` defaults to `10`. The footer reports the visible range and total, and Previous / Next
-disable at the edges. When search or a data change shrinks the result set, the table clamps to the
-last valid page instead of showing an empty one.
+`pageSize` defaults to `10`. The footer pairs a live range summary with the
+[Pagination](/docs/components/pagination/) control, so long result sets get page numbers instead of a
+single step button. When search or a data change shrinks the result set, the table clamps to the last
+valid page instead of showing an empty one.
 
 ## Selection
 
@@ -205,6 +206,13 @@ pagination stay put. Nothing is truncated and no column is squeezed into a one-c
       description: 'Rendered in a single row when nothing matches.',
     },
     { name: 'pageSize', type: 'number', default: '10', description: 'Rows per page.' },
+    {
+      name: 'paginationLabel',
+      type: 'string',
+      default: "'Pagination'",
+      description:
+        'Accessible name for the pagination landmark. Set it when a page holds more than one data table.',
+    },
     {
       name: 'variant',
       type: "'default' | 'bordered'",
