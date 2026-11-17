@@ -36,11 +36,11 @@
 }
 
 .caption {
-  padding: var(--ok-space-2) var(--table-cell-padding-x);
+  padding: 0 var(--table-cell-padding-x) var(--ok-space-2);
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-xs);
   text-align: left;
-  caption-side: bottom;
+  caption-side: top;
 }
 
 .head {
