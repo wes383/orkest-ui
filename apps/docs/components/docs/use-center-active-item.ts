@@ -3,14 +3,11 @@
 import { useEffect, type RefObject } from 'react';
 
 /**
- * Centres the active navigation item inside its scroll container. Opening a page
- * directly would otherwise leave the sidebar scrolled to the top, with the
- * current entry far outside the visible area.
+ * Centres the active navigation item on first render. Opening a page directly
+ * would otherwise leave the sidebar scrolled to the top, with the current entry
+ * far outside the visible area. Later route changes keep the reader's position.
  */
-export function useCenterActiveItem<T extends HTMLElement>(
-  containerRef: RefObject<T | null>,
-  activeKey: string,
-) {
+export function useCenterActiveItem<T extends HTMLElement>(containerRef: RefObject<T | null>) {
   useEffect(() => {
     const container = containerRef.current;
     const active = container?.querySelector<HTMLElement>('[aria-current="page"]');
@@ -29,5 +26,5 @@ export function useCenterActiveItem<T extends HTMLElement>(
       container.clientHeight / 2;
 
     container.scrollTop = Math.min(Math.max(centered, 0), maxScroll);
-  }, [containerRef, activeKey]);
+  }, [containerRef]);
 }

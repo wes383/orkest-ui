@@ -12,7 +12,7 @@ export function DocsSidebar({ navigation }: { navigation: NavGroup[] }) {
   const pathname = usePathname();
   const { ref, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(navigation);
 
-  useCenterActiveItem(ref, pathname);
+  useCenterActiveItem(ref);
 
   const className = [
     'docs-sidebar',
