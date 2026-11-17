@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useMemo, useState, type ReactNode } from 'react';
-import { ChevronDown, ChevronRight, Search } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 import { cx } from '../../utils/cx';
 import { Button } from '../button';
@@ -292,12 +292,10 @@ export function DataTable<TData>({
         {searchable ? (
           <div className={styles.searchField}>
             <Input
-              size="sm"
               type="search"
               value={query}
               placeholder="Search…"
               aria-label="Search rows"
-              leftIcon={Search}
               onChange={(event) => {
                 setQuery(event.target.value);
                 setPage(1);
@@ -310,9 +308,7 @@ export function DataTable<TData>({
 
         {columnVisibility ? (
           <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<Button variant="outline" size="sm" rightIcon={ChevronDown} />}
-            >
+            <DropdownMenuTrigger render={<Button variant="outline" rightIcon={ChevronDown} />}>
               Columns
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
