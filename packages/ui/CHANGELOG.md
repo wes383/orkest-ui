@@ -1,5 +1,12 @@
 # @orkest/ui
 
+## 0.1.1
+
+### Patch Changes
+
+- 8176a26: Document the npm install, the stylesheet import, and the client entry point in the package README,
+  and link the repository and issue tracker from the package metadata. No runtime changes.
+
 ## 0.1.0
 
 ### Minor Changes
