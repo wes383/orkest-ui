@@ -13,7 +13,9 @@ through, so a data table looks exactly like a hand-built one. Import the compone
 
 ## Live preview
 
-<DataTableExample />
+<div className="demo">
+  <DataTableExample />
+</div>
 
 ## Columns
 
@@ -75,7 +77,9 @@ last valid page instead of showing an empty one.
 
 ## Selection
 
-<DataTableSelectionExample />
+<div className="demo">
+  <DataTableSelectionExample />
+</div>
 
 Selecting is opt-in with `selectable`. The header checkbox covers the rows on the current page, not
 the whole data set — a predictable scope when results span several pages. `onSelectionChange`
@@ -84,7 +88,9 @@ receives the selected rows, so the caller owns what happens next. The example ab
 
 ## Row expansion
 
-<DataTableExpandableExample />
+<div className="demo">
+  <DataTableExpandableExample />
+</div>
 
 `expandable` adds a toggle column and renders `renderExpanded(row)` in an extra row underneath.
 Only the toggle button carries `aria-expanded`, so the extra row never joins the row count that
@@ -101,7 +107,9 @@ There is no actions prop, and none is needed: an actions column is a column whos
 menu. `DropdownMenu` portals its content, so the menu escapes the table's horizontal scroll container
 instead of being clipped by a cell.
 
-<DataTableActionsExample />
+<div className="demo">
+  <DataTableActionsExample />
+</div>
 
 ```tsx
 import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
@@ -151,7 +159,9 @@ exceed the available width. Body cells do wrap by default, so a table whose head
 whose content is long will compress instead of scrolling — give those columns a `minWidth` to keep
 them readable and let the container scroll.
 
-<DataTableWideExample />
+<div className="demo">
+  <DataTableWideExample />
+</div>
 
 ```tsx
 const columns: DataColumn<Invoice>[] = [

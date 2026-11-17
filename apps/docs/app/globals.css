@@ -492,6 +492,12 @@ kbd {
   margin-top: var(--ok-space-4);
 }
 
+/* A demo rendered straight into the article needs more air than prose blocks,
+   because the component brings its own border and controls. */
+.prose > .demo {
+  margin-block: var(--ok-space-6);
+}
+
 /* Article typography applies to the headings MDX renders, not to headings a
    component renders inside a preview. */
 .prose .mdx-heading {
