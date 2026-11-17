@@ -11,6 +11,15 @@
     "css-modules"
   ],
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wes383/orkest-ui.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://github.com/wes383/orkest-ui#readme",
+  "bugs": {
+    "url": "https://github.com/wes383/orkest-ui/issues"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
