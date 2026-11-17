@@ -47,12 +47,15 @@ pnpm install
 pnpm build       # build @orkest/ui
 pnpm test        # run the library test suite
 pnpm typecheck   # type-check the library, the documentation site, and the playground
+pnpm lint        # lint the workspace with ESLint
 pnpm docs:dev    # build the library, then start the documentation site
 pnpm docs:build  # build the library, then statically export the documentation site
 pnpm playground:dev  # build the library, then start the consumer playground on port 3001
 ```
 
-`pnpm lint` is not configured in this repository.
+`eslint.config.js` at the repository root lints every workspace package with TypeScript,
+React, and `jsx-a11y` rules. Inline disables are limited to pointer-only affordances that have
+no keyboard equivalent, such as native dialog backdrops.
 
 ## Consuming the package
 
