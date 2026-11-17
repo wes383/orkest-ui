@@ -20,6 +20,7 @@ import { ChoiceDemo } from './choice-demo';
 import { DataTableDemo } from './data-table-demo';
 import { DialogDemo } from './dialog-demo';
 import { DropdownMenuDemo } from './dropdown-menu-demo';
+import { EmptyStateDemo } from './empty-state-demo';
 import { FieldDemo } from './field-demo';
 import { LoadingDemo } from './loading-demo';
 import { PlaygroundForm } from './playground-form';
@@ -99,6 +100,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <FieldDemo />
       <DialogDemo />
       <DropdownMenuDemo />
+      <EmptyStateDemo />
       <PopoverDemo />
       <TabsDemo />
       <TableDemo />
