@@ -15,6 +15,7 @@ import {
 
 import { AlertDemo } from './alert-demo';
 import { AvatarDemo } from './avatar-demo';
+import { CardDemo } from './card-demo';
 import { ChoiceDemo } from './choice-demo';
 import { DialogDemo } from './dialog-demo';
 import { DropdownMenuDemo } from './dropdown-menu-demo';
@@ -87,6 +88,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <Separator />
       <AlertDemo />
       <AvatarDemo />
+      <CardDemo />
       <ChoiceDemo />
       <SelectDemo />
       <FieldDemo />
