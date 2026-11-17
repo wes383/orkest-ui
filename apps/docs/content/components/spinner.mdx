@@ -1,0 +1,135 @@
+---
+title: Spinner
+description: Indeterminate progress for an action that is already running.
+section: components
+---
+
+`Spinner` reports that an action is in progress: a submit button, an inline row action, or a long
+task with a status line. For the first load of a page or a list, use
+[Skeleton](/docs/components/skeleton/) so the layout can be held in place.
+
+## Live preview
+
+<ComponentPreview
+  title="Sizes"
+  code={`import { Spinner, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={4} align="center">
+      <Spinner size="sm" label="Loading" />
+      <Spinner size="md" label="Loading" />
+      <Spinner size="lg" label="Loading" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={4} align="center">
+    <Spinner size="sm" label="Loading" />
+    <Spinner size="md" label="Loading" />
+    <Spinner size="lg" label="Loading" />
+  </Stack>
+</ComponentPreview>
+
+## Alongside status text
+
+When the text next to the spinner already says what is happening, mark the spinner as decorative so
+the status is announced once:
+
+<ComponentPreview
+  title="Decorative spinner"
+  code={`import { Spinner, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center" role="status">
+      <Spinner size="sm" label={null} />
+      <Text size="sm" tone="muted">
+        Syncing changes…
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={2} align="center" role="status">
+    <Spinner size="sm" label={null} />
+    <Text size="sm" tone="muted">
+      Syncing changes…
+    </Text>
+  </Stack>
+</ComponentPreview>
+
+## Colour
+
+The ring uses `currentColor`, so it follows the text colour of its surroundings. Pass `color` to
+tint it without touching the surrounding text:
+
+<ComponentPreview
+  title="Custom colour"
+  code={`import { Spinner, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={4} align="center">
+      <Spinner color="var(--ui-accent)" label="Saving" />
+      <Spinner color="var(--ui-success)" label="Syncing" />
+      <Spinner color="var(--ui-danger)" label="Uploading" />
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={4} align="center">
+    <Spinner color="var(--ui-accent)" label="Saving" />
+    <Spinner color="var(--ui-success)" label="Syncing" />
+    <Spinner color="var(--ui-danger)" label="Uploading" />
+  </Stack>
+</ComponentPreview>
+
+## Accessibility
+
+- With the default `label`, the spinner renders `role="status"` and a visually hidden label, so the
+  loading state is announced without adding visible text.
+- Pass `label={null}` when adjacent text already states the status. The spinner then becomes
+  `aria-hidden` and the surrounding region carries the message.
+- Prefer a specific label over the default: "Saving invoice" is more useful than "Loading".
+- Keep the spinner out of the flow when the action is expected to finish in under a second; a
+  flicker communicates less than nothing.
+- The rotation stops when the reader asks for reduced motion. The ring keeps a gentle fade so the
+  state is still visible.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Diameter of the ring.',
+    },
+    {
+      name: 'color',
+      type: 'string',
+      default: 'currentColor',
+      description: 'Ring colour. The label keeps the inherited text colour.',
+    },
+    {
+      name: 'label',
+      type: 'string | null',
+      default: "'Loading'",
+      description:
+        'Text announced through the status region. Pass `null` to make the spinner decorative when nearby text already states the status.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Skeleton](/docs/components/skeleton/) for the first load of content.
+- [Button](/docs/components/button/) for the action that starts or finishes the work.
+- [Toast](/docs/components/toast/) for reporting the outcome.

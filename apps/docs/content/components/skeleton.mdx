@@ -1,0 +1,205 @@
+---
+title: Skeleton
+description: Placeholder shapes that hold layout while content loads.
+section: components
+---
+
+`Skeleton` renders a shape that stands in for content until the content arrives. It holds the layout
+so nothing jumps when real data replaces it. For an action that is already running, use
+[Spinner](/docs/components/spinner/) instead.
+
+## Live preview
+
+<ComponentPreview
+  title="Profile placeholder"
+  code={`import { Skeleton, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={3} align="center">
+      <Skeleton variant="circular" width={40} height={40} />
+      <Stack gap={2}>
+        <Skeleton width="40%" />
+        <Skeleton width="75%" />
+      </Stack>
+    </Stack>
+  );
+}`}
+>
+  <Stack direction="row" gap={3} align="center">
+    <Skeleton variant="circular" width={40} height={40} />
+    <Stack gap={2}>
+      <Skeleton width="40%" />
+      <Skeleton width="75%" />
+    </Stack>
+  </Stack>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Shapes"
+  code={`import { Skeleton, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={4}>
+      <Skeleton variant="text" width="60%" />
+      <Skeleton variant="circular" width={48} height={48} />
+      <Skeleton variant="rectangular" height={96} />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Skeleton variant="text" width="60%" />
+    <Skeleton variant="circular" width={48} height={48} />
+    <Skeleton variant="rectangular" height={96} />
+  </Stack>
+</ComponentPreview>
+
+`text` is the default. It fills the available width and stands one line tall, so a stack of them
+reads as a paragraph. `rectangular` defaults to a taller block for images and cards. `circular`
+defaults to a 40px square and should keep matching width and height.
+
+## Dimensions
+
+<ComponentPreview
+  title="Width, height, and radius"
+  code={`import { Skeleton, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Skeleton width={240} height={12} />
+      <Skeleton width="50%" height="1rem" radius="0.125rem" />
+      <Skeleton variant="rectangular" width={160} height={64} radius="0.75rem" />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Skeleton width={240} height={12} />
+    <Skeleton width="50%" height="1rem" radius="0.125rem" />
+    <Skeleton variant="rectangular" width={160} height={64} radius="0.75rem" />
+  </Stack>
+</ComponentPreview>
+
+Numbers are pixel values; strings pass through as CSS lengths. Leave a dimension out to use the
+default for the variant.
+
+## Animations
+
+<ComponentPreview
+  title="Pulse, wave, and none"
+  code={`import { Skeleton, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Skeleton animation="pulse" width="60%" />
+      <Skeleton animation="wave" width="60%" />
+      <Skeleton animation="none" width="60%" />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Skeleton animation="pulse" width="60%" />
+    <Skeleton animation="wave" width="60%" />
+    <Skeleton animation="none" width="60%" />
+  </Stack>
+</ComponentPreview>
+
+`pulse` is the default. `none` suits static screenshots, dense tables, or places where several
+placeholders animate at once. Both animations stop when the reader asks for reduced motion.
+
+## Composing a layout
+
+Compose several instances instead of expecting the component to model a layout. A three-line article
+placeholder is three elements:
+
+<ComponentPreview
+  title="Article placeholder"
+  code={`import { Skeleton, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Skeleton width="45%" height={20} />
+      <Skeleton variant="rectangular" height={120} />
+      <Skeleton width="100%" />
+      <Skeleton width="92%" />
+      <Skeleton width="64%" />
+    </Stack>
+  );
+}`}
+>
+  <Stack gap={3}>
+    <Skeleton width="45%" height={20} />
+    <Skeleton variant="rectangular" height={120} />
+    <Skeleton width="100%" />
+    <Skeleton width="92%" />
+    <Skeleton width="64%" />
+  </Stack>
+</ComponentPreview>
+
+## Accessibility
+
+- Every skeleton is `aria-hidden="true"` by default, so screen readers never read placeholders as
+  content. Override it only when the element carries a different meaning.
+- Announce the loading state on the region that owns the content, for example
+  `aria-busy="true"` on the list or section, or a visible status line. Do not rely on the skeleton
+  itself to communicate that something is loading.
+- Place the skeleton exactly where the content will appear. A layout shift after loading is worse
+  for everyone than a slightly imprecise placeholder.
+- Pass `animation="none"` when many placeholders animate at once, and keep motion subtle for users
+  who configure reduced motion.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: "'text' | 'circular' | 'rectangular'",
+      default: "'text'",
+      description: 'Shape of the placeholder.',
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      description:
+        'Width in CSS units. Numbers are treated as pixels. Defaults to `100%`, or the circular size.',
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      description:
+        'Height in CSS units. Numbers are treated as pixels. Defaults to one line for text, `3rem` for rectangular, and the circular size.',
+    },
+    {
+      name: 'radius',
+      type: 'number | string',
+      description:
+        'Corner radius in CSS units. Numbers are treated as pixels. Defaults to the variant radius.',
+    },
+    {
+      name: 'animation',
+      type: "'pulse' | 'wave' | 'none'",
+      default: "'pulse'",
+      description: 'Placeholder animation. Both animations respect reduced motion.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Spinner](/docs/components/spinner/) for work that is already in progress.
+- [Stack](/docs/components/stack/) for composing placeholder layouts.
+- [Box](/docs/components/box/) for the surface that contains the placeholder.
