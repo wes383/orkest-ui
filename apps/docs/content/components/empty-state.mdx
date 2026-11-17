@@ -17,26 +17,29 @@ Base UI. A single icon is enough for most cases; an illustration is optional.
 
 ## Live preview
 
-<div className="demo">
-  <EmptyStateBasicExample />
-</div>
-
-```tsx
-import { Button, EmptyState } from '@orkest/ui';
+<ComponentPreview
+  title="Basic empty state"
+  code={`import { Button, EmptyState } from '@orkest/ui';
 import { Inbox } from 'lucide-react';
 
-<EmptyState
-  icon={Inbox}
-  title="No invoices yet"
-  description="Invoices appear here once a customer is billed."
-  action={
-    <>
-      <Button>Create invoice</Button>
-      <Button variant="outline">Learn about billing</Button>
-    </>
-  }
-/>
-```
+export function Example() {
+  return (
+    <EmptyState
+      icon={Inbox}
+      title="No invoices yet"
+      description="Invoices appear here once a customer is billed."
+      action={
+        <>
+          <Button>Create invoice</Button>
+          <Button variant="outline">Learn about billing</Button>
+        </>
+      }
+    />
+  );
+}`}
+>
+  <EmptyStateBasicExample />
+</ComponentPreview>
 
 This is the shorthand API: `title`, `description`, `icon`, `image`, and `action`. Leave out whatever
 you do not need. A state with only a sentence is perfectly valid, and every shorthand prop builds the
@@ -44,9 +47,28 @@ same parts you can compose by hand.
 
 ## Sizes
 
-<div className="demo">
+<ComponentPreview
+  title="sm, md, and lg"
+  code={`import { Box, EmptyState, Stack } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      {(['sm', 'md', 'lg'] as const).map((size) => (
+        <Box key={size} background="surface" border radius="md">
+          <EmptyState
+            size={size}
+            title={'No activity (' + size + ')'}
+            description="Events will show up here as your team works."
+          />
+        </Box>
+      ))}
+    </Stack>
+  );
+}`}
+>
   <EmptyStateSizesExample />
-</div>
+</ComponentPreview>
 
 From top to bottom: `sm`, `md`, `lg`. Size controls how much room the state takes, not what it is:
 
@@ -59,9 +81,36 @@ stay the same, so a size change never forces a different API.
 
 ## Alignment
 
-<div className="demo">
+<ComponentPreview
+  title="Center and start"
+  code={`import { Box, EmptyState, Grid } from '@orkest/ui';
+import { Search } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Grid columns={{ base: 1, md: 2 }} gap={3}>
+      <Box background="surface" border radius="md">
+        <EmptyState
+          align="center"
+          icon={Search}
+          title="Centered"
+          description="The default. Use it for a region or a whole page."
+        />
+      </Box>
+      <Box background="surface" border radius="md">
+        <EmptyState
+          align="start"
+          icon={Search}
+          title="Start aligned"
+          description="Use it when the surrounding content is left aligned."
+        />
+      </Box>
+    </Grid>
+  );
+}`}
+>
   <EmptyStateAlignExample />
-</div>
+</ComponentPreview>
 
 `align="center"` is the default. Use `align="start"` when the surrounding content is left aligned —
 for example a panel that already has a left-aligned header. Alignment only changes `align-items` and
@@ -73,12 +122,9 @@ When you need several descriptions, more than one action row, a different headin
 visual, pass the parts as children. `children` replaces the shorthand content, while `size` and
 `align` still style the container.
 
-<div className="demo">
-  <EmptyStateCompositionExample />
-</div>
-
-```tsx
-import {
+<ComponentPreview
+  title="Custom composition"
+  code={`import {
   Button,
   EmptyState,
   EmptyStateAction,
@@ -88,17 +134,23 @@ import {
 } from '@orkest/ui';
 import { Search } from 'lucide-react';
 
-<EmptyState size="lg" align="start">
-  <EmptyStateIcon icon={Search} />
-  <EmptyStateTitle level={2}>No results for "quarterly report"</EmptyStateTitle>
-  <EmptyStateDescription>Check the spelling or try a broader keyword.</EmptyStateDescription>
-  <EmptyStateAction>
-    <Button>Clear filters</Button>
-    <Button variant="outline">Browse all files</Button>
-  </EmptyStateAction>
-  <EmptyStateDescription>Search also supports file type and date filters.</EmptyStateDescription>
-</EmptyState>;
-```
+export function Example() {
+  return (
+    <EmptyState size="lg" align="start">
+      <EmptyStateIcon icon={Search} />
+      <EmptyStateTitle level={2}>No results for "quarterly report"</EmptyStateTitle>
+      <EmptyStateDescription>Check the spelling or try a broader keyword.</EmptyStateDescription>
+      <EmptyStateAction>
+        <Button>Clear filters</Button>
+        <Button variant="outline">Browse all files</Button>
+      </EmptyStateAction>
+      <EmptyStateDescription>Search also supports file type and date filters.</EmptyStateDescription>
+    </EmptyState>
+  );
+}`}
+>
+  <EmptyStateCompositionExample />
+</ComponentPreview>
 
 There is no limit on how many titles, descriptions, or actions you use. The parts are ordinary
 elements:
@@ -111,19 +163,24 @@ elements:
 
 ## Illustrations
 
-<div className="demo">
-  <EmptyStateImageExample />
-</div>
+<ComponentPreview
+  title="Optional illustration"
+  code={`import { Button, EmptyState } from '@orkest/ui';
 
-```tsx
-<EmptyState
-  size="lg"
-  image={{ src: '/empty-inbox.svg', alt: 'An empty inbox with no documents' }}
-  title="Your inbox is all caught up"
-  description="New messages will land here as soon as someone writes to you."
-  action={<Button variant="outline">Compose a message</Button>}
-/>
-```
+export function Example() {
+  return (
+    <EmptyState
+      size="lg"
+      image={{ src: '/empty-inbox.svg', alt: 'An empty inbox with no documents' }}
+      title="Your inbox is all caught up"
+      description="New messages will land here as soon as someone writes to you."
+      action={<Button variant="outline">Compose a message</Button>}
+    />
+  );
+}`}
+>
+  <EmptyStateImageExample />
+</ComponentPreview>
 
 `image` is optional and takes precedence over `icon` when both are supplied. `alt` is required: it
 carries any meaning the illustration adds. If the picture is purely decorative, use `alt=""` and make
@@ -137,28 +194,33 @@ prerequisite for using the component.
 to be empty. This example uses a custom panel with its own header, and also shows a text-only state
 with no icon and no action:
 
-<div className="demo">
+<ComponentPreview
+  title="Inside a panel"
+  code={`import { Box, Button, EmptyState, Separator, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box background="surface" border radius="md">
+      <Box as="header" padding={4}>
+        <Stack direction="row" gap={3} align="center" justify="between">
+          <Text weight="semibold">Team members</Text>
+          <Button size="sm" variant="outline">
+            Invite
+          </Button>
+        </Stack>
+      </Box>
+      <Separator />
+      <EmptyState
+        size="sm"
+        title="No members yet"
+        description="Invite someone to collaborate in this workspace."
+      />
+    </Box>
+  );
+}`}
+>
   <EmptyStateEmbeddedExample />
-</div>
-
-```tsx
-import { Box, Button, EmptyState, Separator, Stack, Text } from '@orkest/ui';
-
-<Box background="surface" border radius="md">
-  <Box as="header" padding={4}>
-    <Stack direction="row" gap={3} align="center" justify="between">
-      <Text weight="semibold">Team members</Text>
-      <Button size="sm" variant="outline">Invite</Button>
-    </Stack>
-  </Box>
-  <Separator />
-  <EmptyState
-    size="sm"
-    title="No members yet"
-    description="Invite someone to collaborate in this workspace."
-  />
-</Box>;
-```
+</ComponentPreview>
 
 ## Accessibility
 

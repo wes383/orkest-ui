@@ -36,7 +36,7 @@ export function EmptyStateSizesExample() {
         <Box key={size} background="surface" border radius="md">
           <EmptyState
             size={size}
-            title={`No activity (${size})`}
+            title={'No activity (' + size + ')'}
             description="Events will show up here as your team works."
           />
         </Box>
