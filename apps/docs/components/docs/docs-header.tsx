@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import type { NavGroup, SearchIndexItem } from '@/lib/docs-types';
 
+import { GithubLink } from './github-link';
 import { MobileNav } from './mobile-nav';
 import { PrimaryNav } from './primary-nav';
 import { SearchDialog } from './search-dialog';
@@ -25,6 +26,7 @@ export function DocsHeader({
 
         <div className="header-actions">
           <SearchDialog index={searchIndex} />
+          <GithubLink />
           <ThemeToggle />
           <MobileNav navigation={navigation} />
         </div>
