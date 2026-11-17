@@ -1,0 +1,658 @@
+---
+title: Table
+description: Presentational tables built on native table elements.
+section: components
+---
+
+`Table` renders tabular data with the native `table` elements, so rows, columns, and headers reach
+assistive technology without extra ARIA. It is presentational only: sorting, filtering, pagination,
+and row selection belong to a composed data table, not to this component.
+
+## Live preview
+
+<ComponentPreview
+  title="Invoice list"
+  code={`import {
+  Badge,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Table hoverable>
+      <TableCaption>Invoices issued this quarter.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Invoice</TableHead>
+          <TableHead>Customer</TableHead>
+          <TableHead align="right">Amount</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>INV-1042</TableCell>
+          <TableCell>Northwind</TableCell>
+          <TableCell align="right">2,400.00</TableCell>
+          <TableCell>
+            <Badge variant="success">Paid</Badge>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>INV-1043</TableCell>
+          <TableCell>Contoso</TableCell>
+          <TableCell align="right">980.00</TableCell>
+          <TableCell>
+            <Badge variant="warning">Pending</Badge>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>INV-1044</TableCell>
+          <TableCell>Fabrikam</TableCell>
+          <TableCell align="right">1,720.00</TableCell>
+          <TableCell>
+            <Badge variant="destructive">Overdue</Badge>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}`}
+>
+  <Table hoverable>
+    <TableCaption>Invoices issued this quarter.</TableCaption>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Invoice</TableHead>
+        <TableHead>Customer</TableHead>
+        <TableHead align="right">Amount</TableHead>
+        <TableHead>Status</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>INV-1042</TableCell>
+        <TableCell>Northwind</TableCell>
+        <TableCell align="right">2,400.00</TableCell>
+        <TableCell>
+          <Badge variant="success">Paid</Badge>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>INV-1043</TableCell>
+        <TableCell>Contoso</TableCell>
+        <TableCell align="right">980.00</TableCell>
+        <TableCell>
+          <Badge variant="warning">Pending</Badge>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>INV-1044</TableCell>
+        <TableCell>Fabrikam</TableCell>
+        <TableCell align="right">1,720.00</TableCell>
+        <TableCell>
+          <Badge variant="destructive">Overdue</Badge>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</ComponentPreview>
+
+## Variants
+
+<ComponentPreview
+  title="Default and bordered"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+const rows = [
+  ['Design', '12'],
+  ['Engineering', '28'],
+];
+
+export function Example() {
+  return (
+    <>
+      <Table size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Team</TableHead>
+            <TableHead align="right">People</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(([team, people]) => (
+            <TableRow key={team}>
+              <TableCell>{team}</TableCell>
+              <TableCell align="right">{people}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Table size="sm" variant="bordered">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Team</TableHead>
+            <TableHead align="right">People</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(([team, people]) => (
+            <TableRow key={team}>
+              <TableCell>{team}</TableCell>
+              <TableCell align="right">{people}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Table size="sm">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Team</TableHead>
+          <TableHead align="right">People</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Design</TableCell>
+          <TableCell align="right">12</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Engineering</TableCell>
+          <TableCell align="right">28</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    <Table size="sm" variant="bordered">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Team</TableHead>
+          <TableHead align="right">People</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Design</TableCell>
+          <TableCell align="right">12</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Engineering</TableCell>
+          <TableCell align="right">28</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </Stack>
+</ComponentPreview>
+
+`default` draws horizontal row rules only, which suits dense data. `bordered` adds an outer frame and
+vertical rules between cells for tables that need clearer cell boundaries.
+
+## Sizes
+
+<ComponentPreview
+  title="sm, md, and lg"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <>
+      {(['sm', 'lg'] as const).map((size) => (
+        <Table key={size} size={size}>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Size</TableHead>
+              <TableHead align="right">Rows</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>{size}</TableCell>
+              <TableCell align="right">2</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      ))}
+    </>
+  );
+}`}
+>
+  <Stack gap={4}>
+    <Table size="sm">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Size</TableHead>
+          <TableHead align="right">Rows</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>sm</TableCell>
+          <TableCell align="right">2</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    <Table size="lg">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Size</TableHead>
+          <TableHead align="right">Rows</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>lg</TableCell>
+          <TableCell align="right">2</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </Stack>
+</ComponentPreview>
+
+`md` is the default. `sm` suits dense administration screens; `lg` suits short, prominent tables.
+
+## Striped rows and hover
+
+<ComponentPreview
+  title="Striped and hoverable"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Table striped hoverable>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Environment</TableHead>
+          <TableHead align="right">Requests</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {['Production', 'Staging', 'Preview', 'Local'].map((environment, index) => (
+          <TableRow key={environment}>
+            <TableCell>{environment}</TableCell>
+            <TableCell align="right">{new Intl.NumberFormat('en').format((index + 1) * 12500)}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}`}
+>
+  <Table striped hoverable>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Environment</TableHead>
+        <TableHead align="right">Requests</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Production</TableCell>
+        <TableCell align="right">12,500</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Staging</TableCell>
+        <TableCell align="right">25,000</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Preview</TableCell>
+        <TableCell align="right">37,500</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Local</TableCell>
+        <TableCell align="right">50,000</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</ComponentPreview>
+
+Striping helps the eye follow long rows. Hover is a very light background change, so it never
+competes with selection or status colors. Both respect reduced motion.
+
+## Alignment and widths
+
+<ComponentPreview
+  title="Numeric column"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead width="55%">Plan</TableHead>
+          <TableHead align="right" minWidth={120}>
+            Monthly
+          </TableHead>
+          <TableHead align="center" width={96}>
+            Seats
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Team</TableCell>
+          <TableCell align="right">48.00</TableCell>
+          <TableCell align="center">10</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Business</TableCell>
+          <TableCell align="right">120.00</TableCell>
+          <TableCell align="center">50</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}`}
+>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead width="55%">Plan</TableHead>
+        <TableHead align="right" minWidth={120}>
+          Monthly
+        </TableHead>
+        <TableHead align="center" width={96}>
+          Seats
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Team</TableCell>
+        <TableCell align="right">48.00</TableCell>
+        <TableCell align="center">10</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Business</TableCell>
+        <TableCell align="right">120.00</TableCell>
+        <TableCell align="center">50</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</ComponentPreview>
+
+Right-aligned cells also switch to tabular figures, so digits line up down the column. Use `width`
+and `minWidth` to stop narrow columns from collapsing; numbers are pixels, strings pass through.
+
+## Merged cells
+
+<ComponentPreview
+  title="Row and column spans"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Table size="sm">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Team</TableHead>
+          <TableHead align="right">Q1</TableHead>
+          <TableHead align="right">Q2</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableHead scope="row" rowSpan={2}>
+            Design
+          </TableHead>
+          <TableCell align="right">12</TableCell>
+          <TableCell align="right">14</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell align="right">9</TableCell>
+          <TableCell align="right">11</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell colSpan={3} align="center">
+            Q3 figures are provisional.
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}`}
+>
+  <Table size="sm">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Team</TableHead>
+        <TableHead align="right">Q1</TableHead>
+        <TableHead align="right">Q2</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableHead scope="row" rowSpan={2}>
+          Design
+        </TableHead>
+        <TableCell align="right">12</TableCell>
+        <TableCell align="right">14</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell align="right">9</TableCell>
+        <TableCell align="right">11</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={3} align="center">
+          Q3 figures are provisional.
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</ComponentPreview>
+
+A cell that labels its own row is a `TableHead` with `scope="row"`. `colSpan` and `rowSpan` pass
+through to the native attributes.
+
+## Footer
+
+<ComponentPreview
+  title="Totals"
+  code={`import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Table size="sm">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Invoice</TableHead>
+          <TableHead align="right">Amount</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>INV-1042</TableCell>
+          <TableCell align="right">2,400.00</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>INV-1043</TableCell>
+          <TableCell align="right">980.00</TableCell>
+        </TableRow>
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell>Total</TableCell>
+          <TableCell align="right">3,380.00</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
+  );
+}`}
+>
+  <Table size="sm">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Invoice</TableHead>
+        <TableHead align="right">Amount</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>INV-1042</TableCell>
+        <TableCell align="right">2,400.00</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>INV-1043</TableCell>
+        <TableCell align="right">980.00</TableCell>
+      </TableRow>
+    </TableBody>
+    <TableFooter>
+      <TableRow>
+        <TableCell>Total</TableCell>
+        <TableCell align="right">3,380.00</TableCell>
+      </TableRow>
+    </TableFooter>
+  </Table>
+</ComponentPreview>
+
+## Narrow screens
+
+The table scrolls horizontally inside its own container instead of squeezing columns, so nothing is
+truncated and the page itself never scrolls sideways. Keep the first column readable with
+`minWidth` when the table has many columns.
+
+## Accessibility
+
+- Every part maps to its native element: `table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td`, and
+  `caption`. Do not replace them with `div` grids, which would need roles and keyboard handling that
+  the platform already provides.
+- Give the table an accessible name with `TableCaption` or `aria-label`.
+- Header cells default to `scope="col"`. Use `scope="row"` for cells that label their own row.
+- Do not use a table for layout. If the content is not tabular, use `Grid` or `Stack`.
+- Sorting, filtering, and pagination are not part of this component. When they are needed, compose a
+  data table from `Table`, `Checkbox`, `Button`, and `DropdownMenu`, and announce the result count
+  outside the table.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: "'default' | 'bordered'",
+      default: "'default'",
+      description: 'Horizontal row rules only, or a full frame with vertical rules.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Cell padding and font size.',
+    },
+    {
+      name: 'striped',
+      type: 'boolean',
+      default: 'false',
+      description: 'Alternating background on even body rows.',
+    },
+    {
+      name: 'hoverable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Subtle background change on body row hover.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLTableElement>',
+      description:
+        'ARIA attributes, className, and ref are forwarded to the table element, not to the scrolling wrapper.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    {
+      name: 'align',
+      type: "'left' | 'center' | 'right'",
+      default: "'left'",
+      description: 'TableHead and TableCell. Right alignment also enables tabular figures.',
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      description: 'TableHead and TableCell. Numbers are treated as pixels.',
+    },
+    {
+      name: 'minWidth',
+      type: 'number | string',
+      description: 'TableHead and TableCell. Numbers are treated as pixels.',
+    },
+    {
+      name: 'verticalAlign',
+      type: "'top' | 'middle' | 'bottom'",
+      description: 'TableHead and TableCell.',
+    },
+    {
+      name: 'scope',
+      type: "'col' | 'row' | 'colgroup' | 'rowgroup'",
+      default: "'col'",
+      description: 'TableHead only. Use `row` for cells that label their own row.',
+    },
+    {
+      name: 'colSpan / rowSpan',
+      type: 'number',
+      description: 'Passed through to the native attributes on TableHead and TableCell.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Card](/docs/components/card/) for a surface around a short table.
+- [Badge](/docs/components/badge/) for status cells.
+- [Checkbox](/docs/components/checkbox/) for row selection in a composed data table.
+- [Skeleton](/docs/components/skeleton/) for the placeholder while rows load.
