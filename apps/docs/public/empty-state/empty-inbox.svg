@@ -1,13 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="220" height="140" viewBox="0 0 220 140" fill="none">
   <g stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <g transform="rotate(-10 110 42)">
-      <rect x="78" y="14" width="64" height="46" rx="6" />
-      <path d="M90 28h40M90 36h28M90 44h18" />
-    </g>
-    <g transform="rotate(8 110 42)">
-      <rect x="78" y="14" width="64" height="46" rx="6" />
-      <path d="M90 28h40M90 36h28M90 44h18" />
-    </g>
+    <rect x="78" y="14" width="64" height="46" rx="6" />
+    <path d="M92 28h36M92 36h28M92 44h18" />
     <path d="M28 78h46l12 18h48l12-18h46v38a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8V78Z" />
     <path d="M70 96h18M132 96h18" />
   </g>
