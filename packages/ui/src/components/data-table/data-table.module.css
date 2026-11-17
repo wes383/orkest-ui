@@ -1,7 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: var(--ok-space-3);
+  gap: var(--ok-space-4);
   min-width: 0;
 }
 
