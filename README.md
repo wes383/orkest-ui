@@ -60,8 +60,8 @@ no keyboard equivalent, such as native dialog backdrops.
 The package exports its built `dist` directory, so build it first:
 
 ```tsx
-import { Box, Stack, Text } from "@orkest/ui";
-import "@orkest/ui/style.css";
+import { Box, Stack, Text } from '@orkest/ui';
+import '@orkest/ui/style.css';
 ```
 
 Theme state belongs to the host application. Set `data-orkest-theme="light"` or `"dark"` on the
@@ -77,7 +77,7 @@ import {
   MultiSelect,
   Select,
   Textarea,
-} from "@orkest/ui/client";
+} from '@orkest/ui/client';
 ```
 
 They use client-side state and must render inside a Client Component.
