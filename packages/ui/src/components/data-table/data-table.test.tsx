@@ -1,6 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Ellipsis } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuTrigger } from '../dropdown-menu';
+import { IconButton } from '../icon-button';
 
 import { DataTable, type DataColumn } from './data-table';
 
@@ -190,6 +194,38 @@ describe('DataTable', () => {
       'data-variant',
       'bordered',
     );
+  });
+
+  it('renders an interactive menu from a custom cell', async () => {
+    const user = userEvent.setup();
+    const actionColumns: DataColumn<Person>[] = [
+      ...columns,
+      {
+        id: 'actions',
+        header: 'Actions',
+        accessor: () => null,
+        sortable: false,
+        searchable: false,
+        cell: (row) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={<IconButton icon={Ellipsis} label={`Actions for ${row.name}`} size="sm" variant="ghost" />}
+            />
+            <DropdownMenuPortal>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Edit {row.name}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenuPortal>
+          </DropdownMenu>
+        ),
+      },
+    ];
+
+    render(<DataTable columns={actionColumns} data={people} getRowId={(row) => row.id} />);
+
+    await user.click(screen.getByRole('button', { name: 'Actions for Grace' }));
+
+    expect(await screen.findByRole('menuitem', { name: 'Edit Grace' })).toBeInTheDocument();
   });
 
   it('renders an empty state when nothing matches', async () => {
