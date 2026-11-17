@@ -13,7 +13,7 @@ export function LoadingDemo() {
         </Text>
         <Stack direction="row" gap={3} align="center">
           <Skeleton variant="circular" width={40} height={40} />
-          <Stack gap={2}>
+          <Stack gap={2} style={{ width: 200 }}>
             <Skeleton width="35%" />
             <Skeleton width="65%" />
           </Stack>
