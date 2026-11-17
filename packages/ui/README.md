@@ -3,6 +3,8 @@
 Neutral-first React component library with semantic design tokens, accessible primitives, and light
 and dark themes.
 
+Documentation: [ui.wesluma.com/docs](https://ui.wesluma.com/docs/)
+
 ## Status
 
 `0.1.0` is published on npm. The public API may still change before `1.0.0`.
@@ -15,24 +17,6 @@ pnpm add @orkest/ui
 
 React 18.2 or React 19 is required.
 
-## Usage
-
-```tsx
-import { Stack, Text } from '@orkest/ui';
-import '@orkest/ui/style.css';
-
-export function Example() {
-  return (
-    <Stack gap={2}>
-      <Text weight="semibold">Orkest UI</Text>
-      <Text size="sm" tone="muted">
-        Token-driven primitives.
-      </Text>
-    </Stack>
-  );
-}
-```
-
 ## Components
 
 - Primitives: `Box`, `Stack`, `Grid`, `Separator`, `Icon`
@@ -44,17 +28,8 @@ export function Example() {
   parts), `DropdownMenu` (with parts), `Field`, `FieldDescription`, `FieldLabel`, `FieldMessage`,
   `FieldRequiredIndicator`, `Fieldset`, `Input`, `Legend`, `MultiSelect`, `Popover` (with parts),
   `Radio`, `RadioGroup`, `Select`, `Switch`, `Tabs` (with parts), `Textarea`, `Toast` (with parts
-  and the `toast` API), `Tooltip` (with parts), and `TooltipProvider`
-
-## Client components
-
-Components that use client-side state are exported from `@orkest/ui/client`:
-
-```tsx
-import { Avatar, AvatarFallback, Input, Select, Textarea, toast } from '@orkest/ui/client';
-```
-
-Render them inside a Client Component (a module with `'use client'`).
+  and the `toast` API), `Tooltip` (with parts), and `TooltipProvider`. These must render inside a
+  Client Component (a module with `'use client'`).
 
 ## Styling
 
@@ -70,14 +45,6 @@ The stylesheet does not load font files or override host application typography.
 React and React DOM `^18.2.0 || ^19.0.0`. `lucide-react` is a regular dependency because `Icon`
 renders Lucide components. `@base-ui/react` is a regular dependency that provides overlay and popup
 behavior for interactive components.
-
-## Documentation
-
-The documentation site lives in this repository. Run it from the repository root:
-
-```bash
-pnpm docs:dev
-```
 
 ## License
 
