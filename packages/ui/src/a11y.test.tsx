@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from './components/alert';
 import { Avatar, AvatarFallback } from './components/avatar';
 import { Badge } from './components/badge';
 import { Button } from './components/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
 import {
   Dialog,
@@ -57,6 +58,13 @@ describe('accessibility', () => {
         </Avatar>
         <Skeleton width={160} />
         <Spinner label="Loading" />
+        <Card>
+          <CardHeader>
+            <CardTitle level={2}>Billing</CardTitle>
+            <CardDescription>Invoices and payment method.</CardDescription>
+          </CardHeader>
+          <CardContent>Content</CardContent>
+        </Card>
       </main>,
     );
 
