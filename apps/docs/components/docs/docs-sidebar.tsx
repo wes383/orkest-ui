@@ -5,11 +5,15 @@ import { usePathname } from 'next/navigation';
 import type { NavGroup } from '@/lib/docs-types';
 
 import { DocsNav } from './docs-nav';
+import { useCenterActiveItem } from './use-center-active-item';
 import { useScrollOverflow } from './use-scroll-overflow';
 
 export function DocsSidebar({ navigation }: { navigation: NavGroup[] }) {
   const pathname = usePathname();
   const { ref, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(navigation);
+
+  useCenterActiveItem(ref, pathname);
+
   const className = [
     'docs-sidebar',
     overflowing && !atTop ? 'docs-sidebar-fade-top' : '',
