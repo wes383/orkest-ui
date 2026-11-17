@@ -18,7 +18,7 @@ export function Example() {
   return (
     <Stack direction="row" gap={3} align="center">
       <Skeleton variant="circular" width={40} height={40} />
-      <Stack gap={2}>
+      <Stack gap={2} style={{ width: 180 }}>
         <Skeleton width="40%" />
         <Skeleton width="75%" />
       </Stack>
@@ -28,7 +28,7 @@ export function Example() {
 >
   <Stack direction="row" gap={3} align="center">
     <Skeleton variant="circular" width={40} height={40} />
-    <Stack gap={2}>
+    <Stack gap={2} style={{ width: 180 }}>
       <Skeleton width="40%" />
       <Skeleton width="75%" />
     </Stack>
@@ -43,7 +43,7 @@ export function Example() {
 
 export function Example() {
   return (
-    <Stack gap={4}>
+    <Stack gap={4} style={{ width: 240 }}>
       <Skeleton variant="text" width="60%" />
       <Skeleton variant="circular" width={48} height={48} />
       <Skeleton variant="rectangular" height={96} />
@@ -51,7 +51,7 @@ export function Example() {
   );
 }`}
 >
-  <Stack gap={4}>
+  <Stack gap={4} style={{ width: 240 }}>
     <Skeleton variant="text" width="60%" />
     <Skeleton variant="circular" width={48} height={48} />
     <Skeleton variant="rectangular" height={96} />
@@ -70,7 +70,7 @@ defaults to a 40px square and should keep matching width and height.
 
 export function Example() {
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: 320 }}>
       <Skeleton width={240} height={12} />
       <Skeleton width="50%" height="1rem" radius="0.125rem" />
       <Skeleton variant="rectangular" width={160} height={64} radius="0.75rem" />
@@ -78,7 +78,7 @@ export function Example() {
   );
 }`}
 >
-  <Stack gap={3}>
+  <Stack gap={3} style={{ width: 320 }}>
     <Skeleton width={240} height={12} />
     <Skeleton width="50%" height="1rem" radius="0.125rem" />
     <Skeleton variant="rectangular" width={160} height={64} radius="0.75rem" />
@@ -88,6 +88,10 @@ export function Example() {
 Numbers are pixel values; strings pass through as CSS lengths. Leave a dimension out to use the
 default for the variant.
 
+Percentage widths resolve against the parent, so the parent needs a width of its own. Inside a flex
+row that shrink-wraps its children, a placeholder sized only in percentages has nothing to resolve
+against and collapses to zero — give the column a width, as in the examples above.
+
 ## Animations
 
 <ComponentPreview
@@ -96,7 +100,7 @@ default for the variant.
 
 export function Example() {
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: 240 }}>
       <Skeleton animation="pulse" width="60%" />
       <Skeleton animation="wave" width="60%" />
       <Skeleton animation="none" width="60%" />
@@ -104,7 +108,7 @@ export function Example() {
   );
 }`}
 >
-  <Stack gap={3}>
+  <Stack gap={3} style={{ width: 240 }}>
     <Skeleton animation="pulse" width="60%" />
     <Skeleton animation="wave" width="60%" />
     <Skeleton animation="none" width="60%" />
@@ -125,7 +129,7 @@ placeholder is three elements:
 
 export function Example() {
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: 320 }}>
       <Skeleton width="45%" height={20} />
       <Skeleton variant="rectangular" height={120} />
       <Skeleton width="100%" />
@@ -135,7 +139,7 @@ export function Example() {
   );
 }`}
 >
-  <Stack gap={3}>
+  <Stack gap={3} style={{ width: 320 }}>
     <Skeleton width="45%" height={20} />
     <Skeleton variant="rectangular" height={120} />
     <Skeleton width="100%" />
@@ -170,7 +174,7 @@ export function Example() {
       name: 'width',
       type: 'number | string',
       description:
-        'Width in CSS units. Numbers are treated as pixels. Defaults to `100%`, or the circular size.',
+        'Width in CSS units. Numbers are treated as pixels. Defaults to `100%`, or the circular size. Percentage values need a parent with a definite width.',
     },
     {
       name: 'height',
