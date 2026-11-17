@@ -98,7 +98,6 @@ export function EmptyStateEmbeddedExample() {
       </Box>
       <Separator />
       <EmptyState
-        size="sm"
         title="No members yet"
         description="Invite someone to collaborate in this workspace."
       />
