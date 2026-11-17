@@ -9,7 +9,12 @@ export function PaginationBasicExample() {
 
   return (
     <Stack gap={2} align="center">
-      <Pagination page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination
+        page={page}
+        totalPages={5}
+        label="Basic pagination example"
+        onPageChange={setPage}
+      />
       <Text size="sm" tone="muted">
         Page {page} of 5
       </Text>
@@ -22,7 +27,7 @@ export function PaginationManyPagesExample() {
 
   return (
     <Stack gap={2}>
-      <Pagination page={page} totalPages={20} onPageChange={setPage} />
+      <Pagination page={page} totalPages={20} label="Long list example" onPageChange={setPage} />
       <Text size="sm" tone="muted">
         Page {page} of 20
       </Text>
@@ -35,7 +40,13 @@ export function PaginationFirstLastExample() {
 
   return (
     <Stack gap={2}>
-      <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />
+      <Pagination
+        page={page}
+        totalPages={20}
+        showFirstLast
+        label="First and last jump example"
+        onPageChange={setPage}
+      />
       <Text size="sm" tone="muted">
         Page {page} of 20
       </Text>
@@ -48,9 +59,27 @@ export function PaginationSizesExample() {
 
   return (
     <Stack gap={3} align="start">
-      <Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
-      <Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
-      <Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination
+        size="sm"
+        page={page}
+        totalPages={5}
+        label="Small pagination example"
+        onPageChange={setPage}
+      />
+      <Pagination
+        size="md"
+        page={page}
+        totalPages={5}
+        label="Medium pagination example"
+        onPageChange={setPage}
+      />
+      <Pagination
+        size="lg"
+        page={page}
+        totalPages={5}
+        label="Large pagination example"
+        onPageChange={setPage}
+      />
     </Stack>
   );
 }
