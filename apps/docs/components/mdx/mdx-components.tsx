@@ -74,6 +74,7 @@ import {
   DataTableExample,
   DataTableExpandableExample,
   DataTableSelectionExample,
+  DataTableWideExample,
 } from '../examples/data-table-examples';
 import { TableActionsExample } from '../examples/table-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
@@ -266,6 +267,7 @@ export const mdxComponents = {
   DataTableExample,
   DataTableExpandableExample,
   DataTableSelectionExample,
+  DataTableWideExample,
   AlertWithoutTitleExample,
   Avatar,
   AvatarFallback,

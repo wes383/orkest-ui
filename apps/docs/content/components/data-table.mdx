@@ -151,6 +151,21 @@ exceed the available width. Body cells do wrap by default, so a table whose head
 whose content is long will compress instead of scrolling — give those columns a `minWidth` to keep
 them readable and let the container scroll.
 
+<DataTableWideExample />
+
+```tsx
+const columns: DataColumn<Invoice>[] = [
+  { id: 'id', header: 'Invoice', accessor: (row) => row.id, minWidth: 110 },
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 170 },
+  { id: 'email', header: 'Billing email', accessor: (row) => row.email, minWidth: 220 },
+  { id: 'region', header: 'Region', accessor: (row) => row.region, minWidth: 120 },
+  // …
+];
+```
+
+Ten columns with explicit `minWidth` cannot fit, so the container scrolls while the toolbar and the
+pagination stay put. Nothing is truncated and no column is squeezed into a one-character stack.
+
 ## Props
 
 <PropsTable

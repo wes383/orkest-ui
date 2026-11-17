@@ -161,3 +161,74 @@ export function DataTableActionsExample() {
     />
   );
 }
+
+interface WideInvoice {
+  id: string;
+  customer: string;
+  email: string;
+  owner: string;
+  region: string;
+  issued: string;
+  due: string;
+  amount: number;
+  tax: number;
+  status: 'Paid' | 'Pending' | 'Overdue';
+}
+
+const wideInvoices: WideInvoice[] = invoices.slice(0, 6).map((invoice, index) => ({
+  ...invoice,
+  email: `${invoice.customer.toLowerCase().split(' ').join('.')}@example.com`,
+  region: ['EMEA', 'APAC', 'Americas'][index % 3] ?? 'EMEA',
+  issued: `2026-0${(index % 6) + 1}-14`,
+  due: `2026-0${(index % 6) + 2}-14`,
+  tax: Math.round(invoice.amount * 0.2),
+}));
+
+const currency = (value: number) =>
+  value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+const wideColumns: DataColumn<WideInvoice>[] = [
+  { id: 'id', header: 'Invoice', accessor: (row) => row.id, minWidth: 110 },
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 170 },
+  { id: 'email', header: 'Billing email', accessor: (row) => row.email, minWidth: 220 },
+  { id: 'owner', header: 'Owner', accessor: (row) => row.owner, minWidth: 120 },
+  { id: 'region', header: 'Region', accessor: (row) => row.region, minWidth: 120 },
+  { id: 'issued', header: 'Issued', accessor: (row) => row.issued, minWidth: 120 },
+  { id: 'due', header: 'Due', accessor: (row) => row.due, minWidth: 120 },
+  {
+    id: 'amount',
+    header: 'Amount',
+    accessor: (row) => row.amount,
+    align: 'right',
+    minWidth: 120,
+    cell: (row) => currency(row.amount),
+  },
+  {
+    id: 'tax',
+    header: 'Tax',
+    accessor: (row) => row.tax,
+    align: 'right',
+    minWidth: 100,
+    cell: (row) => currency(row.tax),
+  },
+  {
+    id: 'status',
+    header: 'Status',
+    accessor: (row) => row.status,
+    minWidth: 110,
+    cell: (row) => <Badge variant={statusVariant[row.status]}>{row.status}</Badge>,
+  },
+];
+
+export function DataTableWideExample() {
+  return (
+    <DataTable
+      columns={wideColumns}
+      data={wideInvoices}
+      caption="Invoices in a wide table"
+      pageSize={5}
+      size="sm"
+      getRowId={(row) => row.id}
+    />
+  );
+}
