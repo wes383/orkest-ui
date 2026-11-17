@@ -17,6 +17,7 @@ import { AlertDemo } from './alert-demo';
 import { AvatarDemo } from './avatar-demo';
 import { CardDemo } from './card-demo';
 import { ChoiceDemo } from './choice-demo';
+import { DataTableDemo } from './data-table-demo';
 import { DialogDemo } from './dialog-demo';
 import { DropdownMenuDemo } from './dropdown-menu-demo';
 import { FieldDemo } from './field-demo';
@@ -91,6 +92,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <AvatarDemo />
       <CardDemo />
       <ChoiceDemo />
+      <DataTableDemo />
       <SelectDemo />
       <FieldDemo />
       <DialogDemo />
