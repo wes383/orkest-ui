@@ -13,12 +13,13 @@ The repository is a pnpm monorepo containing the library and its custom document
 - Typography: `Text`, `Heading`, `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`,
   `Link`
 - Components: `Badge`, `Button`, `IconButton`, `Tag`
-- Client components: `AlertDialog` (with parts), `Avatar`, `AvatarFallback`, `AvatarGroup`,
-  `AvatarImage`, `Checkbox`, `Dialog` (with parts), `DropdownMenu` (with parts), `Field`,
-  `FieldDescription`, `FieldLabel`, `FieldMessage`, `FieldRequiredIndicator`, `Fieldset`, `Input`,
-  `Legend`, `MultiSelect`, `Popover` (with parts), `Radio`, `RadioGroup`, `Select`, `Switch`,
-  `Tabs` (with parts), `Textarea`, `Toast` (with parts and the `toast` API), `Tooltip` (with parts),
-  `TooltipProvider` (exported from `@orkest/ui/client`)
+- Client components: `Alert` (with parts), `AlertDialog` (with parts), `Avatar`,
+  `AvatarFallback`, `AvatarGroup`, `AvatarImage`, `Checkbox`, `Dialog` (with parts),
+  `DropdownMenu` (with parts), `Field`, `FieldDescription`, `FieldLabel`, `FieldMessage`,
+  `FieldRequiredIndicator`, `Fieldset`, `Input`, `Legend`, `MultiSelect`, `Popover` (with parts),
+  `Radio`, `RadioGroup`, `Select`, `Switch`, `Tabs` (with parts), `Textarea`, `Toast` (with parts
+  and the `toast` API), `Tooltip` (with parts), `TooltipProvider` (exported from
+  `@orkest/ui/client`)
 
 Core components and complex interactions are still in progress. `@orkest/ui` is not published to a
 registry yet.

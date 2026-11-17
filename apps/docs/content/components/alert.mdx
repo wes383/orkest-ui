@@ -1,0 +1,333 @@
+---
+title: Alert
+description: Persistent inline messages for information, success, warning, and error states.
+section: components
+---
+
+`Alert` shows a persistent message inside the page, such as a form-level error, an account warning,
+or a status note. Use it when the message should stay visible until the user resolves it. For brief,
+non-blocking feedback use [Toast](/docs/components/toast/); for decisions that block the workflow
+use [AlertDialog](/docs/components/alert-dialog/).
+
+Import the components from `@orkest/ui/client`.
+
+## Variants
+
+<ComponentPreview
+  title="Variants"
+  code={`import { Stack } from '@orkest/ui';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Alert variant="info">
+        <AlertTitle>New version available</AlertTitle>
+        <AlertDescription>
+          Orkest UI 0.2 adds updated theme tokens.
+        </AlertDescription>
+      </Alert>
+      <Alert variant="success">
+        <AlertTitle>Changes saved</AlertTitle>
+        <AlertDescription>Your profile is up to date.</AlertDescription>
+      </Alert>
+      <Alert variant="warning">
+        <AlertTitle>Unsaved changes</AlertTitle>
+        <AlertDescription>
+          Leaving this page will discard your draft.
+        </AlertDescription>
+      </Alert>
+      <Alert variant="error">
+        <AlertTitle>Upload failed</AlertTitle>
+        <AlertDescription>
+          Check your connection and try again.
+        </AlertDescription>
+      </Alert>
+    </Stack>
+  );
+}`}
+>
+  <AlertVariantsExample />
+</ComponentPreview>
+
+The icon shape and the text carry the state. The tinted surface reinforces it but is not the only
+signal. Both themes use semantic tokens, so no component-level theme overrides are required.
+
+## Anatomy
+
+- `Alert` is the container. It owns `variant`, the optional icon, the close button, and the live
+  region role.
+- `AlertIcon` is rendered automatically and derives its glyph and color from the variant. Override
+  the glyph with `icon`, or remove it with `icon={null}`.
+- `AlertTitle` and `AlertDescription` render paragraphs. Both are optional and may be used alone.
+- `AlertAction` is an optional action slot for one or two buttons or links.
+- `AlertClose` is rendered automatically when `closable` is set. It is also exported for custom
+  containers.
+
+## Optional title and icon
+
+A description alone can be enough for short statuses. Use `icon={null}` when the message does not
+need a status glyph.
+
+<ComponentPreview
+  title="Without title or icon"
+  code={`import { Stack } from '@orkest/ui';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Alert variant="info">
+        <AlertDescription>
+          Two-factor authentication is enabled for this account.
+        </AlertDescription>
+      </Alert>
+      <Alert variant="warning" icon={null}>
+        <AlertTitle>Maintenance window</AlertTitle>
+        <AlertDescription>
+          Expect brief interruptions on Saturday, 02:00–04:00 UTC.
+        </AlertDescription>
+      </Alert>
+    </Stack>
+  );
+}`}
+>
+  <AlertWithoutTitleExample />
+</ComponentPreview>
+
+When the title is omitted, the description uses the primary foreground color instead of the muted
+one.
+
+## Custom icon
+
+Pass a Lucide icon to `icon` when a more specific glyph communicates the message better. The color
+still follows the variant.
+
+<ComponentPreview
+  title="Custom icon"
+  code={`import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@orkest/ui/client';
+import { Rocket } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Alert variant="info" icon={Rocket}>
+      <AlertTitle>Early access</AlertTitle>
+      <AlertDescription>
+        This workspace is enrolled in the preview program.
+      </AlertDescription>
+    </Alert>
+  );
+}`}
+>
+  <AlertCustomIconExample />
+</ComponentPreview>
+
+## Closable
+
+`Alert` is controlled: `closable` renders the close button and `onClose` reports the request, but the
+alert does not remove itself. Hide it in the parent so the same state can be restored or persisted.
+
+<ComponentPreview
+  title="Dismissible alert"
+  code={`import { useState } from 'react';
+import { Button } from '@orkest/ui';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) {
+    return (
+      <Button variant="outline" onClick={() => setVisible(true)}>
+        Show alert again
+      </Button>
+    );
+  }
+
+  return (
+    <Alert variant="warning" closable onClose={() => setVisible(false)}>
+      <AlertTitle>Verify your email</AlertTitle>
+      <AlertDescription>
+        Some features stay limited until the address is confirmed.
+      </AlertDescription>
+    </Alert>
+  );
+}`}
+>
+  <AlertClosableExample />
+</ComponentPreview>
+
+## Actions
+
+`AlertAction` sits below the text and can hold buttons or links. Keep actions directly related to
+the message; do not turn the alert into a form.
+
+<ComponentPreview
+  title="Retry action"
+  code={`import { Button } from '@orkest/ui';
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Alert variant="error">
+      <AlertTitle>Could not load billing data</AlertTitle>
+      <AlertDescription>
+        The payment provider did not respond in time.
+      </AlertDescription>
+      <AlertAction>
+        <Button size="sm" variant="outline">
+          Retry
+        </Button>
+        <Button size="sm" variant="ghost">
+          Contact support
+        </Button>
+      </AlertAction>
+    </Alert>
+  );
+}`}
+>
+  <AlertActionExample />
+</ComponentPreview>
+
+## Accessibility
+
+- `error` alerts default to `role="alert"`. Other variants default to `role="status"` so ordinary
+  information does not interrupt the screen reader.
+- Pass `role` to match the scenario, or `role={null}` for a static container that should never be
+  announced. Avoid `role="alert"` for messages that are already visible on page load.
+- The close button uses the accessible name `Dismiss`. Override it with `closeLabel` when several
+  alerts share the page.
+- The status icon is decorative by default because the title and description carry the state. Pass
+  `label` to `AlertIcon` when you need a meaningful standalone icon.
+- `AlertTitle` renders a paragraph, not a heading, so repeated alerts do not pollute the document
+  outline. Use the surrounding page structure for headings.
+- State is conveyed by text and icon shape, not by color alone.
+- Focus is visible on the close button and action controls.
+- The close-button hover transition respects `prefers-reduced-motion`.
+
+## Props
+
+### Alert
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'info' | 'success' | 'warning' | 'error'`,
+      default: `'info'`,
+      description: 'Visual treatment, default icon, and default live region role.',
+    },
+    {
+      name: 'icon',
+      type: 'LucideIcon | null',
+      default: 'Variant icon',
+      description: 'Replaces the status icon. Pass `null` to render no icon.',
+    },
+    {
+      name: 'closable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Renders a close button that calls `onClose`.',
+    },
+    {
+      name: 'onClose',
+      type: '() => void',
+      description: 'Called when the close button is clicked. The parent owns visibility.',
+    },
+    {
+      name: 'closeLabel',
+      type: 'string',
+      default: `'Dismiss'`,
+      description: 'Accessible name of the close button.',
+    },
+    {
+      name: 'role',
+      type: 'AriaRole | null',
+      default: `'alert' for error, 'status' otherwise`,
+      description: 'Overrides the live region role. Pass `null` to remove it.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+### AlertIcon
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'info' | 'success' | 'warning' | 'error'`,
+      description: 'Overrides the variant inherited from the surrounding `Alert`.',
+    },
+    {
+      name: 'icon',
+      type: 'LucideIcon',
+      description: 'Overrides the default glyph for the variant.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      description:
+        'Accessible name for the icon. Without it the icon is decorative and hidden from assistive technology.',
+    },
+  ]}
+/>
+
+### AlertTitle, AlertDescription, AlertAction, and AlertClose
+
+<PropsTable
+  rows={[
+    {
+      name: 'AlertTitle',
+      type: 'HTMLAttributes<HTMLParagraphElement>',
+      description: 'Primary message. Renders a paragraph.',
+    },
+    {
+      name: 'AlertDescription',
+      type: 'HTMLAttributes<HTMLParagraphElement>',
+      description: 'Supporting message. Renders a paragraph.',
+    },
+    {
+      name: 'AlertAction',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Action slot rendered below the text. Accepts buttons, links, or other controls.',
+    },
+    {
+      name: 'AlertClose.label',
+      type: 'string',
+      default: `'Dismiss'`,
+      description: 'Accessible name of the icon-only close button.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Toast](/docs/components/toast/) for temporary feedback that does not need to stay on the page.
+- [AlertDialog](/docs/components/alert-dialog/) for decisions that require confirmation.
+- [Badge](/docs/components/badge/) for compact status labels.

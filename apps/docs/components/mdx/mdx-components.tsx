@@ -45,6 +45,13 @@ import {
   AvatarIconExample,
   AvatarImage,
 } from '../examples/avatar-examples';
+import {
+  AlertActionExample,
+  AlertClosableExample,
+  AlertCustomIconExample,
+  AlertVariantsExample,
+  AlertWithoutTitleExample,
+} from '../examples/alert-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -225,8 +232,13 @@ export const mdxComponents = {
   a: MdxLink,
   pre: MdxPre,
   table: MdxTable,
+  AlertActionExample,
+  AlertClosableExample,
+  AlertCustomIconExample,
   AlertDialogBasicExample,
   AlertDialogControlledExample,
+  AlertVariantsExample,
+  AlertWithoutTitleExample,
   Avatar,
   AvatarFallback,
   AvatarGroup,
