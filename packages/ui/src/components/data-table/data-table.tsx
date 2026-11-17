@@ -290,26 +290,31 @@ export function DataTable<TData>({
     <div className={cx(styles.root, className)}>
       <div className={styles.toolbar}>
         {searchable ? (
-          <Input
-            size="sm"
-            className={styles.search}
-            type="search"
-            value={query}
-            placeholder="Search…"
-            aria-label="Search rows"
-            leftIcon={Search}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setPage(1);
-            }}
-          />
+          <div className={styles.searchField}>
+            <Input
+              size="sm"
+              type="search"
+              value={query}
+              placeholder="Search…"
+              aria-label="Search rows"
+              leftIcon={Search}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         ) : (
           <span />
         )}
 
         {columnVisibility ? (
           <DropdownMenu>
-            <DropdownMenuTrigger className={styles.visibilityTrigger}>Columns</DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              render={<Button variant="outline" size="sm" rightIcon={ChevronDown} />}
+            >
+              Columns
+            </DropdownMenuTrigger>
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">
                 <DropdownMenuGroup>

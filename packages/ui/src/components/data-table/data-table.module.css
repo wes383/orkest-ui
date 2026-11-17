@@ -10,11 +10,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--ok-space-3);
+  gap: var(--ok-space-2);
 }
 
-.search {
-  width: min(100%, 16rem);
+.searchField {
+  flex: 1 1 12rem;
+  max-width: 18rem;
+  min-width: 0;
 }
 
 .sortButton {
