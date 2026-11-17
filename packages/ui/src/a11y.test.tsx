@@ -24,6 +24,7 @@ import {
 import { Field, FieldDescription, FieldLabel, FieldMessage } from './components/field';
 import { IconButton } from './components/icon-button';
 import { Input, Textarea } from './components/input';
+import { Pagination } from './components/pagination';
 import { Radio, RadioGroup } from './components/radio';
 import { Select } from './components/select';
 import { Skeleton } from './components/skeleton';
@@ -96,6 +97,7 @@ describe('accessibility', () => {
           columns={[{ id: 'name', header: 'Name', accessor: (row: { name: string }) => row.name }]}
           getRowId={(row) => row.name}
         />
+        <Pagination page={2} totalPages={5} onPageChange={() => {}} />
       </main>,
     );
 

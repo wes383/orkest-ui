@@ -1,0 +1,104 @@
+.root {
+  --pagination-size: 2rem;
+  --pagination-font-size: var(--ok-font-size-sm);
+  display: block;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --pagination-size: 1.75rem;
+  --pagination-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="lg"] {
+  --pagination-size: 2.5rem;
+  --pagination-font-size: var(--ok-font-size-md);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ok-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--pagination-size);
+  height: var(--pagination-size);
+  padding-inline: var(--ok-space-2);
+  border: var(--ok-border-width) solid transparent;
+  border-radius: var(--ok-radius-md);
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  font-family: inherit;
+  font-size: var(--pagination-font-size);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.page:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ui-foreground) 6%, transparent);
+  color: var(--ui-foreground);
+}
+
+.page:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.page[aria-current="page"] {
+  border-color: var(--ui-border);
+  background: var(--ui-surface-raised);
+  color: var(--ui-foreground);
+  font-weight: var(--ok-font-weight-medium);
+}
+
+.page:disabled {
+  background: transparent;
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--pagination-size);
+  height: var(--pagination-size);
+  color: var(--ui-subtle-foreground);
+  font-size: var(--pagination-font-size);
+  user-select: none;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    transition: none;
+  }
+}

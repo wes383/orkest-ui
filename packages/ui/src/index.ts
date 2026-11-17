@@ -118,6 +118,27 @@ export type {
   CardVariant,
 } from './components/card';
 
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  clampPage,
+  getPaginationRange,
+} from './components/pagination';
+export type {
+  PaginationContentProps,
+  PaginationEllipsisProps,
+  PaginationItemProps,
+  PaginationLinkProps,
+  PaginationProps,
+  PaginationRangeItem,
+  PaginationSize,
+} from './components/pagination';
+
 export { Skeleton } from './components/skeleton';
 export type {
   SkeletonAnimation,
