@@ -157,13 +157,17 @@ elements:
 ## Illustrations
 
 <ComponentPreview
-  title="Optional illustration"
+  title="Illustration in a dashed region"
   code={`import { Button, EmptyState } from '@orkest/ui';
 
 export function Example() {
   return (
     <EmptyState
       size="lg"
+      style={{
+        border: '1px dashed var(--ui-border)',
+        borderRadius: 'var(--ok-radius-2xl)',
+      }}
       image={{ src: '/empty-inbox.svg', alt: 'An empty inbox with no documents' }}
       title="Your inbox is all caught up"
       description="New messages will land here as soon as someone writes to you."
@@ -174,6 +178,11 @@ export function Example() {
 >
   <EmptyStateImageExample />
 </ComponentPreview>
+
+`EmptyState` draws no border of its own. `className` and `style` pass through to the root, so a
+dashed outline is one declaration away — useful when the empty region needs to stand out inside a
+larger surface. Leave it off when the parent already frames the content, as in the
+[embedding example](#embedding) below.
 
 `image` is optional and takes precedence over `icon` when both are supplied. `alt` is required: it
 carries any meaning the illustration adds. If the picture is purely decorative, use `alt=""` and make

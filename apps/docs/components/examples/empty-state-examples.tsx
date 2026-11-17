@@ -110,6 +110,10 @@ export function EmptyStateImageExample() {
   return (
     <EmptyState
       size="lg"
+      style={{
+        border: '1px dashed var(--ui-border)',
+        borderRadius: 'var(--ok-radius-2xl)',
+      }}
       image={{
         src: '/empty-state/empty-inbox.svg',
         alt: 'An empty inbox with no documents',
