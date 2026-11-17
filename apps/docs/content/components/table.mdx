@@ -562,7 +562,39 @@ export function Example() {
 
 Row actions are ordinary cells: render a `DropdownMenu` with an `IconButton` trigger inside a
 `TableCell`. The menu portals out of the table's horizontal scroll container, so it is never clipped
-by a cell. [DataTable](/docs/components/data-table/) shows a complete actions column.
+by a cell.
+
+<TableActionsExample />
+
+```tsx
+import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+import { IconButton, TableCell } from '@orkest/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+
+<TableCell align="right">
+  <DropdownMenu>
+    <DropdownMenuTrigger
+      render={<IconButton icon={Ellipsis} label={`Actions for ${invoice.id}`} size="sm" variant="ghost" />}
+    />
+    <DropdownMenuPortal>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem leftIcon={Pencil}>Edit invoice</DropdownMenuItem>
+        <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenuPortal>
+  </DropdownMenu>
+</TableCell>;
+```
+
+Give each trigger a per-row `label` so the button is not announced as a nameless icon, and keep the
+cell right-aligned so the trigger sits against the row edge. [DataTable](/docs/components/data-table/)
+shows the same pattern as a column definition.
 
 ## Narrow screens
 

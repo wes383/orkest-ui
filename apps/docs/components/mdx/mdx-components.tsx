@@ -75,6 +75,7 @@ import {
   DataTableExpandableExample,
   DataTableSelectionExample,
 } from '../examples/data-table-examples';
+import { TableActionsExample } from '../examples/table-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -359,6 +360,7 @@ export const mdxComponents = {
   Switch,
   SwitchExample,
   Table,
+  TableActionsExample,
   TableBody,
   TableCaption,
   TableCell,
