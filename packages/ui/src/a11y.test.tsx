@@ -28,6 +28,15 @@ import { Select } from './components/select';
 import { Skeleton } from './components/skeleton';
 import { Spinner } from './components/spinner';
 import { Switch } from './components/switch';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './components/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/tabs';
 import { Tag } from './components/tag';
 import { Heading, Paragraph } from './components/typography';
@@ -65,6 +74,21 @@ describe('accessibility', () => {
           </CardHeader>
           <CardContent>Content</CardContent>
         </Card>
+        <Table>
+          <TableCaption>Invoices issued this quarter.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Invoice</TableHead>
+              <TableHead align="right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>INV-1042</TableCell>
+              <TableCell align="right">2400.00</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </main>,
     );
 
