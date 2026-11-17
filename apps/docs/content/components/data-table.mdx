@@ -1,0 +1,235 @@
+---
+title: DataTable
+description: Sortable, searchable table with pagination, selection, and expandable rows.
+section: components
+---
+
+`DataTable` layers behaviour over the presentational [Table](/docs/components/table/): column
+definitions, sorting, global search, pagination, row selection, row expansion, and column
+visibility. All of it runs on the client against the data you pass in — no fetching, no caching, and
+no data source assumptions.
+
+It is exported from the client entry, like every other stateful component:
+
+```tsx
+import { DataTable, type DataColumn } from '@orkest/ui/client';
+```
+
+## Live preview
+
+<DataTableExample />
+
+## Columns
+
+Columns are plain objects. `accessor` feeds sorting and search; `cell` decides what is rendered.
+
+```tsx
+import { Badge } from '@orkest/ui';
+import { DataTable, type DataColumn } from '@orkest/ui/client';
+
+interface Invoice {
+  id: string;
+  customer: string;
+  amount: number;
+  status: 'Paid' | 'Pending';
+}
+
+const columns: DataColumn<Invoice>[] = [
+  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 160 },
+  {
+    id: 'amount',
+    header: 'Amount',
+    accessor: (row) => row.amount,
+    align: 'right',
+    cell: (row) => row.amount.toFixed(2),
+  },
+  {
+    id: 'status',
+    header: 'Status',
+    accessor: (row) => row.status,
+    cell: (row) => <Badge>{row.status}</Badge>,
+  },
+];
+
+<DataTable columns={columns} data={invoices} getRowId={(row) => row.id} caption="Invoices" />;
+```
+
+- `id` must be stable: it keys sorting, visibility, and selection.
+- `accessor` returns the sortable, searchable value. Keep it free of formatting — formatting belongs
+  in `cell`.
+- `sortable={false}` and `searchable={false}` opt a single column out.
+
+## Sorting
+
+Clicking a sortable header cycles ascending → descending → unsorted. Sorting is single-column, and
+numbers compare numerically while everything else compares as text with numeric awareness, so
+`Item 2` sorts before `Item 10`. The active direction is exposed through `aria-sort` on the header
+cell.
+
+## Search
+
+The toolbar input filters rows whose searchable columns contain the query, case-insensitively. Search
+runs before sorting and pagination, and changing it resets the table to the first page.
+
+## Pagination
+
+`pageSize` defaults to `10`. The footer reports the visible range and total, and Previous / Next
+disable at the edges. When search or a data change shrinks the result set, the table clamps to the
+last valid page instead of showing an empty one.
+
+## Selection
+
+<DataTableSelectionExample />
+
+Selecting is opt-in with `selectable`. The header checkbox covers the rows on the current page, not
+the whole data set — a predictable scope when results span several pages. `onSelectionChange`
+receives the selected rows, so the caller owns what happens next.
+
+## Row expansion
+
+<DataTableExpandableExample />
+
+`expandable` adds a toggle column and renders `renderExpanded(row)` in an extra row underneath.
+Only the toggle button carries `aria-expanded`, so the extra row never joins the row count that
+assistive technology announces for the table body.
+
+## Column visibility
+
+The Columns menu toggles individual columns and keeps the menu open while you work. Hidden columns
+keep their state; nothing about sorting or selection is lost when a column is hidden and restored.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'columns',
+      type: 'DataColumn<TData>[]',
+      description: 'Column definitions. Required.',
+    },
+    { name: 'data', type: 'TData[]', description: 'Rows to render. Required.' },
+    {
+      name: 'getRowId',
+      type: '(row: TData, index: number) => string',
+      description:
+        'Stable row identity. Defaults to the row position in `data`, which stays correct across sorting and pagination.',
+    },
+    {
+      name: 'caption',
+      type: 'ReactNode',
+      description: 'Table caption, which also provides the accessible name.',
+    },
+    {
+      name: 'emptyState',
+      type: 'ReactNode',
+      default: "'No results.'",
+      description: 'Rendered in a single row when nothing matches.',
+    },
+    { name: 'pageSize', type: 'number', default: '10', description: 'Rows per page.' },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Cell density, passed to Table.',
+    },
+    { name: 'striped', type: 'boolean', default: 'false', description: 'Alternating row background.' },
+    { name: 'hoverable', type: 'boolean', default: 'true', description: 'Row hover background.' },
+    { name: 'sortable', type: 'boolean', default: 'true', description: 'Enables header sorting.' },
+    {
+      name: 'searchable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the search input in the toolbar.',
+    },
+    {
+      name: 'paginated',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the pagination footer.',
+    },
+    {
+      name: 'selectable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds the checkbox column and enables selection.',
+    },
+    {
+      name: 'expandable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds the expand toggle column.',
+    },
+    {
+      name: 'renderExpanded',
+      type: '(row: TData) => ReactNode',
+      description: 'Content rendered under an expanded row.',
+    },
+    {
+      name: 'columnVisibility',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the Columns menu in the toolbar.',
+    },
+    {
+      name: 'onSelectionChange',
+      type: '(rows: TData[]) => void',
+      description: 'Called with the selected rows after every change.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    { name: 'id', type: 'string', description: 'Stable column identifier.' },
+    { name: 'header', type: 'ReactNode', description: 'Header cell content.' },
+    {
+      name: 'accessor',
+      type: '(row: TData) => unknown',
+      description: 'Value used for sorting and searching.',
+    },
+    {
+      name: 'cell',
+      type: '(row: TData) => ReactNode',
+      description: 'Cell renderer. Defaults to the accessor value as text.',
+    },
+    {
+      name: 'sortable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Set to `false` to keep this column out of sorting.',
+    },
+    {
+      name: 'searchable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Set to `false` to exclude the column from the global search.',
+    },
+    {
+      name: 'align',
+      type: "'left' | 'center' | 'right'",
+      description: 'Horizontal alignment, passed to TableHead and TableCell.',
+    },
+    {
+      name: 'width / minWidth',
+      type: 'number | string',
+      description: 'Column sizing. Numbers are treated as pixels.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The table is a real `table` with real header cells. Pass `caption` so it has an accessible name.
+- Sortable headers are `button` elements inside the header cell, so they are keyboard reachable.
+  `aria-sort` reports the current direction.
+- Selection checkboxes carry labels: one for the page-level toggle and one per row.
+- The range summary is a polite live region, so page changes are announced without moving focus.
+- Search results replace the body in place. Keep the table inside a region with a heading so the
+  change of content has context.
+
+## Related
+
+- [Table](/docs/components/table/) for a static table without state.
+- [Checkbox](/docs/components/checkbox/) for selection outside a table.
+- [Badge](/docs/components/badge/) for status cells.
+- [Skeleton](/docs/components/skeleton/) for the placeholder while rows load.

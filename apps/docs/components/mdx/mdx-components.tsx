@@ -69,6 +69,11 @@ import {
   AlertVariantsExample,
   AlertWithoutTitleExample,
 } from '../examples/alert-examples';
+import {
+  DataTableExample,
+  DataTableExpandableExample,
+  DataTableSelectionExample,
+} from '../examples/data-table-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -255,6 +260,9 @@ export const mdxComponents = {
   AlertDialogBasicExample,
   AlertDialogControlledExample,
   AlertVariantsExample,
+  DataTableExample,
+  DataTableExpandableExample,
+  DataTableSelectionExample,
   AlertWithoutTitleExample,
   Avatar,
   AvatarFallback,
