@@ -30,6 +30,9 @@ pnpm playground:dev
 pnpm add @orkest/ui
 ```
 
+Import `@orkest/ui/style.css` once in your application. Client-side components are exported from
+`@orkest/ui/client` and must render inside a Client Component (a module with `'use client'`).
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
