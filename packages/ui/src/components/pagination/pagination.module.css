@@ -38,9 +38,12 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  min-width: var(--pagination-size);
+  width: var(--pagination-size);
+  /* Fixed width keeps one- and two-digit pages the same size, so paging does
+     not shift the row; content wider than the box is allowed to grow it. */
+  min-width: max-content;
   height: var(--pagination-size);
-  padding-inline: var(--ok-space-2);
+  padding-inline: 0;
   border: var(--ok-border-width) solid transparent;
   border-radius: var(--pagination-radius);
   background: transparent;
