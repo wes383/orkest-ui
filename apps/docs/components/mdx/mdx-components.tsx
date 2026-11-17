@@ -77,6 +77,11 @@ import {
   DataTableWideExample,
 } from '../examples/data-table-examples';
 import { TableActionsExample } from '../examples/table-examples';
+import {
+  PaginationBasicExample,
+  PaginationManyPagesExample,
+  PaginationSizesExample,
+} from '../examples/pagination-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -370,6 +375,9 @@ export const mdxComponents = {
   TableHead,
   TableHeader,
   TableRow,
+  PaginationBasicExample,
+  PaginationManyPagesExample,
+  PaginationSizesExample,
   Tag,
   Text,
   Textarea,

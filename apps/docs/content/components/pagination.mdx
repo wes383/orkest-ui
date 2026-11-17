@@ -1,0 +1,216 @@
+---
+title: Pagination
+description: Page navigation for paginated tables, lists, and search results.
+section: components
+---
+
+`Pagination` splits a long collection into pages. It is controlled: you own the current page, it
+reports the page the reader asked for. Page numbers, clamping, and ellipsis handling are computed for
+you, and the same markup is available piece by piece when the shape needs to differ.
+
+It renders buttons, which is what client-side paging wants. A link-based variant for
+server-rendered search results, where every page needs a real URL, is a separate concern and is not
+part of this component.
+
+## Live preview
+
+<div className="demo">
+  <PaginationBasicExample />
+</div>
+
+```tsx
+import { useState } from 'react';
+import { Pagination } from '@orkest/ui';
+
+export function Example() {
+  const [page, setPage] = useState(1);
+
+  return <Pagination page={page} totalPages={5} onPageChange={setPage} />;
+}
+```
+
+## Sizes
+
+<div className="demo">
+  <PaginationSizesExample />
+</div>
+
+`md` is the default. All three sizes share the same footprint rules, so switching size never changes
+how many pages fit before the list wraps.
+
+## Long lists
+
+<div className="demo">
+  <PaginationManyPagesExample />
+</div>
+
+With a large page count the list keeps the boundary pages and a window around the current page,
+collapsing everything else into a single ellipsis per side. `siblingCount` controls the window — `1`
+shows one page on each side of the current one, `2` shows two.
+
+The range is also exported, so a custom layout can reuse the same rules:
+
+```tsx
+import { getPaginationRange } from '@orkest/ui';
+
+getPaginationRange(10, 20); // [1, 'start-ellipsis', 9, 10, 11, 'end-ellipsis', 20]
+```
+
+## Composition
+
+When the default list is not the right shape, pass the parts as children. `Pagination` keeps the
+`nav` landmark, the accessible name, and the size; the children decide the layout:
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@orkest/ui';
+
+<Pagination page={page} totalPages={20} onPageChange={setPage} label="Search results">
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious label="Previous" disabled={page === 1} onClick={() => setPage(page - 1)} />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink page={1} isActive={page === 1} onClick={() => setPage(1)} />
+    </PaginationItem>
+    <PaginationEllipsis />
+    <PaginationItem>
+      <PaginationLink page={20} isActive={page === 20} onClick={() => setPage(20)} />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext label="Next" disabled={page === 20} onClick={() => setPage(page + 1)} />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>;
+```
+
+## Boundary rules
+
+- A `page` below `1` or above `totalPages` is clamped before rendering, so an out-of-range value can
+  never produce a state the reader cannot leave.
+- Previous and next are disabled with the native `disabled` attribute at the ends of the range, not
+  hidden.
+- `totalPages` of `0` renders nothing at all: an empty collection has no pages to navigate.
+- A single page also renders nothing, because the control would have nothing to do.
+- Clicking the page you are already on does not call `onPageChange`.
+- An ellipsis is decoration with an accessible label. It is never focusable and never clickable.
+
+## Accessibility
+
+- The wrapper is `<nav aria-label="Pagination">`; rename it with `label` when a page has more than one
+  paginator.
+- The current page carries `aria-current="page"` and a border plus background, so the state is not
+  communicated by color alone.
+- Chevron-only controls have accessible names through `previousLabel`, `nextLabel`, `firstLabel`, and
+  `lastLabel`.
+- Everything is a real `button`, so Tab order, Enter, and Space work without extra handlers.
+- The visual dots are hidden from assistive technology and replaced by the `More pages` text, so the
+  skip is announced once and not as punctuation.
+
+## Props
+
+<PropsTable
+  rows={[
+    { name: 'page', type: 'number', description: 'Current page, starting at `1`. Required.' },
+    {
+      name: 'totalPages',
+      type: 'number',
+      description: 'Total number of pages. Required. `0` renders nothing.',
+    },
+    {
+      name: 'onPageChange',
+      type: '(page: number) => void',
+      description: 'Called with the requested page. Required.',
+    },
+    {
+      name: 'siblingCount',
+      type: 'number',
+      default: '1',
+      description: 'Pages shown on each side of the current page.',
+    },
+    {
+      name: 'showFirstLast',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds jump-to-first and jump-to-last buttons.',
+    },
+    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables every control.' },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Control size.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: "'Pagination'",
+      description: 'Accessible name of the navigation landmark.',
+    },
+    {
+      name: 'previousLabel / nextLabel',
+      type: 'string',
+      default: "'Previous page' / 'Next page'",
+      description: 'Accessible names for the step buttons.',
+    },
+    {
+      name: 'firstLabel / lastLabel',
+      type: 'string',
+      default: "'First page' / 'Last page'",
+      description: 'Accessible names for the jump buttons.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Custom composition built from the parts. Replaces the default page list.',
+    },
+  ]}
+/>
+
+<PropsTable
+  rows={[
+    {
+      name: 'PaginationContent',
+      type: 'HTMLAttributes<HTMLUListElement>',
+      description: 'The `ul` that holds the items.',
+    },
+    {
+      name: 'PaginationItem',
+      type: 'HTMLAttributes<HTMLLIElement>',
+      description: 'One slot in the list.',
+    },
+    {
+      name: 'PaginationLink',
+      type: 'ButtonHTMLAttributes & { page: number; isActive?: boolean }',
+      description: 'Page number button. `isActive` adds `aria-current="page"` and the active styling.',
+    },
+    {
+      name: 'PaginationPrevious / PaginationNext',
+      type: 'IconButtonProps & { label: string }',
+      description: 'Chevron controls with a required accessible name.',
+    },
+    {
+      name: 'PaginationEllipsis',
+      type: 'HTMLAttributes<HTMLLIElement> & { label?: string }',
+      description: 'Non-interactive ellipsis with an accessible label. Defaults to `More pages`.',
+    },
+    {
+      name: 'getPaginationRange',
+      type: '(page, totalPages, siblingCount?) => PaginationRangeItem[]',
+      description: 'The page-slot algorithm, exported for custom lists.',
+    },
+  ]}
+/>
+
+## Related
+
+- [DataTable](/docs/components/data-table/) for a table with its own paging footer.
+- [Table](/docs/components/table/) for the presentational grid.
+- [Button](/docs/components/button/) for the controls inside a custom composition.
