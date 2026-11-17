@@ -13,6 +13,7 @@ import {
   Text,
 } from '@orkest/ui';
 
+import { AlertDemo } from './alert-demo';
 import { AvatarDemo } from './avatar-demo';
 import { ChoiceDemo } from './choice-demo';
 import { DialogDemo } from './dialog-demo';
@@ -83,6 +84,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
         </Text>
       </Stack>
       <Separator />
+      <AlertDemo />
       <AvatarDemo />
       <ChoiceDemo />
       <SelectDemo />

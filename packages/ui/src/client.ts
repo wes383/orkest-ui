@@ -1,5 +1,23 @@
 'use client';
 
+export {
+  Alert,
+  AlertAction,
+  AlertClose,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from './components/alert';
+export type {
+  AlertActionProps,
+  AlertCloseProps,
+  AlertDescriptionProps,
+  AlertIconProps,
+  AlertProps,
+  AlertTitleProps,
+  AlertVariant,
+} from './components/alert';
+
 export { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from './components/avatar';
 export type {
   AvatarFallbackProps,

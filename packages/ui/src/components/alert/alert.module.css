@@ -1,0 +1,136 @@
+.alert {
+  --alert-accent: var(--ui-accent);
+  --alert-surface: var(--ui-accent-surface);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  box-sizing: border-box;
+  padding: var(--ok-space-3) var(--ok-space-4);
+  border: var(--ok-border-width) solid
+    color-mix(in srgb, var(--alert-accent) 24%, transparent);
+  border-radius: var(--ok-radius-xl);
+  background: var(--alert-surface);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-normal);
+  row-gap: var(--ok-space-1);
+}
+
+.alert[data-variant="info"] {
+  --alert-accent: var(--ui-accent);
+  --alert-surface: var(--ui-accent-surface);
+}
+
+.alert[data-variant="success"] {
+  --alert-accent: var(--ui-success);
+  --alert-surface: var(--ui-success-surface);
+}
+
+.alert[data-variant="warning"] {
+  --alert-accent: var(--ui-warning);
+  --alert-surface: var(--ui-warning-surface);
+}
+
+.alert[data-variant="error"] {
+  --alert-accent: var(--ui-danger);
+  --alert-surface: var(--ui-danger-surface);
+}
+
+/*
+ * Direct children default to the content column. The icon and close button
+ * override the column so authors can compose parts in any order.
+ */
+.alert > * {
+  grid-column: 2;
+}
+
+.icon {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-flex;
+  margin-block-start: calc(var(--ok-space-1) * 0.5);
+  margin-inline-end: var(--ok-space-3);
+  color: var(--ui-muted-foreground);
+}
+
+.icon[data-variant="info"] {
+  color: var(--ui-accent);
+}
+
+.icon[data-variant="success"] {
+  color: var(--ui-success);
+}
+
+.icon[data-variant="warning"] {
+  color: var(--ui-warning);
+}
+
+.icon[data-variant="error"] {
+  color: var(--ui-danger);
+}
+
+.title {
+  margin: 0;
+  color: var(--ui-foreground);
+  font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-semibold);
+  line-height: var(--ok-line-height-snug);
+  overflow-wrap: anywhere;
+}
+
+.description {
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  line-height: var(--ok-line-height-normal);
+  overflow-wrap: anywhere;
+}
+
+/* A description without a title is the primary message. */
+.alert:not(:has(> .title)) > .description {
+  color: var(--ui-foreground);
+}
+
+.action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-2);
+  margin-block-start: var(--ok-space-1);
+}
+
+.close {
+  grid-column: 3;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ok-space-6);
+  height: var(--ok-space-6);
+  margin: calc(var(--ok-space-1) * -0.5) calc(var(--ok-space-2) * -0.5) 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ok-radius-md);
+  appearance: none;
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  cursor: pointer;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.close:hover {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.close:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: calc(var(--ok-focus-ring-offset) * -1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .close {
+    transition: none;
+  }
+}
