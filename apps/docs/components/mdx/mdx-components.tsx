@@ -79,6 +79,7 @@ import {
 import { TableActionsExample } from '../examples/table-examples';
 import {
   PaginationBasicExample,
+  PaginationFirstLastExample,
   PaginationManyPagesExample,
   PaginationSizesExample,
 } from '../examples/pagination-examples';
@@ -376,6 +377,7 @@ export const mdxComponents = {
   TableHeader,
   TableRow,
   PaginationBasicExample,
+  PaginationFirstLastExample,
   PaginationManyPagesExample,
   PaginationSizesExample,
   Tag,

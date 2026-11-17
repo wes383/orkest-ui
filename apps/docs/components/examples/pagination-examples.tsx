@@ -22,6 +22,19 @@ export function PaginationManyPagesExample() {
 
   return (
     <Stack gap={2}>
+      <Pagination page={page} totalPages={20} onPageChange={setPage} />
+      <Text size="sm" tone="muted">
+        Page {page} of 20
+      </Text>
+    </Stack>
+  );
+}
+
+export function PaginationFirstLastExample() {
+  const [page, setPage] = useState(10);
+
+  return (
+    <Stack gap={2}>
       <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />
       <Text size="sm" tone="muted">
         Page {page} of 20

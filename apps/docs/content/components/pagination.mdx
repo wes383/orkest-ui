@@ -48,6 +48,16 @@ With a large page count the list keeps the boundary pages and a window around th
 collapsing everything else into a single ellipsis per side. `siblingCount` controls the window — `1`
 shows one page on each side of the current one, `2` shows two.
 
+First and last jumps are **off by default**; a long list only gets them when you ask for them:
+
+<div className="demo">
+  <PaginationFirstLastExample />
+</div>
+
+```tsx
+<Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />
+```
+
 The range is also exported, so a custom layout can reuse the same rules:
 
 ```tsx
