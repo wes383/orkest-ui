@@ -1,9 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import { Copy, Ellipsis, Pencil, Trash2 } from 'lucide-react';
 
-import { Badge, Stack, Text } from '@orkest/ui';
-import { DataTable, type DataColumn } from '@orkest/ui/client';
+import { Badge, IconButton, Stack, Text } from '@orkest/ui';
+import {
+  DataTable,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  type DataColumn,
+} from '@orkest/ui/client';
 
 interface Invoice {
   id: string;
@@ -101,6 +111,53 @@ export function DataTableExpandableExample() {
           </Text>
         </Stack>
       )}
+    />
+  );
+}
+
+const columnsWithActions: DataColumn<Invoice>[] = [
+  ...columns,
+  {
+    id: 'actions',
+    header: 'Actions',
+    accessor: () => null,
+    sortable: false,
+    searchable: false,
+    align: 'right',
+    minWidth: 88,
+    cell: (row) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <IconButton
+              icon={Ellipsis}
+              label={`Actions for ${row.id}`}
+              size="sm"
+              variant="ghost"
+            />
+          }
+        />
+        <DropdownMenuPortal>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem leftIcon={Pencil}>Edit invoice</DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Copy}>Duplicate</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
+    ),
+  },
+];
+
+export function DataTableActionsExample() {
+  return (
+    <DataTable
+      columns={columnsWithActions}
+      data={invoices.slice(0, 5)}
+      caption="Invoices"
+      paginated={false}
+      getRowId={(row) => row.id}
     />
   );
 }

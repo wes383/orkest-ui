@@ -70,6 +70,7 @@ import {
   AlertWithoutTitleExample,
 } from '../examples/alert-examples';
 import {
+  DataTableActionsExample,
   DataTableExample,
   DataTableExpandableExample,
   DataTableSelectionExample,
@@ -260,6 +261,7 @@ export const mdxComponents = {
   AlertDialogBasicExample,
   AlertDialogControlledExample,
   AlertVariantsExample,
+  DataTableActionsExample,
   DataTableExample,
   DataTableExpandableExample,
   DataTableSelectionExample,

@@ -558,6 +558,12 @@ export function Example() {
   </Table>
 </ComponentPreview>
 
+## Row actions
+
+Row actions are ordinary cells: render a `DropdownMenu` with an `IconButton` trigger inside a
+`TableCell`. The menu portals out of the table's horizontal scroll container, so it is never clipped
+by a cell. [DataTable](/docs/components/data-table/) shows a complete actions column.
+
 ## Narrow screens
 
 The table scrolls horizontally inside its own container instead of squeezing columns, so nothing is

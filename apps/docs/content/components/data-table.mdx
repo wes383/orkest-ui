@@ -95,6 +95,54 @@ assistive technology announces for the table body.
 The Columns menu toggles individual columns and keeps the menu open while you work. Hidden columns
 keep their state; nothing about sorting or selection is lost when a column is hidden and restored.
 
+## Row actions
+
+There is no actions prop, and none is needed: an actions column is a column whose `cell` renders a
+menu. `DropdownMenu` portals its content, so the menu escapes the table's horizontal scroll container
+instead of being clipped by a cell.
+
+<DataTableActionsExample />
+
+```tsx
+import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+import { IconButton } from '@orkest/ui';
+import {
+  type DataColumn,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from '@orkest/ui/client';
+
+const actions: DataColumn<Invoice> = {
+  id: 'actions',
+  header: 'Actions',
+  accessor: () => null,
+  sortable: false,
+  searchable: false,
+  align: 'right',
+  cell: (row) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<IconButton icon={Ellipsis} label={`Actions for ${row.id}`} size="sm" variant="ghost" />}
+      />
+      <DropdownMenuPortal>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
+          <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  ),
+};
+```
+
+Three details matter: `sortable` and `searchable` are off because the column has no value to sort or
+search, `align="right"` keeps the trigger next to the row edge, and the trigger carries a per-row
+accessible name so it is not announced as a nameless button. The same pattern works with a plain
+[Table](/docs/components/table/): render the menu inside a `TableCell`.
+
 ## Props
 
 <PropsTable
