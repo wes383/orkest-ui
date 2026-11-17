@@ -1,0 +1,131 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  min-width: 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-3);
+}
+
+.search {
+  width: min(100%, 16rem);
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: var(--ok-font-weight-medium);
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.sortButton:hover {
+  color: var(--ui-foreground);
+}
+
+.sortButton:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+  border-radius: var(--ok-radius-sm);
+}
+
+.sortIcon {
+  flex: none;
+  opacity: 0;
+  transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.sortButton:hover .sortIcon {
+  opacity: 0.5;
+}
+
+.sortButton[data-direction] .sortIcon {
+  opacity: 1;
+}
+
+.sortButton[data-direction="asc"] .sortIcon {
+  transform: rotate(180deg);
+}
+
+.toggleCell,
+.selectCell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.toggle svg {
+  transition: transform var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.toggle[data-expanded] svg {
+  transform: rotate(90deg);
+}
+
+.root tr[data-selected] {
+  background: color-mix(in srgb, var(--ui-accent) 6%, transparent);
+}
+
+.expandedRow td {
+  color: var(--ui-muted-foreground);
+  background: color-mix(in srgb, var(--ui-foreground) 2.5%, transparent);
+}
+
+.empty {
+  padding-block: var(--ok-space-8);
+  color: var(--ui-muted-foreground);
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-3);
+}
+
+.summary {
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+}
+
+.pageLabel {
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sortIcon,
+  .toggle svg {
+    transition: none;
+  }
+}

@@ -10,6 +10,7 @@ import { Badge } from './components/badge';
 import { Button } from './components/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
+import { DataTable } from './components/data-table';
 import {
   Dialog,
   DialogBody,
@@ -89,6 +90,12 @@ describe('accessibility', () => {
             </TableRow>
           </TableBody>
         </Table>
+        <DataTable
+          caption="Invoices"
+          data={[{ name: 'Ada' }, { name: 'Grace' }]}
+          columns={[{ id: 'name', header: 'Name', accessor: (row: { name: string }) => row.name }]}
+          getRowId={(row) => row.name}
+        />
       </main>,
     );
 

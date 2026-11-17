@@ -189,6 +189,9 @@ export type { TextareaProps, TextareaSize } from './components/input';
 export { Checkbox } from './components/checkbox';
 export type { CheckboxProps, CheckboxSize } from './components/checkbox';
 
+export { DataTable } from './components/data-table';
+export type { DataColumn, DataTableProps } from './components/data-table';
+
 export { Radio, RadioGroup } from './components/radio';
 export type {
   RadioGroupProps,
