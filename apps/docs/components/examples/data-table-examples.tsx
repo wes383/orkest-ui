@@ -72,6 +72,7 @@ export function DataTableSelectionExample() {
         data={invoices.slice(0, 5)}
         caption="Invoices"
         selectable
+        variant="bordered"
         paginated={false}
         getRowId={(row) => row.id}
         onSelectionChange={setSelected}
