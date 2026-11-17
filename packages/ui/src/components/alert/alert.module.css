@@ -1,6 +1,6 @@
 .alert {
   --alert-accent: var(--ui-accent);
-  --alert-surface: var(--ui-accent-surface);
+  --alert-surface: var(--ui-surface-raised);
   display: flex;
   align-items: center;
   gap: var(--ok-space-3);
@@ -18,7 +18,7 @@
 
 .alert[data-variant="info"] {
   --alert-accent: var(--ui-accent);
-  --alert-surface: var(--ui-accent-surface);
+  --alert-surface: var(--ui-surface-raised);
 }
 
 .alert[data-variant="success"] {
