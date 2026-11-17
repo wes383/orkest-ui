@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
-import styles from '../chip/chip.module.css';
+import styles from '../../styles/chip.module.css';
 
 export type BadgeVariant = 'default' | 'info' | 'success' | 'warning' | 'destructive' | 'outline';
 export type BadgeSize = 'sm' | 'md' | 'lg';

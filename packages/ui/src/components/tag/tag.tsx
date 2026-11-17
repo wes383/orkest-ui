@@ -9,7 +9,7 @@ import { X, type LucideIcon } from 'lucide-react';
 import { Icon, type IconSize } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
 import type { BadgeShape, BadgeSize, BadgeVariant } from '../badge';
-import styles from '../chip/chip.module.css';
+import styles from '../../styles/chip.module.css';
 
 export type TagVariant = BadgeVariant;
 export type TagSize = BadgeSize;
