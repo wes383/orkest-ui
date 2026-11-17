@@ -24,6 +24,7 @@ import { LoadingDemo } from './loading-demo';
 import { PlaygroundForm } from './playground-form';
 import { PopoverDemo } from './popover-demo';
 import { SelectDemo } from './select-demo';
+import { TableDemo } from './table-demo';
 import { TabsDemo } from './tabs-demo';
 import { ToastDemo } from './toast-demo';
 
@@ -96,6 +97,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <DropdownMenuDemo />
       <PopoverDemo />
       <TabsDemo />
+      <TableDemo />
       <ToastDemo />
       <LoadingDemo />
       <PlaygroundForm idPrefix={idPrefix} />
