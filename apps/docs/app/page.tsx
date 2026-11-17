@@ -29,8 +29,7 @@ export default function HomePage() {
       <section className="landing-hero">
         <div className="landing-hero-copy">
           <h1 className="landing-title">
-            Thoughtfully crafted components for{' '}
-            <span className="landing-title-accent">modern interfaces.</span>
+            UI, <span className="landing-title-accent">thoughtfully</span> made.
           </h1>
           <p className="landing-lede">
             A lightweight, accessible, and flexible React component library designed to help
