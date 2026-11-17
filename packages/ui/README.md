@@ -4,8 +4,8 @@ Neutral-first React primitives with semantic design tokens and light and dark th
 
 ## Status
 
-`0.1.0` is prepared but not published yet. The public API may still change before the package is
-released.
+`0.1.0` is the next release and has not been published yet. The public API may still change before
+the package is released.
 
 Currently exported:
 
