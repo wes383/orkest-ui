@@ -58,7 +58,7 @@ export interface DataTableProps<TData> {
    * selection attached to the right row when the table is sorted or paginated.
    */
   getRowId?: (row: TData, index: number) => string;
-  /** Table caption, also used as the accessible name. */
+  /** Table caption, used as the accessible name. Visually hidden. */
   caption?: ReactNode;
   /** Rendered in place of rows when nothing matches. */
   emptyState?: ReactNode;
@@ -336,7 +336,7 @@ export function DataTable<TData>({
       </div>
 
       <Table variant={variant} size={size} striped={striped} hoverable={hoverable}>
-        {caption ? <TableCaption>{caption}</TableCaption> : null}
+        {caption ? <TableCaption className={styles.srOnly}>{caption}</TableCaption> : null}
         <TableHeader>
           <TableRow>
             {expandable ? (

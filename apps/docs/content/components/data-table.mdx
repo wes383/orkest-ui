@@ -114,7 +114,8 @@ keep their state; nothing about sorting or selection is lost when a column is hi
     {
       name: 'caption',
       type: 'ReactNode',
-      description: 'Table caption, which also provides the accessible name.',
+      description:
+        'Accessible name for the table. Rendered as a visually hidden caption, since the toolbar already frames the table.',
     },
     {
       name: 'emptyState',
@@ -223,7 +224,8 @@ keep their state; nothing about sorting or selection is lost when a column is hi
 
 ## Accessibility
 
-- The table is a real `table` with real header cells. Pass `caption` so it has an accessible name.
+- The table is a real `table` with real header cells. Pass `caption` so it has an accessible name; it
+  is hidden visually but stays available to assistive technology.
 - Sortable headers are `button` elements inside the header cell, so they are keyboard reachable.
   `aria-sort` reports the current direction.
 - Selection checkboxes carry labels: one for the page-level toggle and one per row.
