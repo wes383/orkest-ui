@@ -26,13 +26,11 @@ registry yet.
 
 ## Workspace
 
-| Path | Package | Purpose |
-| --- | --- | --- |
-| `packages/ui` | `@orkest/ui` | Component library source and build output |
-| `apps/docs` | `@orkest/docs` | Documentation site (Next.js App Router + MDX) |
+| Path              | Package              | Purpose                                                     |
+| ----------------- | -------------------- | ----------------------------------------------------------- |
+| `packages/ui`     | `@orkest/ui`         | Component library source and build output                   |
+| `apps/docs`       | `@orkest/docs`       | Documentation site (Next.js App Router + MDX)               |
 | `apps/playground` | `@orkest/playground` | Private Next.js consumer used to validate the built package |
-
-`Custom-documentation-spec.md` is a local planning document and is intentionally not tracked.
 
 ## Requirements
 
@@ -62,8 +60,8 @@ no keyboard equivalent, such as native dialog backdrops.
 The package exports its built `dist` directory, so build it first:
 
 ```tsx
-import { Box, Stack, Text } from '@orkest/ui';
-import '@orkest/ui/style.css';
+import { Box, Stack, Text } from "@orkest/ui";
+import "@orkest/ui/style.css";
 ```
 
 Theme state belongs to the host application. Set `data-orkest-theme="light"` or `"dark"` on the
@@ -72,7 +70,14 @@ document root or a container; without the attribute the stylesheet follows `pref
 Client-only components are exported from `@orkest/ui/client`:
 
 ```tsx
-import { Avatar, AvatarFallback, Input, MultiSelect, Select, Textarea } from '@orkest/ui/client';
+import {
+  Avatar,
+  AvatarFallback,
+  Input,
+  MultiSelect,
+  Select,
+  Textarea,
+} from "@orkest/ui/client";
 ```
 
 They use client-side state and must render inside a Client Component.
