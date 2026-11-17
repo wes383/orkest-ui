@@ -1681,41 +1681,6 @@ kbd {
   background: var(--ui-secondary-hover);
 }
 
-.landing-principles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
-  margin-top: 6rem;
-}
-
-.landing-principle {
-  padding-top: 1.5rem;
-}
-
-.landing-principle-number {
-  display: block;
-  margin-bottom: 1.5rem;
-  color: var(--ui-accent);
-  font-size: 12px;
-  font-weight: var(--ok-font-weight-medium);
-  letter-spacing: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.landing-principle h3 {
-  margin: 0 0 8px;
-  font-size: var(--ok-font-size-md);
-  font-weight: var(--ok-font-weight-semibold);
-  letter-spacing: -0.01em;
-}
-
-.landing-principle p {
-  margin: 0;
-  color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-sm);
-  line-height: var(--ok-line-height-relaxed);
-}
-
 .landing-explore {
   margin-top: 6rem;
   padding-top: 2rem;
@@ -1946,12 +1911,6 @@ kbd {
 @media (max-width: 760px) {
   .landing {
     padding: 3rem var(--ok-space-5) 4rem;
-  }
-
-  .landing-principles {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
-    margin-top: 4rem;
   }
 
   .landing-explore {

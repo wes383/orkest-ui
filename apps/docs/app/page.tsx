@@ -2,27 +2,6 @@ import { Icon } from '@orkest/ui';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
-const principles = [
-  {
-    number: '01',
-    title: 'Neutral by default',
-    description:
-      'Ink, graphite, and a muted slate accent keep attention on content instead of chrome.',
-  },
-  {
-    number: '02',
-    title: 'Token-driven',
-    description:
-      'Semantic variables map every surface, border, and text tone across light and dark themes.',
-  },
-  {
-    number: '03',
-    title: 'Accessible primitives',
-    description:
-      'Semantic HTML, visible focus, and honest icon labeling are part of the component contract.',
-  },
-];
-
 const exploreLinks = [
   {
     index: '01',
@@ -66,19 +45,6 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
-
-      <section className="landing-principles" aria-labelledby="landing-principles">
-        <h2 className="sr-only" id="landing-principles">
-          Principles
-        </h2>
-        {principles.map((principle) => (
-          <article className="landing-principle" key={principle.number}>
-            <span className="landing-principle-number">{principle.number}</span>
-            <h3>{principle.title}</h3>
-            <p>{principle.description}</p>
-          </article>
-        ))}
       </section>
 
       <section className="landing-explore" aria-labelledby="landing-explore">
