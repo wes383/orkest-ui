@@ -73,7 +73,7 @@ export const EmptyStateIcon = forwardRef<HTMLSpanElement, EmptyStateIconProps>(
   function EmptyStateIcon({ icon, className, children, ...rest }, ref) {
     return (
       <span ref={ref} className={cx(styles.icon, className)} {...rest}>
-        {children ?? (icon ? <Icon icon={icon} size="md" tone="muted" /> : null)}
+        {children ?? (icon ? <Icon icon={icon} size="inherit" tone="muted" /> : null)}
       </span>
     );
   },
