@@ -1626,7 +1626,7 @@ kbd {
 .landing-title {
   margin: 16px 0 20px;
   font-family: var(--ok-font-display);
-  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  font-size: clamp(2.75rem, 5vw, 3.75rem);
   font-weight: var(--ok-font-weight-semibold);
   letter-spacing: -0.045em;
   line-height: 0.98;
