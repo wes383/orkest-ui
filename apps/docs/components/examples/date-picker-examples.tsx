@@ -10,7 +10,7 @@ export function DatePickerBasicExample() {
   const [value, setValue] = useState<string | null>(null);
 
   return (
-    <Stack gap={2} align="start">
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
       <DatePicker value={value} onChange={setValue} />
       <Text size="sm" tone="muted">
         Value: {value ?? 'none'}
@@ -37,7 +37,7 @@ export function DatePickerFormatExample() {
   const [value, setValue] = useState<string | null>('2026-11-18');
 
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
       <DatePicker
         value={value}
         onChange={setValue}
@@ -62,7 +62,7 @@ export function DatePickerFieldExample() {
 
 export function DatePickerSizesExample() {
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
       <DatePicker defaultValue="2026-11-18" size="sm" placeholder="Small" />
       <DatePicker defaultValue="2026-11-18" size="md" placeholder="Medium" />
       <DatePicker defaultValue="2026-11-18" size="lg" placeholder="Large" />
