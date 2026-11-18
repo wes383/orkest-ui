@@ -1,5 +1,6 @@
 .root {
-  --calendar-cell-size: 2.25rem;
+  --calendar-cell-size: 2rem;
+  --calendar-cell-radius: var(--ok-radius-xl);
   --calendar-gap: 2px;
   --calendar-font-size: var(--ok-font-size-sm);
   --calendar-caption-size: var(--ok-font-size-sm);
@@ -15,14 +16,16 @@
 }
 
 .root[data-size="sm"] {
-  --calendar-cell-size: 2rem;
+  --calendar-cell-size: 1.875rem;
+  --calendar-cell-radius: var(--ok-radius-lg);
   --calendar-gap: 1px;
   --calendar-font-size: var(--ok-font-size-xs);
   --calendar-caption-size: var(--ok-font-size-xs);
 }
 
 .root[data-size="lg"] {
-  --calendar-cell-size: 2.5rem;
+  --calendar-cell-size: 2.25rem;
+  --calendar-cell-radius: var(--ok-radius-xl);
   --calendar-gap: var(--ok-space-1);
   --calendar-font-size: var(--ok-font-size-md);
   --calendar-caption-size: var(--ok-font-size-md);
@@ -55,19 +58,14 @@
   white-space: nowrap;
 }
 
-.selectWrap {
-  position: relative;
+.selectTrigger {
   display: inline-flex;
   align-items: center;
-}
-
-.select {
-  appearance: none;
-  box-sizing: border-box;
+  gap: var(--ok-space-1);
   max-width: 8rem;
   height: 1.75rem;
-  padding: 0 var(--ok-space-5) 0 var(--ok-space-2);
-  border: var(--ok-border-width) solid transparent;
+  padding: 0 var(--ok-space-1) 0 var(--ok-space-2);
+  border: 0;
   border-radius: var(--ok-radius-lg);
   background: transparent;
   color: var(--ui-foreground);
@@ -75,29 +73,135 @@
   font-size: var(--calendar-caption-size);
   font-weight: var(--ok-font-weight-semibold);
   line-height: 1;
-  text-align: center;
   cursor: pointer;
-  transition:
-    background-color var(--ok-duration-fast) var(--ok-ease-standard),
-    border-color var(--ok-duration-fast) var(--ok-ease-standard);
+  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.select:hover {
+.selectTrigger:not([data-disabled]):hover,
+.selectTrigger[data-popup-open] {
   background: var(--ui-surface-sunken);
 }
 
-.select:focus-visible {
+.selectTrigger:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: 1px;
 }
 
+.selectTrigger[data-disabled] {
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.selectValue {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .selectIcon {
-  position: absolute;
-  right: var(--ok-space-2);
+  flex: none;
   width: 0.75rem;
   height: 0.75rem;
   color: var(--ui-muted-foreground);
-  pointer-events: none;
+}
+
+.selectPositioner {
+  z-index: var(--ok-z-popover);
+  outline: none;
+}
+
+/* The popup is portaled, so it cannot inherit the calendar's type scale. */
+.selectPopup {
+  box-sizing: border-box;
+  min-width: var(--anchor-width);
+  max-width: min(16rem, var(--available-width));
+  max-height: min(17rem, var(--available-height));
+  margin: 0;
+  padding: var(--ok-space-1);
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--ok-radius-xl);
+  background: var(--ui-surface-raised);
+  box-shadow: var(--ok-shadow-md);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-snug);
+  outline: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--ui-subtle-foreground) transparent;
+  scrollbar-width: thin;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--ok-duration-fast) var(--ok-ease-standard),
+    transform var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.selectPopup[data-size="sm"] {
+  font-size: var(--ok-font-size-xs);
+}
+
+.selectPopup[data-size="lg"] {
+  font-size: var(--ok-font-size-md);
+}
+
+.selectPopup[data-starting-style],
+.selectPopup[data-ending-style] {
+  opacity: 0;
+  transform: translateY(-2px) scale(0.98);
+}
+
+.selectList {
+  display: block;
+  outline: none;
+}
+
+.selectList > * + * {
+  margin-top: calc(var(--ok-space-1) / 2);
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  padding: calc(var(--ok-space-2) - 1px) var(--ok-space-2);
+  border-radius: var(--ok-radius-lg);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.selectOption[data-highlighted] {
+  background: var(--ui-secondary);
+}
+
+.selectOption[data-selected] {
+  background: var(--ui-secondary);
+  font-weight: var(--ok-font-weight-semibold);
+}
+
+.selectOption[data-selected][data-highlighted] {
+  background: var(--ui-secondary-hover);
+}
+
+.selectOptionLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectIndicator {
+  display: inline-flex;
+  flex: none;
+  color: var(--ui-primary);
+}
+
+.selectCheck {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .grid {
@@ -137,7 +241,7 @@
   height: var(--calendar-cell-size);
   padding: 0;
   border: var(--ok-border-width) solid transparent;
-  border-radius: var(--ok-radius-lg);
+  border-radius: var(--calendar-cell-radius);
   background: transparent;
   color: var(--ui-foreground);
   font-family: inherit;
