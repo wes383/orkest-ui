@@ -1,17 +1,17 @@
 'use client';
 
 import { Icon } from '@orkest/ui';
-import { Check, Copy } from 'lucide-react';
+import { Check, CircleAlert, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { articleToMarkdown } from '@/lib/markdown-export';
 
 type CopyState = 'idle' | 'copied' | 'error';
 
-const labels: Record<CopyState, string> = {
-  idle: 'Copy as Markdown',
-  copied: 'Copied',
-  error: 'Copy failed',
+const icons: Record<CopyState, typeof Copy> = {
+  idle: Copy,
+  copied: Check,
+  error: CircleAlert,
 };
 
 export function CopyMarkdownButton() {
@@ -49,11 +49,10 @@ export function CopyMarkdownButton() {
         className="page-copy"
         data-state={state}
         onClick={copyMarkdown}
-        title="Copy the page as Markdown"
         aria-label="Copy the page as Markdown"
       >
-        <Icon icon={state === 'copied' ? Check : Copy} size="sm" />
-        <span className="page-copy-label">{labels[state]}</span>
+        <Icon icon={icons[state]} size="sm" />
+        <span className="page-copy-label">Copy as Markdown</span>
       </button>
       <span className="sr-only" role="status" aria-live="polite">
         {state === 'copied'
