@@ -232,7 +232,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
         </PopoverTrigger>
         <PopoverPortal>
           <PopoverPositioner align="start" sideOffset={6}>
-            <PopoverContent width="auto" aria-label={mergedLabels.dialog}>
+            <PopoverContent width="auto" aria-label={mergedLabels.dialog} className={styles.popover}>
               <Calendar
                 value={currentValue}
                 onChange={handleSelect}

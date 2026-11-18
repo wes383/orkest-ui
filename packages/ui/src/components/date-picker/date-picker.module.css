@@ -138,6 +138,10 @@
   outline-offset: 0;
 }
 
+.popover {
+  border-radius: var(--ok-radius-2xl);
+}
+
 .footer {
   display: flex;
   align-items: center;
