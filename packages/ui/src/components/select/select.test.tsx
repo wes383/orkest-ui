@@ -172,11 +172,7 @@ describe('Select', () => {
   it('closes with Escape and keeps focus on the trigger', async () => {
     render(<Select aria-label="Team" options={options} />);
 
-    const user = userEvent.setup();
-    const combobox = screen.getByRole('combobox', { name: 'Team' });
-
-    await user.click(combobox);
-    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    const { user, combobox } = await openSelect();
 
     await user.keyboard('{Escape}');
     expect(combobox).toHaveAttribute('aria-expanded', 'false');
