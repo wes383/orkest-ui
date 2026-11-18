@@ -9,14 +9,17 @@ import {
   useState,
   type HTMLAttributes,
   type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
 } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, X } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
-import { useFieldControl } from '../field/field-context';
-import { Input, type InputProps, type InputSize } from '../input';
+import { useFieldContext, useFieldControl } from '../field/field-context';
+import type { InputSize } from '../input';
+import inputStyles from '../input/input.module.css';
 import {
   Popover,
   PopoverContent,
@@ -29,13 +32,14 @@ import {
   buildMinuteOptions,
   buildSecondOptions,
   clampTime,
-  formatTimeLabel,
+  formatDayPeriod,
+  from12Hour,
+  getDayPeriod,
   isWithinTimeRange,
-  parseTimeInput,
   parseTimeValue,
-  snapToStep,
-  stepTime,
+  to12Hour,
   toTimeValue,
+  type DayPeriod,
   type TimeFormat,
   type TimeParts,
 } from './time-utils';
@@ -48,12 +52,16 @@ export interface TimePickerLabels {
   dialog: string;
   /** Accessible name of the button that opens the panel. */
   open: string;
-  /** Accessible name of the hours column. */
+  /** Accessible name of the hours segment. */
   hours: string;
-  /** Accessible name of the minutes column. */
+  /** Accessible name of the minutes segment. */
   minutes: string;
-  /** Accessible name of the seconds column. */
+  /** Accessible name of the seconds segment. */
   seconds: string;
+  /** Accessible name of the day-period segment. */
+  period: string;
+  /** Accessible name of the clear action. */
+  clear: string;
 }
 
 const DEFAULT_LABELS: TimePickerLabels = {
@@ -62,6 +70,8 @@ const DEFAULT_LABELS: TimePickerLabels = {
   hours: 'Hours',
   minutes: 'Minutes',
   seconds: 'Seconds',
+  period: 'AM/PM',
+  clear: 'Clear input',
 };
 
 const iconSizeBySize: Record<TimePickerSize, IconSize> = {
@@ -82,13 +92,13 @@ export interface TimePickerProps
   format?: TimeFormat;
   /** Minute interval offered by the picker. Defaults to `1`. */
   minuteStep?: number;
-  /** Adds a seconds column and stores `HH:mm:ss`. */
+  /** Adds a seconds segment and column and stores `HH:mm:ss`. */
   showSeconds?: boolean;
   /** Earliest selectable time, inclusive, as `HH:mm`. */
   minTime?: string;
   /** Latest selectable time, inclusive, as `HH:mm`. */
   maxTime?: string;
-  /** Disables the input and prevents the panel from opening. */
+  /** Disables the field and prevents the panel from opening. */
   disabled?: boolean;
   /** Text shown while no time is selected. */
   placeholder?: string;
@@ -108,7 +118,10 @@ export interface TimePickerProps
   labels?: Partial<TimePickerLabels>;
 }
 
-/** Time input with typed entry, arrow-key stepping, and a scrollable column panel. */
+/**
+ * Time input with one editable segment per unit, arrow-key stepping, and a
+ * scrollable column panel.
+ */
 export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function TimePicker(
   {
     value,
@@ -134,12 +147,14 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
   },
   ref,
 ) {
+  const field = useFieldContext();
   const control = useFieldControl({
     id: rest.id,
     name,
     disabled,
     required: rest['aria-required'] === true,
     invalid,
+    describedBy,
   });
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
   const min = useMemo(() => parseTimeValue(minTime), [minTime]);
@@ -151,12 +166,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
   );
   const currentValue = isControlled ? (value ?? null) : internalValue;
   const parts = parseTimeValue(currentValue);
-
-  const displayText = parts
-    ? formatTimeLabel(parts, { format, showSeconds, locale })
-    : '';
-  // A null draft follows the committed value; a string renders what the user typed.
-  const [draft, setDraft] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
   const commit = useCallback(
@@ -168,8 +177,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
       if (!isControlled) {
         setInternalValue(nextValue);
       }
-
-      setDraft(null);
 
       if (nextValue !== currentValue) {
         onChange?.(nextValue);
@@ -187,30 +194,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
     [commit, parts],
   );
 
-  const commitDraft = useCallback(() => {
-    if (draft === null) {
-      return;
-    }
-
-    const parsed = parseTimeInput(draft, { format });
-
-    if (!parsed) {
-      setDraft(null);
-      return;
-    }
-
-    commit(snapToStep(parsed, minuteStep));
-  }, [commit, draft, format, minuteStep]);
-
-  const step = useCallback(
-    (direction: 1 | -1) => {
-      const base = parts ?? clampTime({ hours: 9, minutes: 0, seconds: 0 }, min, max);
-
-      commit(stepTime(base, direction, { minuteStep, min, max }));
-    },
-    [commit, max, min, minuteStep, parts],
-  );
-
   const hourOptions = useMemo(() => buildHourOptions(format, locale), [format, locale]);
   const minuteOptions = useMemo(() => buildMinuteOptions(minuteStep), [minuteStep]);
   const secondOptions = useMemo(() => buildSecondOptions(), []);
@@ -225,20 +208,25 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
       {...rest}
     >
       <Popover open={open} onOpenChange={setOpen}>
-        <TimePickerInput
+        <TimePickerField
           id={control.id}
-          value={draft ?? displayText}
-          placeholder={placeholder}
+          name={control.name}
+          labelId={field?.labelId}
+          describedBy={control.describedBy}
+          value={parts}
+          format={format}
+          showSeconds={showSeconds}
+          minuteStep={minuteStep}
+          locale={locale}
           size={size}
           disabled={control.disabled}
           invalid={control.invalid}
-          name={control.name}
           required={control.required}
+          placeholder={placeholder}
           clearable={clearable}
-          aria-describedby={describedBy}
-          autoComplete="off"
-          inputMode="numeric"
-          prefix={
+          labels={mergedLabels}
+          onCommit={commit}
+          leading={
             showIcon ? (
               <PopoverTrigger
                 render={
@@ -254,23 +242,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
               </PopoverTrigger>
             ) : undefined
           }
-          onValueChange={(next) => {
-            if (next === '') {
-              setDraft('');
-
-              if (currentValue !== null) {
-                commit(null);
-              }
-
-              return;
-            }
-
-            setDraft(next);
-          }}
-          onCommit={commitDraft}
-          onStep={step}
-          onCancel={() => setDraft(null)}
-          onBlur={commitDraft}
         />
         <PopoverPortal>
           <PopoverPositioner align="start" sideOffset={6}>
@@ -324,79 +295,516 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
   );
 });
 
-export interface TimePickerInputProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'type'> {
-  /** Controlled display text. */
-  value?: string;
-  /** Called with the next display text as the user types. */
-  onValueChange?: (value: string) => void;
-  /** Called on Enter, and when the field should commit the typed text. */
-  onCommit?: () => void;
-  /** Called on Escape, when the typed text should be discarded. */
-  onCancel?: () => void;
-  /** Called with `1` on ArrowUp and `-1` on ArrowDown. */
-  onStep?: (direction: 1 | -1) => void;
+type TimeSegmentKey = 'hours' | 'minutes' | 'seconds' | 'period';
+type NumericSegmentKey = Exclude<TimeSegmentKey, 'period'>;
+
+interface TimeFieldState {
+  /** 24-hour value, so the stored value never depends on the display format. */
+  hours: number | null;
+  minutes: number | null;
+  seconds: number | null;
+}
+
+const EMPTY_FIELD_STATE: TimeFieldState = { hours: null, minutes: null, seconds: null };
+
+function isCompleteState(state: TimeFieldState, showSeconds: boolean): boolean {
+  return (
+    state.hours !== null &&
+    state.minutes !== null &&
+    (!showSeconds || state.seconds !== null)
+  );
+}
+
+function pad2(value: number): string {
+  return String(value).padStart(2, '0');
+}
+
+interface TimePickerFieldProps {
+  id?: string;
+  name?: string;
+  labelId?: string;
+  describedBy?: string;
+  value: TimeParts | null;
+  format: TimeFormat;
+  showSeconds: boolean;
+  minuteStep: number;
+  locale: string;
+  size: TimePickerSize;
+  disabled: boolean;
+  invalid: boolean;
+  required: boolean;
+  placeholder: string;
+  clearable: boolean;
+  labels: TimePickerLabels;
+  /** The clock action, rendered before the segments. */
+  leading?: ReactNode;
+  onCommit: (value: TimeParts | null) => void;
 }
 
 /**
- * Text field for a time value. It keeps the keyboard contract in one place:
- * arrows step the value, Enter commits, Escape reverts.
+ * Field body split into one spinbutton per time unit. Each segment takes typed
+ * digits, arrow-key steps, and moves with the horizontal arrows, so every unit
+ * can be edited on its own without a mask or a caret.
  */
-export const TimePickerInput = forwardRef<HTMLInputElement, TimePickerInputProps>(
-  function TimePickerInput(
-    { value, onValueChange, onCommit, onCancel, onStep, onKeyDown, ...rest },
-    ref,
+function TimePickerField({
+  id,
+  name,
+  labelId,
+  describedBy,
+  value,
+  format,
+  showSeconds,
+  minuteStep,
+  locale,
+  size,
+  disabled,
+  invalid,
+  required,
+  placeholder,
+  clearable,
+  labels,
+  leading,
+  onCommit,
+}: TimePickerFieldProps) {
+  const [draft, setDraft] = useState<TimeFieldState | null>(null);
+  const [focused, setFocused] = useState(false);
+  // Digits typed into one segment before it advances, e.g. `1` then `4`.
+  const buffer = useRef<{ segment: TimeSegmentKey | null; digits: string }>({
+    segment: null,
+    digits: '',
+  });
+  const segmentNodes = useRef<Partial<Record<TimeSegmentKey, HTMLSpanElement | null>>>({});
+
+  const committed = useMemo<TimeFieldState | null>(
+    () =>
+      value
+        ? { hours: value.hours, minutes: value.minutes, seconds: value.seconds }
+        : null,
+    [value],
+  );
+  const state = draft ?? committed;
+  const order = useMemo<TimeSegmentKey[]>(() => {
+    const keys: TimeSegmentKey[] = showSeconds
+      ? ['hours', 'minutes', 'seconds']
+      : ['hours', 'minutes'];
+
+    if (format === '12h') {
+      keys.push('period');
+    }
+
+    return keys;
+  }, [format, showSeconds]);
+
+  const empty = state === null;
+  const showPlaceholder = empty && !focused && placeholder.length > 0;
+  const showClear = clearable && value !== null && !disabled;
+
+  const displayHours = state?.hours ?? null;
+  // Two digits in both formats: the segment keeps a fixed width, so the colon
+  // never drifts when a single-digit hour becomes a two-digit one.
+  const hourText = displayHours === null ? null : pad2(format === '12h' ? to12Hour(displayHours) : displayHours);
+  const minuteText = state?.minutes === null || state?.minutes === undefined
+    ? null
+    : pad2(state.minutes);
+  const secondText = state?.seconds === null || state?.seconds === undefined
+    ? null
+    : pad2(state.seconds);
+  const periodText = displayHours === null ? null : formatDayPeriod(displayHours, locale);
+
+  function resetBuffer() {
+    buffer.current = { segment: null, digits: '' };
+  }
+
+  function resetDraft() {
+    setDraft(null);
+    resetBuffer();
+  }
+
+  function focusSegment(key: TimeSegmentKey) {
+    segmentNodes.current[key]?.focus();
+  }
+
+  function moveFocus(key: TimeSegmentKey, direction: 1 | -1) {
+    const index = order.indexOf(key);
+    const next = order[Math.min(Math.max(index + direction, 0), order.length - 1)];
+
+    if (next && next !== key) {
+      focusSegment(next);
+    }
+  }
+
+  function commitState(next: TimeFieldState) {
+    if (!isCompleteState(next, showSeconds)) {
+      setDraft(next);
+      return;
+    }
+
+    setDraft(null);
+    onCommit({
+      hours: next.hours as number,
+      minutes: next.minutes as number,
+      seconds: next.seconds ?? 0,
+    });
+  }
+
+  /** Writes a value that is already expressed in the segment's own unit. */
+  function writeSegment(key: TimeSegmentKey, amount: number) {
+    const base = state ?? EMPTY_FIELD_STATE;
+
+    if (key === 'period') {
+      setPeriod(amount === 1 ? 'pm' : 'am');
+      return;
+    }
+
+    if (key === 'hours') {
+      const hours = format === '12h' ? from12Hour(amount, getDayPeriod(base.hours)) : amount;
+
+      commitState({ ...base, hours });
+      return;
+    }
+
+    commitState({ ...base, [key]: amount });
+  }
+
+  function setPeriod(period: DayPeriod) {
+    const base = state ?? EMPTY_FIELD_STATE;
+    const hours =
+      base.hours === null
+        ? period === 'pm'
+          ? 12
+          : 0
+        : from12Hour(to12Hour(base.hours), period);
+
+    commitState({ ...base, hours });
+  }
+
+  function stepSegment(key: TimeSegmentKey, direction: 1 | -1) {
+    const base = state ?? EMPTY_FIELD_STATE;
+
+    if (key === 'period') {
+      setPeriod(direction > 0 ? 'pm' : 'am');
+      return;
+    }
+
+    if (key === 'hours') {
+      if (base.hours === null) {
+        writeSegment('hours', format === '12h' ? (direction > 0 ? 1 : 12) : direction > 0 ? 0 : 23);
+        return;
+      }
+
+      if (format === '12h') {
+        const next = ((to12Hour(base.hours) - 1 + direction + 12) % 12) + 1;
+
+        writeSegment('hours', next);
+        return;
+      }
+
+      writeSegment('hours', (base.hours + direction + 24) % 24);
+      return;
+    }
+
+    if (key === 'minutes') {
+      const step = Math.max(1, Math.floor(minuteStep));
+
+      if (base.minutes === null) {
+        writeSegment('minutes', direction > 0 ? 0 : 60 - step);
+        return;
+      }
+
+      writeSegment('minutes', (((base.minutes + direction * step) % 60) + 60) % 60);
+      return;
+    }
+
+    if (base.seconds === null) {
+      writeSegment('seconds', direction > 0 ? 0 : 59);
+      return;
+    }
+
+    writeSegment('seconds', (base.seconds + direction + 60) % 60);
+  }
+
+  function typeDigit(key: NumericSegmentKey, digit: number, max: number) {
+    const previous = buffer.current.segment === key ? buffer.current.digits : '';
+    const digits = `${previous}${digit}`;
+
+    if (digits.length === 1) {
+      const firstDigitMax = Math.floor(max / 10);
+
+      writeSegment(key, digit);
+
+      if (digit > firstDigitMax) {
+        resetBuffer();
+        moveFocus(key, 1);
+        return;
+      }
+
+      buffer.current = { segment: key, digits };
+      return;
+    }
+
+    const next = Number(digits) > max ? digit : Number(digits);
+
+    resetBuffer();
+    writeSegment(key, next);
+    moveFocus(key, 1);
+  }
+
+  function clearSegment(key: NumericSegmentKey) {
+    const base = state ?? EMPTY_FIELD_STATE;
+
+    if (base[key] === null) {
+      moveFocus(key, -1);
+      return;
+    }
+
+    const next: TimeFieldState = { ...base, [key]: null };
+
+    if (next.hours === null && next.minutes === null && next.seconds === null) {
+      setDraft(null);
+      onCommit(null);
+      return;
+    }
+
+    setDraft(next);
+  }
+
+  function handleSegmentKeyDown(key: TimeSegmentKey, event: KeyboardEvent<HTMLSpanElement>) {
+    if (disabled) {
+      return;
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveFocus(key, event.key === 'ArrowRight' ? 1 : -1);
+      return;
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      focusSegment(order[event.key === 'Home' ? 0 : order.length - 1] as TimeSegmentKey);
+      return;
+    }
+
+    if (key === 'period') {
+      if (/^[ap]$/i.test(event.key)) {
+        event.preventDefault();
+        setPeriod(event.key.toLowerCase() === 'a' ? 'am' : 'pm');
+        return;
+      }
+
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        stepSegment('period', event.key === 'ArrowUp' ? 1 : -1);
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        resetDraft();
+      }
+
+      return;
+    }
+
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      stepSegment(key, event.key === 'ArrowUp' ? 1 : -1);
+      return;
+    }
+
+    if (event.key === 'Backspace' || event.key === 'Delete') {
+      event.preventDefault();
+      clearSegment(key);
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      resetDraft();
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (state && isCompleteState(state, showSeconds)) {
+        event.preventDefault();
+        event.currentTarget.blur();
+      }
+
+      return;
+    }
+
+    if (event.key === ':') {
+      event.preventDefault();
+      moveFocus(key, 1);
+      return;
+    }
+
+    if (/^\d$/.test(event.key)) {
+      event.preventDefault();
+      typeDigit(key, Number(event.key), key === 'hours' && format === '12h' ? 12 : key === 'hours' ? 23 : 59);
+    }
+  }
+
+  function handleFieldMouseDown(event: MouseEvent<HTMLDivElement>) {
+    const target = event.target as HTMLElement;
+
+    if (target.closest('[data-segment]') || target.closest('button')) {
+      return;
+    }
+
+    const separator = target.closest<HTMLElement>('[data-separator]');
+    const next = separator?.nextElementSibling;
+
+    event.preventDefault();
+
+    if (next instanceof HTMLElement && next.dataset.segment) {
+      next.focus();
+      return;
+    }
+
+    focusSegment(order[0] as TimeSegmentKey);
+  }
+
+  function renderSegment(
+    key: TimeSegmentKey,
+    config: {
+      text: string | null;
+      ghost: string;
+      now: number | null;
+      min: number;
+      max: number;
+    },
   ) {
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const setRefs = useCallback(
-      (node: HTMLInputElement | null) => {
-        inputRef.current = node;
-        assignRef(ref, node);
-      },
-      [ref],
-    );
-
     return (
-      <Input
-        ref={setRefs}
-        type="text"
-        value={value}
-        onKeyDown={(event) => {
-          onKeyDown?.(event);
-
-          if (event.defaultPrevented) {
-            return;
-          }
-
-          if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-            event.preventDefault();
-            onStep?.(event.key === 'ArrowUp' ? 1 : -1);
-            return;
-          }
-
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            onCommit?.();
-            return;
-          }
-
-          if (event.key === 'Escape') {
-            onCancel?.();
-          }
+      <span
+        key={key}
+        ref={(node) => {
+          segmentNodes.current[key] = node;
         }}
-        onChange={(event) => {
-          onValueChange?.(event.currentTarget.value);
-        }}
-        {...rest}
-      />
+        role="spinbutton"
+        tabIndex={disabled ? -1 : 0}
+        data-segment={key}
+        data-placeholder={config.text === null ? true : undefined}
+        className={cx(styles.segment, key === 'period' && styles.period)}
+        aria-label={labels[key]}
+        aria-valuemin={config.min}
+        aria-valuemax={config.max}
+        aria-valuenow={config.now ?? undefined}
+        aria-valuetext={config.text ?? undefined}
+        aria-required={required || undefined}
+        aria-disabled={disabled || undefined}
+        aria-invalid={invalid || undefined}
+        onKeyDown={(event) => handleSegmentKeyDown(key, event)}
+      >
+        {config.text ?? config.ghost}
+      </span>
     );
-  },
-);
+  }
+
+  return (
+    <div
+      role="presentation"
+      className={cx(inputStyles.field, styles.field)}
+      data-size={size}
+      data-invalid={invalid || undefined}
+      data-disabled={disabled || undefined}
+      data-actions={showClear || undefined}
+      data-leading={leading ? true : undefined}
+      onMouseDown={handleFieldMouseDown}
+    >
+      {leading}
+      <div
+        id={id}
+        role="group"
+        className={styles.segments}
+        data-empty={showPlaceholder || undefined}
+        aria-labelledby={labelId}
+        aria-describedby={describedBy}
+        aria-disabled={disabled || undefined}
+        onFocus={() => setFocused(true)}
+        onBlur={(event) => {
+          if (event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            return;
+          }
+
+          setFocused(false);
+          resetDraft();
+        }}
+      >
+        {renderSegment('hours', {
+          text: hourText,
+          ghost: 'hh',
+          now:
+            displayHours === null
+              ? null
+              : format === '12h'
+                ? to12Hour(displayHours)
+                : displayHours,
+          min: format === '12h' ? 1 : 0,
+          max: format === '12h' ? 12 : 23,
+        })}
+        <span className={styles.separator} data-separator aria-hidden="true">
+          :
+        </span>
+        {renderSegment('minutes', {
+          text: minuteText,
+          ghost: 'mm',
+          now: state?.minutes ?? null,
+          min: 0,
+          max: 59,
+        })}
+        {showSeconds ? (
+          <>
+            <span className={styles.separator} data-separator aria-hidden="true">
+              :
+            </span>
+            {renderSegment('seconds', {
+              text: secondText,
+              ghost: 'ss',
+              now: state?.seconds ?? null,
+              min: 0,
+              max: 59,
+            })}
+          </>
+        ) : null}
+        {format === '12h'
+          ? renderSegment('period', {
+              text: periodText,
+              ghost: '--',
+              now: displayHours === null ? null : getDayPeriod(displayHours) === 'pm' ? 1 : 0,
+              min: 0,
+              max: 1,
+            })
+          : null}
+        {showPlaceholder ? (
+          <span className={styles.placeholder} aria-hidden="true">
+            {placeholder}
+          </span>
+        ) : null}
+      </div>
+      {showClear ? (
+        <button
+          type="button"
+          className={inputStyles.action}
+          aria-label={labels.clear}
+          onClick={() => {
+            setDraft(null);
+            resetBuffer();
+            onCommit(null);
+            focusSegment(order[0] as TimeSegmentKey);
+          }}
+        >
+          <Icon icon={X} size={iconSizeBySize[size]} />
+        </button>
+      ) : null}
+      <input type="hidden" name={name} value={value ? toTimeValue(value, { showSeconds }) : ''} />
+    </div>
+  );
+}
 
 export interface TimePickerContentProps extends HTMLAttributes<HTMLDivElement> {
   /** Columns to render side by side. */
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 /** Panel body that lays out hour, minute, and second columns. */

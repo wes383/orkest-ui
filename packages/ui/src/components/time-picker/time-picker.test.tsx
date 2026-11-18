@@ -1,13 +1,13 @@
 import { createRef } from 'react';
 
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { TimePicker, TimePickerColumn } from './time-picker';
 
-function getInput() {
-  return screen.getByRole('textbox');
+function getSegment(name: 'Hours' | 'Minutes' | 'Seconds' | 'AM/PM') {
+  return screen.getByRole('spinbutton', { name });
 }
 
 async function openPanel(user: ReturnType<typeof userEvent.setup>) {
@@ -16,18 +16,23 @@ async function openPanel(user: ReturnType<typeof userEvent.setup>) {
 }
 
 describe('TimePicker', () => {
-  it('renders the stored value in 24-hour form', () => {
+  it('renders the stored value one segment per unit', () => {
     render(<TimePicker defaultValue="09:30" />);
 
-    expect(getInput()).toHaveValue('09:30');
+    expect(getSegment('Hours')).toHaveTextContent('09');
+    expect(getSegment('Minutes')).toHaveTextContent('30');
+    expect(screen.queryByRole('spinbutton', { name: 'Seconds' })).not.toBeInTheDocument();
   });
 
-  it('renders a 12-hour display without changing the value', () => {
+  it('renders a 12-hour display with a day-period segment', () => {
     const onChange = vi.fn();
 
     render(<TimePicker defaultValue="13:45" format="12h" onChange={onChange} />);
 
-    expect(getInput()).toHaveValue('1:45 PM');
+    expect(getSegment('Hours')).toHaveTextContent('01');
+    expect(getSegment('Minutes')).toHaveTextContent('45');
+    expect(getSegment('AM/PM')).toHaveTextContent('PM');
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   it('opens the panel from a single clock action on the leading side', () => {
@@ -37,7 +42,8 @@ describe('TimePicker', () => {
 
     expect(triggers).toHaveLength(1);
     expect(
-      triggers[0]!.compareDocumentPosition(getInput()) & Node.DOCUMENT_POSITION_FOLLOWING,
+      triggers[0]!.compareDocumentPosition(screen.getByRole('group')) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
   });
 
@@ -45,32 +51,34 @@ describe('TimePicker', () => {
     render(<TimePicker defaultValue="09:30" showIcon={false} />);
 
     expect(screen.queryByRole('button', { name: 'Open time picker' })).not.toBeInTheDocument();
-    expect(getInput()).toHaveValue('09:30');
+    expect(getSegment('Hours')).toHaveTextContent('09');
   });
 
   it('shows the placeholder until a time is selected', () => {
     render(<TimePicker placeholder="Pick a time" />);
 
-    expect(getInput()).toHaveAttribute('placeholder', 'Pick a time');
+    expect(screen.getByText('Pick a time')).toBeInTheDocument();
   });
 
-  it('accepts typed input on Enter', async () => {
+  it('fills the segments from typed digits', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<TimePicker onChange={onChange} />);
-    await user.type(getInput(), '1430{Enter}');
+    await user.click(getSegment('Hours'));
+    await user.keyboard('1430');
 
     expect(onChange).toHaveBeenCalledWith('14:30');
-    expect(getInput()).toHaveValue('14:30');
+    expect(getSegment('Hours')).toHaveTextContent('14');
+    expect(getSegment('Minutes')).toHaveTextContent('30');
   });
 
-  it('steps with the arrow keys', async () => {
+  it('steps the focused segment with the arrow keys', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<TimePicker defaultValue="09:30" minuteStep={15} onChange={onChange} />);
-    await user.click(getInput());
+    await user.click(getSegment('Minutes'));
     await user.keyboard('{ArrowUp}');
     expect(onChange).toHaveBeenLastCalledWith('09:45');
 
@@ -78,27 +86,68 @@ describe('TimePicker', () => {
     expect(onChange).toHaveBeenLastCalledWith('09:30');
   });
 
-  it('wraps around midnight', async () => {
+  it('wraps the hour segment around midnight', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
     render(<TimePicker defaultValue="23:45" minuteStep={15} onChange={onChange} />);
-    await user.click(getInput());
+    await user.click(getSegment('Hours'));
     await user.keyboard('{ArrowUp}');
 
-    expect(onChange).toHaveBeenLastCalledWith('00:00');
+    expect(onChange).toHaveBeenLastCalledWith('00:45');
   });
 
   it('clamps typed input to the allowed range', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    render(
-      <TimePicker minTime="09:00" maxTime="17:00" onChange={onChange} />,
-    );
-    await user.type(getInput(), '2030{Enter}');
+    render(<TimePicker minTime="09:00" maxTime="17:00" onChange={onChange} />);
+    await user.click(getSegment('Hours'));
+    await user.keyboard('2030');
 
     expect(onChange).toHaveBeenCalledWith('17:00');
+    expect(getSegment('Hours')).toHaveTextContent('17');
+  });
+
+  it('moves between segments with the arrow keys', async () => {
+    const user = userEvent.setup();
+
+    render(<TimePicker defaultValue="09:30" />);
+    await user.click(getSegment('Hours'));
+    await user.keyboard('{ArrowRight}');
+
+    expect(getSegment('Minutes')).toHaveFocus();
+
+    await user.keyboard('{ArrowLeft}');
+    expect(getSegment('Hours')).toHaveFocus();
+  });
+
+  it('clears one segment without committing an incomplete time', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+
+    render(<TimePicker defaultValue="09:30" onChange={onChange} />);
+    await user.click(getSegment('Hours'));
+    await user.keyboard('{Backspace}');
+
+    expect(getSegment('Hours')).toHaveTextContent('hh');
+    expect(getSegment('Hours')).not.toHaveAttribute('aria-valuenow');
+    expect(onChange).not.toHaveBeenCalled();
+
+    await user.keyboard('8');
+    expect(onChange).toHaveBeenLastCalledWith('08:30');
+  });
+
+  it('switches the day period from the keyboard', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+
+    render(<TimePicker defaultValue="13:45" format="12h" onChange={onChange} />);
+    await user.click(getSegment('AM/PM'));
+    await user.keyboard('a');
+
+    expect(onChange).toHaveBeenLastCalledWith('01:45');
+    expect(getSegment('AM/PM')).toHaveTextContent('AM');
   });
 
   it('opens a panel with hour and minute columns', async () => {
@@ -143,13 +192,12 @@ describe('TimePicker', () => {
     ).toHaveAttribute('aria-selected', 'true');
   });
 
-  it('records seconds when showSeconds is set', async () => {
+  it('adds a seconds segment when showSeconds is set', async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
 
-    render(<TimePicker defaultValue="09:30:15" showSeconds onChange={onChange} />);
+    render(<TimePicker defaultValue="09:30:15" showSeconds />);
 
-    expect(getInput()).toHaveValue('09:30:15');
+    expect(getSegment('Seconds')).toHaveTextContent('15');
     await openPanel(user);
     expect(screen.getByRole('listbox', { name: 'Seconds' })).toBeInTheDocument();
   });
@@ -162,13 +210,17 @@ describe('TimePicker', () => {
     await user.click(screen.getByRole('button', { name: 'Clear input' }));
 
     expect(onChange).toHaveBeenCalledWith(null);
-    expect(getInput()).toHaveValue('');
+    expect(getSegment('Hours')).toHaveTextContent('hh');
+    // Clearing returns the focus to the field, so the placeholder gives way to
+    // the empty segments.
+    expect(getSegment('Hours')).toHaveFocus();
   });
 
-  it('disables both the input and the trigger', () => {
+  it('disables the segments and the trigger', () => {
     render(<TimePicker defaultValue="09:30" disabled />);
 
-    expect(getInput()).toBeDisabled();
+    expect(getSegment('Hours')).toHaveAttribute('aria-disabled', 'true');
+    expect(getSegment('Hours')).toHaveAttribute('tabindex', '-1');
     expect(screen.getByRole('button', { name: 'Open time picker' })).toBeDisabled();
   });
 
@@ -199,15 +251,12 @@ describe('TimePicker', () => {
 
   it('submits through the named input', async () => {
     const user = userEvent.setup();
-    const onChange = vi.fn();
 
-    render(<TimePicker name="startsAt" onChange={onChange} />);
-    await user.type(getInput(), '930{Enter}');
+    render(<TimePicker name="startsAt" />);
+    await user.click(getSegment('Hours'));
+    await user.keyboard('0930');
 
-    await waitFor(() => {
-      expect(getInput()).toHaveAttribute('name', 'startsAt');
-    });
-    expect(onChange).toHaveBeenCalledWith('09:30');
+    expect(document.querySelector('input[name="startsAt"]')).toHaveValue('09:30');
   });
 });
 

@@ -1,28 +1,14 @@
 .root {
   position: relative;
   width: 100%;
-  /* The clock action matches the field action of the same size, so the hover
-     surface keeps the same weight at every step. */
-  --time-picker-action-size: 1.25rem;
-  --time-picker-action-radius: var(--ok-radius-lg);
-  /* Mirrors the field metrics so the leading action can sit exactly as far from
-     the border as the trailing one. */
-  --time-picker-field-height: var(--ok-control-height-md);
-  --time-picker-field-padding: var(--ok-control-padding-x-md);
   font-family: var(--ok-font-sans);
 }
 
-.root[data-size="sm"] {
-  --time-picker-action-size: 1rem;
-  --time-picker-action-radius: var(--ok-radius-md);
-  --time-picker-field-height: var(--ok-control-height-sm);
-  --time-picker-field-padding: var(--ok-control-padding-x-sm);
-}
-
-.root[data-size="lg"] {
-  --time-picker-action-size: 1.5rem;
-  --time-picker-field-height: var(--ok-control-height-lg);
-  --time-picker-field-padding: var(--ok-control-padding-x-lg);
+/* Input owns the field chrome, and TimePicker reuses those classes so both
+   controls stay identical. Only the leading inset changes, so the clock action
+   sits as far from the border as the trailing clear action. */
+.field[data-leading="true"] {
+  padding-inline-start: calc((var(--field-height) - var(--field-action-size)) / 2);
 }
 
 .trigger {
@@ -30,16 +16,11 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: var(--time-picker-action-size);
-  height: var(--time-picker-action-size);
-  /* Cancels the field padding down to the same inset the trailing action has. */
-  margin-inline-start: calc(
-    (var(--time-picker-field-height) - var(--time-picker-action-size)) / 2 -
-      var(--time-picker-field-padding)
-  );
+  width: var(--field-action-size);
+  height: var(--field-action-size);
   padding: 0;
   border: 0;
-  border-radius: var(--time-picker-action-radius);
+  border-radius: var(--field-action-radius);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;
@@ -61,6 +42,78 @@
 .trigger:disabled {
   color: var(--ui-disabled-foreground);
   cursor: not-allowed;
+}
+
+.segments {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 2ch;
+  height: calc(var(--field-action-size) + 2px);
+  padding: 0 1px;
+  border-radius: calc(var(--field-action-radius) - 2px);
+  outline: none;
+  color: var(--ui-foreground);
+  cursor: default;
+  user-select: none;
+  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.segment:hover:not([aria-disabled="true"]) {
+  background: var(--ui-secondary);
+}
+
+.segment:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: -1px;
+}
+
+.segment[data-placeholder="true"] {
+  color: var(--ui-subtle-foreground);
+}
+
+.segment[aria-disabled="true"] {
+  color: var(--ui-disabled-foreground);
+}
+
+.period {
+  min-width: 3ch;
+}
+
+.separator {
+  flex: none;
+  color: var(--ui-muted-foreground);
+  user-select: none;
+}
+
+/* The ghost segments keep their space while the placeholder is shown, so the
+   field does not jump when focus arrives. */
+.segments[data-empty="true"] .segment,
+.segments[data-empty="true"] .separator {
+  opacity: 0;
+}
+
+.placeholder {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  overflow: hidden;
+  color: var(--ui-subtle-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
 .popover {
@@ -159,6 +212,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .item,
+  .segment,
   .trigger {
     transition: none;
   }

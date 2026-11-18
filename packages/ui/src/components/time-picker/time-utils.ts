@@ -13,6 +13,9 @@ export interface TimeParts {
 /** Display format only; the stored value is always 24-hour. */
 export type TimeFormat = '12h' | '24h';
 
+/** Half of a 12-hour day. */
+export type DayPeriod = 'am' | 'pm';
+
 const MINUTES_PER_DAY = 24 * 60;
 const TIME_VALUE_PATTERN = /^(\d{2}):(\d{2})(?::(\d{2}))?$/;
 const DAY_PERIOD_PREFIX = /^(上午|下午|凌晨|早上|晚上|中午)/;
@@ -119,6 +122,36 @@ export function formatHourLabel(
 
 export function formatMinuteLabel(minutes: number): string {
   return pad2(minutes);
+}
+
+/** Day period of a 24-hour value. Treats an unknown hour as the morning. */
+export function getDayPeriod(hours: number | null | undefined): DayPeriod {
+  return (hours ?? 0) >= 12 ? 'pm' : 'am';
+}
+
+/** Converts a 24-hour value to the 1-12 clock face. */
+export function to12Hour(hours: number): number {
+  const normalized = ((hours % 12) + 12) % 12;
+
+  return normalized === 0 ? 12 : normalized;
+}
+
+/** Converts a 1-12 clock face back to a 24-hour value. */
+export function from12Hour(hours: number, period: DayPeriod): number {
+  return (hours % 12) + (period === 'pm' ? 12 : 0);
+}
+
+/** Localized day period, e.g. `AM`, `PM`, or `上午`. */
+export function formatDayPeriod(hours: number, locale: string = 'en-US'): string {
+  const part = new Intl.DateTimeFormat(locale, {
+    hour: 'numeric',
+    hour12: true,
+    timeZone: 'UTC',
+  })
+    .formatToParts(new Date(Date.UTC(2000, 0, 1, hours)))
+    .find(({ type }) => type === 'dayPeriod');
+
+  return part?.value ?? (getDayPeriod(hours) === 'am' ? 'AM' : 'PM');
 }
 
 /**

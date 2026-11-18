@@ -308,7 +308,6 @@ export {
   TimePicker,
   TimePickerColumn,
   TimePickerContent,
-  TimePickerInput,
 } from './components/time-picker';
 export type {
   TimeFormat,
@@ -316,7 +315,6 @@ export type {
   TimePickerColumnOption,
   TimePickerColumnProps,
   TimePickerContentProps,
-  TimePickerInputProps,
   TimePickerLabels,
   TimePickerProps,
   TimePickerSize,
