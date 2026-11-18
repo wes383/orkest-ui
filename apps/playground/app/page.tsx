@@ -18,6 +18,7 @@ import { AvatarDemo } from './avatar-demo';
 import { CardDemo } from './card-demo';
 import { ChoiceDemo } from './choice-demo';
 import { DataTableDemo } from './data-table-demo';
+import { DateTimeDemo } from './date-time-demo';
 import { DialogDemo } from './dialog-demo';
 import { DropdownMenuDemo } from './dropdown-menu-demo';
 import { EmptyStateDemo } from './empty-state-demo';
@@ -104,6 +105,7 @@ function Showcase({ idPrefix }: { idPrefix: string }) {
       <PopoverDemo />
       <TabsDemo />
       <TableDemo />
+      <DateTimeDemo />
       <ToastDemo />
       <LoadingDemo />
       <PlaygroundForm idPrefix={idPrefix} />
