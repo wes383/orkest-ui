@@ -15,7 +15,10 @@ export async function CodeBlock({
   const isSingleLine = !code.trimEnd().includes('\n');
 
   return (
-    <div className={isSingleLine ? 'code-block code-block-single-line' : 'code-block'}>
+    <div
+      className={isSingleLine ? 'code-block code-block-single-line' : 'code-block'}
+      data-language={language}
+    >
       <CopyButton code={code} />
       <div className="code-block-content" dangerouslySetInnerHTML={{ __html: html }} />
     </div>

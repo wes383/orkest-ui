@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { Breadcrumbs } from '@/components/docs/breadcrumbs';
+import { CopyMarkdownButton } from '@/components/docs/copy-markdown-button';
 import { PrevNext } from '@/components/docs/prev-next';
 import { TableOfContents } from '@/components/docs/table-of-contents';
 import { getAdjacentDocs, getDocBySlug, getDocs } from '@/lib/docs-source';
@@ -44,7 +45,10 @@ export default async function DocRoute({ params }: DocRouteProps) {
   return (
     <div className={doc.headings.length > 0 ? 'page-grid' : 'page-grid page-grid-no-toc'}>
       <article className="doc-article">
-        <Breadcrumbs sectionId={doc.section} sectionLabel={doc.sectionLabel} title={doc.title} />
+        <div className="page-topbar">
+          <Breadcrumbs sectionId={doc.section} sectionLabel={doc.sectionLabel} title={doc.title} />
+          <CopyMarkdownButton />
+        </div>
 
         <header className="page-header">
           <p className="page-eyebrow">{doc.sectionLabel}</p>
