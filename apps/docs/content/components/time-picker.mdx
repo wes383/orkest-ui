@@ -23,7 +23,7 @@ export function Example() {
   const [value, setValue] = useState<string | null>('09:30');
 
   return (
-    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '12rem' }}>
       <TimePicker value={value} onChange={setValue} />
       <Text size="sm" tone="muted">
         Value: {value ?? 'none'}
@@ -59,7 +59,7 @@ export function Example() {
   const [value, setValue] = useState<string | null>('13:45');
 
   return (
-    <Stack gap={3} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
+    <Stack gap={3} align="start" style={{ width: '100%', maxWidth: '12rem' }}>
       <TimePicker value={value} onChange={setValue} format="12h" minuteStep={15} />
       <Text size="sm" tone="muted">
         Stored as {value ?? 'none'} — the display format never changes the value.
@@ -97,6 +97,7 @@ export function Example() {
       showSeconds
       minTime="08:00"
       maxTime="18:00"
+      style={{ width: '100%', maxWidth: '12rem' }}
     />
   );
 }`}
@@ -117,7 +118,7 @@ export function Example() {
   const [value, setValue] = useState<string | null>(null);
 
   return (
-    <Field>
+    <Field style={{ width: '100%', maxWidth: '12rem' }}>
       <FieldLabel>Reminder time</FieldLabel>
       <TimePicker value={value} onChange={setValue} placeholder="Set a reminder" />
       <FieldDescription>Sent in your local timezone, stored as HH:mm.</FieldDescription>
@@ -137,7 +138,7 @@ import { TimePicker } from '@orkest/ui/client';
 
 export function Example() {
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: '100%', maxWidth: '12rem' }}>
       <TimePicker defaultValue="09:30" size="sm" />
       <TimePicker defaultValue="09:30" size="md" />
       <TimePicker defaultValue="09:30" size="lg" />
@@ -168,7 +169,7 @@ export function Example() {
       onChange={setValue}
       showIcon={false}
       clearable={false}
-      style={{ width: '100%', maxWidth: '20rem' }}
+      style={{ width: '100%', maxWidth: '12rem' }}
     />
   );
 }`}

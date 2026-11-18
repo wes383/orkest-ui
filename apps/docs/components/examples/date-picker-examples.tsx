@@ -10,7 +10,7 @@ export function DatePickerBasicExample() {
   const [value, setValue] = useState<string | null>(null);
 
   return (
-    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '18rem' }}>
       <DatePicker value={value} onChange={setValue} />
       <Text size="sm" tone="muted">
         Value: {value ?? 'none'}
@@ -29,6 +29,7 @@ export function DatePickerRangeExample() {
       minDate="2026-11-10"
       maxDate="2026-12-20"
       disabledDates={(date) => date.endsWith('-15') || date.endsWith('-16')}
+      style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
 }
@@ -37,7 +38,7 @@ export function DatePickerFormatExample() {
   const [value, setValue] = useState<string | null>('2026-11-18');
 
   return (
-    <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
+    <Stack gap={3} style={{ width: '100%', maxWidth: '18rem' }}>
       <DatePicker
         value={value}
         onChange={setValue}
@@ -52,7 +53,7 @@ export function DatePickerFieldExample() {
   const [value, setValue] = useState<string | null>(null);
 
   return (
-    <Field required>
+    <Field required style={{ width: '100%', maxWidth: '18rem' }}>
       <FieldLabel>Start date</FieldLabel>
       <DatePicker value={value} onChange={setValue} placeholder="Choose a start date" />
       <FieldDescription>Leave empty to start immediately.</FieldDescription>
@@ -62,7 +63,7 @@ export function DatePickerFieldExample() {
 
 export function DatePickerSizesExample() {
   return (
-    <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
+    <Stack gap={3} style={{ width: '100%', maxWidth: '18rem' }}>
       <DatePicker defaultValue="2026-11-18" size="sm" placeholder="Small" />
       <DatePicker defaultValue="2026-11-18" size="md" placeholder="Medium" />
       <DatePicker defaultValue="2026-11-18" size="lg" placeholder="Large" />
@@ -78,7 +79,7 @@ export function DatePickerCaptionSelectExample() {
       value={value}
       onChange={setValue}
       captionLayout="select"
-      style={{ width: '100%', maxWidth: '20rem' }}
+      style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
 }
@@ -93,7 +94,7 @@ export function DatePickerBareExample() {
       showIcon={false}
       showToday={false}
       clearable={false}
-      style={{ width: '100%', maxWidth: '20rem' }}
+      style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
 }
