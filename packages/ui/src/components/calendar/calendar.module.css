@@ -273,7 +273,7 @@
   font-variant-numeric: tabular-nums;
   line-height: 1;
   cursor: pointer;
-  /* Keeps the range band inside the cell's own paint order, so it never slips
+  /* Keeps the range chip inside the cell's own paint order, so it never slips
      behind the popover surface. */
   isolation: isolate;
   transition:
@@ -281,20 +281,16 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-/* The band bleeds half of the grid gap on each side, so consecutive days read as
-   one continuous span instead of a row of chips. */
+/* Each day in the span carries its own rounded chip. The grid gap keeps them
+   apart, so the range reads as a run of squares instead of one merged bar. */
 .day[data-in-range]::before,
 .day[data-range-preview]::before {
   content: '';
   position: absolute;
   z-index: -1;
-  top: 50%;
-  /* Half the gap plus the transparent 1px cell border: the band starts where the
-     padding box ends, so without the extra pixel a hairline would survive. */
-  inset-inline: calc(var(--calendar-gap) / -2 - var(--ok-border-width));
-  height: var(--calendar-cell-size);
+  inset: 0;
+  border-radius: var(--calendar-cell-radius);
   background: var(--ui-secondary);
-  transform: translateY(-50%);
 }
 
 .day[data-in-range]:hover::before,
