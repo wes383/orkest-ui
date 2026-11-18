@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from './components/alert';
 import { Avatar, AvatarFallback } from './components/avatar';
 import { Badge } from './components/badge';
 import { Button } from './components/button';
+import { Calendar } from './components/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
 import { DataTable } from './components/data-table';
@@ -164,6 +165,19 @@ describe('accessibility', () => {
     render(<Select aria-label="Team" options={planOptions} />);
 
     await user.click(screen.getByRole('combobox', { name: 'Team' }));
+    await screen.findByRole('listbox');
+
+    // The popup renders in a portal outside any landmark, so the page-level
+    // region rule cannot apply to this isolated fixture.
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  it('renders an open month listbox in the calendar without violations', async () => {
+    const user = userEvent.setup();
+
+    render(<Calendar defaultMonth="2026-11" captionLayout="select" />);
+
+    await user.click(screen.getByRole('combobox', { name: 'Month' }));
     await screen.findByRole('listbox');
 
     // The popup renders in a portal outside any landmark, so the page-level

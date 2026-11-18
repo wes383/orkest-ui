@@ -48,6 +48,19 @@ describe('DatePicker', () => {
     });
   });
 
+  it('keeps the popover open while switching months from the caption selects', async () => {
+    const user = userEvent.setup();
+
+    render(<DatePicker defaultValue="2026-11-10" captionLayout="select" />);
+    await open(user, 'Nov 10, 2026');
+
+    await user.click(screen.getByRole('combobox', { name: 'Month' }));
+    await user.click(await screen.findByRole('option', { name: 'December' }));
+
+    expect(screen.getByRole('dialog', { name: 'Choose a date' })).toBeInTheDocument();
+    expect(screen.getByRole('grid', { name: 'December 2026' })).toBeInTheDocument();
+  });
+
   it('keeps the value controlled', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

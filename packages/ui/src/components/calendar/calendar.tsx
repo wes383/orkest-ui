@@ -11,7 +11,8 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { Check, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
@@ -370,18 +371,91 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
   },
 );
 
+interface CalendarCaptionOption {
+  value: string;
+  label: string;
+}
+
+interface CalendarCaptionSelectProps {
+  label: string;
+  value: string;
+  options: CalendarCaptionOption[];
+  disabled?: boolean;
+  onValueChange: (value: string) => void;
+}
+
+/**
+ * Caption picker built from the select primitive rather than a native `select`:
+ * the native control falls back to OS styling and a UA focus ring on click.
+ */
+function CalendarCaptionSelect({
+  label,
+  value,
+  options,
+  disabled,
+  onValueChange,
+}: CalendarCaptionSelectProps) {
+  const { size } = useCalendarContext();
+
+  return (
+    <BaseSelect.Root
+      items={options}
+      value={value}
+      onValueChange={(next) => {
+        if (typeof next === 'string') {
+          onValueChange(next);
+        }
+      }}
+      disabled={disabled}
+      modal={false}
+    >
+      <BaseSelect.Trigger className={styles.selectTrigger} aria-label={label}>
+        <BaseSelect.Value className={styles.selectValue} />
+        <ChevronDown className={styles.selectIcon} aria-hidden="true" />
+      </BaseSelect.Trigger>
+      <BaseSelect.Portal>
+        <BaseSelect.Positioner
+          side="bottom"
+          align="center"
+          sideOffset={4}
+          alignItemWithTrigger={false}
+          positionMethod="fixed"
+          className={styles.selectPositioner}
+        >
+          <BaseSelect.Popup className={styles.selectPopup} data-size={size}>
+            <BaseSelect.List className={styles.selectList}>
+              {options.map((option) => (
+                <BaseSelect.Item
+                  key={option.value}
+                  value={option.value}
+                  className={styles.selectOption}
+                >
+                  <span className={styles.selectOptionLabel}>{option.label}</span>
+                  <BaseSelect.ItemIndicator className={styles.selectIndicator}>
+                    <Check className={styles.selectCheck} aria-hidden="true" />
+                  </BaseSelect.ItemIndicator>
+                </BaseSelect.Item>
+              ))}
+            </BaseSelect.List>
+          </BaseSelect.Popup>
+        </BaseSelect.Positioner>
+      </BaseSelect.Portal>
+    </BaseSelect.Root>
+  );
+}
+
 function CalendarCaptionSelects() {
-  const { visibleMonth, locale, labels, minDate, maxDate, setVisibleMonth } =
+  const { visibleMonth, locale, labels, minDate, maxDate, disabled, setVisibleMonth } =
     useCalendarContext();
   const { year: visibleYear } = visibleMonth;
 
   const startYear = Math.min(minDate?.year ?? 1900, visibleYear);
   const endYear = Math.max(maxDate?.year ?? 2100, visibleYear);
-  const years = useMemo(() => {
-    const list: number[] = [];
+  const yearOptions = useMemo(() => {
+    const list: CalendarCaptionOption[] = [];
 
     for (let year = startYear; year <= endYear; year += 1) {
-      list.push(year);
+      list.push({ value: String(year), label: String(year) });
     }
 
     return list;
@@ -389,7 +463,7 @@ function CalendarCaptionSelects() {
 
   const months = useMemo(() => {
     return Array.from({ length: 12 }, (_, index) => ({
-      value: index,
+      value: String(index),
       label: formatMonthLabel(
         { year: visibleMonth.year, month: index, day: 1 },
         locale,
@@ -400,40 +474,22 @@ function CalendarCaptionSelects() {
 
   return (
     <>
-      <span className={styles.selectWrap}>
-        <select
-          className={styles.select}
-          aria-label={labels.month}
-          value={visibleMonth.month}
-          onChange={(event) =>
-            setVisibleMonth({ ...visibleMonth, month: Number(event.target.value), day: 1 })
-          }
-        >
-          {months.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className={styles.selectIcon} aria-hidden="true" />
-      </span>
-      <span className={styles.selectWrap}>
-        <select
-          className={styles.select}
-          aria-label={labels.year}
-          value={visibleMonth.year}
-          onChange={(event) =>
-            setVisibleMonth({ ...visibleMonth, year: Number(event.target.value), day: 1 })
-          }
-        >
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className={styles.selectIcon} aria-hidden="true" />
-      </span>
+      <CalendarCaptionSelect
+        label={labels.month}
+        value={String(visibleMonth.month)}
+        options={months}
+        disabled={disabled}
+        onValueChange={(next) =>
+          setVisibleMonth({ ...visibleMonth, month: Number(next), day: 1 })
+        }
+      />
+      <CalendarCaptionSelect
+        label={labels.year}
+        value={String(visibleMonth.year)}
+        options={yearOptions}
+        disabled={disabled}
+        onValueChange={(next) => setVisibleMonth({ ...visibleMonth, year: Number(next), day: 1 })}
+      />
     </>
   );
 }

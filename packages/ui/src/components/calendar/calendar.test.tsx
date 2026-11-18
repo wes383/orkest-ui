@@ -102,10 +102,27 @@ describe('Calendar', () => {
   });
 
   it('switches months and years with the caption selects', async () => {
+    const user = userEvent.setup();
+
     render(<Calendar defaultMonth={NOVEMBER} captionLayout="select" />);
 
-    expect(screen.getByRole('combobox', { name: 'Month' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Year' })).toBeInTheDocument();
+    const monthSelect = screen.getByRole('combobox', { name: 'Month' });
+    const yearSelect = screen.getByRole('combobox', { name: 'Year' });
+
+    expect(monthSelect).toHaveTextContent('November');
+    expect(yearSelect).toHaveTextContent('2026');
+
+    await user.click(monthSelect);
+    await user.click(await screen.findByRole('option', { name: 'December' }));
+
+    expect(monthSelect).toHaveTextContent('December');
+    expect(screen.getByRole('grid', { name: 'December 2026' })).toBeInTheDocument();
+
+    await user.click(yearSelect);
+    await user.click(await screen.findByRole('option', { name: '2027' }));
+
+    expect(yearSelect).toHaveTextContent('2027');
+    expect(screen.getByRole('grid', { name: 'December 2027' })).toBeInTheDocument();
   });
 
   it('navigates with arrow keys and keeps one tab stop', async () => {
