@@ -68,6 +68,9 @@ Both pickers are listbox comboboxes rendered by the component rather than native
 so the panel follows the same surface, radius, and shadow tokens as the rest of the library, and the
 focused trigger does not pick up the browser's blue focus box.
 
+The caption reserves the widest month name in the active locale, so moving between "May" and
+"September" never resizes the calendar or shifts the header arrows.
+
 ## Range limits and blocked dates
 
 `minDate` and `maxDate` are inclusive. `disabledDates` takes either a list of `YYYY-MM-DD` strings or a
