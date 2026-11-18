@@ -8,9 +8,8 @@ section: components
 `showSeconds`), always written in 24-hour form, so `13:45` is stored as `13:45` even when the field
 reads `1:45 PM`.
 
-A time has no date and no timezone, so a JavaScript `Date` is the wrong container: it attaches both.
-Keeping the value as a string means no conversion, no accidental offset, and a value that can be sent
-to an API unchanged.
+A time has no date and no timezone, so the value stays a string: no conversion, no accidental
+offset, and a value that can be sent to an API unchanged.
 
 ## Live preview
 
@@ -97,8 +96,7 @@ export function Example() {
   <TimePickerSecondsExample />
 </ComponentPreview>
 
-Values outside the range are clamped on the way in, so the field never shows a time the picker cannot
-represent.
+Values outside the range are clamped on the way in.
 
 ## Inside a Field
 
@@ -267,8 +265,7 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
 
 - The field is a real text input, so screen readers announce the current value and the typed text is
   editable with the usual caret and selection behavior.
-- The clock button next to it is a separate, labelled button with `aria-haspopup="dialog"`, so opening
-  the panel never fights with typing.
+- The clock button next to it is a separate, labelled button with `aria-haspopup="dialog"`.
 - Inside the panel each column is a labelled listbox. `ArrowUp` and `ArrowDown` move the selection,
   `Home` and `End` jump to the ends, and `ArrowLeft` and `ArrowRight` move between columns.
 - Selected options carry `aria-selected`, and unavailable ones carry `aria-disabled` rather than being

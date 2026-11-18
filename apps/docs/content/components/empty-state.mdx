@@ -5,8 +5,8 @@ section: components
 ---
 
 `EmptyState` explains why a region has nothing in it and, when there is something to do, offers the
-next step. It is purely presentational: no data fetching, no state, no extra dependency, and no
-Base UI. A single icon is enough for most cases; an illustration is optional.
+next step. It is purely presentational: no data fetching and no state. A single icon is enough for
+most cases; an illustration is optional.
 
 ## Live preview
 
@@ -69,8 +69,7 @@ From top to bottom: `sm`, `md`, `lg`. Size controls how much room the state take
 - `md` is the default for a normal content area.
 - `lg` suits a full-page, first-run state.
 
-Padding, gaps, title size, and the icon surface all scale together. The DOM and the available parts
-stay the same, so a size change never forces a different API.
+Padding, gaps, title size, and the icon surface all scale together.
 
 ## Alignment
 
@@ -186,8 +185,7 @@ larger surface. Leave it off when the parent already frames the content, as in t
 
 `image` is optional and takes precedence over `icon` when both are supplied. `alt` is required: it
 carries any meaning the illustration adds. If the picture is purely decorative, use `alt=""` and make
-sure the title and description say everything on their own. Do not make a custom illustration a
-prerequisite for using the component.
+sure the title and description say everything on their own.
 
 ## Embedding
 
@@ -235,9 +233,8 @@ vertical padding; keep `sm` for genuinely tight regions such as a widget or an e
   must not be the only explanation of the state.
 - Actions are real buttons with visible focus, so keyboard and screen-reader users get the same path
   forward. Do not add click handlers to the container.
-- The component deliberately has no `role="status"` or `aria-live`: an empty state is static content,
-  not an announcement. If the state appears after a client-side filter change, announce the change on
-  the region that owns the content instead.
+- An empty state is static content, not an announcement. If the state appears after a client-side
+  filter change, announce the change on the region that owns the content instead.
 - Text uses semantic theme colors, so light and dark themes keep their contrast. State is described
   in words, never by color alone.
 

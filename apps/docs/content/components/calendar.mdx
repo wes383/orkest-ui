@@ -5,8 +5,7 @@ section: components
 ---
 
 `Calendar` is the grid on its own: it holds no input and no popover, so it can sit inline in a form, a
-side panel, or a popover you already own. `DatePicker` builds on it, and a future range picker can
-reuse it without changes.
+side panel, or a popover you already own.
 
 Dates are plain `YYYY-MM-DD` strings. A calendar date has no time and no timezone, so it never shifts
 to the previous day when the host timezone changes.
@@ -37,8 +36,7 @@ export function Example() {
 
 ## Month and year switching
 
-`captionLayout="select"` swaps the caption for month and year pickers, which is what someone booking
-a date six months out actually wants.
+`captionLayout="select"` swaps the caption for month and year pickers.
 
 <ComponentPreview
   title="Caption selects"
@@ -61,15 +59,7 @@ export function Example() {
   <CalendarCaptionSelectExample />
 </ComponentPreview>
 
-The header arrows stay available in both layouts. A disabled bound is reflected on the arrow, so the
-reader can see there is nothing earlier or later to reach.
-
-Both pickers are listbox comboboxes rendered by the component rather than native `select` elements,
-so the panel follows the same surface, radius, and shadow tokens as the rest of the library, and the
-focused trigger does not pick up the browser's blue focus box.
-
-The caption reserves the widest month name in the active locale, so moving between "May" and
-"September" never resizes the calendar or shifts the header arrows.
+The header arrows stay available in both layouts. A disabled bound is reflected on the arrow.
 
 ## Range limits and blocked dates
 
@@ -247,7 +237,7 @@ export function CompactCalendar() {
 - The grid is a single tab stop. Arrow keys move by day, `Home` and `End` jump to the ends of the
   week, `PageUp` and `PageDown` change month, and holding `Shift` changes year.
 - Every day exposes its full date as its accessible name, plus `aria-selected` and
-  `aria-current="date"` for today, so the reader never has to infer the month from position.
+  `aria-current="date"` for today.
 - The header arrows are icon buttons with names that follow the locale labels.
 - The month and year pickers are comboboxes over a listbox: arrow keys move the highlight, `Enter`
   commits, and `Escape` closes the panel without changing the month.

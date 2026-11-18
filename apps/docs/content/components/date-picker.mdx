@@ -8,9 +8,6 @@ section: components
 `YYYY-MM-DD` string, never a `Date`, so it survives a round trip through a database or an API without
 a timezone shifting it by a day.
 
-The field is a button, not a text input: typing a date in six different formats is a worse experience
-than picking it from a grid, and it removes a whole class of parsing bugs.
-
 ## Live preview
 
 <ComponentPreview
@@ -147,8 +144,7 @@ export function Example() {
 ## Desktop and mobile
 
 The same popover is used at every width. It is positioned against the trigger, stays inside the
-viewport, and the calendar cells are comfortably above the minimum touch target, so it does not need a
-separate bottom-sheet implementation.
+viewport, and the calendar cells are comfortably above the minimum touch target.
 
 When you do want a full-screen sheet, compose the parts yourself: `Calendar` is exported on its own
 and works inside any [Dialog](/docs/components/dialog/).
@@ -256,5 +252,4 @@ and works inside any [Dialog](/docs/components/dialog/).
   to the trigger.
 - The grid is a single tab stop with full arrow-key navigation, described in the
   [Calendar documentation](/docs/components/calendar/#accessibility).
-- The clear action has its own accessible name and never sits inside the trigger, so it stays a
-  separate, reachable target.
+- The clear action has its own accessible name and is a separate, reachable target.

@@ -8,9 +8,7 @@ section: components
 reports the page the reader asked for. Page numbers, clamping, and ellipsis handling are computed for
 you, and the same markup is available piece by piece when the shape needs to differ.
 
-It renders buttons, which is what client-side paging wants. A link-based variant for
-server-rendered search results, where every page needs a real URL, is a separate concern and is not
-part of this component.
+It renders buttons. A link-based variant for server-rendered results is not part of this component.
 
 ## Live preview
 
@@ -57,8 +55,7 @@ export function Example() {
   <PaginationSizesExample />
 </ComponentPreview>
 
-`md` is the default. All three sizes share the same footprint rules, so switching size never changes
-how many pages fit before the list wraps.
+`md` is the default. All three sizes share the same footprint rules.
 
 ## Long lists
 
@@ -141,8 +138,7 @@ import {
 
 ## Boundary rules
 
-- A `page` below `1` or above `totalPages` is clamped before rendering, so an out-of-range value can
-  never produce a state the reader cannot leave.
+- A `page` below `1` or above `totalPages` is clamped before rendering.
 - Previous and next are disabled with the native `disabled` attribute at the ends of the range, not
   hidden.
 - `totalPages` of `0` renders nothing at all: an empty collection has no pages to navigate.

@@ -19,8 +19,8 @@ It is built on Base UI Alert Dialog and exported from `@orkest/ui/client`.
 | Requires an explicit choice | No | Yes |
 | Typical use | Edit, view, create | Delete, discard, reset |
 
-Alert Dialog is intentionally stricter than Dialog. It does not render a built-in close icon, and the
-only ways out are the cancel and confirming actions.
+Alert Dialog does not render a built-in close icon. The only ways out are the cancel and confirming
+actions.
 
 ## Basic usage
 
@@ -68,7 +68,7 @@ export function Example() {
 </ComponentPreview>
 
 `AlertDialogCancel` renders a secondary Button. `AlertDialogAction` renders a destructive Button.
-Both are Base UI close buttons, so pressing either action closes the dialog.
+Both actions close the dialog.
 
 ## Async actions
 

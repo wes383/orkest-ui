@@ -4,11 +4,10 @@ description: A single-value combobox with search, groups, descriptions, and coll
 section: components
 ---
 
-`Select` is a single-value combobox built on Base UI's Select and Combobox primitives. Non-searchable
-use renders a select button; `searchable` renders a filterable combobox input. Base UI owns
-positioning, collision handling, dismissal, highlight, and listbox semantics.
+`Select` is a single-value combobox. Non-searchable use renders a select button; `searchable` renders
+a filterable combobox input.
 
-Import it from `@orkest/ui/client` because the menu uses client-side state.
+Import it from `@orkest/ui/client`.
 
 ## Live preview
 
@@ -371,8 +370,7 @@ export function Example() {
 
 - Base UI renders the combobox and listbox semantics, including `role="option"`, `aria-expanded`,
   `aria-selected`, and `aria-disabled`. Option highlighting is managed by the primitive.
-- The popup uses Base UI collision handling and is portaled inside the component root, so scoped
-  themes still apply.
+- The popup is portaled inside the component root, so scoped themes apply to it.
 - Outside pointer interactions, Escape, Tab, and selecting an option close the popup and restore
   focus.
 - Disabled options are skipped by keyboard navigation.

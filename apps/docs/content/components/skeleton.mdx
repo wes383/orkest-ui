@@ -155,8 +155,7 @@ export function Example() {
 - Announce the loading state on the region that owns the content, for example
   `aria-busy="true"` on the list or section, or a visible status line. Do not rely on the skeleton
   itself to communicate that something is loading.
-- Place the skeleton exactly where the content will appear. A layout shift after loading is worse
-  for everyone than a slightly imprecise placeholder.
+- Place the skeleton exactly where the content will appear.
 - Pass `animation="none"` when many placeholders animate at once, and keep motion subtle for users
   who configure reduced motion.
 

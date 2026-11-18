@@ -8,8 +8,7 @@ section: components
 definitions, sorting, global search, pagination, row selection, row expansion, and column
 visibility. All of it runs on the client against the data you pass in — no fetching, no caching, and
 no data source assumptions. Table styling (`variant`, `size`, `striped`, `hoverable`) passes straight
-through, so a data table looks exactly like a hand-built one. Import the component and the
-`DataColumn` type from `@orkest/ui/client`.
+through. Import the component and the `DataColumn` type from `@orkest/ui/client`.
 
 ## Live preview
 
@@ -190,9 +189,8 @@ keep their state; nothing about sorting or selection is lost when a column is hi
 
 ## Row actions
 
-There is no actions prop, and none is needed: an actions column is a column whose `cell` renders a
-menu. `DropdownMenu` portals its content, so the menu escapes the table's horizontal scroll container
-instead of being clipped by a cell.
+Row actions are an ordinary column whose `cell` renders a menu. `DropdownMenu` portals its content,
+so the menu escapes the table's horizontal scroll container instead of being clipped by a cell.
 
 <ComponentPreview
   title="Row actions column"
@@ -254,11 +252,11 @@ accessible name so it is not announced as a nameless button. The same pattern wo
 
 ## Narrow screens
 
-The table scrolls horizontally inside its own container, so the page never scrolls sideways. Header
-cells never wrap, which means a table with many columns starts scrolling as soon as the headers
-exceed the available width. Body cells do wrap by default, so a table whose headers are short but
-whose content is long will compress instead of scrolling — give those columns a `minWidth` to keep
-them readable and let the container scroll.
+The table scrolls horizontally inside its own container. Header cells never wrap, which means a
+table with many columns starts scrolling as soon as the headers exceed the available width. Body
+cells do wrap by default, so a table whose headers are short but whose content is long will
+compress instead of scrolling — give those columns a `minWidth` to keep them readable and let the
+container scroll.
 
 <ComponentPreview
   title="Wide table with horizontal scroll"
@@ -284,7 +282,7 @@ export function Example() {
 </ComponentPreview>
 
 Ten columns with explicit `minWidth` cannot fit, so the container scrolls while the toolbar and the
-pagination stay put. Nothing is truncated and no column is squeezed into a one-character stack.
+pagination stay put.
 
 ## Props
 
