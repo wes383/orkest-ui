@@ -292,6 +292,8 @@ export type {
   CalendarHeaderProps,
   CalendarLabels,
   CalendarProps,
+  CalendarRange,
+  CalendarRangePosition,
   CalendarSize,
   CivilDate,
   Weekday,
@@ -303,6 +305,21 @@ export type {
   DatePickerProps,
   DatePickerSize,
 } from './components/date-picker';
+
+export { DateRangePicker } from './components/date-range-picker';
+export type {
+  DateRange,
+  DateRangePickerLabels,
+  DateRangePickerProps,
+  DateRangePickerSize,
+} from './components/date-range-picker';
+
+export { DateTimePicker } from './components/date-time-picker';
+export type {
+  DateTimePickerLabels,
+  DateTimePickerProps,
+  DateTimePickerSize,
+} from './components/date-time-picker';
 
 export {
   TimePicker,
