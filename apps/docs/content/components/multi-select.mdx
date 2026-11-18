@@ -95,7 +95,6 @@ export function Example() {
       selectAll
       searchable
       clearable
-      maxSelected={4}
       placeholder="Select skills"
     />
   );
@@ -104,8 +103,8 @@ export function Example() {
   <MultiSelectSelectAllExample />
 </ComponentPreview>
 
-Disabled options are never selected by the row, and the row stops at `maxSelected` instead of
-overshooting it.
+Disabled options are never selected by the row. If `maxSelected` is also set, the row stops at the
+limit instead of overshooting it.
 
 ## Chip overflow
 

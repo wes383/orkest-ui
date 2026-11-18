@@ -218,7 +218,6 @@ export function MultiSelectSelectAllExample() {
       selectAll
       searchable
       clearable
-      maxSelected={4}
       placeholder="Select skills"
     />
   );
