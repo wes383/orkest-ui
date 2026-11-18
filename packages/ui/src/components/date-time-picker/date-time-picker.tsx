@@ -359,47 +359,50 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                 aria-label={mergedLabels.dialog}
                 className={fieldStyles.popover}
               >
-                <Calendar
-                  value={datePart}
-                  onChange={handleDateSelect}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  disabledDates={disabledDates}
-                  locale={locale}
-                  weekStartsOn={weekStartsOn}
-                  size={size}
-                  captionLayout={captionLayout}
-                  labels={mergedLabels}
-                />
-                {timeMode === 'menu' ? (
-                  <div className={styles.timePanel}>
-                    <TimePickerContent>
-                      <TimePickerColumn
-                        label={mergedLabels.hours}
-                        value={time.hours}
-                        options={hourOptions}
-                        onValueChange={(hours) => handleTimeParts({ hours })}
-                        disabled={control.disabled}
-                      />
-                      <TimePickerColumn
-                        label={mergedLabels.minutes}
-                        value={time.minutes}
-                        options={minuteOptions}
-                        onValueChange={(minutes) => handleTimeParts({ minutes })}
-                        disabled={control.disabled}
-                      />
-                      {showSeconds ? (
+                <div className={styles.body} data-mode={timeMode}>
+                  <Calendar
+                    value={datePart}
+                    onChange={handleDateSelect}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    disabledDates={disabledDates}
+                    locale={locale}
+                    weekStartsOn={weekStartsOn}
+                    size={size}
+                    captionLayout={captionLayout}
+                    labels={mergedLabels}
+                  />
+                  {timeMode === 'menu' ? (
+                    <div className={styles.timePanel}>
+                      <TimePickerContent>
                         <TimePickerColumn
-                          label={mergedLabels.seconds}
-                          value={time.seconds}
-                          options={secondOptions}
-                          onValueChange={(seconds) => handleTimeParts({ seconds })}
+                          label={mergedLabels.hours}
+                          value={time.hours}
+                          options={hourOptions}
+                          onValueChange={(hours) => handleTimeParts({ hours })}
                           disabled={control.disabled}
                         />
-                      ) : null}
-                    </TimePickerContent>
-                  </div>
-                ) : (
+                        <TimePickerColumn
+                          label={mergedLabels.minutes}
+                          value={time.minutes}
+                          options={minuteOptions}
+                          onValueChange={(minutes) => handleTimeParts({ minutes })}
+                          disabled={control.disabled}
+                        />
+                        {showSeconds ? (
+                          <TimePickerColumn
+                            label={mergedLabels.seconds}
+                            value={time.seconds}
+                            options={secondOptions}
+                            onValueChange={(seconds) => handleTimeParts({ seconds })}
+                            disabled={control.disabled}
+                          />
+                        ) : null}
+                      </TimePickerContent>
+                    </div>
+                  ) : null}
+                </div>
+                {timeMode === 'input' ? (
                   <div className={styles.timeRow}>
                     <span className={styles.timeLabel}>{mergedLabels.time}</span>
                     <div
@@ -429,7 +432,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                       </FieldContext.Provider>
                     </div>
                   </div>
-                )}
+                ) : null}
                 <div className={styles.footer}>
                   <Button
                     variant="ghost"

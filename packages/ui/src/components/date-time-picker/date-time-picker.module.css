@@ -39,12 +39,28 @@
   width: calc(14ch + var(--ok-space-6));
 }
 
-/* Same divider as the row above, but the columns stack under the grid instead
-   of sharing one line with a label and a field. */
+/* The column menu sits to the right of the grid, behind a hairline that runs the
+   full height of the calendar. */
 .timePanel {
-  margin-top: var(--ok-space-3);
-  padding-top: var(--ok-space-3);
-  border-top: var(--ok-border-width) solid var(--ui-border);
+  display: flex;
+  align-items: center;
+  padding-inline-start: var(--ok-space-4);
+  border-inline-start: var(--ok-border-width) solid var(--ui-border);
+}
+
+/* The input mode stacks the time field under the grid; the menu mode puts the
+   columns beside it, so the panel stays about as tall as the calendar. */
+.body {
+  display: flex;
+}
+
+.body[data-mode="input"] {
+  flex-direction: column;
+}
+
+.body[data-mode="menu"] {
+  align-items: stretch;
+  gap: var(--ok-space-4);
 }
 
 .footer {

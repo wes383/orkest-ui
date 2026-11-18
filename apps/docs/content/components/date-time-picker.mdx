@@ -91,9 +91,10 @@ export function Example() {
 ## Column menu for the time
 
 `timeMode="menu"` swaps the segmented field for the scrollable hour, minute, and second columns
-that [TimePicker](/docs/components/time-picker/) opens in its own panel. Every click commits at
-once, and the columns follow `timeFormat`, `minuteStep`, and `showSeconds`, so the stored value
-keeps the same shape.
+that [TimePicker](/docs/components/time-picker/) opens in its own panel. They sit to the right of
+the grid, so the panel stays about as tall as the calendar, and every click commits at once. The
+columns follow `timeFormat`, `minuteStep`, and `showSeconds`, so the stored value keeps the same
+shape.
 
 <ComponentPreview
   title="Time picked from columns"
