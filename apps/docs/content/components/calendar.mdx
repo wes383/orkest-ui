@@ -190,6 +190,12 @@ export function CompactCalendar() {
       description: 'Dates to block, as a list or a predicate on YYYY-MM-DD.',
     },
     {
+      name: 'range',
+      type: '{ start?: string; end?: string; preview?: string }',
+      description:
+        'Paints a span of days. The endpoints count as selected and the days between them get a connecting band; preview shows an open end while the pointer moves.',
+    },
+    {
       name: 'disabled',
       type: 'boolean',
       default: 'false',

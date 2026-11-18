@@ -107,6 +107,20 @@ import {
   DatePickerSizesExample,
 } from '../examples/date-picker-examples';
 import {
+  DateRangePickerBasicExample,
+  DateRangePickerFieldExample,
+  DateRangePickerLimitsExample,
+  DateRangePickerSingleMonthExample,
+  DateRangePickerSizesExample,
+} from '../examples/date-range-picker-examples';
+import {
+  DateTimePickerBasicExample,
+  DateTimePickerFieldExample,
+  DateTimePickerSecondsExample,
+  DateTimePickerSizesExample,
+  DateTimePickerTwelveHourExample,
+} from '../examples/date-time-picker-examples';
+import {
   TimePickerBasicExample,
   TimePickerBareExample,
   TimePickerFieldExample,
@@ -305,6 +319,16 @@ export const mdxComponents = {
   DatePickerFormatExample,
   DatePickerRangeExample,
   DatePickerSizesExample,
+  DateRangePickerBasicExample,
+  DateRangePickerFieldExample,
+  DateRangePickerLimitsExample,
+  DateRangePickerSingleMonthExample,
+  DateRangePickerSizesExample,
+  DateTimePickerBasicExample,
+  DateTimePickerFieldExample,
+  DateTimePickerSecondsExample,
+  DateTimePickerSizesExample,
+  DateTimePickerTwelveHourExample,
   TimePickerBasicExample,
   TimePickerBareExample,
   TimePickerFieldExample,

@@ -1,0 +1,263 @@
+---
+title: Date Time Picker
+description: Pick a date and a time of day in one field, with a calendar and a segmented clock in the same popover.
+section: components
+---
+
+`DateTimePicker` pairs a [Calendar](/docs/components/calendar/) with the segmented field from
+[TimePicker](/docs/components/time-picker/). The value is a `YYYY-MM-DDTHH:mm` string — wall-clock
+time with no offset — so it never shifts when the host timezone changes.
+
+## Live preview
+
+<ComponentPreview
+  title="Basic date and time picker"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { DateTimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18T09:30');
+
+  return (
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '16rem' }}>
+      <DateTimePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ?? 'none'}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <DateTimePickerBasicExample />
+</ComponentPreview>
+
+The panel stays open while you work: pick the day, then step or type the time, and press `Done` when
+the value is right. The two halves are independent, so the order does not matter — a time typed before
+the day is remembered and used as soon as a date is picked.
+
+## 12-hour clock and minute step
+
+`timeFormat` switches the clock face to a 12-hour one with an `AM/PM` segment, and `minuteStep` sets
+both the arrow-key step and the interval the panel offers.
+
+<ComponentPreview
+  title="12-hour clock in quarter hours"
+  code={`import { useState } from 'react';
+import { DateTimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18T14:45');
+
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      timeFormat="12h"
+      minuteStep={15}
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
+}`}
+>
+  <DateTimePickerTwelveHourExample />
+</ComponentPreview>
+
+## Seconds
+
+`showSeconds` adds a seconds segment and widens the stored value to `YYYY-MM-DDTHH:mm:ss`.
+
+<ComponentPreview
+  title="With seconds"
+  code={`import { useState } from 'react';
+import { DateTimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18T09:30:15');
+
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      showSeconds
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
+}`}
+>
+  <DateTimePickerSecondsExample />
+</ComponentPreview>
+
+## Inside a Field
+
+The trigger reads the surrounding [Field](/docs/components/field/) context, and `minDate`, `maxDate`,
+and `disabledDates` bound the calendar the same way they do for `DatePicker`.
+
+<ComponentPreview
+  title="With a label and description"
+  code={`import { useState } from 'react';
+import { DateTimePicker, Field, FieldDescription, FieldLabel } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Field style={{ width: '100%', maxWidth: '16rem' }}>
+      <FieldLabel>Publish at</FieldLabel>
+      <DateTimePicker value={value} onChange={setValue} />
+      <FieldDescription>Stored as local wall-clock time.</FieldDescription>
+    </Field>
+  );
+}`}
+>
+  <DateTimePickerFieldExample />
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { Stack } from '@orkest/ui';
+import { DateTimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3} style={{ width: '100%', maxWidth: '16rem' }}>
+      <DateTimePicker defaultValue="2026-11-18T09:30" size="sm" />
+      <DateTimePicker defaultValue="2026-11-18T09:30" size="md" />
+      <DateTimePicker defaultValue="2026-11-18T09:30" size="lg" />
+    </Stack>
+  );
+}`}
+>
+  <DateTimePickerSizesExample />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string | null',
+      description: 'Selected value as YYYY-MM-DDTHH:mm, plus :ss with showSeconds.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial value for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string | null) => void',
+      description: 'Called with the next value, or null when cleared.',
+    },
+    {
+      name: 'minDate / maxDate',
+      type: 'string',
+      description: 'Inclusive date bounds as YYYY-MM-DD.',
+    },
+    {
+      name: 'disabledDates',
+      type: 'string[] | ((value: string) => boolean)',
+      description: 'Dates to block, as a list or a predicate on YYYY-MM-DD.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the trigger and prevents the popover from opening.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: "'Select date and time'",
+      description: 'Text shown while no value is selected.',
+    },
+    {
+      name: 'format',
+      type: "'short' | 'medium' | 'long' | 'full' | ((value: string) => string)",
+      default: "'medium'",
+      description: 'Display format for the date half. The time is appended after a comma.',
+    },
+    {
+      name: 'timeFormat',
+      type: "'12h' | '24h'",
+      default: "'24h'",
+      description: 'Clock face used by the time field. The stored value stays 24-hour.',
+    },
+    {
+      name: 'minuteStep',
+      type: 'number',
+      default: '1',
+      description: 'Minute interval used by the arrow keys.',
+    },
+    {
+      name: 'showSeconds',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds a seconds segment and stores HH:mm:ss.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      default: "'en-US'",
+      description: 'BCP 47 locale used for names and for the 12-hour day period.',
+    },
+    {
+      name: 'weekStartsOn',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6',
+      description: 'First day of the week. Derived from locale when omitted.',
+    },
+    {
+      name: 'captionLayout',
+      type: "'label' | 'select'",
+      default: "'label'",
+      description: 'Month caption, or month and year pickers inside the popover.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Control, calendar, and time field scale.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the clear action in the field and in the panel footer.',
+    },
+    {
+      name: 'showIcon',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the calendar icon at the start of the field.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the invalid border.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name. Renders a hidden input carrying the value.',
+    },
+    {
+      name: 'labels',
+      type: 'Partial<DateTimePickerLabels>',
+      description: 'Overrides the accessible names for the dialog, the time row, and the actions.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The trigger is a button with `aria-haspopup="dialog"` and `aria-expanded`. `Escape` closes the panel
+  and returns focus to it.
+- Inside the panel, the grid is a single tab stop with full arrow-key navigation, described in the
+  [Calendar documentation](/docs/components/calendar/#accessibility).
+- The time row is the same segmented field as `TimePicker`: one `spinbutton` per unit, each with its
+  own label, range, and value. The selected digits are the focus indicator.
+- `Now` and `Done` are ordinary buttons in the tab order, after the grid and the time field.

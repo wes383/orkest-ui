@@ -1,0 +1,264 @@
+---
+title: Date Range Picker
+description: Pick a start and an end date from one two-month calendar, with a live preview of the span.
+section: components
+---
+
+`DateRangePicker` is a [Calendar](/docs/components/calendar/) pair behind a single field. The value is
+a plain object of two `YYYY-MM-DD` strings, so it survives a round trip through a database or an API
+without a timezone shifting either end.
+
+## Live preview
+
+<ComponentPreview
+  title="Basic date range picker"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { DateRangePicker } from '@orkest/ui/client';
+import type { DateRange } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<DateRange | null>({
+    start: '2026-11-18',
+    end: '2026-11-22',
+  });
+
+  return (
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
+      <DateRangePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ? value.start + ' → ' + value.end : 'none'}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <DateRangePickerBasicExample />
+</ComponentPreview>
+
+The first click sets the start and leaves the span open. Moving the pointer paints the days it would
+cover, and the second click commits the range and closes the popover. Clicking an earlier day than the
+start swaps the two ends instead of producing an inverted range.
+
+## Range limits
+
+`minDate`, `maxDate`, and `disabledDates` are passed straight to both calendars, so blocked days stay
+visible but inert and the navigation stops at the allowed months.
+
+<ComponentPreview
+  title="Bounded range"
+  code={`import { useState } from 'react';
+import { DateRangePicker } from '@orkest/ui/client';
+import type { DateRange } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<DateRange | null>(null);
+
+  return (
+    <DateRangePicker
+      value={value}
+      onChange={setValue}
+      minDate="2026-11-10"
+      maxDate="2026-12-20"
+      disabledDates={(date) => date.endsWith('-15') || date.endsWith('-16')}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}`}
+>
+  <DateRangePickerLimitsExample />
+</ComponentPreview>
+
+## One month at a time
+
+`months` defaults to `2`. Set it to `1` when the popover has to stay narrow; the panel also wraps to a
+single column by itself when the viewport cannot fit both months side by side.
+
+<ComponentPreview
+  title="Single month"
+  code={`import { useState } from 'react';
+import { DateRangePicker } from '@orkest/ui/client';
+import type { DateRange } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<DateRange | null>(null);
+
+  return (
+    <DateRangePicker
+      value={value}
+      onChange={setValue}
+      months={1}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}`}
+>
+  <DateRangePickerSingleMonthExample />
+</ComponentPreview>
+
+## Inside a Field
+
+The trigger reads the surrounding [Field](/docs/components/field/) context: the label points at it and
+`aria-describedby` carries the description and validation message.
+
+<ComponentPreview
+  title="With a label and description"
+  code={`import { useState } from 'react';
+import { DateRangePicker, Field, FieldDescription, FieldLabel } from '@orkest/ui/client';
+import type { DateRange } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<DateRange | null>(null);
+
+  return (
+    <Field required style={{ width: '100%', maxWidth: '20rem' }}>
+      <FieldLabel>Stay</FieldLabel>
+      <DateRangePicker value={value} onChange={setValue} placeholder="Check in – Check out" />
+      <FieldDescription>Both ends are submitted with the form.</FieldDescription>
+    </Field>
+  );
+}`}
+>
+  <DateRangePickerFieldExample />
+</ComponentPreview>
+
+Passing `name` renders two hidden inputs, `${name}-start` and `${name}-end`, so a native form submits
+both ends without extra wiring.
+
+## Sizes
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { Stack } from '@orkest/ui';
+import { DateRangePicker } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="sm" />
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="md" />
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="lg" />
+    </Stack>
+  );
+}`}
+>
+  <DateRangePickerSizesExample />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: '{ start: string; end: string } | null',
+      description: 'Selected range of YYYY-MM-DD values. Controlled when provided, including null.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'DateRange',
+      description: 'Initial range for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: DateRange | null) => void',
+      description: 'Called once both ends are picked, or with null when cleared.',
+    },
+    {
+      name: 'minDate / maxDate',
+      type: 'string',
+      description: 'Inclusive bounds as YYYY-MM-DD.',
+    },
+    {
+      name: 'disabledDates',
+      type: 'string[] | ((value: string) => boolean)',
+      description: 'Dates to block, as a list or a predicate on YYYY-MM-DD.',
+    },
+    {
+      name: 'months',
+      type: '1 | 2',
+      default: '2',
+      description: 'Months shown side by side in the popover.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the trigger and prevents the popover from opening.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: "'Start date – End date'",
+      description: 'Text shown while no range is selected.',
+    },
+    {
+      name: 'separator',
+      type: 'string',
+      default: "'–'",
+      description: 'Sits between the two dates in the field.',
+    },
+    {
+      name: 'format',
+      type: "'short' | 'medium' | 'long' | 'full' | ((value: string) => string)",
+      default: "'medium'",
+      description: 'Display format applied to each end.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      default: "'en-US'",
+      description: 'BCP 47 locale used for names and formatting.',
+    },
+    {
+      name: 'weekStartsOn',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6',
+      description: 'First day of the week. Derived from locale when omitted.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Control and calendar scale.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the clear action in the field and in the panel footer.',
+    },
+    {
+      name: 'showIcon',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the calendar icon at the start of the field.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the invalid border.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name. Renders two hidden inputs, suffixed -start and -end.',
+    },
+    {
+      name: 'labels',
+      type: 'Partial<DateRangePickerLabels>',
+      description: 'Overrides the accessible names for the dialog and the clear action.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The trigger is a button with `aria-haspopup="dialog"` and `aria-expanded`, so the popup is announced
+  before it opens.
+- Each month is a grid with a single tab stop and full arrow-key navigation, described in the
+  [Calendar documentation](/docs/components/calendar/#accessibility).
+- Both endpoints carry `aria-selected`; the days the span covers are painted only, so a screen reader
+  hears two selected dates rather than a wall of selected cells.
+- The pointer preview is decorative. Keyboard users pick the end date by moving to it and pressing
+  `Enter`, which selects the day the focus is on.
