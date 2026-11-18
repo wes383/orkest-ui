@@ -255,6 +255,9 @@ export type {
   ToastViewportProps,
 } from './components/toast';
 
+export { Combobox } from './components/combobox';
+export type { ComboboxProps } from './components/combobox';
+
 export { MultiSelect, Select } from './components/select';
 export type {
   MultiSelectProps,

@@ -140,6 +140,14 @@ import {
   SwitchExample,
 } from '../examples/choice-controls';
 import {
+  Combobox,
+  ComboboxAsyncExample,
+  ComboboxBasicExample,
+  ComboboxCustomItemExample,
+  ComboboxGroupedExample,
+  ComboboxStatesExample,
+} from '../examples/combobox-examples';
+import {
   BasicSelectExample,
   DetailedSelectExample,
   MultiSelect,
@@ -313,6 +321,12 @@ export const mdxComponents = {
   CalendarCaptionSelectExample,
   CalendarRangeExample,
   CalendarSizesExample,
+  Combobox,
+  ComboboxAsyncExample,
+  ComboboxBasicExample,
+  ComboboxCustomItemExample,
+  ComboboxGroupedExample,
+  ComboboxStatesExample,
   DatePickerBasicExample,
   DatePickerBareExample,
   DatePickerCaptionSelectExample,

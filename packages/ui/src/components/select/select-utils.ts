@@ -84,8 +84,12 @@ export function toSelectRenderGroups(items: SelectItem[]): SelectRenderGroup[] {
 export function filterItemsForQuery(
   items: SelectItem[],
   query: string,
-  filterOption?: (option: SelectOption, query: string) => boolean,
+  filterOption?: ((option: SelectOption, query: string) => boolean) | null,
 ): SelectItem[] {
+  if (filterOption === null) {
+    return items;
+  }
+
   const normalizedQuery = query.trim().toLowerCase();
 
   if (normalizedQuery === '') {

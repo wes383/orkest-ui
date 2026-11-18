@@ -11,6 +11,7 @@ import { Button } from './components/button';
 import { Calendar } from './components/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
+import { Combobox } from './components/combobox';
 import { DataTable } from './components/data-table';
 import { DatePicker } from './components/date-picker';
 import {
@@ -165,6 +166,22 @@ describe('accessibility', () => {
     render(<Select aria-label="Team" options={planOptions} />);
 
     await user.click(screen.getByRole('combobox', { name: 'Team' }));
+    await screen.findByRole('listbox');
+
+    // The popup renders in a portal outside any landmark, so the page-level
+    // region rule cannot apply to this isolated fixture.
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  it('renders an open combobox without violations', async () => {
+    const user = userEvent.setup();
+
+    render(<Combobox aria-label="Team" options={planOptions} clearable />);
+
+    const combobox = screen.getByRole('combobox', { name: 'Team' });
+
+    await user.click(combobox);
+    await user.type(combobox, 'eng');
     await screen.findByRole('listbox');
 
     // The popup renders in a portal outside any landmark, so the page-level

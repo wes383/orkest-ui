@@ -1,0 +1,360 @@
+---
+title: Combobox
+description: A single-value picker you type into, with filtering, groups, custom items, and async loading.
+section: components
+---
+
+`Combobox` is an input combined with a list of predefined options. Typing filters the list, and the
+choice is written back into the field. It only ever commits values that exist in `options`; for free
+text with suggestions, use an autocomplete pattern instead.
+
+Import it from `@orkest/ui/client`.
+
+## Live preview
+
+<ComponentPreview
+  title="Searchable select"
+  code={`import { useState } from 'react';
+import { Combobox } from '@orkest/ui/client';
+
+const fruits = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'apricot', label: 'Apricot' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'blueberry', label: 'Blueberry' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'grape', label: 'Grape' },
+  { value: 'mango', label: 'Mango' },
+];
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('apple');
+
+  return (
+    <Combobox
+      aria-label="Fruit"
+      options={fruits}
+      value={value}
+      onChange={setValue}
+      clearable
+      placeholder="Pick a fruit"
+      searchPlaceholder="Search fruit"
+    />
+  );
+}`}
+>
+  <ComboboxBasicExample />
+</ComponentPreview>
+
+## When to use it
+
+| Component | Use it for |
+| --- | --- |
+| `Select` | Choosing from a short, fixed list with no search. |
+| `Combobox` | Searching a long list and choosing exactly one option. |
+| `MultiSelect` | Searching a long list and choosing several options. |
+
+`Combobox` always renders an input. Opening the field starts a fresh search, so a new query never
+needs the old label deleted first; closing it puts the chosen label back.
+
+## Controlled and uncontrolled
+
+Pass `value` and `onChange` to control the selection, or `defaultValue` to start uncontrolled. The
+value is the option's `value`, so keep it to a stable ID when the options come from a database:
+
+```tsx
+<Combobox
+  aria-label="Assignee"
+  options={users.map((user) => ({ value: user.id, label: user.name }))}
+  value={assigneeId}
+  onChange={(next, option) => {
+    setAssigneeId(next);
+    // `option` carries the row that produced the value: description, icon, and so on.
+    console.log(option?.description);
+  }}
+/>
+```
+
+`onChange` receives `null` when the field is cleared, either from the clear action or by deleting
+the text and confirming.
+
+## Groups
+
+Options can be interleaved with `{ label, options }` groups. The group label is announced with the
+listbox and is not selectable itself.
+
+<ComponentPreview
+  title="Grouped options"
+  code={`import { Combobox } from '@orkest/ui/client';
+
+const projects = [
+  {
+    label: 'Engineering',
+    options: [
+      { value: 'frontend', label: 'Frontend', description: 'Web interfaces' },
+      { value: 'backend', label: 'Backend', description: 'APIs and services' },
+    ],
+  },
+  {
+    label: 'Marketing',
+    options: [{ value: 'website', label: 'Website', description: 'Public site' }],
+  },
+];
+
+export function Example() {
+  return (
+    <Combobox
+      aria-label="Project"
+      options={projects}
+      defaultValue="backend"
+      placeholder="Pick a project"
+    />
+  );
+}`}
+>
+  <ComboboxGroupedExample />
+</ComponentPreview>
+
+## Custom option content
+
+`renderItem` replaces the label / description block. The row still gets the selected state, the
+check indicator, and keyboard highlighting from the listbox:
+
+<ComponentPreview
+  title="Custom rows"
+  code={`import { Combobox } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Combobox
+      aria-label="Project"
+      options={projects}
+      defaultValue="frontend"
+      renderItem={(option) => (
+        <span style={{ display: 'grid', gap: 2 }}>
+          <strong>{option.label}</strong>
+          <small>{option.description}</small>
+        </span>
+      )}
+    />
+  );
+}`}
+>
+  <ComboboxCustomItemExample />
+</ComponentPreview>
+
+## Async search and loading
+
+For a server-backed list, filter nothing locally and let the options be the response. Pass
+`filterOption={null}` to switch the local matcher off, use `onSearchChange` to fire the request, and
+`loading` to show the status row:
+
+```tsx
+const [query, setQuery] = useState('');
+const [options, setOptions] = useState<SelectOption[]>([]);
+const [loading, setLoading] = useState(false);
+
+<Combobox
+  aria-label="Country"
+  options={options}
+  filterOption={null}
+  loading={loading}
+  onSearchChange={async (next) => {
+    setQuery(next);
+    setLoading(true);
+    setOptions(await searchCountries(next));
+    setLoading(false);
+  }}
+  emptyMessage={loading ? null : 'No country matched'}
+/>
+```
+
+<ComponentPreview
+  title="Server-side search"
+  code={`<Combobox
+  aria-label="Country"
+  options={results}
+  filterOption={null}
+  loading={loading}
+  onSearchChange={setQuery}
+  placeholder="Pick a country"
+  emptyMessage="No country matched"
+/>`}
+>
+  <ComboboxAsyncExample />
+</ComponentPreview>
+
+While `loading` is set, the listbox exposes `aria-busy="true"` and the status row is announced
+politely. Keep the previous options in place if you want the list to stay usable during the request.
+
+## States
+
+<ComponentPreview
+  title="Disabled, invalid, and large"
+  code={`<Combobox aria-label="Fruit" options={fruits} disabled defaultValue="apple" />
+<Combobox aria-label="Team fruit" options={fruits} invalid placeholder="Invalid" />
+<Combobox aria-label="Sized fruit" options={fruits} size="lg" placeholder="Large" />`}
+>
+  <ComboboxStatesExample />
+</ComponentPreview>
+
+Disable a single row with `disabled` on the option; the field stays usable and the row is skipped by
+the keyboard.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'options',
+      type: 'Array<SelectOption | SelectOptionGroup>',
+      description: 'Options and option groups offered by the field.',
+    },
+    {
+      name: 'value',
+      type: 'string | null',
+      description: 'Controlled selected value.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string | null',
+      default: 'null',
+      description: 'Initial value for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string | null, option?: SelectOption) => void',
+      description: 'Called with the next value, or null when cleared.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: `'Select an option'`,
+      description: 'Text shown while nothing is selected and the field is closed.',
+    },
+    {
+      name: 'searchPlaceholder',
+      type: 'string',
+      default: `'Search…'`,
+      description: 'Placeholder while the field is open and searching.',
+    },
+    {
+      name: 'onSearchChange',
+      type: '(query: string) => void',
+      description: 'Called with the next query, including the reset on close.',
+    },
+    {
+      name: 'filterOption',
+      type: '((option: SelectOption, query: string) => boolean) | null',
+      description:
+        'Replaces the default case-insensitive label filter. Pass null when the options are already server-filtered.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows the status row and sets aria-busy on the listbox.',
+    },
+    {
+      name: 'loadingMessage',
+      type: 'ReactNode',
+      default: `'Loading options…'`,
+      description: 'Content of the loading row.',
+    },
+    {
+      name: 'emptyMessage',
+      type: 'ReactNode',
+      default: `'No options'`,
+      description: 'Content shown when the filtered list is empty.',
+    },
+    {
+      name: 'renderItem',
+      type: '(option: SelectOption) => ReactNode',
+      description: 'Replaces the default option content.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows a clear action while a value is selected.',
+    },
+    {
+      name: 'clearLabel',
+      type: 'string',
+      default: `'Clear selection'`,
+      description: 'Accessible name for the clear action.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the field and prevents the popup from opening.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Marks the field required and forwards it to the hidden form input.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the danger border and aria-invalid.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Field size using the shared control tokens.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name applied to the hidden input.',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'Id applied to the input.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Class name applied to the root element.',
+    },
+    {
+      name: 'leftIcon',
+      type: 'LucideIcon',
+      description: 'Decorative icon rendered before the input.',
+    },
+    {
+      name: 'aria-label / aria-labelledby',
+      type: 'string',
+      description: 'Accessible name for the input.',
+    },
+    {
+      name: 'aria-describedby / aria-errormessage',
+      type: 'string',
+      description: 'Connects help text and validation messages.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The input is the combobox: it exposes `aria-expanded`, `aria-controls`, and `aria-autocomplete`,
+  and the popup is a `listbox` of `option` rows. Group labels are `group` names.
+- Typing filters and highlights the first match; `ArrowDown` / `ArrowUp` move the highlight, `Enter`
+  commits, `Escape` closes and restores the chosen label.
+- Opening starts an empty query, so the first keystroke is never appended to the previous label.
+- Disabled rows are skipped by the keyboard and expose `aria-disabled="true"`.
+- `name` and `required` are forwarded to the hidden input Base UI renders, so the field submits with
+  the surrounding form.
+- With `loading`, the status row is a polite live region and the listbox is marked busy.
+
+## Related
+
+- [Select](/docs/components/select/) for a fixed list without typing.
+- [MultiSelect](/docs/components/multi-select/) for choosing several values with chips.
+- [Field](/docs/components/field/) for labels, descriptions, and validation messages.

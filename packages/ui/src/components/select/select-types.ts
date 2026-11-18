@@ -53,8 +53,11 @@ export interface SelectBaseProps {
   searchPlaceholder?: string;
   /** Called with the next query when the user types. */
   onSearchChange?: (query: string) => void;
-  /** Custom filter. Defaults to a case-insensitive label match. */
-  filterOption?: (option: SelectOption, query: string) => boolean;
+  /**
+   * Custom filter. Defaults to a case-insensitive label match. Pass `null` when
+   * the options are already filtered elsewhere, such as a server search.
+   */
+  filterOption?: ((option: SelectOption, query: string) => boolean) | null;
   /** Content shown when filtering returns no options. */
   emptyMessage?: ReactNode;
   /** Shows a loading row and marks the listbox busy. */
@@ -65,4 +68,16 @@ export interface SelectBaseProps {
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
   'aria-errormessage'?: string;
+}
+
+/**
+ * Props shared by the two components that filter as you type. `Select` keeps
+ * its own base because it does not render a list of items the caller can
+ * restyle.
+ */
+export interface FilterableSelectBaseProps extends SelectBaseProps {
+  /** Replaces the default option content inside the listbox. */
+  renderItem?: (option: SelectOption) => ReactNode;
+  /** Content of the loading row. Defaults to `Loading options…`. */
+  loadingMessage?: ReactNode;
 }
