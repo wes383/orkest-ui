@@ -4,6 +4,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
+import { Field, FieldLabel } from '../field';
 import { DateTimePicker } from './date-time-picker';
 
 const PLACEHOLDER = 'Select date and time';
@@ -118,6 +119,23 @@ describe('DateTimePicker', () => {
 
     expect(onChange).toHaveBeenCalledWith(null);
     expect(screen.getByRole('button', { name: PLACEHOLDER })).toBeInTheDocument();
+  });
+
+  it('keeps its field id and name to itself inside a Field', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Field name="publishedAt">
+        <FieldLabel>Publish at</FieldLabel>
+        <DateTimePicker defaultValue="2026-11-18T09:30" />
+      </Field>,
+    );
+    await open(user, 'Nov 18, 2026, 09:30');
+
+    const ids = Array.from(document.querySelectorAll('[id]')).map((node) => node.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(document.querySelectorAll('input[name="publishedAt"]')).toHaveLength(1);
   });
 
   it('submits through a hidden input', () => {

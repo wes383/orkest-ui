@@ -25,7 +25,7 @@ import {
   type DateDisplayFormat,
   type Weekday,
 } from '../calendar';
-import { useFieldControl } from '../field/field-context';
+import { FieldContext, useFieldControl } from '../field/field-context';
 import {
   Popover,
   PopoverContent,
@@ -344,20 +344,25 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     data-period={timeFormat === '12h' || undefined}
                   >
                     {/* The segmented field without its clock action: the panel is
-                        already open, so this is a plain inline editor. */}
-                    <TimePicker
-                      value={timeValue}
-                      onChange={handleTimeChange}
-                      format={timeFormat}
-                      minuteStep={minuteStep}
-                      showSeconds={showSeconds}
-                      locale={locale}
-                      size={size}
-                      disabled={control.disabled}
-                      clearable={false}
-                      showIcon={false}
-                      placeholder={mergedLabels.time}
-                    />
+                        already open, so this is a plain inline editor. It is cut
+                        off from the surrounding Field so it does not reuse the
+                        control id or submit a second hidden input under the same
+                        name. */}
+                    <FieldContext.Provider value={null}>
+                      <TimePicker
+                        value={timeValue}
+                        onChange={handleTimeChange}
+                        format={timeFormat}
+                        minuteStep={minuteStep}
+                        showSeconds={showSeconds}
+                        locale={locale}
+                        size={size}
+                        disabled={control.disabled}
+                        clearable={false}
+                        showIcon={false}
+                        placeholder={mergedLabels.time}
+                      />
+                    </FieldContext.Provider>
                   </div>
                 </div>
                 <div className={styles.footer}>
