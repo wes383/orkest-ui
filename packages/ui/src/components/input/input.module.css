@@ -162,7 +162,9 @@
 }
 
 .affix {
+  display: inline-flex;
   flex: none;
+  align-items: center;
   color: var(--ui-muted-foreground);
   font-size: inherit;
   white-space: nowrap;

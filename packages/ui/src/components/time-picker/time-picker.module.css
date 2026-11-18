@@ -5,16 +5,24 @@
      surface keeps the same weight at every step. */
   --time-picker-action-size: 1.25rem;
   --time-picker-action-radius: var(--ok-radius-lg);
+  /* Mirrors the field metrics so the leading action can sit exactly as far from
+     the border as the trailing one. */
+  --time-picker-field-height: var(--ok-control-height-md);
+  --time-picker-field-padding: var(--ok-control-padding-x-md);
   font-family: var(--ok-font-sans);
 }
 
 .root[data-size="sm"] {
   --time-picker-action-size: 1rem;
   --time-picker-action-radius: var(--ok-radius-md);
+  --time-picker-field-height: var(--ok-control-height-sm);
+  --time-picker-field-padding: var(--ok-control-padding-x-sm);
 }
 
 .root[data-size="lg"] {
   --time-picker-action-size: 1.5rem;
+  --time-picker-field-height: var(--ok-control-height-lg);
+  --time-picker-field-padding: var(--ok-control-padding-x-lg);
 }
 
 .trigger {
@@ -24,6 +32,11 @@
   justify-content: center;
   width: var(--time-picker-action-size);
   height: var(--time-picker-action-size);
+  /* Cancels the field padding down to the same inset the trailing action has. */
+  margin-inline-start: calc(
+    (var(--time-picker-field-height) - var(--time-picker-action-size)) / 2 -
+      var(--time-picker-field-padding)
+  );
   padding: 0;
   border: 0;
   border-radius: var(--time-picker-action-radius);
@@ -51,7 +64,7 @@
 }
 
 .popover {
-  --popover-body-padding: var(--ok-space-4) var(--ok-space-3);
+  --popover-body-padding: var(--ok-space-4) var(--ok-space-1);
   border-radius: var(--ok-radius-2xl);
 }
 
@@ -66,7 +79,7 @@
   flex-direction: column;
   gap: 2px;
   box-sizing: border-box;
-  width: 4rem;
+  width: 3rem;
   height: 12rem;
   padding-block: var(--ok-space-1);
   overflow-y: auto;
