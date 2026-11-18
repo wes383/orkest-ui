@@ -39,6 +39,14 @@
   width: calc(14ch + var(--ok-space-6));
 }
 
+/* Same divider as the row above, but the columns stack under the grid instead
+   of sharing one line with a label and a field. */
+.timePanel {
+  margin-top: var(--ok-space-3);
+  padding-top: var(--ok-space-3);
+  border-top: var(--ok-border-width) solid var(--ui-border);
+}
+
 .footer {
   display: flex;
   align-items: center;

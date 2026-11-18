@@ -33,8 +33,11 @@ import {
   PopoverPositioner,
   PopoverTrigger,
 } from '../popover';
-import { TimePicker } from '../time-picker';
+import { TimePicker, TimePickerColumn, TimePickerContent } from '../time-picker';
 import {
+  buildHourOptions,
+  buildMinuteOptions,
+  buildSecondOptions,
   formatTimeLabel,
   parseTimeValue,
   toTimeValue,
@@ -57,6 +60,12 @@ export interface DateTimePickerLabels extends CalendarLabels {
   clear: string;
   /** Visible label of the time row. */
   time: string;
+  /** Accessible name of the hours column in `timeMode="menu"`. */
+  hours: string;
+  /** Accessible name of the minutes column in `timeMode="menu"`. */
+  minutes: string;
+  /** Accessible name of the seconds column in `timeMode="menu"`. */
+  seconds: string;
 }
 
 const DEFAULT_LABELS: DateTimePickerLabels = {
@@ -69,6 +78,9 @@ const DEFAULT_LABELS: DateTimePickerLabels = {
   done: 'Done',
   clear: 'Clear',
   time: 'Time',
+  hours: 'Hours',
+  minutes: 'Minutes',
+  seconds: 'Seconds',
 };
 
 const ZERO_TIME: TimeParts = { hours: 0, minutes: 0, seconds: 0 };
@@ -128,6 +140,12 @@ export interface DateTimePickerProps
   format?: DateDisplayFormat | ((value: string) => string);
   /** 12-hour or 24-hour display. Stored values stay 24-hour. Defaults to `24h`. */
   timeFormat?: TimeFormat;
+  /**
+   * How the time half is edited. `input` is the segmented field you can type
+   * into; `menu` is the scrollable hour, minute, and second columns used by the
+   * `TimePicker` panel. Defaults to `input`.
+   */
+  timeMode?: 'input' | 'menu';
   /** Minute interval offered by the time field. Defaults to `1`. */
   minuteStep?: number;
   /** Adds a seconds segment and stores `HH:mm:ss`. */
@@ -153,8 +171,9 @@ export interface DateTimePickerProps
 }
 
 /**
- * Date and time in a single field. The panel holds a calendar and a segmented
- * time field, and stays open while both are edited; `Done` closes it.
+ * Date and time in a single field. The panel holds a calendar and a time half
+ * that is either a segmented field or a column menu, and stays open while both
+ * are edited; `Done` closes it.
  */
 export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
   function DateTimePicker(
@@ -169,6 +188,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
       placeholder = 'Select date and time',
       format = 'medium',
       timeFormat = '24h',
+      timeMode = 'input',
       minuteStep = 1,
       showSeconds = false,
       locale = 'en-US',
@@ -263,6 +283,21 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
       [commit, datePart, showSeconds],
     );
 
+    /** Writes one unit from the column menu and keeps the rest of the time. */
+    const handleTimeParts = useCallback(
+      (patch: Partial<TimeParts>) => {
+        handleTimeChange(toTimeValue({ ...time, ...patch }, { showSeconds }));
+      },
+      [handleTimeChange, showSeconds, time],
+    );
+
+    const hourOptions = useMemo(
+      () => buildHourOptions(timeFormat, locale),
+      [timeFormat, locale],
+    );
+    const minuteOptions = useMemo(() => buildMinuteOptions(minuteStep), [minuteStep]);
+    const secondOptions = useMemo(() => buildSecondOptions(), []);
+
     const handleNow = useCallback(() => {
       const now = new Date();
       const date = formatISODate({
@@ -336,35 +371,65 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                   captionLayout={captionLayout}
                   labels={mergedLabels}
                 />
-                <div className={styles.timeRow}>
-                  <span className={styles.timeLabel}>{mergedLabels.time}</span>
-                  <div
-                    className={styles.timeField}
-                    data-seconds={showSeconds || undefined}
-                    data-period={timeFormat === '12h' || undefined}
-                  >
-                    {/* The segmented field without its clock action: the panel is
-                        already open, so this is a plain inline editor. It is cut
-                        off from the surrounding Field so it does not reuse the
-                        control id or submit a second hidden input under the same
-                        name. */}
-                    <FieldContext.Provider value={null}>
-                      <TimePicker
-                        value={timeValue}
-                        onChange={handleTimeChange}
-                        format={timeFormat}
-                        minuteStep={minuteStep}
-                        showSeconds={showSeconds}
-                        locale={locale}
-                        size={size}
+                {timeMode === 'menu' ? (
+                  <div className={styles.timePanel}>
+                    <TimePickerContent>
+                      <TimePickerColumn
+                        label={mergedLabels.hours}
+                        value={time.hours}
+                        options={hourOptions}
+                        onValueChange={(hours) => handleTimeParts({ hours })}
                         disabled={control.disabled}
-                        clearable={false}
-                        showIcon={false}
-                        placeholder={mergedLabels.time}
                       />
-                    </FieldContext.Provider>
+                      <TimePickerColumn
+                        label={mergedLabels.minutes}
+                        value={time.minutes}
+                        options={minuteOptions}
+                        onValueChange={(minutes) => handleTimeParts({ minutes })}
+                        disabled={control.disabled}
+                      />
+                      {showSeconds ? (
+                        <TimePickerColumn
+                          label={mergedLabels.seconds}
+                          value={time.seconds}
+                          options={secondOptions}
+                          onValueChange={(seconds) => handleTimeParts({ seconds })}
+                          disabled={control.disabled}
+                        />
+                      ) : null}
+                    </TimePickerContent>
                   </div>
-                </div>
+                ) : (
+                  <div className={styles.timeRow}>
+                    <span className={styles.timeLabel}>{mergedLabels.time}</span>
+                    <div
+                      className={styles.timeField}
+                      data-seconds={showSeconds || undefined}
+                      data-period={timeFormat === '12h' || undefined}
+                    >
+                      {/* The segmented field without its clock action: the panel is
+                          already open, so this is a plain inline editor. It is cut
+                          off from the surrounding Field so it does not reuse the
+                          control id or submit a second hidden input under the same
+                          name. */}
+                      <FieldContext.Provider value={null}>
+                        <TimePicker
+                          value={timeValue}
+                          onChange={handleTimeChange}
+                          format={timeFormat}
+                          minuteStep={minuteStep}
+                          showSeconds={showSeconds}
+                          locale={locale}
+                          size={size}
+                          disabled={control.disabled}
+                          clearable={false}
+                          showIcon={false}
+                          placeholder={mergedLabels.time}
+                        />
+                      </FieldContext.Provider>
+                    </div>
+                  </div>
+                )}
                 <div className={styles.footer}>
                   <Button
                     variant="ghost"

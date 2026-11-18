@@ -1,6 +1,6 @@
 ---
 title: Date Time Picker
-description: Pick a date and a time of day in one field, with a calendar and a segmented clock in the same popover.
+description: Pick a date and a time of day in one field, with a calendar and either a segmented clock or a column menu in the same popover.
 section: components
 ---
 
@@ -86,6 +86,34 @@ export function Example() {
 }`}
 >
   <DateTimePickerSecondsExample />
+</ComponentPreview>
+
+## Column menu for the time
+
+`timeMode="menu"` swaps the segmented field for the scrollable hour, minute, and second columns
+that [TimePicker](/docs/components/time-picker/) opens in its own panel. Every click commits at
+once, and the columns follow `timeFormat`, `minuteStep`, and `showSeconds`, so the stored value
+keeps the same shape.
+
+<ComponentPreview
+  title="Time picked from columns"
+  code={`import { useState } from 'react';
+import { DateTimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18T09:30');
+
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      timeMode="menu"
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
+}`}
+>
+  <DateTimePickerMenuExample />
 </ComponentPreview>
 
 ## Inside a Field
@@ -187,6 +215,13 @@ export function Example() {
       description: 'Clock face used by the time field. The stored value stays 24-hour.',
     },
     {
+      name: 'timeMode',
+      type: "'input' | 'menu'",
+      default: "'input'",
+      description:
+        'Edits the time in the segmented field or in scrollable hour, minute, and second columns.',
+    },
+    {
       name: 'minuteStep',
       type: 'number',
       default: '1',
@@ -247,7 +282,8 @@ export function Example() {
     {
       name: 'labels',
       type: 'Partial<DateTimePickerLabels>',
-      description: 'Overrides the accessible names for the dialog, the time row, and the actions.',
+      description:
+        'Overrides the accessible names for the dialog, the time half, and the actions.',
     },
   ]}
 />
@@ -258,6 +294,7 @@ export function Example() {
   and returns focus to it.
 - Inside the panel, the grid is a single tab stop with full arrow-key navigation, described in the
   [Calendar documentation](/docs/components/calendar/#accessibility).
-- The time row is the same segmented field as `TimePicker`: one `spinbutton` per unit, each with its
-  own label, range, and value. The selected digits are the focus indicator.
+- The time half is the same segmented field as `TimePicker` by default: one `spinbutton` per unit,
+  each with its own label, range, and value, and the selected digits are the focus indicator. With
+  `timeMode="menu"`, each column is a `listbox` driven by the arrow keys, `Home`, and `End`.
 - `Now` and `Done` are ordinary buttons in the tab order, after the grid and the time field.

@@ -116,6 +116,7 @@ import {
 import {
   DateTimePickerBasicExample,
   DateTimePickerFieldExample,
+  DateTimePickerMenuExample,
   DateTimePickerSecondsExample,
   DateTimePickerSizesExample,
   DateTimePickerTwelveHourExample,
@@ -326,6 +327,7 @@ export const mdxComponents = {
   DateRangePickerSizesExample,
   DateTimePickerBasicExample,
   DateTimePickerFieldExample,
+  DateTimePickerMenuExample,
   DateTimePickerSecondsExample,
   DateTimePickerSizesExample,
   DateTimePickerTwelveHourExample,

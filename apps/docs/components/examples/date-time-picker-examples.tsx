@@ -32,6 +32,19 @@ export function DateTimePickerTwelveHourExample() {
   );
 }
 
+export function DateTimePickerMenuExample() {
+  const [value, setValue] = useState<string | null>('2026-11-18T09:30');
+
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      timeMode="menu"
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
+}
+
 export function DateTimePickerSecondsExample() {
   const [value, setValue] = useState<string | null>('2026-11-18T09:30:15');
 
