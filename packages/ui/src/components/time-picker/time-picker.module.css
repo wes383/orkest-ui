@@ -62,20 +62,15 @@
   min-width: 2ch;
   height: calc(var(--field-action-size) + 2px);
   padding: 0 1px;
-  border-radius: calc(var(--field-action-radius) - 2px);
   outline: none;
   color: var(--ui-foreground);
   cursor: text;
   user-select: text;
-  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.segment:hover:not([aria-disabled="true"]) {
-  background: var(--ui-secondary);
-}
-
-/* The selected digits are the focus indicator, as in a native time field, so no
-   ring is drawn around the segment. */
+/* Hovering a unit gives no background: the digits are not a button. The
+   selected digits are the only state, and they double as the focus indicator,
+   as in a native time field, so no ring is drawn around the segment. */
 .segment:focus-visible {
   outline: none;
 }
@@ -218,7 +213,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .item,
-  .segment,
   .trigger {
     transition: none;
   }
