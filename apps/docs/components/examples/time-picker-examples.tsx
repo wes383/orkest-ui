@@ -68,3 +68,17 @@ export function TimePickerStatesExample() {
     </Stack>
   );
 }
+
+export function TimePickerBareExample() {
+  const [value, setValue] = useState<string | null>('09:30');
+
+  return (
+    <TimePicker
+      value={value}
+      onChange={setValue}
+      showIcon={false}
+      clearable={false}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}

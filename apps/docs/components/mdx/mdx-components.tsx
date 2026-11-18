@@ -108,6 +108,7 @@ import {
 } from '../examples/date-picker-examples';
 import {
   TimePickerBasicExample,
+  TimePickerBareExample,
   TimePickerFieldExample,
   TimePickerSecondsExample,
   TimePickerStatesExample,
@@ -305,6 +306,7 @@ export const mdxComponents = {
   DatePickerRangeExample,
   DatePickerSizesExample,
   TimePickerBasicExample,
+  TimePickerBareExample,
   TimePickerFieldExample,
   TimePickerSecondsExample,
   TimePickerStatesExample,

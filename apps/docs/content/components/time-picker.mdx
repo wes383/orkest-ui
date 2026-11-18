@@ -141,6 +141,33 @@ export function Example() {
   <TimePickerStatesExample />
 </ComponentPreview>
 
+## Hiding the actions
+
+`showIcon={false}` removes the clock action that opens the panel. The field still accepts typed input
+and arrow-key stepping. `clearable={false}` removes the clear action.
+
+<ComponentPreview
+  title="Field without the clock or the clear action"
+  code={`import { useState } from 'react';
+import { TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('09:30');
+
+  return (
+    <TimePicker
+      value={value}
+      onChange={setValue}
+      showIcon={false}
+      clearable={false}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}`}
+>
+  <TimePickerBareExample />
+</ComponentPreview>
+
 ## Composition
 
 `TimePicker` is built from parts you can use on their own:
@@ -229,6 +256,12 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
       type: 'boolean',
       default: 'true',
       description: 'Shows a clear action while a time is selected.',
+    },
+    {
+      name: 'showIcon',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the clock action at the start of the field.',
     },
     {
       name: 'size',
