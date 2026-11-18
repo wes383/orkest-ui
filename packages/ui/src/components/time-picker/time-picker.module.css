@@ -65,8 +65,8 @@
   border-radius: calc(var(--field-action-radius) - 2px);
   outline: none;
   color: var(--ui-foreground);
-  cursor: default;
-  user-select: none;
+  cursor: text;
+  user-select: text;
   transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
@@ -74,9 +74,15 @@
   background: var(--ui-secondary);
 }
 
+/* The selected digits are the focus indicator, as in a native time field, so no
+   ring is drawn around the segment. */
 .segment:focus-visible {
-  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
-  outline-offset: -1px;
+  outline: none;
+}
+
+.segment::selection {
+  background: var(--ui-selection-background);
+  color: var(--ui-foreground);
 }
 
 .segment[data-placeholder="true"] {

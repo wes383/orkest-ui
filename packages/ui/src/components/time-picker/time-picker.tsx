@@ -4,6 +4,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -73,6 +74,8 @@ const DEFAULT_LABELS: TimePickerLabels = {
   period: 'AM/PM',
   clear: 'Clear input',
 };
+
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 const iconSizeBySize: Record<TimePickerSize, IconSize> = {
   sm: 'xs',
@@ -319,6 +322,21 @@ function pad2(value: number): string {
   return String(value).padStart(2, '0');
 }
 
+/** Highlights a whole segment, the way a native segmented field does on click. */
+function selectSegmentText(node: HTMLElement) {
+  const selection = window.getSelection();
+
+  if (!selection) {
+    return;
+  }
+
+  const range = document.createRange();
+
+  range.selectNodeContents(node);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
 interface TimePickerFieldProps {
   id?: string;
   name?: string;
@@ -368,6 +386,7 @@ function TimePickerField({
 }: TimePickerFieldProps) {
   const [draft, setDraft] = useState<TimeFieldState | null>(null);
   const [focused, setFocused] = useState(false);
+  const [focusedSegment, setFocusedSegment] = useState<TimeSegmentKey | null>(null);
   // Digits typed into one segment before it advances, e.g. `1` then `4`.
   const buffer = useRef<{ segment: TimeSegmentKey | null; digits: string }>({
     segment: null,
@@ -410,6 +429,21 @@ function TimePickerField({
     ? null
     : pad2(state.seconds);
   const periodText = displayHours === null ? null : formatDayPeriod(displayHours, locale);
+
+  // React swaps the text node whenever a segment changes, which drops the
+  // selection, so the highlight is restored after every render while a segment
+  // still owns the focus.
+  useIsoLayoutEffect(() => {
+    if (focusedSegment === null) {
+      return;
+    }
+
+    const node = segmentNodes.current[focusedSegment];
+
+    if (node && document.activeElement === node) {
+      selectSegmentText(node);
+    }
+  }, [focusedSegment, hourText, minuteText, secondText, periodText]);
 
   function resetBuffer() {
     buffer.current = { segment: null, digits: '' };
@@ -695,6 +729,21 @@ function TimePickerField({
         aria-disabled={disabled || undefined}
         aria-invalid={invalid || undefined}
         onKeyDown={(event) => handleSegmentKeyDown(key, event)}
+        onFocus={(event) => {
+          setFocusedSegment(key);
+          selectSegmentText(event.currentTarget);
+        }}
+        onMouseDown={(event) => {
+          if (disabled) {
+            return;
+          }
+
+          // Native focus would drop a caret between the digits; select the unit
+          // instead, so typing replaces it the way a segmented field does.
+          event.preventDefault();
+          event.currentTarget.focus();
+          selectSegmentText(event.currentTarget);
+        }}
       >
         {config.text ?? config.ghost}
       </span>
@@ -728,6 +777,7 @@ function TimePickerField({
           }
 
           setFocused(false);
+          setFocusedSegment(null);
           resetDraft();
         }}
       >

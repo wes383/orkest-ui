@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -33,6 +33,42 @@ describe('TimePicker', () => {
     expect(getSegment('Minutes')).toHaveTextContent('45');
     expect(getSegment('AM/PM')).toHaveTextContent('PM');
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('selects the digits when a segment is reached with the keyboard', async () => {
+    const user = userEvent.setup();
+
+    render(<TimePicker defaultValue="09:30" showIcon={false} />);
+    await user.tab();
+
+    expect(getSegment('Hours')).toHaveFocus();
+    expect(window.getSelection()?.toString()).toBe('09');
+  });
+
+  it('keeps the typed digits selected and moves the selection on', async () => {
+    const user = userEvent.setup();
+
+    render(<TimePicker defaultValue="09:30" />);
+    await user.click(getSegment('Hours'));
+    await user.keyboard('1');
+
+    expect(getSegment('Hours')).toHaveTextContent('01');
+    expect(window.getSelection()?.toString()).toBe('01');
+
+    await user.keyboard('4');
+
+    expect(getSegment('Hours')).toHaveTextContent('14');
+    expect(getSegment('Minutes')).toHaveFocus();
+    expect(window.getSelection()?.toString()).toBe('30');
+  });
+
+  it('selects the digits on pointer down', () => {
+    render(<TimePicker defaultValue="09:30" />);
+
+    fireEvent.mouseDown(getSegment('Minutes'));
+
+    expect(getSegment('Minutes')).toHaveFocus();
+    expect(window.getSelection()?.toString()).toBe('30');
   });
 
   it('opens the panel from a single clock action on the leading side', () => {
