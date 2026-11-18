@@ -10,7 +10,7 @@ export function TimePickerBasicExample() {
   const [value, setValue] = useState<string | null>('09:30');
 
   return (
-    <Stack gap={2} align="start">
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
       <TimePicker value={value} onChange={setValue} />
       <Text size="sm" tone="muted">
         Value: {value ?? 'none'}
@@ -23,7 +23,7 @@ export function TimePickerTwelveHourExample() {
   const [value, setValue] = useState<string | null>('13:45');
 
   return (
-    <Stack gap={3} align="start">
+    <Stack gap={3} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
       <TimePicker value={value} onChange={setValue} format="12h" minuteStep={15} />
       <Text size="sm" tone="muted">
         Stored as {value ?? 'none'} — the display format never changes the value.

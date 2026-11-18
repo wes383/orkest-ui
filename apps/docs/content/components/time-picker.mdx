@@ -23,7 +23,7 @@ export function Example() {
   const [value, setValue] = useState<string | null>('09:30');
 
   return (
-    <Stack gap={2} align="start">
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
       <TimePicker value={value} onChange={setValue} />
       <Text size="sm" tone="muted">
         Value: {value ?? 'none'}
@@ -53,7 +53,7 @@ export function Example() {
   const [value, setValue] = useState<string | null>('13:45');
 
   return (
-    <Stack gap={3} align="start">
+    <Stack gap={3} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
       <TimePicker value={value} onChange={setValue} format="12h" minuteStep={15} />
       <Text size="sm" tone="muted">
         Stored as {value ?? 'none'} — the display format never changes the value.
@@ -265,7 +265,8 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
 
 - The field is a real text input, so screen readers announce the current value and the typed text is
   editable with the usual caret and selection behavior.
-- The clock button next to it is a separate, labelled button with `aria-haspopup="dialog"`.
+- The clock button at the start of the field is a separate, labelled button with
+  `aria-haspopup="dialog"`.
 - Inside the panel each column is a labelled listbox. `ArrowUp` and `ArrowDown` move the selection,
   `Home` and `End` jump to the ends, and `ArrowLeft` and `ArrowRight` move between columns.
 - Selected options carry `aria-selected`, and unavailable ones carry `aria-disabled` rather than being
