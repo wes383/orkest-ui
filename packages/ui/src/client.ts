@@ -264,3 +264,35 @@ export type {
   SelectProps,
   SelectSize,
 } from './components/select';
+
+export {
+  Calendar,
+  CalendarDay,
+  CalendarGrid,
+  CalendarHeader,
+  addDays,
+  addMonths,
+  buildCalendarWeeks,
+  daysInMonth,
+  formatISODate,
+  formatISOMonth,
+  isSameDate,
+  isSameMonth,
+  parseISODate,
+  parseISOMonth,
+  resolveWeekStartsOn,
+  startOfMonth,
+  today as todayDate,
+  weekdayOf,
+} from './components/calendar';
+export type {
+  CalendarCaptionLayout,
+  CalendarDayProps,
+  CalendarGridProps,
+  CalendarHeaderProps,
+  CalendarLabels,
+  CalendarProps,
+  CalendarSize,
+  CivilDate,
+  Weekday,
+} from './components/calendar';
