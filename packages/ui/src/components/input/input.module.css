@@ -20,6 +20,10 @@
   --field-padding-x: var(--ok-control-padding-x-md);
   --field-padding-y: var(--ok-space-2);
   --field-radius: var(--ok-radius-xl);
+  /* The action is a square hugging its icon. It steps with the control so the
+     hover surface keeps the same weight at every size. */
+  --field-action-size: 1.25rem;
+  --field-action-radius: var(--ok-radius-lg);
   display: flex;
   align-items: center;
   gap: var(--ok-space-2);
@@ -49,6 +53,8 @@
   --field-padding-x: var(--ok-control-padding-x-sm);
   --field-padding-y: var(--ok-space-1);
   --field-radius: var(--ok-radius-lg);
+  --field-action-size: 1rem;
+  --field-action-radius: var(--ok-radius-md);
   font-size: var(--ok-font-size-xs);
 }
 
@@ -65,6 +71,7 @@
   --field-padding-x: var(--ok-control-padding-x-lg);
   --field-padding-y: var(--ok-space-3);
   --field-radius: var(--ok-radius-xl);
+  --field-action-size: 1.5rem;
   font-size: var(--ok-font-size-md);
 }
 
@@ -73,11 +80,12 @@
   --field-padding-x: var(--ok-control-padding-x-xl);
   --field-padding-y: var(--ok-space-3);
   --field-radius: var(--ok-radius-2xl);
+  --field-action-size: 1.75rem;
   font-size: var(--ok-font-size-lg);
 }
 
 .field[data-actions="true"] {
-  padding-right: var(--ok-space-2);
+  padding-right: calc((var(--field-height) - var(--field-action-size)) / 2);
 }
 
 .field:hover:not(:focus-within):not([data-disabled="true"]):not([data-read-only="true"]):not(
@@ -169,11 +177,11 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--field-action-size);
+  height: var(--field-action-size);
   padding: 0;
   border: 0;
-  border-radius: var(--ok-radius-lg);
+  border-radius: var(--field-action-radius);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;
