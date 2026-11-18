@@ -355,4 +355,108 @@ describe('MultiSelect', () => {
     await userEvent.setup().click(combobox);
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
+
+  it('selects every enabled option from the select-all row', async () => {
+    const onChange = vi.fn();
+
+    render(
+      <MultiSelect aria-label="Teams" options={options} selectAll onChange={onChange} />,
+    );
+
+    const { user } = await openMultiSelect();
+    const selectAll = screen.getByRole('button', { name: 'Select all' });
+
+    expect(selectAll).toHaveAttribute('aria-pressed', 'false');
+
+    await user.click(selectAll);
+
+    // Product is disabled, so it is left out.
+    expect(onChange).toHaveBeenLastCalledWith(
+      ['design', 'engineering'],
+      expect.arrayContaining([expect.objectContaining({ value: 'design' })]),
+    );
+    expect(screen.getByRole('button', { name: 'Clear all' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Clear all' }));
+
+    expect(onChange).toHaveBeenLastCalledWith([], []);
+    expect(screen.getByRole('button', { name: 'Select all' })).toBeInTheDocument();
+  });
+
+  it('respects maxSelected when selecting all', async () => {
+    const onChange = vi.fn();
+    const manyOptions: SelectItem[] = [
+      { value: 'design', label: 'Design' },
+      { value: 'engineering', label: 'Engineering' },
+      { value: 'product', label: 'Product' },
+    ];
+
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={manyOptions}
+        selectAll
+        maxSelected={2}
+        defaultValue={['design']}
+        onChange={onChange}
+      />,
+    );
+
+    const { user } = await openMultiSelect();
+    const selectAll = screen.getByRole('button', { name: 'Select all' });
+
+    await user.click(selectAll);
+
+    // Only one seat is left, so the second option is the only addition.
+    expect(onChange).toHaveBeenLastCalledWith(
+      ['design', 'engineering'],
+      expect.anything(),
+    );
+    expect(screen.getByRole('button', { name: 'Select all' })).toBeDisabled();
+  });
+
+  it('collapses extra chips into a counter that expands', async () => {
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={options}
+        defaultValue={['design', 'engineering']}
+        maxVisible={1}
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Remove Design' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Remove Engineering' }),
+    ).not.toBeInTheDocument();
+
+    const overflow = screen.getByRole('button', { name: 'Show 1 more' });
+
+    expect(overflow).toHaveTextContent('+1');
+
+    await userEvent.setup().click(overflow);
+
+    expect(
+      screen.getByRole('button', { name: 'Remove Engineering' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Show 1 more' })).not.toBeInTheDocument();
+  });
+
+  it('renders custom option content', async () => {
+    render(
+      <MultiSelect
+        aria-label="Teams"
+        options={options}
+        renderItem={(option) => <span>{option.label} team</span>}
+      />,
+    );
+
+    await openMultiSelect();
+
+    expect(screen.getByRole('option', { name: 'Design team' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Product team' })).toBeInTheDocument();
+  });
 });

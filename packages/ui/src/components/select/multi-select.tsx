@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Fragment,
   forwardRef,
   useCallback,
   useId,
@@ -13,13 +12,13 @@ import {
   type ReactNode,
 } from 'react';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
+import { Check, ChevronDown, X } from 'lucide-react';
 
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
 import { useFieldControl } from '../field/field-context';
-import { SelectOptionContent } from './select-option';
+import { OptionList } from './option-list';
 import {
   excludeSelectValues,
   filterItemsForQuery,
@@ -27,12 +26,14 @@ import {
   selectActionIconSizeBySize,
   selectIconSizeBySize,
   toSelectRenderGroups,
-  type SelectRenderGroup,
 } from './select-utils';
-import type { SelectBaseProps, SelectOption } from './select-types';
+import type {
+  FilterableSelectBaseProps,
+  SelectOption,
+} from './select-types';
 import styles from './select.module.css';
 
-export interface MultiSelectProps extends SelectBaseProps {
+export interface MultiSelectProps extends FilterableSelectBaseProps {
   /** Controlled selected values. */
   value?: string[];
   /** Initial values for uncontrolled usage. */
@@ -43,6 +44,18 @@ export interface MultiSelectProps extends SelectBaseProps {
   maxSelected?: number;
   /** Removes selected options from the menu. */
   hideSelected?: boolean;
+  /** Adds a row that selects every option in the list, and clears when all are on. */
+  selectAll?: boolean;
+  /** Label of the select-all row. Defaults to `Select all`. */
+  selectAllLabel?: string;
+  /** Label of the select-all row once every option is selected. Defaults to `Clear all`. */
+  clearAllLabel?: string;
+  /** Collapses the chips past this count into a single counter chip. */
+  maxVisible?: number;
+  /** Text of the counter chip. Defaults to `+N`. */
+  overflowLabel?: (count: number) => string;
+  /** Accessible name of the counter chip. Defaults to `Show N more`. */
+  showMoreLabel?: (count: number) => string;
   /** Replaces the default tag display for selected values. */
   renderValue?: (
     selected: SelectOption[],
@@ -84,11 +97,19 @@ function MultiSelectImpl({
   filterOption,
   emptyMessage = 'No options',
   loading = false,
+  loadingMessage,
   clearLabel = 'Clear selection',
   removeLabel = 'Remove',
   maxSelected,
   hideSelected = false,
+  selectAll = false,
+  selectAllLabel = 'Select all',
+  clearAllLabel = 'Clear all',
+  maxVisible,
+  overflowLabel = (count: number) => `+${count}`,
+  showMoreLabel = (count: number) => `Show ${count} more`,
   renderValue,
+  renderItem,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
@@ -110,6 +131,7 @@ function MultiSelectImpl({
   );
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [expanded, setExpanded] = useState(false);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -146,10 +168,22 @@ function MultiSelectImpl({
 
     return filterItemsForQuery(items, query, filterOption);
   }, [options, hideSelected, selectedSet, query, filterOption]);
+
+  const visibleSelectable = useMemo(
+    () => flattenSelectOptions(visibleItems).filter((option) => !option.disabled),
+    [visibleItems],
+  );
   const visibleGroups = useMemo(
     () => toSelectRenderGroups(visibleItems),
     [visibleItems],
   );
+  const selectableOptions = useMemo(
+    () => allOptions.filter((option) => !option.disabled),
+    [allOptions],
+  );
+  const allSelected =
+    selectableOptions.length > 0 &&
+    selectableOptions.every((option) => selectedSet.has(option.value));
 
   const iconSize = selectIconSizeBySize[size];
   const actionIconSize = selectActionIconSizeBySize[size];
@@ -163,6 +197,16 @@ function MultiSelectImpl({
     : currentValues.length === 0
       ? placeholder
       : undefined;
+
+  const collapsible = maxVisible !== undefined && currentValues.length > maxVisible;
+  const showAllChips = expanded || !collapsible;
+  const chips = currentValues.map((chipValue) => ({
+    value: chipValue,
+    option: optionByValue.get(chipValue),
+  }));
+  const visibleChips = showAllChips ? chips : chips.slice(0, maxVisible);
+  /* A custom value replaces the chip row entirely, so it never overflows. */
+  const hiddenCount = renderValue ? 0 : chips.length - visibleChips.length;
 
   const setInputRef = useCallback(
     (node: HTMLInputElement | null) => {
@@ -204,6 +248,39 @@ function MultiSelectImpl({
     [commitValues, currentValues],
   );
 
+  const handleToggleAll = useCallback(() => {
+    if (allSelected) {
+      commitValues(
+        currentValues.filter(
+          (currentValue) =>
+            !selectableOptions.some((option) => option.value === currentValue),
+        ),
+      );
+      return;
+    }
+
+    const room =
+      maxSelected === undefined ? Number.POSITIVE_INFINITY : maxSelected - currentValues.length;
+    const additions = visibleSelectable
+      .filter((option) => !selectedSet.has(option.value))
+      .slice(0, Math.max(room, 0))
+      .map((option) => option.value);
+
+    if (additions.length === 0) {
+      return;
+    }
+
+    commitValues([...currentValues, ...additions]);
+  }, [
+    allSelected,
+    commitValues,
+    currentValues,
+    maxSelected,
+    selectableOptions,
+    selectedSet,
+    visibleSelectable,
+  ]);
+
   const handleInputValueChange = useCallback(
     (inputValue: string, details: { reason: string }) => {
       if (
@@ -228,6 +305,7 @@ function MultiSelectImpl({
         }
 
         setQuery('');
+        setExpanded(false);
       }
     },
     [onSearchChange, query],
@@ -247,52 +325,28 @@ function MultiSelectImpl({
   }
 
   function isOptionDisabled(option: SelectOption) {
-    return (
-      Boolean(option.disabled) ||
-      (atLimit && !selectedSet.has(option.value))
-    );
+    return atLimit && !selectedSet.has(option.value);
   }
 
-  function renderOption(option: SelectOption) {
-    return (
-      <BaseCombobox.Item
-        key={option.value}
-        value={option.value}
-        disabled={isOptionDisabled(option)}
-        className={styles.item}
+  const selectAllRow = selectAll ? (
+    <div className={styles.selectAllRow}>
+      <button
+        type="button"
+        className={styles.selectAll}
+        aria-pressed={allSelected}
+        disabled={
+          control.disabled ||
+          (!allSelected && (visibleSelectable.length === 0 || atLimit))
+        }
+        onClick={handleToggleAll}
       >
-        <SelectOptionContent option={option} />
-        <BaseCombobox.ItemIndicator className={styles.itemIndicator}>
-          <Icon icon={Check} size="sm" />
-        </BaseCombobox.ItemIndicator>
-      </BaseCombobox.Item>
-    );
-  }
-
-  function renderGroup(group: SelectRenderGroup) {
-    if (!group.label) {
-      return (
-        <Fragment key={group.key}>
-          {group.items.map((option) => renderOption(option))}
-        </Fragment>
-      );
-    }
-
-    return (
-      <BaseCombobox.Group
-        key={group.key}
-        items={group.items}
-        className={styles.group}
-      >
-        <BaseCombobox.GroupLabel className={styles.groupLabel}>
-          {group.label}
-        </BaseCombobox.GroupLabel>
-        <BaseCombobox.Collection>
-          {(option: SelectOption) => renderOption(option)}
-        </BaseCombobox.Collection>
-      </BaseCombobox.Group>
-    );
-  }
+        <span className={styles.selectAllMark} aria-hidden="true">
+          {allSelected ? <Icon icon={Check} size="xs" /> : null}
+        </span>
+        <span>{allSelected ? clearAllLabel : selectAllLabel}</span>
+      </button>
+    </div>
+  ) : null;
 
   return (
     <BaseCombobox.Root
@@ -361,13 +415,12 @@ function MultiSelectImpl({
                     {renderValue(selectedOptions, removeValue)}
                   </span>
                 ) : (
-                  selectedValues.map((selectedValue) => {
-                    const option = optionByValue.get(selectedValue);
-                    const label = option?.label ?? selectedValue;
+                  visibleChips.map(({ value: chipValue, option }) => {
+                    const label = option?.label ?? chipValue;
 
                     return (
                       <BaseCombobox.Chip
-                        key={selectedValue}
+                        key={chipValue}
                         className={styles.chip}
                         aria-label={label}
                       >
@@ -388,6 +441,16 @@ function MultiSelectImpl({
                     );
                   })
                 )}
+                {hiddenCount > 0 ? (
+                  <button
+                    type="button"
+                    className={styles.overflowChip}
+                    aria-label={showMoreLabel(hiddenCount)}
+                    onClick={() => setExpanded(true)}
+                  >
+                    {overflowLabel(hiddenCount)}
+                  </button>
+                ) : null}
                 <BaseCombobox.Input
                   ref={setInputRef}
                   id={comboboxId}
@@ -402,10 +465,10 @@ function MultiSelectImpl({
                   aria-errormessage={ariaErrorMessage}
                   aria-invalid={control.invalid || undefined}
                   aria-description={
-                    currentValues.length > 0
+                    selectedValues.length > 0
                       ? maxSelected !== undefined
-                        ? `${currentValues.length} of ${maxSelected} selected`
-                        : `${currentValues.length} selected`
+                        ? `${selectedValues.length} of ${maxSelected} selected`
+                        : `${selectedValues.length} selected`
                       : undefined
                   }
                 />
@@ -436,23 +499,15 @@ function MultiSelectImpl({
             className={styles.positioner}
           >
             <BaseCombobox.Popup className={styles.menu}>
-              <BaseCombobox.Status className={styles.status}>
-                {loading ? (
-                  <>
-                    <Icon icon={LoaderCircle} size="sm" className={styles.spinner} />
-                    <span>Loading options…</span>
-                  </>
-                ) : null}
-              </BaseCombobox.Status>
-              <BaseCombobox.Empty className={styles.status}>
-                {loading ? null : emptyMessage}
-              </BaseCombobox.Empty>
-              <BaseCombobox.List
-                className={styles.list}
-                aria-busy={loading || undefined}
-              >
-                {visibleGroups.map(renderGroup)}
-              </BaseCombobox.List>
+              <OptionList
+                items={visibleItems}
+                header={selectAllRow}
+                loading={loading}
+                loadingMessage={loadingMessage}
+                emptyMessage={emptyMessage}
+                renderItem={renderItem}
+                isOptionDisabled={isOptionDisabled}
+              />
             </BaseCombobox.Popup>
           </BaseCombobox.Positioner>
         </BaseCombobox.Portal>

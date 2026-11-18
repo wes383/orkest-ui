@@ -209,3 +209,29 @@ export function MultiSelectExample() {
     />
   );
 }
+
+export function MultiSelectSelectAllExample() {
+  return (
+    <MultiSelect
+      aria-label="Skills"
+      options={skillOptions}
+      selectAll
+      searchable
+      clearable
+      maxSelected={4}
+      placeholder="Select skills"
+    />
+  );
+}
+
+export function MultiSelectOverflowExample() {
+  return (
+    <MultiSelect
+      aria-label="Skills"
+      options={skillOptions}
+      defaultValue={['react', 'typescript', 'node', 'css', 'testing']}
+      maxVisible={2}
+      clearable
+    />
+  );
+}

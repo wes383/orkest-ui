@@ -30,7 +30,7 @@ import { IconButton } from './components/icon-button';
 import { Input, Textarea } from './components/input';
 import { Pagination } from './components/pagination';
 import { Radio, RadioGroup } from './components/radio';
-import { Select } from './components/select';
+import { MultiSelect, Select } from './components/select';
 import { Skeleton } from './components/skeleton';
 import { Spinner } from './components/spinner';
 import { Switch } from './components/switch';
@@ -186,6 +186,25 @@ describe('accessibility', () => {
 
     // The popup renders in a portal outside any landmark, so the page-level
     // region rule cannot apply to this isolated fixture.
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  it('renders a multi-select with the select-all row without violations', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MultiSelect
+        aria-label="Team"
+        options={planOptions}
+        selectAll
+        maxVisible={1}
+        defaultValue={['design', 'engineering']}
+      />,
+    );
+
+    await user.click(screen.getByRole('combobox', { name: 'Team' }));
+    await screen.findByRole('listbox');
+
     expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
   });
 

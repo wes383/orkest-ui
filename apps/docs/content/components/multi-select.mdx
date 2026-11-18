@@ -7,6 +7,9 @@ section: components
 `MultiSelect` extends the Select interaction model to multiple values. Selected options render as
 removable chips, and the listbox exposes `aria-multiselectable`.
 
+It shares the combobox core with [Combobox](/docs/components/combobox/), so filtering, groups,
+custom rows, and the loading and empty rows behave the same way in both.
+
 Import it from `@orkest/ui/client`.
 
 ## Live preview
@@ -74,6 +77,62 @@ at the right edge.
 <MultiSelect aria-label="Skills" options={skills} maxSelected={3} />
 ```
 
+## Select all
+
+`selectAll` pins an action above the options. It selects every enabled option that is currently in
+the list, so it composes with `searchable`: with a query active, only the matches are added. When
+everything selectable is already on, the same row switches to `clearAllLabel` and removes them.
+
+<ComponentPreview
+  title="Select all"
+  code={`import { MultiSelect } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <MultiSelect
+      aria-label="Skills"
+      options={skills}
+      selectAll
+      searchable
+      clearable
+      maxSelected={4}
+      placeholder="Select skills"
+    />
+  );
+}`}
+>
+  <MultiSelectSelectAllExample />
+</ComponentPreview>
+
+Disabled options are never selected by the row, and the row stops at `maxSelected` instead of
+overshooting it.
+
+## Chip overflow
+
+`maxVisible` keeps the field to one line: the chips past the limit collapse into a counter chip that
+expands the rest when clicked.
+
+<ComponentPreview
+  title="Chip overflow"
+  code={`import { MultiSelect } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <MultiSelect
+      aria-label="Skills"
+      options={skills}
+      defaultValue={['react', 'typescript', 'node', 'css', 'testing']}
+      maxVisible={2}
+      clearable
+    />
+  );
+}`}
+>
+  <MultiSelectOverflowExample />
+</ComponentPreview>
+
+The counter is a button with an accessible name, so keyboard users can reveal the hidden chips too.
+
 ## Custom value content
 
 Override the default tags with `renderValue`. The callback receives selected options and a `remove`
@@ -133,6 +192,47 @@ function:
       description: 'Removes selected options from the menu.',
     },
     {
+      name: 'selectAll',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Pins a row that selects every enabled option in the list, and clears when all are on.',
+    },
+    {
+      name: 'selectAllLabel',
+      type: 'string',
+      default: `'Select all'`,
+      description: 'Label of the select-all row.',
+    },
+    {
+      name: 'clearAllLabel',
+      type: 'string',
+      default: `'Clear all'`,
+      description: 'Label of the select-all row once every option is selected.',
+    },
+    {
+      name: 'maxVisible',
+      type: 'number',
+      description: 'Collapses the chips past this count into a single counter chip.',
+    },
+    {
+      name: 'overflowLabel',
+      type: '(count: number) => string',
+      default: '(count) => `+${count}`',
+      description: 'Text of the counter chip.',
+    },
+    {
+      name: 'showMoreLabel',
+      type: '(count: number) => string',
+      default: '(count) => `Show ${count} more`',
+      description: 'Accessible name of the counter chip.',
+    },
+    {
+      name: 'renderItem',
+      type: '(option: SelectOption) => ReactNode',
+      description: 'Replaces the default option content inside the menu.',
+    },
+    {
       name: 'renderValue',
       type: '(selected: SelectOption[], remove: (value: string) => void) => ReactNode',
       description: 'Replaces the default tag display.',
@@ -168,8 +268,9 @@ function:
     },
     {
       name: 'filterOption',
-      type: '(option: SelectOption, query: string) => boolean',
-      description: 'Replaces the default case-insensitive label filter.',
+      type: '((option: SelectOption, query: string) => boolean) | null',
+      description:
+        'Replaces the default case-insensitive label filter. Pass null when the options are already server-filtered.',
     },
     {
       name: 'emptyMessage',
@@ -182,6 +283,12 @@ function:
       type: 'boolean',
       default: 'false',
       description: 'Shows a loading row and sets aria-busy on the listbox.',
+    },
+    {
+      name: 'loadingMessage',
+      type: 'ReactNode',
+      default: `'Loading options…'`,
+      description: 'Content of the loading row.',
     },
     {
       name: 'clearable',
@@ -266,9 +373,12 @@ function:
   custom controls do not toggle the popup.
 - `required` and `name` are forwarded to the hidden form inputs managed by Base UI.
 - The input exposes the selected count through `aria-description`.
+- The select-all row is a `button` with `aria-pressed`, and the overflow counter is a `button` with
+  an accessible name, so both are reachable without a pointer.
 
 ## Related
 
+- [Combobox](/docs/components/combobox/) for choosing one value with the same search behaviour.
 - [Select](/docs/components/select/) for single-value selection.
 - [Tag](/docs/components/tag/) for the removable chip used by default.
 - [Input](/docs/components/input/) for the shared field styling.
