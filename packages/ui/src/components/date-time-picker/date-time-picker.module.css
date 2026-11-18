@@ -1,0 +1,50 @@
+/* The time sits under the grid, separated by the same hairline the footer uses,
+   so the panel reads as "day, then clock", not as one undifferentiated block. */
+.timeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-3);
+  margin-top: var(--ok-space-3);
+  padding-top: var(--ok-space-3);
+  border-top: var(--ok-border-width) solid var(--ui-border);
+}
+
+.timeLabel {
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-sm);
+}
+
+/* Sized in character units so the field hugs its content and still grows with
+   the type scale: `hh:mm`, plus three characters for seconds, plus the day
+   period segment. */
+.timeField {
+  flex: none;
+  width: calc(7ch + var(--ok-space-6));
+}
+
+.timeField[data-seconds="true"] {
+  width: calc(10ch + var(--ok-space-6));
+}
+
+.timeField[data-period="true"] {
+  width: calc(11ch + var(--ok-space-6));
+}
+
+.timeField[data-period="true"][data-seconds="true"] {
+  width: calc(14ch + var(--ok-space-6));
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  margin-top: var(--ok-space-3);
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+}
