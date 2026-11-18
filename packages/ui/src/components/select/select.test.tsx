@@ -260,6 +260,9 @@ describe('Select', () => {
 
     expect(screen.getByRole('listbox')).toHaveAttribute('aria-busy', 'true');
     expect(screen.getAllByText('Loading options…').length).toBeGreaterThan(0);
+    // The rows belong to the previous result set, so they step aside for the
+    // loading row instead of sitting underneath it.
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
   });
 
   it('supports custom filtering and empty messages', async () => {

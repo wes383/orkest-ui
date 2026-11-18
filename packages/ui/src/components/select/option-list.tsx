@@ -61,7 +61,10 @@ export function OptionList({
 
   return (
     <>
-      {header}
+      {/* While a request is in flight the rows describe the previous query, so
+          they are not rendered at all: the loading row is the state, not an
+          extra line above a stale list. */}
+      {loading ? null : header}
       <BaseCombobox.Status className={styles.status}>
         {loading ? (
           <>
@@ -74,24 +77,26 @@ export function OptionList({
         {loading ? null : emptyMessage}
       </BaseCombobox.Empty>
       <BaseCombobox.List className={styles.list} aria-busy={loading || undefined}>
-        {groups.map((group) =>
-          group.label ? (
-            <BaseCombobox.Group
-              key={group.key}
-              items={group.items}
-              className={styles.group}
-            >
-              <BaseCombobox.GroupLabel className={styles.groupLabel}>
-                {group.label}
-              </BaseCombobox.GroupLabel>
-              <BaseCombobox.Collection>
-                {(option: SelectOption) => renderOption(option)}
-              </BaseCombobox.Collection>
-            </BaseCombobox.Group>
-          ) : (
-            <Fragment key={group.key}>{group.items.map(renderOption)}</Fragment>
-          ),
-        )}
+        {loading
+          ? null
+          : groups.map((group) =>
+              group.label ? (
+                <BaseCombobox.Group
+                  key={group.key}
+                  items={group.items}
+                  className={styles.group}
+                >
+                  <BaseCombobox.GroupLabel className={styles.groupLabel}>
+                    {group.label}
+                  </BaseCombobox.GroupLabel>
+                  <BaseCombobox.Collection>
+                    {(option: SelectOption) => renderOption(option)}
+                  </BaseCombobox.Collection>
+                </BaseCombobox.Group>
+              ) : (
+                <Fragment key={group.key}>{group.items.map(renderOption)}</Fragment>
+              ),
+            )}
       </BaseCombobox.List>
     </>
   );

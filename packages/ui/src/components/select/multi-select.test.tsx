@@ -459,4 +459,16 @@ describe('MultiSelect', () => {
     expect(screen.getByRole('option', { name: 'Design team' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Product team' })).toBeInTheDocument();
   });
+
+  it('replaces the rows and the select-all row while loading', async () => {
+    render(<MultiSelect aria-label="Teams" options={options} selectAll loading />);
+
+    await openMultiSelect();
+
+    expect(screen.getByText(/Loading options…/)).toBeInTheDocument();
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Select all' }),
+    ).not.toBeInTheDocument();
+  });
 });

@@ -165,7 +165,7 @@ const [loading, setLoading] = useState(false);
     setOptions(await searchCountries(next));
     setLoading(false);
   }}
-  emptyMessage={loading ? null : 'No country matched'}
+  emptyMessage="No country matched"
 />
 ```
 
@@ -184,8 +184,10 @@ const [loading, setLoading] = useState(false);
   <ComboboxAsyncExample />
 </ComponentPreview>
 
-While `loading` is set, the listbox exposes `aria-busy="true"` and the status row is announced
-politely. Keep the previous options in place if you want the list to stay usable during the request.
+While `loading` is set, the rows are replaced by the status row: the rows on screen still belong to
+the previous query, so they step aside instead of sitting under the spinner. The listbox keeps its
+`aria-busy="true"` and the status row is announced politely. Options that arrive with the next
+response are rendered as soon as `loading` goes back to `false`.
 
 ## States
 
@@ -253,7 +255,7 @@ the keyboard.
       name: 'loading',
       type: 'boolean',
       default: 'false',
-      description: 'Shows the status row and sets aria-busy on the listbox.',
+      description: 'Replaces the rows with a loading row and sets aria-busy on the listbox.',
     },
     {
       name: 'loadingMessage',

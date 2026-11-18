@@ -260,7 +260,7 @@ function PlainSelect({
                 <div className={styles.status}>{emptyMessage}</div>
               ) : null}
               <BaseSelect.List className={styles.list}>
-                {renderOptions(options)}
+                {loading ? null : renderOptions(options)}
               </BaseSelect.List>
             </BaseSelect.Popup>
           </BaseSelect.Positioner>

@@ -208,6 +208,18 @@ describe('Combobox', () => {
     expect(screen.getByText(/Loading options…/)).toBeInTheDocument();
   });
 
+  it('does not show the previous rows while a query is loading', async () => {
+    const user = userEvent.setup();
+
+    render(<Combobox aria-label="Fruit" options={options} loading />);
+
+    await user.click(screen.getByRole('combobox', { name: 'Fruit' }));
+
+    expect(screen.getByText(/Loading options…/)).toBeInTheDocument();
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    expect(screen.queryByText('Apple')).not.toBeInTheDocument();
+  });
+
   it('leaves filtering to the caller when filterOption is null', async () => {
     const user = userEvent.setup();
     const onSearchChange = vi.fn();
