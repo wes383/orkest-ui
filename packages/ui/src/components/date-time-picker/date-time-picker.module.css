@@ -10,7 +10,11 @@
   border-top: var(--ok-border-width) solid var(--ui-border);
 }
 
+/* The ghost actions below start with their own padding, so their labels sit one
+   control padding inside the panel. Indent the label by the same amount and the
+   two lines share a column. */
 .timeLabel {
+  margin-inline-start: var(--ok-control-padding-x-sm);
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
 }
@@ -47,11 +51,4 @@
   display: flex;
   align-items: center;
   gap: var(--ok-space-2);
-}
-
-/* A ghost action paints no edge, so its label has to line up with the panel's
-   content box. Pull the button back by its own padding to sit on the same line
-   as the time label and the grid. */
-.footerStart {
-  margin-inline-start: calc(var(--ok-control-padding-x-sm) * -1);
 }
