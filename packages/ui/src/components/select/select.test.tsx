@@ -265,6 +265,36 @@ describe('Select', () => {
     expect(screen.queryByRole('option')).not.toBeInTheDocument();
   });
 
+  it('hides matching rows while a searchable select is loading', async () => {
+    render(<Select aria-label="Team" options={options} searchable loading />);
+
+    const user = userEvent.setup();
+    const combobox = screen.getByRole('combobox', { name: 'Team' });
+
+    await user.click(combobox);
+    await screen.findByRole('listbox');
+
+    expect(screen.getByText(/Loading options…/)).toBeInTheDocument();
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+  });
+
+  it('does not select a disabled option while searching', async () => {
+    const onChange = vi.fn();
+
+    render(<Select aria-label="Team" options={options} searchable onChange={onChange} />);
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('combobox', { name: 'Team' }));
+
+    const disabledOption = await screen.findByRole('option', { name: 'Product' });
+
+    expect(disabledOption).toHaveAttribute('aria-disabled', 'true');
+
+    await user.click(disabledOption);
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('supports custom filtering and empty messages', async () => {
     render(
       <Select

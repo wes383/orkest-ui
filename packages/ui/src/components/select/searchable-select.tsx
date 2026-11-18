@@ -177,6 +177,7 @@ export function SearchableSelect({
       <BaseCombobox.Item
         key={option.value}
         value={option.value}
+        disabled={option.disabled}
         className={styles.item}
       >
         <SelectOptionContent option={option} />
@@ -315,7 +316,7 @@ export function SearchableSelect({
                 className={styles.list}
                 aria-busy={loading || undefined}
               >
-                {visibleGroups.map(renderGroup)}
+                {loading ? null : visibleGroups.map(renderGroup)}
               </BaseCombobox.List>
             </BaseCombobox.Popup>
           </BaseCombobox.Positioner>
