@@ -99,6 +99,8 @@ import {
 } from '../examples/calendar-examples';
 import {
   DatePickerBasicExample,
+  DatePickerBareExample,
+  DatePickerCaptionSelectExample,
   DatePickerFieldExample,
   DatePickerFormatExample,
   DatePickerRangeExample,
@@ -296,6 +298,8 @@ export const mdxComponents = {
   CalendarRangeExample,
   CalendarSizesExample,
   DatePickerBasicExample,
+  DatePickerBareExample,
+  DatePickerCaptionSelectExample,
   DatePickerFieldExample,
   DatePickerFormatExample,
   DatePickerRangeExample,

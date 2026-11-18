@@ -93,6 +93,32 @@ export function Example() {
 
 The format only affects the field text. `onChange` always reports `YYYY-MM-DD`.
 
+## Month and year pickers
+
+`captionLayout="select"` swaps the month caption for month and year pickers. Both respect `minDate`
+and `maxDate`.
+
+<ComponentPreview
+  title="Month and year pickers"
+  code={`import { useState } from 'react';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      captionLayout="select"
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}`}
+>
+  <DatePickerCaptionSelectExample />
+</ComponentPreview>
+
 ## Inside a Field
 
 `DatePicker` reads the surrounding [Field](/docs/components/field/) context: the label points at the
@@ -139,6 +165,35 @@ export function Example() {
 }`}
 >
   <DatePickerSizesExample />
+</ComponentPreview>
+
+## Hiding the icon and the shortcuts
+
+`showIcon={false}` removes the calendar icon. `clearable={false}` removes the inline clear action and
+the footer's Clear date. `showToday={false}` removes the Today shortcut; with no shortcut left, the
+footer is not rendered.
+
+<ComponentPreview
+  title="Field without the icon or the shortcuts"
+  code={`import { useState } from 'react';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      showIcon={false}
+      showToday={false}
+      clearable={false}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}`}
+>
+  <DatePickerBareExample />
 </ComponentPreview>
 
 ## Desktop and mobile
@@ -224,6 +279,18 @@ and works inside any [Dialog](/docs/components/dialog/).
       type: 'boolean',
       default: 'true',
       description: 'Shows a clear action while a date is selected.',
+    },
+    {
+      name: 'showIcon',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the calendar icon at the start of the field.',
+    },
+    {
+      name: 'showToday',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the Today shortcut in the popover footer.',
     },
     {
       name: 'invalid',

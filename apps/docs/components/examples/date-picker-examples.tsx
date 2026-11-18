@@ -69,3 +69,31 @@ export function DatePickerSizesExample() {
     </Stack>
   );
 }
+
+export function DatePickerCaptionSelectExample() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      captionLayout="select"
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}
+
+export function DatePickerBareExample() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      showIcon={false}
+      showToday={false}
+      clearable={false}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
+}
