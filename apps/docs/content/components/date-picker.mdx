@@ -10,9 +10,7 @@ a timezone shifting it by a day.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic date picker"
-  code={`import { useState } from 'react';
+export const basicDatePickerCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { DatePicker } from '@orkest/ui/client';
 
@@ -27,7 +25,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic date picker"
+  code={basicDatePickerCode}
 >
   <DatePickerBasicExample />
 </ComponentPreview>
@@ -37,9 +39,7 @@ reach; `Today` is disabled when it falls outside the allowed range.
 
 ## Range limits
 
-<ComponentPreview
-  title="Bounded range"
-  code={`import { useState } from 'react';
+export const boundedRangeCode = `import { useState } from 'react';
 import { DatePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -55,7 +55,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Bounded range"
+  code={boundedRangeCode}
 >
   <DatePickerRangeExample />
 </ComponentPreview>
@@ -68,9 +72,7 @@ navigable month and blocked days stay visible but inert.
 `format` accepts an `Intl.DateTimeFormat` date style. Pass a function when the exact string matters —
 an ISO value, a custom suffix, a label from your own i18n bundle.
 
-<ComponentPreview
-  title="Custom and localized formats"
-  code={`import { useState } from 'react';
+export const customAndLocalizedFormatsCode = `import { useState } from 'react';
 import { Stack } from '@orkest/ui';
 import { DatePicker } from '@orkest/ui/client';
 
@@ -87,7 +89,11 @@ export function Example() {
       <DatePicker value={value} onChange={setValue} locale="en-GB" format="full" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom and localized formats"
+  code={customAndLocalizedFormatsCode}
 >
   <DatePickerFormatExample />
 </ComponentPreview>
@@ -99,9 +105,7 @@ The format only affects the field text. `onChange` always reports `YYYY-MM-DD`.
 `captionLayout="select"` swaps the month caption for month and year pickers. Both respect `minDate`
 and `maxDate`.
 
-<ComponentPreview
-  title="Month and year pickers"
-  code={`import { useState } from 'react';
+export const monthAndYearPickersCode = `import { useState } from 'react';
 import { DatePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -115,7 +119,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Month and year pickers"
+  code={monthAndYearPickersCode}
 >
   <DatePickerCaptionSelectExample />
 </ComponentPreview>
@@ -126,9 +134,7 @@ export function Example() {
 trigger, `aria-describedby` carries the description and validation message, and `required` and
 `invalid` follow the field.
 
-<ComponentPreview
-  title="With a label and description"
-  code={`import { useState } from 'react';
+export const withALabelAndDescriptionCode = `import { useState } from 'react';
 import { Field, FieldDescription, FieldLabel, DatePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -141,7 +147,11 @@ export function Example() {
       <FieldDescription>Leave empty to start immediately.</FieldDescription>
     </Field>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="With a label and description"
+  code={withALabelAndDescriptionCode}
 >
   <DatePickerFieldExample />
 </ComponentPreview>
@@ -150,9 +160,7 @@ Passing `name` also renders a hidden input, so the value is submitted with a nat
 
 ## Sizes
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { DatePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -163,7 +171,11 @@ export function Example() {
       <DatePicker defaultValue="2026-11-18" size="lg" placeholder="Large" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <DatePickerSizesExample />
 </ComponentPreview>
@@ -174,9 +186,7 @@ export function Example() {
 the footer's Clear date. `showToday={false}` removes the Today shortcut; with no shortcut left, the
 footer is not rendered.
 
-<ComponentPreview
-  title="Field without the icon or the shortcuts"
-  code={`import { useState } from 'react';
+export const fieldWithoutTheIconOrTheShortcutsCode = `import { useState } from 'react';
 import { DatePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -192,7 +202,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '18rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Field without the icon or the shortcuts"
+  code={fieldWithoutTheIconOrTheShortcutsCode}
 >
   <DatePickerBareExample />
 </ComponentPreview>

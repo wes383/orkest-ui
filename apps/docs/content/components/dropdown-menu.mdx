@@ -12,9 +12,7 @@ The component is built on Base UI Menu and exported from `@orkest/ui/client`.
 
 ## Basic usage
 
-<ComponentPreview
-  title="Project actions"
-  code={`import {
+export const projectActionsCode = `import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -51,7 +49,11 @@ export function Example() {
       </DropdownMenuPortal>
     </DropdownMenu>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Project actions"
+  code={projectActionsCode}
 >
   <DropdownMenuBasicExample />
 </ComponentPreview>
@@ -83,9 +85,7 @@ another custom element:
 
 ## Groups, labels, and checkboxes
 
-<ComponentPreview
-  title="Grouped settings"
-  code={`import {
+export const groupedSettingsCode = `import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -127,7 +127,11 @@ export function Example() {
       </DropdownMenuPortal>
     </DropdownMenu>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Grouped settings"
+  code={groupedSettingsCode}
 >
   <DropdownMenuGroupExample />
 </ComponentPreview>
@@ -137,9 +141,7 @@ by default. Pass `closeOnClick` when a setting should close the menu immediately
 
 ## Radio items
 
-<ComponentPreview
-  title="Density"
-  code={`import { useState } from 'react';
+export const densityCode = `import { useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -173,7 +175,11 @@ export function Example() {
       </DropdownMenuPortal>
     </DropdownMenu>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Density"
+  code={densityCode}
 >
   <DropdownMenuRadioExample />
 </ComponentPreview>
@@ -183,9 +189,7 @@ menu open so several settings can be adjusted in one session.
 
 ## Submenus
 
-<ComponentPreview
-  title="Share submenu"
-  code={`import {
+export const shareSubmenuCode = `import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -220,7 +224,11 @@ export function Example() {
       </DropdownMenuPortal>
     </DropdownMenu>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Share submenu"
+  code={shareSubmenuCode}
 >
   <DropdownMenuSubmenuExample />
 </ComponentPreview>
@@ -230,9 +238,7 @@ right arrow key, and close with Escape or the left arrow key.
 
 ## Controlled state
 
-<ComponentPreview
-  title="Controlled menu"
-  code={`import { useState } from 'react';
+export const controlledMenuCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import {
   DropdownMenu,
@@ -267,7 +273,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Controlled menu"
+  code={controlledMenuCode}
 >
   <DropdownMenuControlledExample />
 </ComponentPreview>
@@ -278,9 +288,7 @@ export function Example() {
 `side`, `align`, `sideOffset`, and `alignOffset` when the trigger needs a different layout. Base UI
 automatically flips the menu when it would overflow the viewport.
 
-<ComponentPreview
-  title="Sized menu"
-  code={`import {
+export const sizedMenuCode = `import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -307,7 +315,11 @@ export function Example() {
       </DropdownMenuPortal>
     </DropdownMenu>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sized menu"
+  code={sizedMenuCode}
 >
   <DropdownMenuSizingExample />
 </ComponentPreview>

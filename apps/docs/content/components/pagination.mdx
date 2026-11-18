@@ -12,9 +12,7 @@ It renders buttons. A link-based variant for server-rendered results is not part
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic pagination"
-  code={`import { useState } from 'react';
+export const basicPaginationCode = `import { useState } from 'react';
 import { Pagination, Stack, Text } from '@orkest/ui';
 
 export function Example() {
@@ -28,16 +26,18 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic pagination"
+  code={basicPaginationCode}
 >
   <PaginationBasicExample />
 </ComponentPreview>
 
 ## Sizes
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { useState } from 'react';
+export const smallMediumAndLargeCode = `import { useState } from 'react';
 import { Pagination, Stack } from '@orkest/ui';
 
 export function Example() {
@@ -50,7 +50,11 @@ export function Example() {
       <Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <PaginationSizesExample />
 </ComponentPreview>
@@ -59,16 +63,18 @@ export function Example() {
 
 ## Long lists
 
-<ComponentPreview
-  title="Twenty pages"
-  code={`import { useState } from 'react';
+export const twentyPagesCode = `import { useState } from 'react';
 import { Pagination } from '@orkest/ui';
 
 export function Example() {
   const [page, setPage] = useState(1);
 
   return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Twenty pages"
+  code={twentyPagesCode}
 >
   <PaginationManyPagesExample />
 </ComponentPreview>
@@ -79,16 +85,18 @@ shows one page on each side of the current one, `2` shows two.
 
 First and last jumps are off by default; a long list only gets them when you ask for them:
 
-<ComponentPreview
-  title="First and last jumps"
-  code={`import { useState } from 'react';
+export const firstAndLastJumpsCode = `import { useState } from 'react';
 import { Pagination } from '@orkest/ui';
 
 export function Example() {
   const [page, setPage] = useState(10);
 
   return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
-}`}
+}`;
+
+<ComponentPreview
+  title="First and last jumps"
+  code={firstAndLastJumpsCode}
 >
   <PaginationFirstLastExample />
 </ComponentPreview>

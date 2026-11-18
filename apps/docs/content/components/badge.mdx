@@ -9,9 +9,7 @@ removable or clickable chips, use [Tag](/docs/components/tag/).
 
 ## Live preview
 
-<ComponentPreview
-  title="Variants"
-  code={`import { Badge, Stack } from '@orkest/ui';
+export const variantsCode = `import { Badge, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -24,7 +22,11 @@ export function Example() {
       <Badge variant="outline">Outline</Badge>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Variants"
+  code={variantsCode}
 >
   <Stack direction="row" gap={2} wrap>
     <Badge>Default</Badge>
@@ -38,9 +40,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Badge, Stack } from '@orkest/ui';
+export const sizesCode = `import { Badge, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -50,7 +50,11 @@ export function Example() {
       <Badge size="lg">Large</Badge>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Badge size="sm">Small</Badge>
@@ -61,9 +65,7 @@ export function Example() {
 
 ## Shapes
 
-<ComponentPreview
-  title="Rounded and pill"
-  code={`import { Badge, Stack } from '@orkest/ui';
+export const roundedAndPillCode = `import { Badge, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -72,7 +74,11 @@ export function Example() {
       <Badge shape="pill">Pill</Badge>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Rounded and pill"
+  code={roundedAndPillCode}
 >
   <Stack direction="row" gap={2} wrap>
     <Badge shape="rounded">Rounded</Badge>
@@ -85,9 +91,7 @@ export function Example() {
 Icons are decorative. A leading dot inherits the variant accent color. With no content, `dot`
 renders a standalone status dot; give it an `aria-label` when the status is meaningful.
 
-<ComponentPreview
-  title="Icons and status dots"
-  code={`import { Badge, Stack } from '@orkest/ui';
+export const iconsAndStatusDotsCode = `import { Badge, Stack } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
 export function Example() {
@@ -105,7 +109,11 @@ export function Example() {
       <Badge variant="success" dot aria-label="Online" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Icons and status dots"
+  code={iconsAndStatusDotsCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Badge variant="info" leftIcon={Circle}>
@@ -125,9 +133,7 @@ export function Example() {
 
 `count` takes precedence over children. Values above `maxCount` render as `maxCount+`.
 
-<ComponentPreview
-  title="Counts"
-  code={`import { Badge, Stack } from '@orkest/ui';
+export const countsCode = `import { Badge, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -136,7 +142,11 @@ export function Example() {
       <Badge count={120} maxCount={99} variant="info" shape="pill" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Counts"
+  code={countsCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Badge count={8} variant="destructive" shape="pill" />
@@ -149,13 +159,15 @@ export function Example() {
 `color` creates a tinted badge while keeping the theme surface underneath. Check text contrast when
 using light or low-contrast colors.
 
-<ComponentPreview
-  title="Custom color"
-  code={`import { Badge } from '@orkest/ui';
+export const customColorCode = `import { Badge } from '@orkest/ui';
 
 export function Example() {
   return <Badge color="#7c3aed">Custom</Badge>;
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom color"
+  code={customColorCode}
 >
   <Badge color="#7c3aed">Custom</Badge>
 </ComponentPreview>

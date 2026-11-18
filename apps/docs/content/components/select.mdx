@@ -11,9 +11,7 @@ Import it from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic select"
-  code={`import { Select } from '@orkest/ui/client';
+export const basicSelectCode = `import { Select } from '@orkest/ui/client';
 
 const fruits = [
   { value: 'apple', label: 'Apple' },
@@ -25,7 +23,11 @@ const fruits = [
 
 export function Example() {
   return <Select aria-label="Fruit" options={fruits} defaultValue="apple" clearable />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic select"
+  code={basicSelectCode}
 >
   <BasicSelectExample />
 </ComponentPreview>
@@ -41,9 +43,7 @@ loading, and keyboard behaviour are identical. The difference is the API: `Selec
 value as `undefined` and always renders the standard option row, while `Combobox` uses `null` and
 accepts `renderItem` / `loadingMessage`.
 
-<ComponentPreview
-  title="Searchable select"
-  code={`import { Select } from '@orkest/ui/client';
+export const searchableSelectCode = `import { Select } from '@orkest/ui/client';
 
 const languages = [
   { value: 'javascript', label: 'JavaScript' },
@@ -64,7 +64,11 @@ export function Example() {
       placeholder="Choose a language"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Searchable select"
+  code={searchableSelectCode}
 >
   <SearchableSelectExample />
 </ComponentPreview>
@@ -104,9 +108,7 @@ Groups render `role="group"` with the group label as the accessible name. Descri
 secondary text and are included in the option's accessible name. `icon` renders a decorative leading
 icon; the trailing check is the selection indicator and is rendered automatically.
 
-<ComponentPreview
-  title="Groups, descriptions, and icons"
-  code={`import { Briefcase, Code, Layers, Megaphone, Palette, Server } from 'lucide-react';
+export const groupsDescriptionsAndIconsCode = `import { Briefcase, Code, Layers, Megaphone, Palette, Server } from 'lucide-react';
 import { Select } from '@orkest/ui/client';
 
 const teams = [
@@ -150,7 +152,11 @@ const teams = [
 
 export function Example() {
   return <Select aria-label="Team" options={teams} defaultValue="design" clearable />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Groups, descriptions, and icons"
+  code={groupsDescriptionsAndIconsCode}
 >
   <DetailedSelectExample />
 </ComponentPreview>
@@ -159,9 +165,7 @@ export function Example() {
 
 Sizes follow the existing Input height, radius, and padding tokens.
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
 const priorities = [
@@ -178,7 +182,11 @@ export function Example() {
       <Select aria-label="Large priority" size="lg" options={priorities} defaultValue="medium" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <SelectSizesExample />
 </ComponentPreview>
@@ -188,9 +196,7 @@ export function Example() {
 `disabled` blocks interaction, `invalid` applies the danger border and `aria-invalid`, and
 `clearable` adds a clear action while a value is selected.
 
-<ComponentPreview
-  title="Disabled, invalid, and clearable"
-  code={`import { Stack } from '@orkest/ui';
+export const disabledInvalidAndClearableCode = `import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
 const statuses = [
@@ -207,7 +213,11 @@ export function Example() {
       <Select aria-label="Clearable status" options={statuses} defaultValue="paused" clearable />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled, invalid, and clearable"
+  code={disabledInvalidAndClearableCode}
 >
   <SelectStatesExample />
 </ComponentPreview>
@@ -217,9 +227,7 @@ export function Example() {
 `loading` renders a status row and marks the listbox busy. When filtering returns nothing, the menu
 shows `emptyMessage`.
 
-<ComponentPreview
-  title="Loading options"
-  code={`import { Select } from '@orkest/ui/client';
+export const loadingOptionsCode = `import { Select } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -232,7 +240,11 @@ export function Example() {
       emptyMessage="No languages matched"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Loading options"
+  code={loadingOptionsCode}
 >
   <SelectLoadingExample />
 </ComponentPreview>

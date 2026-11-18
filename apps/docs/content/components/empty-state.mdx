@@ -10,9 +10,7 @@ most cases; an illustration is optional.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic empty state"
-  code={`import { Button, EmptyState } from '@orkest/ui';
+export const basicEmptyStateCode = `import { Button, EmptyState } from '@orkest/ui';
 import { Inbox } from 'lucide-react';
 
 export function Example() {
@@ -29,7 +27,11 @@ export function Example() {
       }
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic empty state"
+  code={basicEmptyStateCode}
 >
   <EmptyStateBasicExample />
 </ComponentPreview>
@@ -40,9 +42,7 @@ same parts you can compose by hand.
 
 ## Sizes
 
-<ComponentPreview
-  title="sm, md, and lg"
-  code={`import { Box, EmptyState, Stack } from '@orkest/ui';
+export const smMdAndLgCode = `import { Box, EmptyState, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -58,7 +58,11 @@ export function Example() {
       ))}
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="sm, md, and lg"
+  code={smMdAndLgCode}
 >
   <EmptyStateSizesExample />
 </ComponentPreview>
@@ -73,9 +77,7 @@ Padding, gaps, title size, and the icon surface all scale together.
 
 ## Alignment
 
-<ComponentPreview
-  title="Center and start"
-  code={`import { Box, EmptyState, Grid } from '@orkest/ui';
+export const centerAndStartCode = `import { Box, EmptyState, Grid } from '@orkest/ui';
 import { Search } from 'lucide-react';
 
 export function Example() {
@@ -99,7 +101,11 @@ export function Example() {
       </Box>
     </Grid>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Center and start"
+  code={centerAndStartCode}
 >
   <EmptyStateAlignExample />
 </ComponentPreview>
@@ -114,9 +120,7 @@ When you need several descriptions, more than one action row, a different headin
 visual, pass the parts as children. `children` replaces the shorthand content, while `size` and
 `align` still style the container.
 
-<ComponentPreview
-  title="Custom composition"
-  code={`import {
+export const customCompositionCode = `import {
   Button,
   EmptyState,
   EmptyStateAction,
@@ -139,7 +143,11 @@ export function Example() {
       <EmptyStateDescription>Search also supports file type and date filters.</EmptyStateDescription>
     </EmptyState>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom composition"
+  code={customCompositionCode}
 >
   <EmptyStateCompositionExample />
 </ComponentPreview>
@@ -155,9 +163,7 @@ elements:
 
 ## Illustrations
 
-<ComponentPreview
-  title="Illustration in a dashed region"
-  code={`import { Button, EmptyState } from '@orkest/ui';
+export const illustrationInADashedRegionCode = `import { Button, EmptyState } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -173,7 +179,11 @@ export function Example() {
       action={<Button variant="outline">Compose a message</Button>}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Illustration in a dashed region"
+  code={illustrationInADashedRegionCode}
 >
   <EmptyStateImageExample />
 </ComponentPreview>
@@ -194,9 +204,7 @@ sure the title and description say everything on their own.
 to be empty. This example uses a custom panel with its own header, and also shows a text-only state
 with no icon and no action:
 
-<ComponentPreview
-  title="Inside a panel"
-  code={`import { Box, Button, EmptyState, Separator, Stack, Text } from '@orkest/ui';
+export const insideAPanelCode = `import { Box, Button, EmptyState, Separator, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -216,7 +224,11 @@ export function Example() {
       />
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Inside a panel"
+  code={insideAPanelCode}
 >
   <EmptyStateEmbeddedExample />
 </ComponentPreview>

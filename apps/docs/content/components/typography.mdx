@@ -13,9 +13,7 @@ tokens, see [Typography foundations](/docs/foundations/typography/).
 
 ## Live preview
 
-<ComponentPreview
-  title="Article composition"
-  code={`import { Caption, Code, Heading, Link, Paragraph, Stack, Strong } from '@orkest/ui';
+export const articleCompositionCode = `import { Caption, Code, Heading, Link, Paragraph, Stack, Strong } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -29,7 +27,11 @@ export function Example() {
       <Caption>Updated 12 minutes ago</Caption>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Article composition"
+  code={articleCompositionCode}
 >
   <Stack gap={3}>
     <Heading level={3}>Release notes</Heading>
@@ -51,9 +53,7 @@ export function Example() {
 `level` sets both the rendered heading element and the default size. Level 1 renders an `h1` at the
 `5xl` size; the preview below starts at level 2 because the documentation page already owns its `h1`.
 
-<ComponentPreview
-  title="Heading scale"
-  code={`import { Heading, Stack } from '@orkest/ui';
+export const headingScaleCode = `import { Heading, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -65,7 +65,11 @@ export function Example() {
       <Heading level={6}>Level 6 heading</Heading>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Heading scale"
+  code={headingScaleCode}
 >
   <Stack gap={2}>
     <Heading level={2}>Level 2 heading</Heading>
@@ -84,9 +88,7 @@ visual size without changing semantics.
 The full type scale is available on `Text` and all semantic text components. `inherit` keeps the
 surrounding size, which is useful for inline elements such as `Strong`, `Code`, and `Link`.
 
-<ComponentPreview
-  title="Type scale"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const typeScaleCode = `import { Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -103,7 +105,11 @@ export function Example() {
       <Text size="5xl">5xl · 48px</Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Type scale"
+  code={typeScaleCode}
 >
   <Stack gap={1}>
     <Text size="2xs">2xs · 12px</Text>
@@ -121,9 +127,7 @@ export function Example() {
 
 ## Weights
 
-<ComponentPreview
-  title="Weights"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const weightsCode = `import { Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -134,7 +138,11 @@ export function Example() {
       <Text weight="bold">Bold 700</Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Weights"
+  code={weightsCode}
 >
   <Stack gap={1}>
     <Text weight="regular">Regular 400</Text>
@@ -146,9 +154,7 @@ export function Example() {
 
 ## Shared options
 
-<ComponentPreview
-  title="Line height, tracking, style, and alignment"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const lineHeightTrackingStyleAndAlignmentCode = `import { Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -163,7 +169,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Line height, tracking, style, and alignment"
+  code={lineHeightTrackingStyleAndAlignmentCode}
 >
   <Stack gap={2}>
     <Text lineHeight="relaxed" letterSpacing="wide">
@@ -182,9 +192,7 @@ export function Example() {
 `truncate` limits text to one line. `lineClamp` limits it to a number of lines and takes precedence
 when both props are set. Both options are visual; the full text remains in the DOM.
 
-<ComponentPreview
-  title="Single-line and multi-line overflow"
-  code={`import { Box, Stack, Text } from '@orkest/ui';
+export const singleLineAndMultiLineOverflowCode = `import { Box, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -200,7 +208,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Single-line and multi-line overflow"
+  code={singleLineAndMultiLineOverflowCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={2}>
@@ -216,9 +228,7 @@ export function Example() {
 
 ## Semantic components
 
-<ComponentPreview
-  title="Labels, emphasis, code, and links"
-  code={`import { Caption, Code, Label, Link, Small, Stack, Strong, Text } from '@orkest/ui';
+export const labelsEmphasisCodeAndLinksCode = `import { Caption, Code, Label, Link, Small, Stack, Strong, Text } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -241,7 +251,11 @@ export function Example() {
       <Small>Small text inherits the surrounding color.</Small>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Labels, emphasis, code, and links"
+  code={labelsEmphasisCodeAndLinksCode}
 >
   <Stack gap={4}>
     <Stack gap={1}>

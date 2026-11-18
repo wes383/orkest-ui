@@ -10,9 +10,7 @@ so nothing jumps when real data replaces it. For an action that is already runni
 
 ## Live preview
 
-<ComponentPreview
-  title="Profile placeholder"
-  code={`import { Skeleton, Stack } from '@orkest/ui';
+export const profilePlaceholderCode = `import { Skeleton, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -24,7 +22,11 @@ export function Example() {
       </Stack>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Profile placeholder"
+  code={profilePlaceholderCode}
 >
   <Stack direction="row" gap={3} align="center">
     <Skeleton variant="circular" width={40} height={40} />
@@ -37,9 +39,7 @@ export function Example() {
 
 ## Variants
 
-<ComponentPreview
-  title="Shapes"
-  code={`import { Skeleton, Stack } from '@orkest/ui';
+export const shapesCode = `import { Skeleton, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -49,7 +49,11 @@ export function Example() {
       <Skeleton variant="rectangular" height={96} />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Shapes"
+  code={shapesCode}
 >
   <Stack gap={4} style={{ width: 240 }}>
     <Skeleton variant="text" width="60%" />
@@ -64,9 +68,7 @@ defaults to a 40px square and should keep matching width and height.
 
 ## Dimensions
 
-<ComponentPreview
-  title="Width, height, and radius"
-  code={`import { Skeleton, Stack } from '@orkest/ui';
+export const widthHeightAndRadiusCode = `import { Skeleton, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -76,7 +78,11 @@ export function Example() {
       <Skeleton variant="rectangular" width={160} height={64} radius="0.75rem" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Width, height, and radius"
+  code={widthHeightAndRadiusCode}
 >
   <Stack gap={3} style={{ width: 320 }}>
     <Skeleton width={240} height={12} />
@@ -94,9 +100,7 @@ against and collapses to zero — give the column a width, as in the examples ab
 
 ## Animations
 
-<ComponentPreview
-  title="Pulse, wave, and none"
-  code={`import { Skeleton, Stack } from '@orkest/ui';
+export const pulseWaveAndNoneCode = `import { Skeleton, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -106,7 +110,11 @@ export function Example() {
       <Skeleton animation="none" width="60%" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Pulse, wave, and none"
+  code={pulseWaveAndNoneCode}
 >
   <Stack gap={3} style={{ width: 240 }}>
     <Skeleton animation="pulse" width="60%" />
@@ -123,9 +131,7 @@ placeholders animate at once. Both animations stop when the reader asks for redu
 Compose several instances instead of expecting the component to model a layout. A three-line article
 placeholder is three elements:
 
-<ComponentPreview
-  title="Article placeholder"
-  code={`import { Skeleton, Stack } from '@orkest/ui';
+export const articlePlaceholderCode = `import { Skeleton, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -137,7 +143,11 @@ export function Example() {
       <Skeleton width="64%" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Article placeholder"
+  code={articlePlaceholderCode}
 >
   <Stack gap={3} style={{ width: 320 }}>
     <Skeleton width="45%" height={20} />

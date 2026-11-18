@@ -12,9 +12,7 @@ to the previous day when the host timezone changes.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic calendar"
-  code={`import { useState } from 'react';
+export const basicCalendarCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { Calendar } from '@orkest/ui/client';
 
@@ -29,7 +27,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic calendar"
+  code={basicCalendarCode}
 >
   <CalendarBasicExample />
 </ComponentPreview>
@@ -38,9 +40,7 @@ export function Example() {
 
 `captionLayout="select"` swaps the caption for month and year pickers.
 
-<ComponentPreview
-  title="Caption selects"
-  code={`import { useState } from 'react';
+export const captionSelectsCode = `import { useState } from 'react';
 import { Calendar } from '@orkest/ui/client';
 
 export function Example() {
@@ -54,7 +54,11 @@ export function Example() {
       captionLayout="select"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Caption selects"
+  code={captionSelectsCode}
 >
   <CalendarCaptionSelectExample />
 </ComponentPreview>
@@ -66,9 +70,7 @@ The header arrows stay available in both layouts. A disabled bound is reflected 
 `minDate` and `maxDate` are inclusive. `disabledDates` takes either a list of `YYYY-MM-DD` strings or a
 predicate, so a rule like "no weekends" stays a one-liner.
 
-<ComponentPreview
-  title="Bounded range"
-  code={`import { useState } from 'react';
+export const boundedRangeCode = `import { useState } from 'react';
 import { Calendar } from '@orkest/ui/client';
 
 export function Example() {
@@ -84,7 +86,11 @@ export function Example() {
       disabledDates={['2026-11-13', '2026-11-20']}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Bounded range"
+  code={boundedRangeCode}
 >
   <CalendarRangeExample />
 </ComponentPreview>
@@ -94,9 +100,7 @@ without losing their place. Selecting one does nothing.
 
 ## Sizes
 
-<ComponentPreview
-  title="Small and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallAndLargeCode = `import { Stack } from '@orkest/ui';
 import { Calendar } from '@orkest/ui/client';
 
 export function Example() {
@@ -106,7 +110,11 @@ export function Example() {
       <Calendar defaultMonth="2026-11" defaultValue="2026-11-18" size="lg" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small and large"
+  code={smallAndLargeCode}
 >
   <CalendarSizesExample />
 </ComponentPreview>

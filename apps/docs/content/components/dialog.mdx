@@ -11,9 +11,7 @@ The component is built on Base UI Dialog and exported from `@orkest/ui/client`.
 
 ## Basic usage
 
-<ComponentPreview
-  title="Edit profile"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const editProfileCode = `import { Button, Stack } from '@orkest/ui';
 import {
   Dialog,
   DialogBody,
@@ -64,7 +62,11 @@ export function Example() {
       </DialogPortal>
     </Dialog>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Edit profile"
+  code={editProfileCode}
 >
   <DialogBasicExample />
 </ComponentPreview>
@@ -86,9 +88,7 @@ custom element.
 
 ## Controlled state
 
-<ComponentPreview
-  title="Controlled dialog"
-  code={`import { useState } from 'react';
+export const controlledDialogCode = `import { useState } from 'react';
 import { Button, Stack, Text } from '@orkest/ui';
 import {
   Dialog,
@@ -129,7 +129,11 @@ export function Example() {
       </Dialog>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Controlled dialog"
+  code={controlledDialogCode}
 >
   <DialogControlledExample />
 </ComponentPreview>
@@ -139,9 +143,7 @@ export function Example() {
 `DialogContent` supports `sm`, `md`, `lg`, `xl`, and `full`. The viewport keeps a safe gutter and the
 surface shrinks to the available width on small screens.
 
-<ComponentPreview
-  title="Size presets"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const sizePresetsCode = `import { Box, Stack } from '@orkest/ui';
 import {
   Dialog,
   DialogClose,
@@ -183,7 +185,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Size presets"
+  code={sizePresetsCode}
 >
   <DialogSizesExample />
 </ComponentPreview>
@@ -193,9 +199,7 @@ export function Example() {
 Use `DialogBody` for content that can grow. The header and footer stay visible while the body
 scrolls.
 
-<ComponentPreview
-  title="Scrollable dialog"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const scrollableDialogCode = `import { Stack, Text } from '@orkest/ui';
 import {
   Dialog,
   DialogBody,
@@ -245,7 +249,11 @@ export function Example() {
       </DialogPortal>
     </Dialog>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Scrollable dialog"
+  code={scrollableDialogCode}
 >
   <DialogScrollExample />
 </ComponentPreview>

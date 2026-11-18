@@ -32,9 +32,7 @@ export function App() {
 
 The imperative API works from event handlers, async functions, and modules outside React.
 
-<ComponentPreview
-  title="Types"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const typesCode = `import { Button, Stack } from '@orkest/ui';
 import { toast } from '@orkest/ui/client';
 
 export function Example() {
@@ -66,7 +64,11 @@ export function Example() {
       </Button>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Types"
+  code={typesCode}
 >
   <ToastTypesExample />
 </ComponentPreview>
@@ -96,9 +98,7 @@ Only the icon carries the status color; the surface stays neutral in both themes
 
 ## Descriptions and actions
 
-<ComponentPreview
-  title="Undo action"
-  code={`import { Button } from '@orkest/ui';
+export const undoActionCode = `import { Button } from '@orkest/ui';
 import { toast } from '@orkest/ui/client';
 
 export function Example() {
@@ -120,7 +120,11 @@ export function Example() {
       Delete task
     </Button>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Undo action"
+  code={undoActionCode}
 >
   <ToastActionExample />
 </ComponentPreview>
@@ -131,9 +135,7 @@ Keep toasts short. Do not put forms or multi-step flows inside a toast.
 
 `toast.promise` creates a loading toast and updates it in place when the promise settles.
 
-<ComponentPreview
-  title="Upload state"
-  code={`import { Button } from '@orkest/ui';
+export const uploadStateCode = `import { Button } from '@orkest/ui';
 import { toast } from '@orkest/ui/client';
 
 function simulateUpload() {
@@ -156,7 +158,11 @@ export function Example() {
       Upload file
     </Button>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Upload state"
+  code={uploadStateCode}
 >
   <ToastPromiseExample />
 </ComponentPreview>
@@ -177,9 +183,7 @@ keeps a toast open until it is closed.
 
 ## Positions
 
-<ComponentPreview
-  title="Viewport positions"
-  code={`import { useState } from 'react';
+export const viewportPositionsCode = `import { useState } from 'react';
 import { Button, Stack, Text } from '@orkest/ui';
 import {
   createToast,
@@ -226,7 +230,11 @@ export function Example() {
       <ToastViewport position={position} />
     </ToastProvider>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Viewport positions"
+  code={viewportPositionsCode}
 >
   <ToastPositionsExample />
 </ComponentPreview>
@@ -236,9 +244,7 @@ export function Example() {
 `ToastProvider` shows at most `limit` toasts (default `3`) and keeps older ones inert. `timeout`
 sets the default auto-dismiss delay in milliseconds (default `5000`).
 
-<ComponentPreview
-  title="Limited queue"
-  code={`import { useState } from 'react';
+export const limitedQueueCode = `import { useState } from 'react';
 import { Button, Stack } from '@orkest/ui';
 import {
   createToast,
@@ -270,7 +276,11 @@ export function Example() {
       <ToastViewport position="bottom-left" />
     </ToastProvider>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Limited queue"
+  code={limitedQueueCode}
 >
   <ToastQueueExample />
 </ComponentPreview>

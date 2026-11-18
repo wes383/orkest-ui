@@ -15,9 +15,7 @@ The component is built on Base UI Tooltip. Import it from `@orkest/ui/client`.
 Wrap tooltips in `TooltipProvider` to share the hover delay. The provider defaults to a `500ms` open
 delay and no close delay.
 
-<ComponentPreview
-  title="Icon button tooltips"
-  code={`import { IconButton, Stack } from '@orkest/ui';
+export const iconButtonTooltipsCode = `import { IconButton, Stack } from '@orkest/ui';
 import {
   Tooltip,
   TooltipArrow,
@@ -62,7 +60,11 @@ export function Example() {
       </Stack>
     </TooltipProvider>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Icon button tooltips"
+  code={iconButtonTooltipsCode}
 >
   <TooltipBasicExample />
 </ComponentPreview>
@@ -81,9 +83,7 @@ export function Example() {
 `TooltipContent` accepts short text and inline shortcut hints. Avoid block-level interactive
 components.
 
-<ComponentPreview
-  title="Text trigger"
-  code={`import {
+export const textTriggerCode = `import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
@@ -104,7 +104,11 @@ export function Example() {
       </Tooltip>
     </TooltipProvider>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Text trigger"
+  code={textTriggerCode}
 >
   <TooltipTextTriggerExample />
 </ComponentPreview>
@@ -114,9 +118,7 @@ export function Example() {
 `TooltipContent` defaults to `side="top"`, `align="center"`, and `sideOffset={6}`. It flips
 automatically when the tooltip would overflow the viewport.
 
-<ComponentPreview
-  title="Right-aligned tooltip"
-  code={`import {
+export const rightAlignedTooltipCode = `import {
   Tooltip,
   TooltipArrow,
   TooltipContent,
@@ -139,7 +141,11 @@ export function Example() {
       </Tooltip>
     </TooltipProvider>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Right-aligned tooltip"
+  code={rightAlignedTooltipCode}
 >
   <TooltipPositionExample />
 </ComponentPreview>

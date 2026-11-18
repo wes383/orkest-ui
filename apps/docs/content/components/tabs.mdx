@@ -12,9 +12,7 @@ The component is built on Base UI Tabs and exported from `@orkest/ui/client`.
 
 ## Basic usage
 
-<ComponentPreview
-  title="Underline tabs"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const underlineTabsCode = `import { Stack, Text } from '@orkest/ui';
 import {
   Tabs,
   TabsContent,
@@ -49,7 +47,11 @@ export function Example() {
       </TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Underline tabs"
+  code={underlineTabsCode}
 >
   <TabsBasicExample />
 </ComponentPreview>
@@ -71,9 +73,7 @@ String values keep state stable when tabs are added, removed, or reordered. Avoi
 
 `pills` uses a filled active tab and works well for compact view switching.
 
-<ComponentPreview
-  title="Pills"
-  code={`import {
+export const pillsCode = `import {
   Tabs,
   TabsContent,
   TabsIndicator,
@@ -95,7 +95,11 @@ export function Example() {
       <TabsContent value="month">This month's activity.</TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Pills"
+  code={pillsCode}
 >
   <TabsPillsExample />
 </ComponentPreview>
@@ -103,9 +107,7 @@ export function Example() {
 `enclosed` places the tabs in a sunken segmented container, which suits settings and layout
 switchers.
 
-<ComponentPreview
-  title="Enclosed"
-  code={`import {
+export const enclosedCode = `import {
   Tabs,
   TabsContent,
   TabsIndicator,
@@ -127,7 +129,11 @@ export function Example() {
       <TabsContent value="timeline">Tasks ordered by date.</TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Enclosed"
+  code={enclosedCode}
 >
   <TabsEnclosedExample />
 </ComponentPreview>
@@ -137,9 +143,7 @@ export function Example() {
 Set `orientation="vertical"` on `Tabs`. The root lays the list beside the active panel by default,
 and the arrow keys switch to ArrowUp and ArrowDown.
 
-<ComponentPreview
-  title="Vertical settings navigation"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const verticalSettingsNavigationCode = `import { Stack, Text } from '@orkest/ui';
 import {
   Tabs,
   TabsContent,
@@ -175,7 +179,11 @@ export function Example() {
       </TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Vertical settings navigation"
+  code={verticalSettingsNavigationCode}
 >
   <TabsVerticalExample />
 </ComponentPreview>
@@ -185,9 +193,7 @@ export function Example() {
 `size` accepts `sm`, `md`, and `lg`. `fullWidth` stretches a horizontal list and divides its width
 evenly between the tabs.
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Stack } from '@orkest/ui';
+export const sizesCode = `import { Stack } from '@orkest/ui';
 import {
   Tabs,
   TabsContent,
@@ -228,14 +234,16 @@ export function Example() {
       </Tabs>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <TabsSizesExample />
 </ComponentPreview>
 
-<ComponentPreview
-  title="Full width"
-  code={`import {
+export const fullWidthCode = `import {
   Tabs,
   TabsContent,
   TabsIndicator,
@@ -257,7 +265,11 @@ export function Example() {
       <TabsContent value="archived">Archived projects.</TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Full width"
+  code={fullWidthCode}
 >
   <TabsFullWidthExample />
 </ComponentPreview>
@@ -271,9 +283,7 @@ export function Example() {
 - `manual` moves focus only and waits for Enter or Space. Use it when switching triggers expensive
   work such as a network request.
 
-<ComponentPreview
-  title="Manual activation"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const manualActivationCode = `import { Stack, Text } from '@orkest/ui';
 import {
   Tabs,
   TabsContent,
@@ -308,16 +318,18 @@ export function Example() {
       </TabsContent>
     </Tabs>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Manual activation"
+  code={manualActivationCode}
 >
   <TabsManualExample />
 </ComponentPreview>
 
 ## Controlled state
 
-<ComponentPreview
-  title="Controlled tabs"
-  code={`import { useState } from 'react';
+export const controlledTabsCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import {
   Tabs,
@@ -344,7 +356,11 @@ export function Example() {
       <Text size="sm" tone="muted">Active tab: {value}</Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Controlled tabs"
+  code={controlledTabsCode}
 >
   <TabsControlledExample />
 </ComponentPreview>
@@ -356,9 +372,7 @@ active panel stays visible but the list no longer accepts pointer or keyboard in
 
 Disabled tabs are skipped by arrow-key navigation, Home, and End.
 
-<ComponentPreview
-  title="Disabled states"
-  code={`import { useState } from 'react';
+export const disabledStatesCode = `import { useState } from 'react';
 import { Stack } from '@orkest/ui';
 import {
   Switch,
@@ -394,7 +408,11 @@ export function Example() {
       </Tabs>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled states"
+  code={disabledStatesCode}
 >
   <TabsDisabledExample />
 </ComponentPreview>

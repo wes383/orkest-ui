@@ -10,9 +10,7 @@ one-dimensional layout primitive for vertical rhythm and simple horizontal group
 
 ## Live preview
 
-<ComponentPreview
-  title="Vertical rhythm"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const verticalRhythmCode = `import { Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -26,7 +24,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Vertical rhythm"
+  code={verticalRhythmCode}
 >
   <Stack gap={3}>
     <Text weight="semibold">Release checklist</Text>
@@ -39,14 +41,16 @@ export function Example() {
   </Stack>
 </ComponentPreview>
 
-<ComponentPreview
-  title="Horizontal group"
-  code={`<Stack direction="row" align="center" gap={2}>
+export const horizontalGroupCode = `<Stack direction="row" align="center" gap={2}>
   <Text weight="semibold">Status</Text>
   <Text size="sm" tone="success">
     Ready
   </Text>
-</Stack>`}
+</Stack>`;
+
+<ComponentPreview
+  title="Horizontal group"
+  code={horizontalGroupCode}
 >
   <Stack direction="row" align="center" gap={2}>
     <Text weight="semibold">Status</Text>

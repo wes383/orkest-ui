@@ -12,9 +12,7 @@ together.
 
 ## Basic usage
 
-<ComponentPreview
-  title="Grouped fields"
-  code={`import { Box } from '@orkest/ui';
+export const groupedFieldsCode = `import { Box } from '@orkest/ui';
 import { Field, FieldLabel, Fieldset, Input, Legend } from '@orkest/ui/client';
 
 export function Example() {
@@ -33,7 +31,11 @@ export function Example() {
       </Fieldset>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Grouped fields"
+  code={groupedFieldsCode}
 >
   <FieldsetBasicExample />
 </ComponentPreview>
@@ -46,9 +48,7 @@ id in `aria-labelledby` for consistent behavior across browsers and assistive te
 Disabling a `Fieldset` disables every native control inside it and propagates the state to nested
 `Field` components.
 
-<ComponentPreview
-  title="Disabled fieldset"
-  code={`import { Box } from '@orkest/ui';
+export const disabledFieldsetCode = `import { Box } from '@orkest/ui';
 import { Field, FieldLabel, Fieldset, Input, Legend } from '@orkest/ui/client';
 
 export function Example() {
@@ -67,7 +67,11 @@ export function Example() {
       </Fieldset>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled fieldset"
+  code={disabledFieldsetCode}
 >
   <FieldsetDisabledExample />
 </ComponentPreview>
@@ -77,9 +81,7 @@ export function Example() {
 Pair `Fieldset` and `Legend` with `Field` and `FieldLabel` to name a radio group. The group receives
 the label through `aria-labelledby`, and the required state is propagated to the radios.
 
-<ComponentPreview
-  title="Radio group in a fieldset"
-  code={`import { useState } from 'react';
+export const radioGroupInAFieldsetCode = `import { useState } from 'react';
 import { Box } from '@orkest/ui';
 import {
   Field,
@@ -110,7 +112,11 @@ export function Example() {
       </Fieldset>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Radio group in a fieldset"
+  code={radioGroupInAFieldsetCode}
 >
   <FieldsetRadioExample />
 </ComponentPreview>

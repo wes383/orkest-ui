@@ -12,9 +12,7 @@ Import it from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Searchable select"
-  code={`import { useState } from 'react';
+export const searchableSelectCode = `import { useState } from 'react';
 import { Combobox } from '@orkest/ui/client';
 
 const fruits = [
@@ -41,7 +39,11 @@ export function Example() {
       searchPlaceholder="Search fruit"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Searchable select"
+  code={searchableSelectCode}
 >
   <ComboboxBasicExample />
 </ComponentPreview>
@@ -83,9 +85,7 @@ the text and confirming.
 Options can be interleaved with `{ label, options }` groups. The group label is announced with the
 listbox and is not selectable itself.
 
-<ComponentPreview
-  title="Grouped options"
-  code={`import { Combobox } from '@orkest/ui/client';
+export const groupedOptionsCode = `import { Combobox } from '@orkest/ui/client';
 
 const projects = [
   {
@@ -110,7 +110,11 @@ export function Example() {
       placeholder="Pick a project"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Grouped options"
+  code={groupedOptionsCode}
 >
   <ComboboxGroupedExample />
 </ComponentPreview>
@@ -120,9 +124,7 @@ export function Example() {
 `renderItem` replaces the label / description block. The row still gets the selected state, the
 check indicator, and keyboard highlighting from the listbox:
 
-<ComponentPreview
-  title="Custom rows"
-  code={`import { Combobox } from '@orkest/ui/client';
+export const customRowsCode = `import { Combobox } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -138,7 +140,11 @@ export function Example() {
       )}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom rows"
+  code={customRowsCode}
 >
   <ComboboxCustomItemExample />
 </ComponentPreview>
@@ -169,9 +175,7 @@ const [loading, setLoading] = useState(false);
 />
 ```
 
-<ComponentPreview
-  title="Server-side search"
-  code={`<Combobox
+export const serverSideSearchCode = `<Combobox
   aria-label="Country"
   options={results}
   filterOption={null}
@@ -179,7 +183,11 @@ const [loading, setLoading] = useState(false);
   onSearchChange={setQuery}
   placeholder="Pick a country"
   emptyMessage="No country matched"
-/>`}
+/>`;
+
+<ComponentPreview
+  title="Server-side search"
+  code={serverSideSearchCode}
 >
   <ComboboxAsyncExample />
 </ComponentPreview>
@@ -191,11 +199,13 @@ response are rendered as soon as `loading` goes back to `false`.
 
 ## States
 
+export const disabledInvalidAndLargeCode = `<Combobox aria-label="Fruit" options={fruits} disabled defaultValue="apple" />
+<Combobox aria-label="Team fruit" options={fruits} invalid placeholder="Invalid" />
+<Combobox aria-label="Sized fruit" options={fruits} size="lg" placeholder="Large" />`;
+
 <ComponentPreview
   title="Disabled, invalid, and large"
-  code={`<Combobox aria-label="Fruit" options={fruits} disabled defaultValue="apple" />
-<Combobox aria-label="Team fruit" options={fruits} invalid placeholder="Invalid" />
-<Combobox aria-label="Sized fruit" options={fruits} size="lg" placeholder="Large" />`}
+  code={disabledInvalidAndLargeCode}
 >
   <ComboboxStatesExample />
 </ComponentPreview>

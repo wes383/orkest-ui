@@ -111,6 +111,46 @@ function extractHeadings(source: string): DocHeading[] {
   return headings;
 }
 
+/**
+ * Example sources live in `export const x = `...`;` blocks. They are code, not
+ * prose: a line such as `## Note` inside a snippet must not become a table of
+ * contents entry, and the snippets should not inflate reading time or the
+ * search index. Radix's own template literals can contain escaped backticks, so
+ * the closing delimiter is scanned rather than matched with a regex.
+ */
+function stripExampleConstants(source: string): string {
+  const pattern = /^export const [\w$]+ = `/gm;
+  let result = '';
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(source)) !== null) {
+    result += source.slice(cursor, match.index);
+
+    let index = match.index + match[0].length;
+
+    while (index < source.length) {
+      if (source[index] === '\\') {
+        index += 2;
+        continue;
+      }
+
+      if (source[index] === '`' && source[index + 1] === ';') {
+        index += 2;
+        break;
+      }
+
+      index += 1;
+    }
+
+    const lineEnd = source.indexOf('\n', index);
+    cursor = lineEnd === -1 ? source.length : lineEnd + 1;
+    pattern.lastIndex = cursor;
+  }
+
+  return result + source.slice(cursor);
+}
+
 function toPlainText(source: string): string {
   return source
     .replace(/```[\s\S]*?```/g, ' ')
@@ -136,6 +176,8 @@ function parseDoc(filePath: string): DocPage {
     throw new Error(`Unknown documentation section "${section}" in ${relativePath}`);
   }
 
+  const prose = stripExampleConstants(content);
+
   return {
     slug,
     slugSegments: slug.split('/'),
@@ -145,9 +187,9 @@ function parseDoc(filePath: string): DocPage {
     sectionLabel: sectionMeta.label,
     // Component pages are alphabetical; every other section uses an explicit order.
     order: section === 'components' ? undefined : requireOrder(data.order, relativePath),
-    headings: extractHeadings(content),
+    headings: extractHeadings(prose),
     content,
-    plainText: toPlainText(content),
+    plainText: toPlainText(prose),
   };
 }
 

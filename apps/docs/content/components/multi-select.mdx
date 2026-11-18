@@ -14,9 +14,7 @@ Import it from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Searchable multi-select"
-  code={`import { useState } from 'react';
+export const searchableMultiSelectCode = `import { useState } from 'react';
 import { MultiSelect } from '@orkest/ui/client';
 
 const skills = [
@@ -44,7 +42,11 @@ export function Example() {
       placeholder="Select skills"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Searchable multi-select"
+  code={searchableMultiSelectCode}
 >
   <MultiSelectExample />
 </ComponentPreview>
@@ -83,9 +85,7 @@ at the right edge.
 the list, so it composes with `searchable`: with a query active, only the matches are added. When
 everything selectable is already on, the same row switches to `clearAllLabel` and removes them.
 
-<ComponentPreview
-  title="Select all"
-  code={`import { MultiSelect } from '@orkest/ui/client';
+export const selectAllCode = `import { MultiSelect } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -98,7 +98,11 @@ export function Example() {
       placeholder="Select skills"
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Select all"
+  code={selectAllCode}
 >
   <MultiSelectSelectAllExample />
 </ComponentPreview>
@@ -111,9 +115,7 @@ limit instead of overshooting it.
 `maxVisible` keeps the field to one line: the chips past the limit collapse into a counter chip that
 expands the rest when clicked.
 
-<ComponentPreview
-  title="Chip overflow"
-  code={`import { MultiSelect } from '@orkest/ui/client';
+export const chipOverflowCode = `import { MultiSelect } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -125,7 +127,11 @@ export function Example() {
       clearable
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Chip overflow"
+  code={chipOverflowCode}
 >
   <MultiSelectOverflowExample />
 </ComponentPreview>

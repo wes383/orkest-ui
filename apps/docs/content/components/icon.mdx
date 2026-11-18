@@ -10,9 +10,7 @@ width. It preserves the accessible name rules that controls need, so icons compo
 
 ## Live preview
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Icon, Stack, Text } from '@orkest/ui';
+export const sizesCode = `import { Icon, Stack, Text } from '@orkest/ui';
 import { Circle } from 'lucide-react';
 
 export function Example() {
@@ -28,7 +26,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Circle} size="xs" />
@@ -47,9 +49,7 @@ export function Example() {
 `tone` uses semantic theme tokens, so icons change with the active theme. The default is `inherit`,
 which keeps icons aligned with the foreground of the surrounding control.
 
-<ComponentPreview
-  title="Semantic tones"
-  code={`import { Icon, Stack } from '@orkest/ui';
+export const semanticTonesCode = `import { Icon, Stack } from '@orkest/ui';
 import { Check } from 'lucide-react';
 
 export function Example() {
@@ -63,7 +63,11 @@ export function Example() {
       <Icon icon={Check} tone="danger" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Semantic tones"
+  code={semanticTonesCode}
 >
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Check} tone="default" />
@@ -80,9 +84,7 @@ export function Example() {
 The default stroke width comes from `--ok-icon-stroke-width`. Override it per icon when a denser or
 lighter treatment is needed.
 
-<ComponentPreview
-  title="Stroke widths"
-  code={`import { Icon, Stack } from '@orkest/ui';
+export const strokeWidthsCode = `import { Icon, Stack } from '@orkest/ui';
 import { Circle } from 'lucide-react';
 
 export function Example() {
@@ -93,7 +95,11 @@ export function Example() {
       <Icon icon={Circle} strokeWidth={2.5} />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Stroke widths"
+  code={strokeWidthsCode}
 >
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Circle} strokeWidth={1.25} />
@@ -107,14 +113,16 @@ export function Example() {
 Native SVG attributes, `className`, `style`, and refs are forwarded. Inline styles can use semantic
 tokens when a one-off color is needed.
 
-<ComponentPreview
-  title="Inline style"
-  code={`import { Icon } from '@orkest/ui';
+export const inlineStyleCode = `import { Icon } from '@orkest/ui';
 import { Circle } from 'lucide-react';
 
 export function Example() {
   return <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Inline style"
+  code={inlineStyleCode}
 >
   <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />
 </ComponentPreview>
@@ -125,9 +133,7 @@ export function Example() {
 from the control. The same rules make `Icon` ready for inputs and navigation items: use
 `size="inherit"` to match text, and leave the icon decorative when the control already has a name.
 
-<ComponentPreview
-  title="Inside buttons"
-  code={`import { Button, IconButton, Stack } from '@orkest/ui';
+export const insideButtonsCode = `import { Button, IconButton, Stack } from '@orkest/ui';
 import { ArrowRight, Plus, Settings } from 'lucide-react';
 
 export function Example() {
@@ -140,7 +146,11 @@ export function Example() {
       <IconButton icon={Settings} label="Settings" variant="outline" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Inside buttons"
+  code={insideButtonsCode}
 >
   <Stack direction="row" align="center" gap={2} wrap>
     <Button leftIcon={Plus}>New project</Button>

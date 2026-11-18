@@ -13,9 +13,7 @@ Import the components from `@orkest/ui/client`.
 
 ## Variants
 
-<ComponentPreview
-  title="Variants"
-  code={`import { Stack } from '@orkest/ui';
+export const variantsCode = `import { Stack } from '@orkest/ui';
 import {
   Alert,
   AlertDescription,
@@ -49,7 +47,11 @@ export function Example() {
       </Alert>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Variants"
+  code={variantsCode}
 >
   <AlertVariantsExample />
 </ComponentPreview>
@@ -73,9 +75,7 @@ signal. Both themes use semantic tokens.
 A description alone can be enough for short statuses. Use `icon={null}` when the message does not
 need a status glyph.
 
-<ComponentPreview
-  title="Without title or icon"
-  code={`import { Stack } from '@orkest/ui';
+export const withoutTitleOrIconCode = `import { Stack } from '@orkest/ui';
 import {
   Alert,
   AlertDescription,
@@ -98,7 +98,11 @@ export function Example() {
       </Alert>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Without title or icon"
+  code={withoutTitleOrIconCode}
 >
   <AlertWithoutTitleExample />
 </ComponentPreview>
@@ -111,9 +115,7 @@ one.
 Pass a Lucide icon to `icon` when a more specific glyph communicates the message better. The color
 still follows the variant.
 
-<ComponentPreview
-  title="Custom icon"
-  code={`import {
+export const customIconCode = `import {
   Alert,
   AlertDescription,
   AlertTitle,
@@ -129,7 +131,11 @@ export function Example() {
       </AlertDescription>
     </Alert>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom icon"
+  code={customIconCode}
 >
   <AlertCustomIconExample />
 </ComponentPreview>
@@ -139,9 +145,7 @@ export function Example() {
 `Alert` is controlled: `closable` renders the close button and `onClose` reports the request, but the
 alert does not remove itself. Hide it in the parent so the same state can be restored or persisted.
 
-<ComponentPreview
-  title="Dismissible alert"
-  code={`import { useState } from 'react';
+export const dismissibleAlertCode = `import { useState } from 'react';
 import { Button } from '@orkest/ui';
 import {
   Alert,
@@ -168,7 +172,11 @@ export function Example() {
       </AlertDescription>
     </Alert>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Dismissible alert"
+  code={dismissibleAlertCode}
 >
   <AlertClosableExample />
 </ComponentPreview>
@@ -178,9 +186,7 @@ export function Example() {
 `AlertAction` sits below the text and can hold buttons or links. Keep actions directly related to
 the message; do not turn the alert into a form.
 
-<ComponentPreview
-  title="Retry action"
-  code={`import { Button } from '@orkest/ui';
+export const retryActionCode = `import { Button } from '@orkest/ui';
 import {
   Alert,
   AlertAction,
@@ -205,7 +211,11 @@ export function Example() {
       </AlertAction>
     </Alert>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Retry action"
+  code={retryActionCode}
 >
   <AlertActionExample />
 </ComponentPreview>

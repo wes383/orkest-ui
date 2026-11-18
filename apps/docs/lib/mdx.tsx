@@ -15,6 +15,7 @@ import remarkGfm from 'remark-gfm';
 import type { ShikiTransformer } from 'shiki';
 
 import { mdxComponents } from '@/components/mdx/mdx-components';
+import { collectExampleCode } from '@/lib/example-code';
 
 /**
  * Keeps the fence language on the element. The rendered DOM doubles as the
@@ -43,6 +44,7 @@ export function MdxContent({ source }: { source: string }) {
           Search,
           Settings,
           Trash2,
+          ...collectExampleCode(source),
         },
         mdxOptions: {
           remarkPlugins: [remarkGfm],

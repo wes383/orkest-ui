@@ -8,9 +8,7 @@ order: 3
 The current primitives cover layout, text, and icons. This example composes them into a small status
 panel.
 
-<ComponentPreview
-  title="Status panel"
-  code={`import { Icon, Stack, Text } from '@orkest/ui';
+export const statusPanelCode = `import { Icon, Stack, Text } from '@orkest/ui';
 import { Check } from 'lucide-react';
 
 export function StatusPanel() {
@@ -25,7 +23,11 @@ export function StatusPanel() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Status panel"
+  code={statusPanelCode}
 >
   <Stack gap={3}>
     <Stack direction="row" align="center" gap={2}>

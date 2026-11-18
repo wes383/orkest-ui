@@ -12,9 +12,7 @@ Use it for compact actions such as add, edit, settings, or delete. For buttons w
 
 ## Live preview
 
-<ComponentPreview
-  title="Common actions"
-  code={`import { IconButton, Stack } from '@orkest/ui';
+export const commonActionsCode = `import { IconButton, Stack } from '@orkest/ui';
 import { Plus, Settings, Trash2 } from 'lucide-react';
 
 export function Example() {
@@ -25,7 +23,11 @@ export function Example() {
       <IconButton icon={Trash2} label="Delete" variant="destructive" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Common actions"
+  code={commonActionsCode}
 >
   <Stack direction="row" gap={2} wrap>
     <IconButton icon={Plus} label="Add item" />
@@ -36,9 +38,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { IconButton, Stack } from '@orkest/ui';
+export const sizesCode = `import { IconButton, Stack } from '@orkest/ui';
 import { Plus } from 'lucide-react';
 
 export function Example() {
@@ -50,7 +50,11 @@ export function Example() {
       <IconButton icon={Plus} label="Add item" size="xl" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <IconButton icon={Plus} label="Add item" size="sm" />
@@ -62,9 +66,7 @@ export function Example() {
 
 ## States
 
-<ComponentPreview
-  title="Disabled and loading"
-  code={`import { IconButton, Stack } from '@orkest/ui';
+export const disabledAndLoadingCode = `import { IconButton, Stack } from '@orkest/ui';
 import { Settings } from 'lucide-react';
 
 export function Example() {
@@ -74,7 +76,11 @@ export function Example() {
       <IconButton icon={Settings} label="Loading settings" loading />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled and loading"
+  code={disabledAndLoadingCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <IconButton icon={Settings} label="Settings" disabled />

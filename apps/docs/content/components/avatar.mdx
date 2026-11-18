@@ -12,9 +12,7 @@ and fallback timing. Import the components from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Avatar with status"
-  code={`import {
+export const avatarWithStatusCode = `import {
   Avatar,
   AvatarFallback,
   AvatarImage,
@@ -27,7 +25,11 @@ export function Example() {
       <AvatarFallback>{'AM'}</AvatarFallback>
     </Avatar>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Avatar with status"
+  code={avatarWithStatusCode}
 >
   <Avatar size="lg" status="online">
     <AvatarImage src="/avatars/avatar-sample.svg" alt="Alex Morgan" />
@@ -41,9 +43,7 @@ export function Example() {
 failure. By default the image stays mounted while loading or failed, but is hidden from assistive
 technology until it loads, so the fallback remains the accessible content.
 
-<ComponentPreview
-  title="Image, failed image, and initials"
-  code={`import {
+export const imageFailedImageAndInitialsCode = `import {
   Avatar,
   AvatarFallback,
   AvatarImage,
@@ -56,7 +56,11 @@ export function Example() {
       <AvatarFallback>{'AM'}</AvatarFallback>
     </Avatar>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Image, failed image, and initials"
+  code={imageFailedImageAndInitialsCode}
 >
   <Stack direction="row" gap={3} align="center">
     <Avatar size="lg">
@@ -77,9 +81,7 @@ export function Example() {
 
 Use one or two characters in `AvatarFallback`. Initials scale with the avatar size.
 
-<ComponentPreview
-  title="Initials"
-  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+export const initialsCode = `import { Avatar, AvatarFallback } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -91,7 +93,11 @@ export function Example() {
       <Avatar size="xl"><AvatarFallback>{'XL'}</AvatarFallback></Avatar>
     </>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Initials"
+  code={initialsCode}
 >
   <Stack direction="row" gap={3} align="center" wrap>
     <Avatar size="xs">
@@ -116,9 +122,7 @@ export function Example() {
 
 Circles are the default. Square avatars use a size-aware corner radius.
 
-<ComponentPreview
-  title="Circle and square"
-  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+export const circleAndSquareCode = `import { Avatar, AvatarFallback } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -126,7 +130,11 @@ export function Example() {
       <AvatarFallback>{'SQ'}</AvatarFallback>
     </Avatar>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Circle and square"
+  code={circleAndSquareCode}
 >
   <Stack direction="row" gap={3} align="center">
     <Avatar size="lg">
@@ -143,9 +151,7 @@ export function Example() {
 Icons inherit the avatar size and color. Set `label` on `Avatar` when the fallback is decorative, so
 the avatar keeps an accessible name.
 
-<ComponentPreview
-  title="Icon avatar"
-  code={`import { Bot } from 'lucide-react';
+export const iconAvatarCode = `import { Bot } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@orkest/ui/client';
 
 export function Example() {
@@ -156,7 +162,11 @@ export function Example() {
       </AvatarFallback>
     </Avatar>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Icon avatar"
+  code={iconAvatarCode}
 >
   <AvatarIconExample />
 </ComponentPreview>
@@ -166,9 +176,7 @@ export function Example() {
 Add `status` to show a presence indicator in the bottom-right corner. Every status includes
 visually hidden text; use `statusLabel` to customize it.
 
-<ComponentPreview
-  title="Presence status"
-  code={`import { Avatar, AvatarFallback } from '@orkest/ui/client';
+export const presenceStatusCode = `import { Avatar, AvatarFallback } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -176,7 +184,11 @@ export function Example() {
       <AvatarFallback>{'AM'}</AvatarFallback>
     </Avatar>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Presence status"
+  code={presenceStatusCode}
 >
   <Stack direction="row" gap={4} align="start" wrap>
     <Stack gap={2} align="center">
@@ -219,9 +231,7 @@ export function Example() {
 `AvatarGroup` overlaps its children. `size` and `shape` cascade to avatars that do not set their own,
 and `spacing` controls the overlap using a spacing token step.
 
-<ComponentPreview
-  title="Overlapping avatars"
-  code={`import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
+export const overlappingAvatarsCode = `import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -232,7 +242,11 @@ export function Example() {
       <Avatar><AvatarFallback>{'TW'}</AvatarFallback></Avatar>
     </AvatarGroup>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Overlapping avatars"
+  code={overlappingAvatarsCode}
 >
   <AvatarGroup size="md" spacing={2}>
     <Avatar>
@@ -256,9 +270,7 @@ Set `max` to keep the first N avatars and replace the rest with a count. The gro
 order, so place the avatars that must stay visible first. `overflowLabel` customizes the accessible
 text and defaults to `N more avatars`.
 
-<ComponentPreview
-  title="Overflow count"
-  code={`import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
+export const overflowCountCode = `import { Avatar, AvatarFallback, AvatarGroup } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -270,7 +282,11 @@ export function Example() {
       <Avatar><AvatarFallback>{'RB'}</AvatarFallback></Avatar>
     </AvatarGroup>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Overflow count"
+  code={overflowCountCode}
 >
   <AvatarGroup max={3} size="md">
     <Avatar>

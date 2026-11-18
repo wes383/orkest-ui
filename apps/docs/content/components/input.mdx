@@ -31,9 +31,7 @@ Native browser validation, autocomplete, and input modes remain available.
 
 ## Live preview
 
-<ComponentPreview
-  title="Label, input, and help text"
-  code={`import { Box, Caption, Label, Stack } from '@orkest/ui';
+export const labelInputAndHelpTextCode = `import { Box, Caption, Label, Stack } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -51,7 +49,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Label, input, and help text"
+  code={labelInputAndHelpTextCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={1}>
@@ -69,9 +71,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const sizesCode = `import { Box, Stack } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -85,7 +85,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={2}>
@@ -102,9 +106,7 @@ export function Example() {
 Icons are decorative and follow the input size. The input keeps its own accessible name through a
 label or `aria-label`.
 
-<ComponentPreview
-  title="Leading and trailing icons"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const leadingAndTrailingIconsCode = `import { Box, Stack } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 import { Check, Search } from 'lucide-react';
 
@@ -121,16 +123,18 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Leading and trailing icons"
+  code={leadingAndTrailingIconsCode}
 >
   <InputIconsExample />
 </ComponentPreview>
 
 ## Prefix and suffix
 
-<ComponentPreview
-  title="Affixes"
-  code={`import { Box } from '@orkest/ui';
+export const affixesCode = `import { Box } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -139,7 +143,11 @@ export function Example() {
       <Input prefix="$" suffix="USD" placeholder="0.00" aria-label="Amount" />
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Affixes"
+  code={affixesCode}
 >
   <Box style={{ width: '22rem' }}>
     <Input prefix="$" suffix="USD" placeholder="0.00" aria-label="Amount" />
@@ -151,9 +159,7 @@ export function Example() {
 `clearable` shows a clear action while the input has a value. `passwordToggle` adds a visibility
 toggle for password fields. Both actions have accessible names and keep focus inside the field.
 
-<ComponentPreview
-  title="Clear and password visibility"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const clearAndPasswordVisibilityCode = `import { Box, Stack } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -165,7 +171,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Clear and password visibility"
+  code={clearAndPasswordVisibilityCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={2}>
@@ -177,9 +187,7 @@ export function Example() {
 
 ## Character count
 
-<ComponentPreview
-  title="Character count"
-  code={`import { Box } from '@orkest/ui';
+export const characterCountCode = `import { Box } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -188,7 +196,11 @@ export function Example() {
       <Input showCount maxLength={40} placeholder="Short bio" aria-label="Short bio" />
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Character count"
+  code={characterCountCode}
 >
   <Box style={{ width: '22rem' }}>
     <Input showCount maxLength={40} placeholder="Short bio" aria-label="Short bio" />
@@ -200,9 +212,7 @@ native constraint.
 
 ## States
 
-<ComponentPreview
-  title="Invalid, disabled, and read-only"
-  code={`import { Box, Label, Stack, Text } from '@orkest/ui';
+export const invalidDisabledAndReadOnlyCode = `import { Box, Label, Stack, Text } from '@orkest/ui';
 import { Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -227,7 +237,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Invalid, disabled, and read-only"
+  code={invalidDisabledAndReadOnlyCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={3}>

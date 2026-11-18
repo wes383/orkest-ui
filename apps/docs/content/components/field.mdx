@@ -11,9 +11,7 @@ on Base UI Field, so validation state, disabled state, and ARIA relationships st
 
 ## Basic usage
 
-<ComponentPreview
-  title="Label, input, and description"
-  code={`import { Box } from '@orkest/ui';
+export const labelInputAndDescriptionCode = `import { Box } from '@orkest/ui';
 import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -26,7 +24,11 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Label, input, and description"
+  code={labelInputAndDescriptionCode}
 >
   <FieldBasicExample />
 </ComponentPreview>
@@ -43,9 +45,7 @@ Set `required` on `Field` to require the control and show the required indicator
 keeps the visual asterisk separate from a screen-reader “Required” label, so the state is not
 communicated by color alone.
 
-<ComponentPreview
-  title="Required and optional fields"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const requiredAndOptionalFieldsCode = `import { Box, Stack } from '@orkest/ui';
 import { Field, FieldLabel, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -63,7 +63,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Required and optional fields"
+  code={requiredAndOptionalFieldsCode}
 >
   <FieldRequiredExample />
 </ComponentPreview>
@@ -72,9 +76,7 @@ export function Example() {
 
 Use `orientation="horizontal"` for settings pages where the label sits beside the control.
 
-<ComponentPreview
-  title="Horizontal field"
-  code={`import { Box } from '@orkest/ui';
+export const horizontalFieldCode = `import { Box } from '@orkest/ui';
 import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -87,7 +89,11 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Horizontal field"
+  code={horizontalFieldCode}
 >
   <FieldHorizontalExample />
 </ComponentPreview>
@@ -98,9 +104,7 @@ export function Example() {
 the field, `FieldMessage` shows the validation message automatically and hides it again once the
 field becomes valid.
 
-<ComponentPreview
-  title="Validation on change"
-  code={`import { Box } from '@orkest/ui';
+export const validationOnChangeCode = `import { Box } from '@orkest/ui';
 import { Field, FieldDescription, FieldLabel, FieldMessage, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -119,7 +123,11 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Validation on change"
+  code={validationOnChangeCode}
 >
   <FieldValidationExample />
 </ComponentPreview>
@@ -132,9 +140,7 @@ The same pattern works with `Select` and `Textarea`, which also register with Ba
 `FieldMessage` handles error, success, warning, and info tones. Error messages are announced with
 `role="alert"`; the other tones use `role="status"`.
 
-<ComponentPreview
-  title="Message tones"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const messageTonesCode = `import { Box, Stack } from '@orkest/ui';
 import { Field, FieldLabel, FieldMessage, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -165,7 +171,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Message tones"
+  code={messageTonesCode}
 >
   <FieldMessagesExample />
 </ComponentPreview>
@@ -178,9 +188,7 @@ descriptions and messages are appended to `aria-describedby` in registration ord
 Controls that render their own label should use that label instead of `FieldLabel`. The field still
 links descriptions, messages, names, disabled state, and required state.
 
-<ComponentPreview
-  title="Checkbox with help text"
-  code={`import { Box } from '@orkest/ui';
+export const checkboxWithHelpTextCode = `import { Box } from '@orkest/ui';
 import { Checkbox, Field, FieldDescription, FieldMessage } from '@orkest/ui/client';
 
 export function Example() {
@@ -193,14 +201,16 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Checkbox with help text"
+  code={checkboxWithHelpTextCode}
 >
   <FieldCheckboxExample />
 </ComponentPreview>
 
-<ComponentPreview
-  title="Select with a field label"
-  code={`import { Box } from '@orkest/ui';
+export const selectWithAFieldLabelCode = `import { Box } from '@orkest/ui';
 import { Field, FieldDescription, FieldLabel, Select } from '@orkest/ui/client';
 
 export function Example() {
@@ -219,7 +229,11 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Select with a field label"
+  code={selectWithAFieldLabelCode}
 >
   <FieldSelectExample />
 </ComponentPreview>
@@ -229,9 +243,7 @@ through `aria-labelledby`.
 
 ## Disabled
 
-<ComponentPreview
-  title="Disabled field"
-  code={`import { Box } from '@orkest/ui';
+export const disabledFieldCode = `import { Box } from '@orkest/ui';
 import { Field, FieldDescription, FieldLabel, Input } from '@orkest/ui/client';
 
 export function Example() {
@@ -244,7 +256,11 @@ export function Example() {
       </Field>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled field"
+  code={disabledFieldCode}
 >
   <FieldDisabledExample />
 </ComponentPreview>

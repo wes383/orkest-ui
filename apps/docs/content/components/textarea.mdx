@@ -13,9 +13,7 @@ container.
 
 ## Live preview
 
-<ComponentPreview
-  title="Label, textarea, and help text"
-  code={`import { Box, Caption, Label, Stack } from '@orkest/ui';
+export const labelTextareaAndHelpTextCode = `import { Box, Caption, Label, Stack } from '@orkest/ui';
 import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
@@ -33,7 +31,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Label, textarea, and help text"
+  code={labelTextareaAndHelpTextCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={1}>
@@ -51,9 +53,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const sizesCode = `import { Box, Stack } from '@orkest/ui';
 import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
@@ -67,7 +67,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={2}>
@@ -87,9 +91,7 @@ Three modes cover the common cases:
 - **Auto resize** — set `autoResize` and the field grows with its content.
 - **Min / max rows** — combine `autoResize` with `minRows` and `maxRows`; extra content scrolls.
 
-<ComponentPreview
-  title="Fixed, auto-resize, and bounded"
-  code={`import { Box, Stack } from '@orkest/ui';
+export const fixedAutoResizeAndBoundedCode = `import { Box, Stack } from '@orkest/ui';
 import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
@@ -113,7 +115,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Fixed, auto-resize, and bounded"
+  code={fixedAutoResizeAndBoundedCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={3}>
@@ -140,9 +146,7 @@ enabled. Regardless of `rows`, `minRows`, or auto-resize, the field never shrink
 
 ## Character count
 
-<ComponentPreview
-  title="Character count"
-  code={`import { Box } from '@orkest/ui';
+export const characterCountCode = `import { Box } from '@orkest/ui';
 import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
@@ -157,7 +161,11 @@ export function Example() {
       />
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Character count"
+  code={characterCountCode}
 >
   <Box style={{ width: '22rem' }}>
     <Textarea
@@ -175,9 +183,7 @@ native constraint.
 
 ## States
 
-<ComponentPreview
-  title="Invalid, disabled, and read-only"
-  code={`import { Box, Label, Stack, Text } from '@orkest/ui';
+export const invalidDisabledAndReadOnlyCode = `import { Box, Label, Stack, Text } from '@orkest/ui';
 import { Textarea } from '@orkest/ui/client';
 
 export function Example() {
@@ -206,7 +212,11 @@ export function Example() {
       </Stack>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Invalid, disabled, and read-only"
+  code={invalidDisabledAndReadOnlyCode}
 >
   <Box style={{ width: '22rem' }}>
     <Stack gap={3}>

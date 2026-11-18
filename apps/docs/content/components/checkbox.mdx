@@ -11,9 +11,7 @@ Import it from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Checkbox states"
-  code={`import { Stack } from '@orkest/ui';
+export const checkboxStatesCode = `import { Stack } from '@orkest/ui';
 import { Checkbox } from '@orkest/ui/client';
 
 export function Example() {
@@ -25,7 +23,11 @@ export function Example() {
       <Checkbox label="Disabled checked" defaultChecked disabled />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Checkbox states"
+  code={checkboxStatesCode}
 >
   <Stack gap={3}>
     <Checkbox label="Unchecked" />
@@ -37,9 +39,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { Checkbox } from '@orkest/ui/client';
 
 export function Example() {
@@ -50,7 +50,11 @@ export function Example() {
       <Checkbox size="lg" label="Large" defaultChecked />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <Stack gap={3}>
     <Checkbox size="sm" label="Small" defaultChecked />
@@ -64,9 +68,7 @@ export function Example() {
 `indeterminate` is an independent visual and ARIA state managed by Base UI. It does not change the
 checkbox's checked value; update `checked` yourself after a selection changes.
 
-<ComponentPreview
-  title="Select all"
-  code={`import { useState } from 'react';
+export const selectAllCode = `import { useState } from 'react';
 import { Stack } from '@orkest/ui';
 import { Checkbox } from '@orkest/ui/client';
 
@@ -101,7 +103,11 @@ export function Example() {
       ))}
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Select all"
+  code={selectAllCode}
 >
   <IndeterminateCheckboxExample />
 </ComponentPreview>

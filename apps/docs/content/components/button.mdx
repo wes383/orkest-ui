@@ -12,22 +12,22 @@ Use `Button` for actions. For navigation, render a link element instead. For ico
 
 ## Live preview
 
-<ComponentPreview
-  title="Default button"
-  code={`import { Button } from '@orkest/ui';
+export const defaultButtonCode = `import { Button } from '@orkest/ui';
 
 export function Example() {
   return <Button>Save changes</Button>;
-}`}
+}`;
+
+<ComponentPreview
+  title="Default button"
+  code={defaultButtonCode}
 >
   <Button>Save changes</Button>
 </ComponentPreview>
 
 ## Variants
 
-<ComponentPreview
-  title="Variants"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const variantsCode = `import { Button, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -40,7 +40,11 @@ export function Example() {
       <Button variant="link">Link</Button>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Variants"
+  code={variantsCode}
 >
   <Stack direction="row" gap={2} wrap>
     <Button>Primary</Button>
@@ -59,9 +63,7 @@ export function Example() {
 
 ## Sizes
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const sizesCode = `import { Button, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -72,7 +74,11 @@ export function Example() {
       <Button size="xl">Extra large</Button>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Button size="sm">Small</Button>
@@ -87,9 +93,7 @@ export function Example() {
 Icons are decorative because the button label supplies the accessible name. The icon size follows the
 button size.
 
-<ComponentPreview
-  title="Leading, trailing, and icon-only"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const leadingTrailingAndIconOnlyCode = `import { Button, Stack } from '@orkest/ui';
 import { ArrowRight, Plus } from 'lucide-react';
 
 export function Example() {
@@ -102,7 +106,11 @@ export function Example() {
       <Button iconOnly leftIcon={Plus} aria-label="Add item" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Leading, trailing, and icon-only"
+  code={leadingTrailingAndIconOnlyCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Button leftIcon={Plus}>New project</Button>
@@ -118,9 +126,7 @@ required and becomes the accessible name.
 
 ## States
 
-<ComponentPreview
-  title="Disabled and loading"
-  code={`import { Button, Stack } from '@orkest/ui';
+export const disabledAndLoadingCode = `import { Button, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -132,7 +138,11 @@ export function Example() {
       </Button>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Disabled and loading"
+  code={disabledAndLoadingCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Button disabled>Disabled</Button>
@@ -149,9 +159,7 @@ until loading completes.
 
 ## Full width
 
-<ComponentPreview
-  title="Full width"
-  code={`import { Box, Button } from '@orkest/ui';
+export const fullWidthCode = `import { Box, Button } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -159,7 +167,11 @@ export function Example() {
       <Button fullWidth>Continue</Button>
     </Box>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Full width"
+  code={fullWidthCode}
 >
   <Box style={{ width: '18rem' }}>
     <Button fullWidth>Continue</Button>

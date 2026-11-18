@@ -13,9 +13,7 @@ offset, and a value that can be sent to an API unchanged.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic time picker"
-  code={`import { useState } from 'react';
+export const basicTimePickerCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { TimePicker } from '@orkest/ui/client';
 
@@ -30,7 +28,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic time picker"
+  code={basicTimePickerCode}
 >
   <TimePickerBasicExample />
 </ComponentPreview>
@@ -49,9 +51,7 @@ remaining segments until the time is complete again.
 `format` only changes the display. The stored value stays 24-hour, so a switch to `12h` never rewrites
 what your data layer already holds.
 
-<ComponentPreview
-  title="12-hour with a 15-minute step"
-  code={`import { useState } from 'react';
+export const example12HourWithA15MinuteStepCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { TimePicker } from '@orkest/ui/client';
 
@@ -66,7 +66,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="12-hour with a 15-minute step"
+  code={example12HourWithA15MinuteStepCode}
 >
   <TimePickerTwelveHourExample />
 </ComponentPreview>
@@ -82,9 +86,7 @@ click there.
 step for the minute segment. `showSeconds` adds a seconds segment and column and widens the stored
 value to `HH:mm:ss`. `minTime` and `maxTime` bound the columns, typed entry, and segment stepping.
 
-<ComponentPreview
-  title="Seconds and a working-hours range"
-  code={`import { useState } from 'react';
+export const secondsAndAWorkingHoursRangeCode = `import { useState } from 'react';
 import { TimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -100,7 +102,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '12rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Seconds and a working-hours range"
+  code={secondsAndAWorkingHoursRangeCode}
 >
   <TimePickerSecondsExample />
 </ComponentPreview>
@@ -109,9 +115,7 @@ Values outside the range are clamped on the way in.
 
 ## Inside a Field
 
-<ComponentPreview
-  title="With a label and description"
-  code={`import { useState } from 'react';
+export const withALabelAndDescriptionCode = `import { useState } from 'react';
 import { Field, FieldDescription, FieldLabel, TimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -124,16 +128,18 @@ export function Example() {
       <FieldDescription>Sent in your local timezone, stored as HH:mm.</FieldDescription>
     </Field>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="With a label and description"
+  code={withALabelAndDescriptionCode}
 >
   <TimePickerFieldExample />
 </ComponentPreview>
 
 ## Sizes and states
 
-<ComponentPreview
-  title="Sizes and disabled"
-  code={`import { Stack } from '@orkest/ui';
+export const sizesAndDisabledCode = `import { Stack } from '@orkest/ui';
 import { TimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -145,7 +151,11 @@ export function Example() {
       <TimePicker defaultValue="09:30" disabled />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes and disabled"
+  code={sizesAndDisabledCode}
 >
   <TimePickerStatesExample />
 </ComponentPreview>
@@ -155,9 +165,7 @@ export function Example() {
 `showIcon={false}` removes the clock action that opens the panel. Every segment still accepts typed
 digits and arrow-key stepping. `clearable={false}` removes the clear action.
 
-<ComponentPreview
-  title="Field without the clock or the clear action"
-  code={`import { useState } from 'react';
+export const fieldWithoutTheClockOrTheClearActionCode = `import { useState } from 'react';
 import { TimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -172,7 +180,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '12rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Field without the clock or the clear action"
+  code={fieldWithoutTheClockOrTheClearActionCode}
 >
   <TimePickerBareExample />
 </ComponentPreview>

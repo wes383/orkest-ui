@@ -10,9 +10,7 @@ time with no offset — so it never shifts when the host timezone changes.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic date and time picker"
-  code={`import { useState } from 'react';
+export const basicDateAndTimePickerCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { DateTimePicker } from '@orkest/ui/client';
 
@@ -27,7 +25,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic date and time picker"
+  code={basicDateAndTimePickerCode}
 >
   <DateTimePickerBasicExample />
 </ComponentPreview>
@@ -41,9 +43,7 @@ the day is remembered and used as soon as a date is picked.
 `timeFormat` switches the clock face to a 12-hour one with an `AM/PM` segment, and `minuteStep` sets
 both the arrow-key step and the interval the panel offers.
 
-<ComponentPreview
-  title="12-hour clock in quarter hours"
-  code={`import { useState } from 'react';
+export const example12HourClockInQuarterHoursCode = `import { useState } from 'react';
 import { DateTimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -58,7 +58,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '16rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="12-hour clock in quarter hours"
+  code={example12HourClockInQuarterHoursCode}
 >
   <DateTimePickerTwelveHourExample />
 </ComponentPreview>
@@ -67,9 +71,7 @@ export function Example() {
 
 `showSeconds` adds a seconds segment and widens the stored value to `YYYY-MM-DDTHH:mm:ss`.
 
-<ComponentPreview
-  title="With seconds"
-  code={`import { useState } from 'react';
+export const withSecondsCode = `import { useState } from 'react';
 import { DateTimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -83,7 +85,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '16rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="With seconds"
+  code={withSecondsCode}
 >
   <DateTimePickerSecondsExample />
 </ComponentPreview>
@@ -96,9 +102,7 @@ the grid, so the panel stays about as tall as the calendar, and every click comm
 columns follow `timeFormat`, `minuteStep`, and `showSeconds`, so the stored value keeps the same
 shape.
 
-<ComponentPreview
-  title="Time picked from columns"
-  code={`import { useState } from 'react';
+export const timePickedFromColumnsCode = `import { useState } from 'react';
 import { DateTimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -112,7 +116,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '16rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Time picked from columns"
+  code={timePickedFromColumnsCode}
 >
   <DateTimePickerMenuExample />
 </ComponentPreview>
@@ -122,9 +130,7 @@ export function Example() {
 The trigger reads the surrounding [Field](/docs/components/field/) context, and `minDate`, `maxDate`,
 and `disabledDates` bound the calendar the same way they do for `DatePicker`.
 
-<ComponentPreview
-  title="With a label and description"
-  code={`import { useState } from 'react';
+export const withALabelAndDescriptionCode = `import { useState } from 'react';
 import { DateTimePicker, Field, FieldDescription, FieldLabel } from '@orkest/ui/client';
 
 export function Example() {
@@ -137,16 +143,18 @@ export function Example() {
       <FieldDescription>Stored as local wall-clock time.</FieldDescription>
     </Field>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="With a label and description"
+  code={withALabelAndDescriptionCode}
 >
   <DateTimePickerFieldExample />
 </ComponentPreview>
 
 ## Sizes
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { DateTimePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -157,7 +165,11 @@ export function Example() {
       <DateTimePicker defaultValue="2026-11-18T09:30" size="lg" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <DateTimePickerSizesExample />
 </ComponentPreview>

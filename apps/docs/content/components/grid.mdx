@@ -8,9 +8,7 @@ section: components
 
 ## Live preview
 
-<ComponentPreview
-  title="Responsive columns"
-  code={`import { Box, Grid, Text } from '@orkest/ui';
+export const responsiveColumnsCode = `import { Box, Grid, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -26,7 +24,11 @@ export function Example() {
       </Box>
     </Grid>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Responsive columns"
+  code={responsiveColumnsCode}
 >
   <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={3}>
     <Box padding={4} background="surface-sunken" radius="xl">
@@ -52,9 +54,7 @@ export function Example() {
 Pass any valid `grid-template-columns` value when a fixed count is not enough. The example below
 uses `auto-fit` so the grid fills the available width without breakpoints.
 
-<ComponentPreview
-  title="Auto-fit template"
-  code={`import { Box, Grid, Text } from '@orkest/ui';
+export const autoFitTemplateCode = `import { Box, Grid, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -70,7 +70,11 @@ export function Example() {
       </Box>
     </Grid>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Auto-fit template"
+  code={autoFitTemplateCode}
 >
   <Grid columns="repeat(auto-fit, minmax(12rem, 1fr))" gap={3}>
     <Box padding={4} background="surface-sunken" radius="xl">
@@ -90,9 +94,7 @@ export function Example() {
 `columnGap` and `rowGap` override `gap` for one axis. `align` and `justify` map to `align-items` and
 `justify-items`.
 
-<ComponentPreview
-  title="Independent gaps"
-  code={`import { Box, Grid, Text } from '@orkest/ui';
+export const independentGapsCode = `import { Box, Grid, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -111,7 +113,11 @@ export function Example() {
       </Box>
     </Grid>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Independent gaps"
+  code={independentGapsCode}
 >
   <Grid columns={2} columnGap={6} rowGap={2} align="center">
     <Box padding={3} background="surface-sunken" radius="xl">

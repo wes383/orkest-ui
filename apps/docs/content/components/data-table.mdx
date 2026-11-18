@@ -12,9 +12,7 @@ through. Import the component and the `DataColumn` type from `@orkest/ui/client`
 
 ## Live preview
 
-<ComponentPreview
-  title="Invoice table"
-  code={`import { DataTable, type DataColumn } from '@orkest/ui/client';
+export const invoiceTableCode = `import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 interface Invoice {
   id: string;
@@ -40,7 +38,11 @@ const columns: DataColumn<Invoice>[] = [
 
 export function Example() {
   return <DataTable columns={columns} data={invoices} getRowId={(row) => row.id} caption="Invoices" />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Invoice table"
+  code={invoiceTableCode}
 >
   <DataTableExample />
 </ComponentPreview>
@@ -106,9 +108,7 @@ valid page instead of showing an empty one.
 
 ## Selection
 
-<ComponentPreview
-  title="Row selection"
-  code={`import { useState } from 'react';
+export const rowSelectionCode = `import { useState } from 'react';
 import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
@@ -135,7 +135,11 @@ export function Example() {
       onSelectionChange={setSelected}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Row selection"
+  code={rowSelectionCode}
 >
   <DataTableSelectionExample />
 </ComponentPreview>
@@ -147,9 +151,7 @@ receives the selected rows, so the caller owns what happens next. The example ab
 
 ## Row expansion
 
-<ComponentPreview
-  title="Expandable rows"
-  code={`import { Text } from '@orkest/ui';
+export const expandableRowsCode = `import { Text } from '@orkest/ui';
 import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
@@ -173,7 +175,11 @@ export function Example() {
       renderExpanded={(row) => <Text size="sm">Owner: {row.owner}</Text>}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Expandable rows"
+  code={expandableRowsCode}
 >
   <DataTableExpandableExample />
 </ComponentPreview>
@@ -192,9 +198,7 @@ keep their state; nothing about sorting or selection is lost when a column is hi
 Row actions are an ordinary column whose `cell` renders a menu. `DropdownMenu` portals its content,
 so the menu escapes the table's horizontal scroll container instead of being clipped by a cell.
 
-<ComponentPreview
-  title="Row actions column"
-  code={`import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+export const rowActionsColumnCode = `import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import { IconButton } from '@orkest/ui';
 import {
   DataTable,
@@ -240,7 +244,11 @@ const columns: DataColumn<(typeof rows)[number]>[] = [
 
 export function Example() {
   return <DataTable columns={columns} data={rows} caption="Invoices" paginated={false} />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Row actions column"
+  code={rowActionsColumnCode}
 >
   <DataTableActionsExample />
 </ComponentPreview>
@@ -258,9 +266,7 @@ cells do wrap by default, so a table whose headers are short but whose content i
 compress instead of scrolling — give those columns a `minWidth` to keep them readable and let the
 container scroll.
 
-<ComponentPreview
-  title="Wide table with horizontal scroll"
-  code={`import { DataTable, type DataColumn } from '@orkest/ui/client';
+export const wideTableWithHorizontalScrollCode = `import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
   { id: 'INV-1042', customer: 'Northwind', email: 'billing@northwind.example', region: 'EMEA' },
@@ -276,7 +282,11 @@ const columns: DataColumn<(typeof rows)[number]>[] = [
 
 export function Example() {
   return <DataTable columns={columns} data={rows} caption="Invoices" pageSize={5} size="sm" />;
-}`}
+}`;
+
+<ComponentPreview
+  title="Wide table with horizontal scroll"
+  code={wideTableWithHorizontalScrollCode}
 >
   <DataTableWideExample />
 </ComponentPreview>

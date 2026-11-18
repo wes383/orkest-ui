@@ -12,9 +12,7 @@ Render `Radio` inside a `RadioGroup`. Import both from `@orkest/ui/client`.
 
 ## Live preview
 
-<ComponentPreview
-  title="Radio group"
-  code={`import { useState } from 'react';
+export const radioGroupCode = `import { useState } from 'react';
 import { Radio, RadioGroup } from '@orkest/ui/client';
 
 export function Example() {
@@ -32,7 +30,11 @@ export function Example() {
       <Radio value="enterprise" label="Enterprise" />
     </RadioGroup>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Radio group"
+  code={radioGroupCode}
 >
   <RadioGroupExample />
 </ComponentPreview>
@@ -41,9 +43,7 @@ export function Example() {
 
 `orientation` controls layout only. The default is vertical; horizontal groups wrap when needed.
 
-<ComponentPreview
-  title="Vertical group"
-  code={`import { Radio, RadioGroup } from '@orkest/ui/client';
+export const verticalGroupCode = `import { Radio, RadioGroup } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -53,7 +53,11 @@ export function Example() {
       <Radio value="none" label="Nothing" />
     </RadioGroup>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Vertical group"
+  code={verticalGroupCode}
 >
   <RadioGroup aria-label="Notifications" defaultValue="all">
     <Radio value="all" label="All activity" />
@@ -66,9 +70,7 @@ export function Example() {
 
 `RadioGroup` passes `size` to its radios. A radio can override the group size with its own `size`.
 
-<ComponentPreview
-  title="Sizes and disabled group"
-  code={`import { Stack } from '@orkest/ui';
+export const sizesAndDisabledGroupCode = `import { Stack } from '@orkest/ui';
 import { Radio, RadioGroup } from '@orkest/ui/client';
 
 export function Example() {
@@ -84,7 +86,11 @@ export function Example() {
       </RadioGroup>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes and disabled group"
+  code={sizesAndDisabledGroupCode}
 >
   <Stack gap={4}>
     <RadioGroup aria-label="Small plan" size="sm" defaultValue="basic">

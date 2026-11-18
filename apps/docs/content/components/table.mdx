@@ -10,9 +10,7 @@ and row selection belong to a composed data table, not to this component.
 
 ## Live preview
 
-<ComponentPreview
-  title="Invoice list"
-  code={`import {
+export const invoiceListCode = `import {
   Badge,
   Table,
   TableBody,
@@ -63,7 +61,11 @@ export function Example() {
       </TableBody>
     </Table>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Invoice list"
+  code={invoiceListCode}
 >
   <Table hoverable>
     <TableCaption>Invoices issued this quarter.</TableCaption>
@@ -106,9 +108,7 @@ export function Example() {
 
 ## Variants
 
-<ComponentPreview
-  title="Default and bordered"
-  code={`import {
+export const defaultAndBorderedCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -159,7 +159,11 @@ export function Example() {
       </Table>
     </>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Default and bordered"
+  code={defaultAndBorderedCode}
 >
   <Stack gap={4}>
     <Table size="sm">
@@ -206,9 +210,7 @@ vertical rules between cells for tables that need clearer cell boundaries.
 
 ## Sizes
 
-<ComponentPreview
-  title="sm, md, and lg"
-  code={`import {
+export const smMdAndLgCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -238,7 +240,11 @@ export function Example() {
       ))}
     </>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="sm, md, and lg"
+  code={smMdAndLgCode}
 >
   <Stack gap={4}>
     <Table size="sm">
@@ -276,9 +282,7 @@ export function Example() {
 
 ## Striped rows and hover
 
-<ComponentPreview
-  title="Striped and hoverable"
-  code={`import {
+export const stripedAndHoverableCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -306,7 +310,11 @@ export function Example() {
       </TableBody>
     </Table>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Striped and hoverable"
+  code={stripedAndHoverableCode}
 >
   <Table striped hoverable>
     <TableHeader>
@@ -341,9 +349,7 @@ reduced motion.
 
 ## Alignment and widths
 
-<ComponentPreview
-  title="Numeric column"
-  code={`import {
+export const numericColumnCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -380,7 +386,11 @@ export function Example() {
       </TableBody>
     </Table>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Numeric column"
+  code={numericColumnCode}
 >
   <Table>
     <TableHeader>
@@ -414,9 +424,7 @@ and `minWidth` to stop narrow columns from collapsing; numbers are pixels, strin
 
 ## Merged cells
 
-<ComponentPreview
-  title="Row and column spans"
-  code={`import {
+export const rowAndColumnSpansCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -455,7 +463,11 @@ export function Example() {
       </TableBody>
     </Table>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Row and column spans"
+  code={rowAndColumnSpansCode}
 >
   <Table size="sm">
     <TableHeader>
@@ -491,9 +503,7 @@ through to the native attributes.
 
 ## Footer
 
-<ComponentPreview
-  title="Totals"
-  code={`import {
+export const totalsCode = `import {
   Table,
   TableBody,
   TableCell,
@@ -530,7 +540,11 @@ export function Example() {
       </TableFooter>
     </Table>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Totals"
+  code={totalsCode}
 >
   <Table size="sm">
     <TableHeader>
@@ -564,9 +578,7 @@ Row actions are ordinary cells: render a `DropdownMenu` with an `IconButton` tri
 `TableCell`. The menu portals out of the table's horizontal scroll container, so it is never clipped
 by a cell.
 
-<ComponentPreview
-  title="Row actions menu"
-  code={`import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+export const rowActionsMenuCode = `import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import { IconButton, TableCell } from '@orkest/ui';
 import {
   DropdownMenu,
@@ -599,7 +611,11 @@ export function ActionsCell({ invoice }: { invoice: { id: string } }) {
       </DropdownMenu>
     </TableCell>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Row actions menu"
+  code={rowActionsMenuCode}
 >
   <TableActionsExample />
 </ComponentPreview>

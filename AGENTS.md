@@ -304,6 +304,13 @@ Import live examples from `@orkest/ui` and keep them aligned with the
 actual public API. Do not create examples that rely on private
 implementation details.
 
+Define each preview's source as `export const <name>Code = `...`;`
+immediately before its `<ComponentPreview>` and pass `code={<name>Code}`.
+`lib/example-code.ts` reads those declarations and supplies them through
+`MDXRemote`'s scope. Never put the template literal directly in the
+`code={...}` JSX attribute: MDX strips its common indentation, which
+flattens the example code shown on the page and in "Copy as Markdown".
+
 Update relevant documentation when changing:
 
 - Public props.

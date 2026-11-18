@@ -11,9 +11,7 @@ The component is built on Base UI Popover and exported from `@orkest/ui/client`.
 
 ## Basic usage
 
-<ComponentPreview
-  title="Filter popover"
-  code={`import { Stack } from '@orkest/ui';
+export const filterPopoverCode = `import { Stack } from '@orkest/ui';
 import {
   Field,
   FieldLabel,
@@ -53,7 +51,11 @@ export function Example() {
       </PopoverPortal>
     </Popover>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Filter popover"
+  code={filterPopoverCode}
 >
   <PopoverBasicExample />
 </ComponentPreview>
@@ -75,9 +77,7 @@ export function Example() {
 `PopoverPositioner` defaults to `side="bottom"`, `align="center"`, and `sideOffset={8}`. Override the
 side, alignment, and offsets when the trigger needs a different layout.
 
-<ComponentPreview
-  title="Right-aligned popover"
-  code={`import { Stack } from '@orkest/ui';
+export const rightAlignedPopoverCode = `import { Stack } from '@orkest/ui';
 import {
   Popover,
   PopoverArrow,
@@ -108,16 +108,18 @@ export function Example() {
       </PopoverPortal>
     </Popover>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Right-aligned popover"
+  code={rightAlignedPopoverCode}
 >
   <PopoverPositionExample />
 </ComponentPreview>
 
 ## Controlled state
 
-<ComponentPreview
-  title="Controlled popover"
-  code={`import { useState } from 'react';
+export const controlledPopoverCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import {
   Popover,
@@ -156,7 +158,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Controlled popover"
+  code={controlledPopoverCode}
 >
   <PopoverControlledExample />
 </ComponentPreview>
@@ -180,9 +186,7 @@ region or group for lightweight inline help.
 exceeds the available viewport height. Use `width`, `minWidth`, `maxWidth`, and `maxHeight` for
 specific layouts.
 
-<ComponentPreview
-  title="Region semantics"
-  code={`import { Stack, Text } from '@orkest/ui';
+export const regionSemanticsCode = `import { Stack, Text } from '@orkest/ui';
 import {
   Popover,
   PopoverClose,
@@ -211,7 +215,11 @@ export function Example() {
       </PopoverPortal>
     </Popover>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Region semantics"
+  code={regionSemanticsCode}
 >
   <PopoverRegionExample />
 </ComponentPreview>

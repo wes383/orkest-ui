@@ -12,9 +12,7 @@ Use `Badge` when the label is informational. Use `Tag` when the label can be rem
 
 ## Live preview
 
-<ComponentPreview
-  title="Fixed and removable tags"
-  code={`import { Stack, Tag } from '@orkest/ui';
+export const fixedAndRemovableTagsCode = `import { Stack, Tag } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -24,7 +22,11 @@ export function Example() {
       <Tag variant="outline">Product</Tag>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Fixed and removable tags"
+  code={fixedAndRemovableTagsCode}
 >
   <Stack direction="row" gap={2} wrap>
     <Tag>Design</Tag>
@@ -35,9 +37,7 @@ export function Example() {
 
 ## Variants
 
-<ComponentPreview
-  title="Variants"
-  code={`import { Stack, Tag } from '@orkest/ui';
+export const variantsCode = `import { Stack, Tag } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -50,7 +50,11 @@ export function Example() {
       <Tag variant="outline">Outline</Tag>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Variants"
+  code={variantsCode}
 >
   <Stack direction="row" gap={2} wrap>
     <Tag>Default</Tag>
@@ -66,9 +70,7 @@ export function Example() {
 
 Tags are pill-shaped by default. Set `shape="rounded"` for a tighter corner.
 
-<ComponentPreview
-  title="Sizes and shapes"
-  code={`import { Stack, Tag } from '@orkest/ui';
+export const sizesAndShapesCode = `import { Stack, Tag } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -79,7 +81,11 @@ export function Example() {
       <Tag shape="rounded">Rounded</Tag>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes and shapes"
+  code={sizesAndShapesCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Tag size="sm">Small</Tag>
@@ -91,9 +97,7 @@ export function Example() {
 
 ## Icons
 
-<ComponentPreview
-  title="Icons"
-  code={`import { Stack, Tag } from '@orkest/ui';
+export const iconsCode = `import { Stack, Tag } from '@orkest/ui';
 import { Check, Circle } from 'lucide-react';
 
 export function Example() {
@@ -107,7 +111,11 @@ export function Example() {
       </Tag>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Icons"
+  code={iconsCode}
 >
   <Stack direction="row" gap={2} align="center" wrap>
     <Tag variant="info" leftIcon={Circle}>
@@ -123,9 +131,7 @@ export function Example() {
 
 Removable tags stay non-interactive as a whole so the remove action can be a native button.
 
-<ComponentPreview
-  title="Removable tags"
-  code={`import { useState } from 'react';
+export const removableTagsCode = `import { useState } from 'react';
 import { Stack, Tag } from '@orkest/ui';
 
 export function Example() {
@@ -144,16 +150,18 @@ export function Example() {
       ))}
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Removable tags"
+  code={removableTagsCode}
 >
   <RemovableTagExample />
 </ComponentPreview>
 
 ## Interactive
 
-<ComponentPreview
-  title="Clickable tag"
-  code={`import { useState } from 'react';
+export const clickableTagCode = `import { useState } from 'react';
 import { Tag } from '@orkest/ui';
 
 export function Example() {
@@ -168,20 +176,26 @@ export function Example() {
       {active ? 'Selected' : 'Select tag'}
     </Tag>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Clickable tag"
+  code={clickableTagCode}
 >
   <InteractiveTagExample />
 </ComponentPreview>
 
 ## Custom color
 
-<ComponentPreview
-  title="Custom color"
-  code={`import { Tag } from '@orkest/ui';
+export const customColorCode = `import { Tag } from '@orkest/ui';
 
 export function Example() {
   return <Tag color="#7c3aed">Custom</Tag>;
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom color"
+  code={customColorCode}
 >
   <Tag color="#7c3aed">Custom</Tag>
 </ComponentPreview>

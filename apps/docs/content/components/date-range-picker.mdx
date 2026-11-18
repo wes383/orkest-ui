@@ -10,9 +10,7 @@ without a timezone shifting either end.
 
 ## Live preview
 
-<ComponentPreview
-  title="Basic date range picker"
-  code={`import { useState } from 'react';
+export const basicDateRangePickerCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
 import { DateRangePicker } from '@orkest/ui/client';
 import type { DateRange } from '@orkest/ui/client';
@@ -31,7 +29,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Basic date range picker"
+  code={basicDateRangePickerCode}
 >
   <DateRangePickerBasicExample />
 </ComponentPreview>
@@ -45,9 +47,7 @@ start swaps the two ends instead of producing an inverted range.
 `minDate`, `maxDate`, and `disabledDates` are passed straight to both calendars, so blocked days stay
 visible but inert and the navigation stops at the allowed months.
 
-<ComponentPreview
-  title="Bounded range"
-  code={`import { useState } from 'react';
+export const boundedRangeCode = `import { useState } from 'react';
 import { DateRangePicker } from '@orkest/ui/client';
 import type { DateRange } from '@orkest/ui/client';
 
@@ -64,7 +64,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '20rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Bounded range"
+  code={boundedRangeCode}
 >
   <DateRangePickerLimitsExample />
 </ComponentPreview>
@@ -74,9 +78,7 @@ export function Example() {
 `months` defaults to `2`. Set it to `1` when the popover has to stay narrow; the panel also wraps to a
 single column by itself when the viewport cannot fit both months side by side.
 
-<ComponentPreview
-  title="Single month"
-  code={`import { useState } from 'react';
+export const singleMonthCode = `import { useState } from 'react';
 import { DateRangePicker } from '@orkest/ui/client';
 import type { DateRange } from '@orkest/ui/client';
 
@@ -91,7 +93,11 @@ export function Example() {
       style={{ width: '100%', maxWidth: '20rem' }}
     />
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Single month"
+  code={singleMonthCode}
 >
   <DateRangePickerSingleMonthExample />
 </ComponentPreview>
@@ -101,9 +107,7 @@ export function Example() {
 The trigger reads the surrounding [Field](/docs/components/field/) context: the label points at it and
 `aria-describedby` carries the description and validation message.
 
-<ComponentPreview
-  title="With a label and description"
-  code={`import { useState } from 'react';
+export const withALabelAndDescriptionCode = `import { useState } from 'react';
 import { DateRangePicker, Field, FieldDescription, FieldLabel } from '@orkest/ui/client';
 import type { DateRange } from '@orkest/ui/client';
 
@@ -117,7 +121,11 @@ export function Example() {
       <FieldDescription>Both ends are submitted with the form.</FieldDescription>
     </Field>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="With a label and description"
+  code={withALabelAndDescriptionCode}
 >
   <DateRangePickerFieldExample />
 </ComponentPreview>
@@ -127,9 +135,7 @@ both ends without extra wiring.
 
 ## Sizes
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={`import { Stack } from '@orkest/ui';
+export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { DateRangePicker } from '@orkest/ui/client';
 
 export function Example() {
@@ -140,7 +146,11 @@ export function Example() {
       <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="lg" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={smallMediumAndLargeCode}
 >
   <DateRangePickerSizesExample />
 </ComponentPreview>

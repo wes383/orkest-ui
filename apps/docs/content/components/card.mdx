@@ -10,9 +10,7 @@ Every part is optional, so you can drop arbitrary content straight into the card
 
 ## Live preview
 
-<ComponentPreview
-  title="Account card"
-  code={`import {
+export const accountCardCode = `import {
   Badge,
   Button,
   Card,
@@ -53,7 +51,11 @@ export function Example() {
       </CardFooter>
     </Card>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Account card"
+  code={accountCardCode}
 >
   <Card style={{ width: 320 }}>
     <CardHeader>
@@ -84,9 +86,7 @@ export function Example() {
 
 ## Variants
 
-<ComponentPreview
-  title="Default, elevated, and outline"
-  code={`import { Card, CardContent, CardDescription, CardHeader, CardTitle, Stack } from '@orkest/ui';
+export const defaultElevatedAndOutlineCode = `import { Card, CardContent, CardDescription, CardHeader, CardTitle, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -102,7 +102,11 @@ export function Example() {
       ))}
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Default, elevated, and outline"
+  code={defaultElevatedAndOutlineCode}
 >
   <Stack direction="row" gap={3} wrap>
     <Card variant="default" style={{ width: 200 }}>
@@ -136,9 +140,7 @@ whatever element performs the action, not to the surface.
 
 ## Padding and radius
 
-<ComponentPreview
-  title="Density"
-  code={`import { Card, Stack, Text } from '@orkest/ui';
+export const densityCode = `import { Card, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -154,7 +156,11 @@ export function Example() {
       </Card>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Density"
+  code={densityCode}
 >
   <Stack direction="row" gap={3} wrap align="start">
     <Card padding="sm" style={{ width: 150 }}>
@@ -175,9 +181,7 @@ full-bleed list.
 
 ## Media
 
-<ComponentPreview
-  title="Full-bleed media"
-  code={`import { Card, CardContent, CardDescription, CardHeader, CardMedia, CardTitle } from '@orkest/ui';
+export const fullBleedMediaCode = `import { Card, CardContent, CardDescription, CardHeader, CardMedia, CardTitle } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -196,7 +200,11 @@ export function Example() {
       <CardContent>Twelve pages on activation and churn.</CardContent>
     </Card>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Full-bleed media"
+  code={fullBleedMediaCode}
 >
   <Card style={{ width: 280 }}>
     <CardMedia>
@@ -224,9 +232,7 @@ one when they carry meaning.
 Render the card as an anchor instead of wrapping it in one. The card then keeps native focus,
 keyboard activation, and context-menu behavior:
 
-<ComponentPreview
-  title="Linked card"
-  code={`import { Card, CardDescription, CardHeader, CardTitle, Icon, Stack } from '@orkest/ui';
+export const linkedCardCode = `import { Card, CardDescription, CardHeader, CardTitle, Icon, Stack } from '@orkest/ui';
 import { ArrowUpRight } from 'lucide-react';
 
 export function Example() {
@@ -241,7 +247,11 @@ export function Example() {
       </Stack>
     </Card>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Linked card"
+  code={linkedCardCode}
 >
   <Card as="a" href="/docs/components/button/" style={{ width: 260 }}>
     <Stack direction="row" justify="between" align="start" gap={3}>

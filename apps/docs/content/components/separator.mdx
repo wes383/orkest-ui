@@ -9,9 +9,7 @@ section: components
 
 ## Live preview
 
-<ComponentPreview
-  title="Horizontal and vertical"
-  code={`import { Separator, Stack, Text } from '@orkest/ui';
+export const horizontalAndVerticalCode = `import { Separator, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -28,7 +26,11 @@ export function Example() {
       </Stack>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Horizontal and vertical"
+  code={horizontalAndVerticalCode}
 >
   <Stack gap={4}>
     <Stack gap={2}>
@@ -54,9 +56,7 @@ export function Example() {
 
 ## Variants
 
-<ComponentPreview
-  title="Line styles"
-  code={`import { Separator, Stack, Text } from '@orkest/ui';
+export const lineStylesCode = `import { Separator, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -75,7 +75,11 @@ export function Example() {
       </Stack>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Line styles"
+  code={lineStylesCode}
 >
   <Stack gap={4}>
     <Stack gap={2}>

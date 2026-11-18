@@ -10,9 +10,7 @@ task with a status line. For the first load of a page or a list, use
 
 ## Live preview
 
-<ComponentPreview
-  title="Sizes"
-  code={`import { Spinner, Stack } from '@orkest/ui';
+export const sizesCode = `import { Spinner, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -22,7 +20,11 @@ export function Example() {
       <Spinner size="lg" label="Loading" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Sizes"
+  code={sizesCode}
 >
   <Stack direction="row" gap={4} align="center">
     <Spinner size="sm" label="Loading" />
@@ -36,9 +38,7 @@ export function Example() {
 When the text next to the spinner already says what is happening, mark the spinner as decorative so
 the status is announced once:
 
-<ComponentPreview
-  title="Decorative spinner"
-  code={`import { Spinner, Stack, Text } from '@orkest/ui';
+export const decorativeSpinnerCode = `import { Spinner, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -49,7 +49,11 @@ export function Example() {
       </Text>
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Decorative spinner"
+  code={decorativeSpinnerCode}
 >
   <Stack direction="row" gap={2} align="center" role="status">
     <Spinner size="sm" label={null} />
@@ -64,9 +68,7 @@ export function Example() {
 The ring uses `currentColor`, so it follows the text colour of its surroundings. Pass `color` to
 tint it without touching the surrounding text:
 
-<ComponentPreview
-  title="Custom colour"
-  code={`import { Spinner, Stack } from '@orkest/ui';
+export const customColourCode = `import { Spinner, Stack } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -76,7 +78,11 @@ export function Example() {
       <Spinner color="var(--ui-danger)" label="Uploading" />
     </Stack>
   );
-}`}
+}`;
+
+<ComponentPreview
+  title="Custom colour"
+  code={customColourCode}
 >
   <Stack direction="row" gap={4} align="center">
     <Spinner color="var(--ui-accent)" label="Saving" />
