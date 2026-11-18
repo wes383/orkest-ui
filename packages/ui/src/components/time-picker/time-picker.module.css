@@ -64,7 +64,7 @@
 }
 
 .popover {
-  --popover-body-padding: var(--ok-space-4) var(--ok-space-1);
+  --popover-body-padding: var(--ok-space-1) var(--ok-space-2);
   border-radius: var(--ok-radius-2xl);
 }
 
