@@ -109,20 +109,33 @@ describe('Calendar', () => {
     const monthSelect = screen.getByRole('combobox', { name: 'Month' });
     const yearSelect = screen.getByRole('combobox', { name: 'Year' });
 
-    expect(monthSelect).toHaveTextContent('November');
-    expect(yearSelect).toHaveTextContent('2026');
+    // The trigger reserves the widest label first, so the visible value is the trailing text.
+    expect(monthSelect.textContent?.trim().endsWith('November')).toBe(true);
+    expect(yearSelect.textContent?.trim().endsWith('2026')).toBe(true);
 
     await user.click(monthSelect);
     await user.click(await screen.findByRole('option', { name: 'December' }));
 
-    expect(monthSelect).toHaveTextContent('December');
+    expect(monthSelect.textContent?.trim().endsWith('December')).toBe(true);
     expect(screen.getByRole('grid', { name: 'December 2026' })).toBeInTheDocument();
 
     await user.click(yearSelect);
     await user.click(await screen.findByRole('option', { name: '2027' }));
 
-    expect(yearSelect).toHaveTextContent('2027');
+    expect(yearSelect.textContent?.trim().endsWith('2027')).toBe(true);
     expect(screen.getByRole('grid', { name: 'December 2027' })).toBeInTheDocument();
+  });
+
+  it('reserves one caption width so switching months cannot resize the header', () => {
+    render(<Calendar defaultMonth={NOVEMBER} captionLayout="select" />);
+
+    const monthSelect = screen.getByRole('combobox', { name: 'Month' });
+    const reserved = monthSelect.querySelector('[aria-hidden="true"]');
+
+    expect(reserved).not.toBeNull();
+    // Every month name sits in the reserved slot, which is what keeps the width stable.
+    expect(reserved?.textContent).toContain('September');
+    expect(reserved?.textContent).toContain('May');
   });
 
   it('navigates with arrow keys and keeps one tab stop', async () => {

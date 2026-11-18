@@ -376,10 +376,15 @@ interface CalendarCaptionOption {
   label: string;
 }
 
+/** Four-digit widths that bracket the widest year, so the year trigger holds its size. */
+const YEAR_WIDTH_SAMPLES = ['0000', '8888'] as const;
+
 interface CalendarCaptionSelectProps {
   label: string;
   value: string;
   options: CalendarCaptionOption[];
+  /** Labels used to reserve the widest caption width, so the calendar keeps one width. */
+  sizer?: readonly string[];
   disabled?: boolean;
   onValueChange: (value: string) => void;
 }
@@ -392,6 +397,7 @@ function CalendarCaptionSelect({
   label,
   value,
   options,
+  sizer,
   disabled,
   onValueChange,
 }: CalendarCaptionSelectProps) {
@@ -410,7 +416,18 @@ function CalendarCaptionSelect({
       modal={false}
     >
       <BaseSelect.Trigger className={styles.selectTrigger} aria-label={label}>
-        <BaseSelect.Value className={styles.selectValue} />
+        <span className={styles.selectLabel}>
+          {sizer ? (
+            // Every candidate label shares one grid cell, so the trigger is as wide as the
+            // longest one and switching months never resizes the header.
+            <span className={styles.selectSizer} aria-hidden="true">
+              {sizer.map((text) => (
+                <span key={text}>{text}</span>
+              ))}
+            </span>
+          ) : null}
+          <BaseSelect.Value className={styles.selectValue} />
+        </span>
         <ChevronDown className={styles.selectIcon} aria-hidden="true" />
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
@@ -472,12 +489,15 @@ function CalendarCaptionSelects() {
     }));
   }, [locale, visibleMonth.year]);
 
+  const monthLabels = useMemo(() => months.map((month) => month.label), [months]);
+
   return (
     <>
       <CalendarCaptionSelect
         label={labels.month}
         value={String(visibleMonth.month)}
         options={months}
+        sizer={monthLabels}
         disabled={disabled}
         onValueChange={(next) =>
           setVisibleMonth({ ...visibleMonth, month: Number(next), day: 1 })
@@ -487,6 +507,7 @@ function CalendarCaptionSelects() {
         label={labels.year}
         value={String(visibleMonth.year)}
         options={yearOptions}
+        sizer={YEAR_WIDTH_SAMPLES}
         disabled={disabled}
         onValueChange={(next) => setVisibleMonth({ ...visibleMonth, year: Number(next), day: 1 })}
       />

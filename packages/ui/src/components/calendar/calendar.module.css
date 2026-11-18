@@ -38,7 +38,7 @@
 .header {
   display: flex;
   align-items: center;
-  gap: var(--ok-space-2);
+  gap: var(--ok-space-1);
   min-height: calc(var(--calendar-cell-size) - var(--ok-space-1));
 }
 
@@ -47,7 +47,7 @@
   flex: 1;
   align-items: center;
   justify-content: center;
-  gap: var(--ok-space-2);
+  gap: var(--ok-space-1);
   min-width: 0;
 }
 
@@ -71,8 +71,10 @@
   color: var(--ui-foreground);
   font-family: inherit;
   font-size: var(--calendar-caption-size);
+  font-variant-numeric: tabular-nums;
   font-weight: var(--ok-font-weight-semibold);
-  line-height: 1;
+  line-height: var(--ok-line-height-snug);
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
@@ -92,9 +94,30 @@
   cursor: not-allowed;
 }
 
+/* The label cell is as wide as its widest candidate, so the caption never jumps. */
+.selectLabel {
+  display: inline-grid;
+  min-width: 0;
+}
+
+.selectSizer,
+.selectValue {
+  grid-area: 1 / 1;
+}
+
+.selectSizer {
+  display: grid;
+  visibility: hidden;
+}
+
+.selectSizer > span {
+  grid-area: 1 / 1;
+}
+
 .selectValue {
   min-width: 0;
   overflow: hidden;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
