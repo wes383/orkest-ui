@@ -1,7 +1,20 @@
 .root {
   position: relative;
   width: 100%;
+  /* The clock action matches the field action of the same size, so the hover
+     surface keeps the same weight at every step. */
+  --time-picker-action-size: 1.25rem;
+  --time-picker-action-radius: var(--ok-radius-lg);
   font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --time-picker-action-size: 1rem;
+  --time-picker-action-radius: var(--ok-radius-md);
+}
+
+.root[data-size="lg"] {
+  --time-picker-action-size: 1.5rem;
 }
 
 .trigger {
@@ -9,11 +22,11 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--time-picker-action-size);
+  height: var(--time-picker-action-size);
   padding: 0;
   border: 0;
-  border-radius: var(--ok-radius-lg);
+  border-radius: var(--time-picker-action-radius);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;
