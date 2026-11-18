@@ -37,6 +37,10 @@
   cursor: not-allowed;
 }
 
+.popover {
+  border-radius: var(--ok-radius-2xl);
+}
+
 .columns {
   display: flex;
   gap: var(--ok-space-2);

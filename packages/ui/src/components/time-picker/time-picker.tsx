@@ -270,7 +270,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
         />
         <PopoverPortal>
           <PopoverPositioner align="start" sideOffset={6}>
-            <PopoverContent width="auto" aria-label={mergedLabels.dialog}>
+            <PopoverContent width="auto" aria-label={mergedLabels.dialog} className={styles.popover}>
               <TimePickerContent>
                 <TimePickerColumn
                   label={mergedLabels.hours}
