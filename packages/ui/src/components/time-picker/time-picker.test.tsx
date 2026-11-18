@@ -30,6 +30,17 @@ describe('TimePicker', () => {
     expect(getInput()).toHaveValue('1:45 PM');
   });
 
+  it('opens the panel from a single clock action on the leading side', () => {
+    render(<TimePicker defaultValue="09:30" />);
+
+    const triggers = screen.getAllByRole('button', { name: 'Open time picker' });
+
+    expect(triggers).toHaveLength(1);
+    expect(
+      triggers[0]!.compareDocumentPosition(getInput()) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
   it('shows the placeholder until a time is selected', () => {
     render(<TimePicker placeholder="Pick a time" />);
 

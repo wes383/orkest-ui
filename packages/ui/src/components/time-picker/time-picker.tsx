@@ -232,11 +232,10 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
           name={control.name}
           required={control.required}
           clearable={clearable}
-          leftIcon={Clock}
           aria-describedby={describedBy}
           autoComplete="off"
           inputMode="numeric"
-          suffix={
+          prefix={
             <PopoverTrigger
               render={
                 <button
