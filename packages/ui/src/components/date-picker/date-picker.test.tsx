@@ -90,6 +90,26 @@ describe('DatePicker', () => {
     expect(screen.queryByRole('button', { name: 'Clear date' })).not.toBeInTheDocument();
   });
 
+  it('hides the leading icon when showIcon is false', () => {
+    const { container } = render(<DatePicker defaultValue="2026-11-18" showIcon={false} />);
+
+    const field = screen.getByRole('button', { name: 'Nov 18, 2026' });
+
+    expect(field.querySelector('svg')).toBeNull();
+    expect(container.querySelector('[data-icon="none"]')).toBeInTheDocument();
+  });
+
+  it('drops the footer once both shortcuts are off', async () => {
+    const user = userEvent.setup();
+
+    render(<DatePicker defaultValue="2026-11-18" clearable={false} showToday={false} />);
+    const dialog = await open(user, 'Nov 18, 2026');
+
+    expect(screen.queryByRole('button', { name: 'Today' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Clear date' })).not.toBeInTheDocument();
+    expect(dialog.querySelector('[class*="footer"]')).toBeNull();
+  });
+
   it('selects today from the footer shortcut', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

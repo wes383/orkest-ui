@@ -99,8 +99,12 @@ export interface DatePickerProps
   captionLayout?: CalendarCaptionLayout;
   /** Control size. Defaults to `md`. */
   size?: DatePickerSize;
-  /** Shows a clear action while a date is selected. Defaults to `true`. */
+  /** Shows the clear action while a date is selected. Defaults to `true`. */
   clearable?: boolean;
+  /** Shows the calendar icon at the start of the field. Defaults to `true`. */
+  showIcon?: boolean;
+  /** Shows the Today shortcut in the popover footer. Defaults to `true`. */
+  showToday?: boolean;
   /** Applies the invalid border and `aria-invalid`. */
   invalid?: boolean;
   /** Form field name; renders a hidden input so native forms submit the value. */
@@ -126,6 +130,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
     captionLayout = 'label',
     size = 'md',
     clearable = true,
+    showIcon = true,
+    showToday = true,
     invalid = false,
     name,
     labels,
@@ -208,6 +214,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
       data-size={size}
       data-disabled={control.disabled || undefined}
       data-clearable={showClear || undefined}
+      data-icon={showIcon ? undefined : 'none'}
       {...rest}
     >
       <Popover open={open} onOpenChange={setOpen}>
@@ -225,9 +232,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
             />
           }
         >
-          <span className={styles.iconSlot}>
-            <Icon icon={CalendarDays} size={iconSizeBySize[size]} tone="muted" />
-          </span>
+          {showIcon ? (
+            <span className={styles.iconSlot}>
+              <Icon icon={CalendarDays} size={iconSizeBySize[size]} tone="muted" />
+            </span>
+          ) : null}
           <span className={styles.value}>{displayText ?? placeholder}</span>
         </PopoverTrigger>
         <PopoverPortal>
@@ -245,21 +254,25 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
                 size={size}
                 labels={mergedLabels}
               />
-              <div className={styles.footer}>
-                <Button variant="ghost" size="sm" onClick={handleToday}>
-                  {mergedLabels.today}
-                </Button>
-                {clearable ? (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleClear}
-                    disabled={selectedDate === null}
-                  >
-                    {mergedLabels.clear}
-                  </Button>
-                ) : null}
-              </div>
+              {showToday || clearable ? (
+                <div className={styles.footer}>
+                  {showToday ? (
+                    <Button variant="ghost" size="sm" onClick={handleToday}>
+                      {mergedLabels.today}
+                    </Button>
+                  ) : null}
+                  {clearable ? (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleClear}
+                      disabled={selectedDate === null}
+                    >
+                      {mergedLabels.clear}
+                    </Button>
+                  ) : null}
+                </div>
+              ) : null}
             </PopoverContent>
           </PopoverPositioner>
         </PopoverPortal>

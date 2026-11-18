@@ -73,6 +73,11 @@
   border-color: var(--ui-danger);
 }
 
+/* Without the leading icon the field falls back to the plain control padding. */
+.root[data-icon="none"] .field {
+  padding-inline-start: var(--date-picker-padding-x);
+}
+
 .root[data-clearable="true"] .field {
   padding-inline-end: calc(
     var(--date-picker-action-size) + var(--date-picker-action-inset) + var(--ok-space-2)
