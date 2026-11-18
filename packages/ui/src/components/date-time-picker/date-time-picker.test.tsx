@@ -254,4 +254,22 @@ describe('DateTimePicker time menu', () => {
 
     expect(onChange).toHaveBeenLastCalledWith('2026-11-20T11:00');
   });
+
+  it('lifts the popover width cap so the columns are not squeezed', async () => {
+    const user = userEvent.setup();
+
+    const menu = render(<DateTimePicker value="2026-11-18T09:30" timeMode="menu" />);
+    const menuDialog = await open(user, 'Nov 18, 2026, 09:30');
+
+    // The default 25rem cap is narrower than the grid plus the columns, which
+    // used to make the popover body scroll sideways.
+    expect(menuDialog.style.maxWidth).toBe('calc(100vw - 2rem)');
+
+    menu.unmount();
+
+    render(<DateTimePicker value="2026-11-18T09:30" />);
+    const inputDialog = await open(user, 'Nov 18, 2026, 09:30');
+
+    expect(inputDialog.style.maxWidth).toBe('');
+  });
 });

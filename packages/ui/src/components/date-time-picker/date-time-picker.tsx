@@ -354,8 +354,12 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
           </PopoverTrigger>
           <PopoverPortal>
             <PopoverPositioner align="start" sideOffset={6}>
+              {/* The columns sit beside the grid, so the panel is wider than the
+                  25rem the popover surface caps at by default. Leaving the cap in
+                  place squeezes the body, which then scrolls sideways. */}
               <PopoverContent
                 width="auto"
+                maxWidth={timeMode === 'menu' ? 'calc(100vw - 2rem)' : undefined}
                 aria-label={mergedLabels.dialog}
                 className={fieldStyles.popover}
               >
