@@ -369,6 +369,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                   <Button
                     variant="ghost"
                     size="sm"
+                    className={styles.footerStart}
                     onClick={handleNow}
                     disabled={nowDisabled}
                   >

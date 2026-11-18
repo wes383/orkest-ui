@@ -48,3 +48,10 @@
   align-items: center;
   gap: var(--ok-space-2);
 }
+
+/* A ghost action paints no edge, so its label has to line up with the panel's
+   content box. Pull the button back by its own padding to sit on the same line
+   as the time label and the grid. */
+.footerStart {
+  margin-inline-start: calc(var(--ok-control-padding-x-sm) * -1);
+}
