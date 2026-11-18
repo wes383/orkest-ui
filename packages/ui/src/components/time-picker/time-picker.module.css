@@ -79,7 +79,7 @@
   flex-direction: column;
   gap: 2px;
   box-sizing: border-box;
-  width: 3rem;
+  width: 4rem;
   height: 12rem;
   padding-block: var(--ok-space-1);
   overflow-y: auto;

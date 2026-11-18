@@ -274,7 +274,14 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
         />
         <PopoverPortal>
           <PopoverPositioner align="start" sideOffset={6}>
-            <PopoverContent width="auto" aria-label={mergedLabels.dialog} className={styles.popover}>
+            {/* The shared popover floor (12rem) would pad a two-column panel; let the
+                columns define the width instead. */}
+            <PopoverContent
+              width="max-content"
+              minWidth={0}
+              aria-label={mergedLabels.dialog}
+              className={styles.popover}
+            >
               <TimePickerContent>
                 <TimePickerColumn
                   label={mergedLabels.hours}
