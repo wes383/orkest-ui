@@ -3,12 +3,7 @@
   --date-picker-padding-x: var(--ok-control-padding-x-md);
   --date-picker-radius: var(--ok-radius-xl);
   --date-picker-font-size: var(--ok-font-size-sm);
-  /* The clear action sits one step inside the border, so its hover surface keeps
-     an even gap all round and its radius stays concentric with the field. */
-  --date-picker-edge-inset: var(--ok-space-1);
-  --date-picker-action-size: calc(var(--date-picker-height) - var(--date-picker-edge-inset) * 2);
-  --date-picker-action-radius: calc(var(--date-picker-radius) - var(--date-picker-edge-inset));
-  /* The leading icon and the trailing action share the same optical inset. */
+  /* The leading icon sits one small step inside the border. */
   --date-picker-leading-inset: calc(var(--ok-space-2) + 2px);
   position: relative;
   display: block;
@@ -71,9 +66,7 @@
 }
 
 .root[data-clearable="true"] .field {
-  padding-inline-end: calc(
-    var(--date-picker-action-size) + var(--ok-space-1) + var(--ok-space-2)
-  );
+  padding-inline-end: calc(1.25rem + var(--ok-space-2) * 2);
 }
 
 .root[data-disabled="true"] .field {
@@ -112,16 +105,16 @@
 .clear {
   position: absolute;
   top: 50%;
-  right: var(--date-picker-edge-inset);
+  right: var(--ok-space-2);
   z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--date-picker-action-size);
-  height: var(--date-picker-action-size);
+  width: 1.25rem;
+  height: 1.25rem;
   padding: 0;
   border: 0;
-  border-radius: var(--date-picker-action-radius);
+  border-radius: var(--ok-radius-lg);
   background: transparent;
   color: var(--ui-muted-foreground);
   cursor: pointer;
