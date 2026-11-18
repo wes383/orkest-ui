@@ -9,10 +9,12 @@ export type {
   CalendarGridProps,
   CalendarHeaderProps,
   CalendarProps,
+  CalendarRange,
 } from './calendar';
 export type {
   CalendarCaptionLayout,
   CalendarLabels,
+  CalendarRangePosition,
   CalendarSize,
 } from './calendar-context';
 export type { CivilDate, Weekday } from './date-utils';
@@ -26,6 +28,7 @@ export {
   formatDateValue,
   formatISODate,
   formatISOMonth,
+  formatMonthLabel,
   isSameDate,
   isSameMonth,
   isWithinRange,

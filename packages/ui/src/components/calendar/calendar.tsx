@@ -22,6 +22,7 @@ import {
   useCalendarContext,
   type CalendarCaptionLayout,
   type CalendarLabels,
+  type CalendarRangePosition,
   type CalendarSize,
 } from './calendar-context';
 import {
@@ -77,6 +78,16 @@ function endOfMonth(date: CivilDate): CivilDate {
   return { year: date.year, month: date.month, day: daysInMonth(date.year, date.month) };
 }
 
+/** A span painted across the grid, without touching the single-value selection. */
+export interface CalendarRange {
+  /** First day of the span, as `YYYY-MM-DD`. */
+  start?: string | null;
+  /** Last day of the span. While it is missing the span is still open. */
+  end?: string | null;
+  /** Provisional last day, used to preview the span while the pointer moves. */
+  preview?: string | null;
+}
+
 export interface CalendarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
   /** Selected date as `YYYY-MM-DD`. Controlled when provided, including `null`. */
@@ -97,6 +108,12 @@ export interface CalendarProps
   maxDate?: string;
   /** Dates to block, either as `YYYY-MM-DD` strings or a predicate on that format. */
   disabledDates?: string[] | ((value: string) => boolean);
+  /**
+   * Paints a span of days on top of the grid. The two endpoints count as
+   * selected; the days between them get a connecting band. Only rendering is
+   * affected — `value` still drives which day owns the keyboard focus.
+   */
+  range?: CalendarRange | null;
   /** Disables the whole calendar. */
   disabled?: boolean;
   /** BCP 47 locale used for names and formatting. Defaults to `en-US`. */
@@ -127,6 +144,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
     minDate,
     maxDate,
     disabledDates,
+    range,
     disabled = false,
     locale = 'en-US',
     weekStartsOn,
@@ -144,6 +162,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
   const min = useMemo(() => parseISODate(minDate), [minDate]);
   const max = useMemo(() => parseISODate(maxDate), [maxDate]);
   const blocked = useMemo(() => createDisabledMatcher(disabledDates), [disabledDates]);
+  const rangeStart = useMemo(() => parseISODate(range?.start), [range?.start]);
+  const rangeEnd = useMemo(() => parseISODate(range?.end), [range?.end]);
+  const rangePreview = useMemo(() => parseISODate(range?.preview), [range?.preview]);
   const resolvedWeekStartsOn = useMemo(
     () => weekStartsOn ?? resolveWeekStartsOn(locale),
     [weekStartsOn, locale],
@@ -256,6 +277,43 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
     [isDateDisabled, isValueControlled, onChange],
   );
 
+  const getRangePosition = useCallback(
+    (date: CivilDate): CalendarRangePosition | null => {
+      if (!rangeStart) {
+        return null;
+      }
+
+      if (isSameDate(date, rangeStart)) {
+        return 'start';
+      }
+
+      if (rangeEnd) {
+        if (isSameDate(date, rangeEnd)) {
+          return 'end';
+        }
+
+        return compareDates(date, rangeStart) > 0 && compareDates(date, rangeEnd) < 0
+          ? 'inside'
+          : null;
+      }
+
+      // A preview only points forward; hovering before the anchor would paint a
+      // band over a span the user is about to replace.
+      if (rangePreview && compareDates(rangePreview, rangeStart) > 0) {
+        if (isSameDate(date, rangePreview)) {
+          return 'preview';
+        }
+
+        return compareDates(date, rangeStart) > 0 && compareDates(date, rangePreview) < 0
+          ? 'inside'
+          : null;
+      }
+
+      return null;
+    },
+    [rangeStart, rangeEnd, rangePreview],
+  );
+
   const contextValue = useMemo(
     () => ({
       visibleMonth,
@@ -272,8 +330,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
       minDate: min,
       maxDate: max,
       isDateDisabled,
-      isDateSelected: (date: CivilDate) => isSameDate(date, selectedDate),
+      isDateSelected: (date: CivilDate) =>
+        isSameDate(date, selectedDate) ||
+        isSameDate(date, rangeStart) ||
+        isSameDate(date, rangeEnd),
       isDateFocused: (date: CivilDate) => isSameDate(date, focusedDate),
+      getRangePosition,
       selectDate,
       focusDate,
       goToMonth,
@@ -294,7 +356,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
       labels,
       min,
       max,
+      rangeStart,
+      rangeEnd,
       isDateDisabled,
+      getRangePosition,
       selectDate,
       focusDate,
       goToMonth,
@@ -646,6 +711,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     const disabled = context.isDateDisabled(parsed);
     const selected = context.isDateSelected(parsed);
+    const rangePosition = context.getRangePosition(parsed);
     const isToday = isSameDate(parsed, context.todayDate);
     const outside = !isSameMonth(parsed, context.visibleMonth);
 
@@ -659,6 +725,10 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         data-selected={selected || undefined}
         data-today={isToday || undefined}
         data-outside={outside || undefined}
+        data-in-range={rangePosition === 'inside' || undefined}
+        data-range-start={rangePosition === 'start' || undefined}
+        data-range-end={rangePosition === 'end' || undefined}
+        data-range-preview={rangePosition === 'preview' || undefined}
         aria-label={formatDateLabel(parsed, context.locale)}
         aria-selected={selected}
         aria-current={isToday ? 'date' : undefined}

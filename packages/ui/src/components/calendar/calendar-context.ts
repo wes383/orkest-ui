@@ -16,6 +16,9 @@ export interface CalendarLabels {
   year: string;
 }
 
+/** Where a day sits inside the painted range, if anywhere. */
+export type CalendarRangePosition = 'start' | 'end' | 'inside' | 'preview';
+
 export interface CalendarContextValue {
   visibleMonth: CivilDate;
   todayDate: CivilDate;
@@ -33,6 +36,8 @@ export interface CalendarContextValue {
   isDateDisabled: (date: CivilDate) => boolean;
   isDateSelected: (date: CivilDate) => boolean;
   isDateFocused: (date: CivilDate) => boolean;
+  /** Range decoration, independent of the single-value selection. */
+  getRangePosition: (date: CivilDate) => CalendarRangePosition | null;
   selectDate: (date: CivilDate) => void;
   focusDate: (date: CivilDate, options?: { focus?: boolean }) => void;
   goToMonth: (amount: number) => void;
