@@ -1,0 +1,46 @@
+/* Two grids sit side by side and keep their own width; on a narrow viewport the
+   second one wraps below the first instead of shrinking the cells. */
+.panels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-6);
+  align-items: flex-start;
+}
+
+.panel {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+}
+
+/* One navigation pair for the whole window: the arrows sit at the outer edges so
+   they read as "previous window" and "next window", not as two pickers. */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-1);
+  min-height: var(--ok-control-height-sm);
+}
+
+.navSpacer {
+  flex: none;
+  width: var(--ok-control-height-sm);
+  height: var(--ok-control-height-sm);
+}
+
+.caption {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ui-foreground);
+  font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-semibold);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  justify-content: flex-end;
+}
