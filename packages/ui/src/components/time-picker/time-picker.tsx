@@ -94,6 +94,8 @@ export interface TimePickerProps
   placeholder?: string;
   /** Shows a clear action while a time is selected. Defaults to `true`. */
   clearable?: boolean;
+  /** Shows the clock action that opens the panel. Defaults to `true`. */
+  showIcon?: boolean;
   /** Control size. Defaults to `md`. */
   size?: TimePickerSize;
   /** BCP 47 locale used for the 12-hour day period. Defaults to `en-US`. */
@@ -120,6 +122,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
     disabled = false,
     placeholder = 'Select a time',
     clearable = true,
+    showIcon = true,
     size = 'md',
     locale = 'en-US',
     invalid = false,
@@ -236,18 +239,20 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
           autoComplete="off"
           inputMode="numeric"
           prefix={
-            <PopoverTrigger
-              render={
-                <button
-                  type="button"
-                  className={styles.trigger}
-                  aria-label={mergedLabels.open}
-                  disabled={control.disabled}
-                />
-              }
-            >
-              <Icon icon={Clock} size={iconSizeBySize[size]} />
-            </PopoverTrigger>
+            showIcon ? (
+              <PopoverTrigger
+                render={
+                  <button
+                    type="button"
+                    className={styles.trigger}
+                    aria-label={mergedLabels.open}
+                    disabled={control.disabled}
+                  />
+                }
+              >
+                <Icon icon={Clock} size={iconSizeBySize[size]} />
+              </PopoverTrigger>
+            ) : undefined
           }
           onValueChange={(next) => {
             if (next === '') {

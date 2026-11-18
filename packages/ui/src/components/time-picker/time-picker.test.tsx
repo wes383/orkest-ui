@@ -41,6 +41,13 @@ describe('TimePicker', () => {
     ).toBeTruthy();
   });
 
+  it('hides the clock action when showIcon is false', () => {
+    render(<TimePicker defaultValue="09:30" showIcon={false} />);
+
+    expect(screen.queryByRole('button', { name: 'Open time picker' })).not.toBeInTheDocument();
+    expect(getInput()).toHaveValue('09:30');
+  });
+
   it('shows the placeholder until a time is selected', () => {
     render(<TimePicker placeholder="Pick a time" />);
 
