@@ -11,6 +11,7 @@ import { Button } from './components/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
 import { DataTable } from './components/data-table';
+import { DatePicker } from './components/date-picker';
 import {
   Dialog,
   DialogBody,
@@ -42,6 +43,7 @@ import {
 } from './components/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/tabs';
 import { Tag } from './components/tag';
+import { TimePicker } from './components/time-picker';
 import { Heading, Paragraph } from './components/typography';
 
 const planOptions = [
@@ -192,5 +194,29 @@ describe('accessibility', () => {
     await screen.findByRole('dialog');
 
     expect(await axe(document.body)).toHaveNoViolations();
+  });
+
+  it('renders an open date picker without violations', async () => {
+    const user = userEvent.setup();
+
+    render(<DatePicker defaultValue="2026-11-18" />);
+
+    await user.click(screen.getByRole('button', { name: 'Nov 18, 2026' }));
+    await screen.findByRole('dialog', { name: 'Choose a date' });
+
+    // The popup renders in a portal outside any landmark, so the page-level
+    // region rule cannot apply to this isolated fixture.
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  it('renders an open time picker without violations', async () => {
+    const user = userEvent.setup();
+
+    render(<TimePicker defaultValue="09:30" />);
+
+    await user.click(screen.getByRole('button', { name: 'Open time picker' }));
+    await screen.findByRole('dialog', { name: 'Choose a time' });
+
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
   });
 });

@@ -303,3 +303,21 @@ export type {
   DatePickerProps,
   DatePickerSize,
 } from './components/date-picker';
+
+export {
+  TimePicker,
+  TimePickerColumn,
+  TimePickerContent,
+  TimePickerInput,
+} from './components/time-picker';
+export type {
+  TimeFormat,
+  TimeParts,
+  TimePickerColumnOption,
+  TimePickerColumnProps,
+  TimePickerContentProps,
+  TimePickerInputProps,
+  TimePickerLabels,
+  TimePickerProps,
+  TimePickerSize,
+} from './components/time-picker';
