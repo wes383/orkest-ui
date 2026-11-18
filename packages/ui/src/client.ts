@@ -296,3 +296,10 @@ export type {
   CivilDate,
   Weekday,
 } from './components/calendar';
+
+export { DatePicker } from './components/date-picker';
+export type {
+  DatePickerLabels,
+  DatePickerProps,
+  DatePickerSize,
+} from './components/date-picker';

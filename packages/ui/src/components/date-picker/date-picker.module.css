@@ -1,0 +1,143 @@
+.root {
+  --date-picker-height: var(--ok-control-height-md);
+  --date-picker-padding-x: var(--ok-control-padding-x-md);
+  --date-picker-radius: var(--ok-radius-xl);
+  --date-picker-font-size: var(--ok-font-size-sm);
+  position: relative;
+  display: block;
+  width: 100%;
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --date-picker-height: var(--ok-control-height-sm);
+  --date-picker-padding-x: var(--ok-control-padding-x-sm);
+  --date-picker-radius: var(--ok-radius-lg);
+  --date-picker-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="lg"] {
+  --date-picker-height: var(--ok-control-height-lg);
+  --date-picker-padding-x: var(--ok-control-padding-x-lg);
+  --date-picker-radius: var(--ok-radius-xl);
+  --date-picker-font-size: var(--ok-font-size-md);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--date-picker-height);
+  padding: 0 var(--date-picker-padding-x);
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--date-picker-radius);
+  background: var(--ui-surface);
+  color: var(--ui-foreground);
+  font-family: inherit;
+  font-size: var(--date-picker-font-size);
+  line-height: var(--ok-line-height-normal);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.root:not([data-disabled="true"]) .field:hover {
+  border-color: var(--ui-border-strong);
+}
+
+.field:focus-visible {
+  border-color: var(--ui-subtle-foreground);
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.field[data-invalid="true"] {
+  border-color: var(--ui-danger);
+}
+
+.root[data-clearable="true"] .field {
+  padding-inline-end: calc(1.25rem + var(--ok-space-2) + var(--date-picker-padding-x));
+}
+
+.root[data-disabled="true"] .field {
+  border-color: var(--ui-border-subtle);
+  background: var(--ui-disabled-surface);
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.iconSlot {
+  display: inline-flex;
+  flex: none;
+  color: var(--ui-muted-foreground);
+}
+
+.root[data-disabled="true"] .iconSlot {
+  color: var(--ui-disabled-foreground);
+}
+
+.value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field[data-placeholder="true"] .value {
+  color: var(--ui-subtle-foreground);
+}
+
+.root[data-disabled="true"] .field[data-placeholder="true"] .value {
+  color: var(--ui-disabled-foreground);
+}
+
+.clear {
+  position: absolute;
+  top: 50%;
+  right: var(--date-picker-padding-x);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ok-radius-lg);
+  background: transparent;
+  color: var(--ui-muted-foreground);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.clear:hover {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.clear:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  margin-top: var(--ok-space-3);
+  padding-top: var(--ok-space-3);
+  border-top: var(--ok-border-width) solid var(--ui-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field {
+    transition: none;
+  }
+}
