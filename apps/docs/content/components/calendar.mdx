@@ -1,0 +1,245 @@
+---
+title: Calendar
+description: A month grid for picking dates, with keyboard navigation and range limits.
+section: components
+---
+
+`Calendar` is the grid on its own: it holds no input and no popover, so it can sit inline in a form, a
+side panel, or a popover you already own. `DatePicker` builds on it, and a future range picker can
+reuse it without changes.
+
+Dates are plain `YYYY-MM-DD` strings. A calendar date has no time and no timezone, so it never shifts
+to the previous day when the host timezone changes.
+
+## Live preview
+
+<ComponentPreview
+  title="Basic calendar"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { Calendar } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState('2026-11-18');
+
+  return (
+    <Stack gap={3} align="start">
+      <Calendar value={value} onChange={setValue} month="2026-11" />
+      <Text size="sm" tone="muted">
+        Selected: {value}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <CalendarBasicExample />
+</ComponentPreview>
+
+## Month and year switching
+
+`captionLayout="select"` swaps the caption for month and year pickers, which is what someone booking
+a date six months out actually wants.
+
+<ComponentPreview
+  title="Caption selects"
+  code={`import { useState } from 'react';
+import { Calendar } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState('2026-11-18');
+
+  return (
+    <Calendar
+      value={value}
+      onChange={setValue}
+      month="2026-11"
+      captionLayout="select"
+    />
+  );
+}`}
+>
+  <CalendarCaptionSelectExample />
+</ComponentPreview>
+
+The header arrows stay available in both layouts. A disabled bound is reflected on the arrow, so the
+reader can see there is nothing earlier or later to reach.
+
+## Range limits and blocked dates
+
+`minDate` and `maxDate` are inclusive. `disabledDates` takes either a list of `YYYY-MM-DD` strings or a
+predicate, so a rule like "no weekends" stays a one-liner.
+
+<ComponentPreview
+  title="Bounded range"
+  code={`import { useState } from 'react';
+import { Calendar } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState('2026-11-16');
+
+  return (
+    <Calendar
+      value={value}
+      onChange={setValue}
+      month="2026-11"
+      minDate="2026-11-10"
+      maxDate="2026-11-24"
+      disabledDates={['2026-11-13', '2026-11-20']}
+    />
+  );
+}`}
+>
+  <CalendarRangeExample />
+</ComponentPreview>
+
+Blocked days stay focusable and announce `aria-disabled`, so keyboard users can move past them
+without losing their place. Selecting one does nothing.
+
+## Sizes
+
+<ComponentPreview
+  title="Small and large"
+  code={`import { Stack } from '@orkest/ui';
+import { Calendar } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={5} align="start">
+      <Calendar defaultMonth="2026-11" defaultValue="2026-11-18" size="sm" />
+      <Calendar defaultMonth="2026-11" defaultValue="2026-11-18" size="lg" />
+    </Stack>
+  );
+}`}
+>
+  <CalendarSizesExample />
+</ComponentPreview>
+
+`size` scales the cell, the text, and the spacing together. `sm` fits a filter bar; `lg` is for a
+standalone date page. `md` is the default.
+
+## Composition
+
+`Calendar` renders `CalendarHeader` and `CalendarGrid` by default. Pass children to replace that
+composition; the parts read their state from the surrounding calendar, so you can reorder them or drop
+the header entirely.
+
+```tsx
+import { Calendar, CalendarGrid, CalendarHeader } from '@orkest/ui/client';
+
+export function CompactCalendar() {
+  return (
+    <Calendar defaultMonth="2026-11">
+      <CalendarHeader />
+      <CalendarGrid showWeekdays={false} />
+    </Calendar>
+  );
+}
+```
+
+`CalendarDay` is exported for cases that need a custom grid, and throws when rendered outside a
+`Calendar` because it has no state of its own.
+
+## Formats and locale
+
+- `locale` drives month names, weekday names, and the accessible label of every day. It defaults to
+  `en-US`.
+- `weekStartsOn` accepts `0`–`6` from Sunday. When omitted it is derived from `locale`, so `zh-CN`
+  starts on Monday without extra configuration.
+- `formatISODate`, `parseISODate`, `addDays`, `addMonths`, `weekdayOf`, and `todayDate` are exported
+  from `@orkest/ui/client` so callers can do date math without pulling in another library.
+
+## API
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string | null',
+      description: 'Selected date as YYYY-MM-DD. Controlled when provided, including null.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial date for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string) => void',
+      description: 'Called with the next YYYY-MM-DD value.',
+    },
+    {
+      name: 'month',
+      type: 'string',
+      description: 'Visible month as YYYY-MM. Controlled when provided.',
+    },
+    {
+      name: 'defaultMonth',
+      type: 'string',
+      description: 'Initial visible month. Defaults to the selected date, then today.',
+    },
+    {
+      name: 'onMonthChange',
+      type: '(month: string) => void',
+      description: 'Called with the next YYYY-MM when the visible month changes.',
+    },
+    {
+      name: 'minDate / maxDate',
+      type: 'string',
+      description: 'Inclusive bounds as YYYY-MM-DD.',
+    },
+    {
+      name: 'disabledDates',
+      type: 'string[] | ((value: string) => boolean)',
+      description: 'Dates to block, as a list or a predicate on YYYY-MM-DD.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables selection and the header arrows.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      default: "'en-US'",
+      description: 'BCP 47 locale for names and formatting.',
+    },
+    {
+      name: 'weekStartsOn',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6',
+      description: 'First day of the week. Derived from locale when omitted.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Cell and text scale.',
+    },
+    {
+      name: 'captionLayout',
+      type: "'label' | 'select'",
+      default: "'label'",
+      description: 'Month caption, or month and year pickers.',
+    },
+    {
+      name: 'showOutsideDays',
+      type: 'boolean',
+      default: 'true',
+      description: 'Renders adjacent-month days in the leading and trailing weeks.',
+    },
+    {
+      name: 'labels',
+      type: 'Partial<CalendarLabels>',
+      description: 'Overrides the accessible names for navigation and the caption selects.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The grid is a single tab stop. Arrow keys move by day, `Home` and `End` jump to the ends of the
+  week, `PageUp` and `PageDown` change month, and holding `Shift` changes year.
+- Every day exposes its full date as its accessible name, plus `aria-selected` and
+  `aria-current="date"` for today, so the reader never has to infer the month from position.
+- The header arrows are icon buttons with names that follow the locale labels.
+- Focus follows the navigated date, including when a key press lands in another month.

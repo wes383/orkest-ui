@@ -91,6 +91,26 @@ import {
   EmptyStateImageExample,
   EmptyStateSizesExample,
 } from '../examples/empty-state-examples';
+import {
+  CalendarBasicExample,
+  CalendarCaptionSelectExample,
+  CalendarRangeExample,
+  CalendarSizesExample,
+} from '../examples/calendar-examples';
+import {
+  DatePickerBasicExample,
+  DatePickerFieldExample,
+  DatePickerFormatExample,
+  DatePickerRangeExample,
+  DatePickerSizesExample,
+} from '../examples/date-picker-examples';
+import {
+  TimePickerBasicExample,
+  TimePickerFieldExample,
+  TimePickerSecondsExample,
+  TimePickerStatesExample,
+  TimePickerTwelveHourExample,
+} from '../examples/time-picker-examples';
 import { Input, InputIconsExample, Textarea } from '../examples/form-components';
 import {
   Checkbox,
@@ -271,6 +291,20 @@ export const mdxComponents = {
   a: MdxLink,
   pre: MdxPre,
   table: MdxTable,
+  CalendarBasicExample,
+  CalendarCaptionSelectExample,
+  CalendarRangeExample,
+  CalendarSizesExample,
+  DatePickerBasicExample,
+  DatePickerFieldExample,
+  DatePickerFormatExample,
+  DatePickerRangeExample,
+  DatePickerSizesExample,
+  TimePickerBasicExample,
+  TimePickerFieldExample,
+  TimePickerSecondsExample,
+  TimePickerStatesExample,
+  TimePickerTwelveHourExample,
   AlertActionExample,
   AlertClosableExample,
   AlertCustomIconExample,

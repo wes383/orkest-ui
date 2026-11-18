@@ -1,0 +1,275 @@
+---
+title: Time Picker
+description: Pick a time of day from scrollable columns, with typed entry and keyboard stepping.
+section: components
+---
+
+`TimePicker` selects a time of day, not a moment. The value is `HH:mm` (or `HH:mm:ss` with
+`showSeconds`), always written in 24-hour form, so `13:45` is stored as `13:45` even when the field
+reads `1:45 PM`.
+
+A time has no date and no timezone, so a JavaScript `Date` is the wrong container: it attaches both.
+Keeping the value as a string means no conversion, no accidental offset, and a value that can be sent
+to an API unchanged.
+
+## Live preview
+
+<ComponentPreview
+  title="Basic time picker"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('09:30');
+
+  return (
+    <Stack gap={2} align="start">
+      <TimePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ?? 'none'}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <TimePickerBasicExample />
+</ComponentPreview>
+
+The field accepts typed entry. `930`, `1430`, `09:30`, and `1:45 PM` all parse, and an unparseable
+entry reverts to the last committed value instead of silently clearing it.
+
+## 12-hour display
+
+`format` only changes the display. The stored value stays 24-hour, so a switch to `12h` never rewrites
+what your data layer already holds.
+
+<ComponentPreview
+  title="12-hour with a 15-minute step"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('13:45');
+
+  return (
+    <Stack gap={3} align="start">
+      <TimePicker value={value} onChange={setValue} format="12h" minuteStep={15} />
+      <Text size="sm" tone="muted">
+        Stored as {value ?? 'none'} — the display format never changes the value.
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <TimePickerTwelveHourExample />
+</ComponentPreview>
+
+The hour column lists all 24 hours with their day period in the label, so `1 PM` is one click rather
+than a separate AM/PM switch.
+
+## Minute step, seconds, and range
+
+`minuteStep` trims the minute column to the intervals you actually accept. `showSeconds` adds a third
+column and widens the stored value to `HH:mm:ss`. `minTime` and `maxTime` bound both the columns and
+typed entry.
+
+<ComponentPreview
+  title="Seconds and a working-hours range"
+  code={`import { useState } from 'react';
+import { TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('09:30:00');
+
+  return (
+    <TimePicker
+      value={value}
+      onChange={setValue}
+      showSeconds
+      minTime="08:00"
+      maxTime="18:00"
+    />
+  );
+}`}
+>
+  <TimePickerSecondsExample />
+</ComponentPreview>
+
+Values outside the range are clamped on the way in, so the field never shows a time the picker cannot
+represent.
+
+## Inside a Field
+
+<ComponentPreview
+  title="With a label and description"
+  code={`import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel, TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Field>
+      <FieldLabel>Reminder time</FieldLabel>
+      <TimePicker value={value} onChange={setValue} placeholder="Set a reminder" />
+      <FieldDescription>Sent in your local timezone, stored as HH:mm.</FieldDescription>
+    </Field>
+  );
+}`}
+>
+  <TimePickerFieldExample />
+</ComponentPreview>
+
+## Sizes and states
+
+<ComponentPreview
+  title="Sizes and disabled"
+  code={`import { Stack } from '@orkest/ui';
+import { TimePicker } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <TimePicker defaultValue="09:30" size="sm" />
+      <TimePicker defaultValue="09:30" size="md" />
+      <TimePicker defaultValue="09:30" size="lg" />
+      <TimePicker defaultValue="09:30" disabled />
+    </Stack>
+  );
+}`}
+>
+  <TimePickerStatesExample />
+</ComponentPreview>
+
+## Composition
+
+`TimePicker` is built from parts you can use on their own:
+
+- `TimePickerInput` is the text field. It owns the keyboard contract: `ArrowUp` and `ArrowDown` call
+  `onStep`, `Enter` commits, `Escape` reverts.
+- `TimePickerContent` is the panel body that lays columns out side by side.
+- `TimePickerColumn` is one scrollable list (`role="listbox"`) with roving `tabindex`.
+- `TimePickerItem` styling ships with the column; reach for `TimePickerColumn` when you need a
+  different option set.
+
+```tsx
+import { TimePickerColumn } from '@orkest/ui/client';
+
+export function HalfHours({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  return (
+    <TimePickerColumn
+      label="Minutes"
+      value={value}
+      options={[0, 30].map((minute) => ({
+        value: minute,
+        label: String(minute).padStart(2, '0'),
+      }))}
+      onValueChange={onChange}
+    />
+  );
+}
+```
+
+## API
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string | null',
+      description: 'Selected time as HH:mm, or HH:mm:ss with showSeconds. Controlled when provided.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial time for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string | null) => void',
+      description: 'Called with the next 24-hour value, or null when cleared.',
+    },
+    {
+      name: 'format',
+      type: "'12h' | '24h'",
+      default: "'24h'",
+      description: 'Display format. The stored value is always 24-hour.',
+    },
+    {
+      name: 'minuteStep',
+      type: 'number',
+      default: '1',
+      description: 'Minute interval offered by the column and by arrow-key stepping.',
+    },
+    {
+      name: 'showSeconds',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds a seconds column and stores HH:mm:ss.',
+    },
+    {
+      name: 'minTime / maxTime',
+      type: 'string',
+      description: 'Inclusive bounds as HH:mm. Typed values are clamped to them.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the input and the panel trigger.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: "'Select a time'",
+      description: 'Text shown while no time is selected.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows a clear action while a time is selected.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Control size.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      default: "'en-US'",
+      description: 'BCP 47 locale used for the 12-hour day period.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the invalid border.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name inherited by the input.',
+    },
+    {
+      name: 'labels',
+      type: 'Partial<TimePickerLabels>',
+      description: 'Overrides the accessible names for the dialog, trigger, and columns.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The field is a real text input, so screen readers announce the current value and the typed text is
+  editable with the usual caret and selection behavior.
+- The clock button next to it is a separate, labelled button with `aria-haspopup="dialog"`, so opening
+  the panel never fights with typing.
+- Inside the panel each column is a labelled listbox. `ArrowUp` and `ArrowDown` move the selection,
+  `Home` and `End` jump to the ends, and `ArrowLeft` and `ArrowRight` move between columns.
+- Selected options carry `aria-selected`, and unavailable ones carry `aria-disabled` rather than being
+  removed, so the list does not reflow under the pointer.

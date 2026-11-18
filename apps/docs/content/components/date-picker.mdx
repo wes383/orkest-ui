@@ -1,0 +1,260 @@
+---
+title: Date Picker
+description: Pick a calendar date from a popover calendar, with typed formatting and range limits.
+section: components
+---
+
+`DatePicker` pairs a field with a [Calendar](/docs/components/calendar/) in a popover. The value is a
+`YYYY-MM-DD` string, never a `Date`, so it survives a round trip through a database or an API without
+a timezone shifting it by a day.
+
+The field is a button, not a text input: typing a date in six different formats is a worse experience
+than picking it from a grid, and it removes a whole class of parsing bugs.
+
+## Live preview
+
+<ComponentPreview
+  title="Basic date picker"
+  code={`import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Stack gap={2} align="start">
+      <DatePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ?? 'none'}
+      </Text>
+    </Stack>
+  );
+}`}
+>
+  <DatePickerBasicExample />
+</ComponentPreview>
+
+Selecting a day commits the value and closes the popover. The footer keeps `Today` and `Clear` within
+reach; `Today` is disabled when it falls outside the allowed range.
+
+## Range limits
+
+<ComponentPreview
+  title="Bounded range"
+  code={`import { useState } from 'react';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <DatePicker
+      value={value}
+      onChange={setValue}
+      minDate="2026-11-10"
+      maxDate="2026-12-20"
+      disabledDates={(date) => date.endsWith('-15') || date.endsWith('-16')}
+    />
+  );
+}`}
+>
+  <DatePickerRangeExample />
+</ComponentPreview>
+
+`minDate`, `maxDate`, and `disabledDates` are passed straight to the calendar, so the popover opens on a
+navigable month and blocked days stay visible but inert.
+
+## Display format
+
+`format` accepts an `Intl.DateTimeFormat` date style. Pass a function when the exact string matters —
+an ISO value, a custom suffix, a label from your own i18n bundle.
+
+<ComponentPreview
+  title="Custom and localized formats"
+  code={`import { useState } from 'react';
+import { Stack } from '@orkest/ui';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return (
+    <Stack gap={3}>
+      <DatePicker
+        value={value}
+        onChange={setValue}
+        format={(iso) => iso.replaceAll('-', '/')}
+      />
+      <DatePicker value={value} onChange={setValue} locale="en-GB" format="full" />
+    </Stack>
+  );
+}`}
+>
+  <DatePickerFormatExample />
+</ComponentPreview>
+
+The format only affects the field text. `onChange` always reports `YYYY-MM-DD`.
+
+## Inside a Field
+
+`DatePicker` reads the surrounding [Field](/docs/components/field/) context: the label points at the
+trigger, `aria-describedby` carries the description and validation message, and `required` and
+`invalid` follow the field.
+
+<ComponentPreview
+  title="With a label and description"
+  code={`import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel, DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <Field required>
+      <FieldLabel>Start date</FieldLabel>
+      <DatePicker value={value} onChange={setValue} placeholder="Choose a start date" />
+      <FieldDescription>Leave empty to start immediately.</FieldDescription>
+    </Field>
+  );
+}`}
+>
+  <DatePickerFieldExample />
+</ComponentPreview>
+
+Passing `name` also renders a hidden input, so the value is submitted with a native form.
+
+## Sizes
+
+<ComponentPreview
+  title="Small, medium, and large"
+  code={`import { Stack } from '@orkest/ui';
+import { DatePicker } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <DatePicker defaultValue="2026-11-18" size="sm" placeholder="Small" />
+      <DatePicker defaultValue="2026-11-18" size="md" placeholder="Medium" />
+      <DatePicker defaultValue="2026-11-18" size="lg" placeholder="Large" />
+    </Stack>
+  );
+}`}
+>
+  <DatePickerSizesExample />
+</ComponentPreview>
+
+## Desktop and mobile
+
+The same popover is used at every width. It is positioned against the trigger, stays inside the
+viewport, and the calendar cells are comfortably above the minimum touch target, so it does not need a
+separate bottom-sheet implementation.
+
+When you do want a full-screen sheet, compose the parts yourself: `Calendar` is exported on its own
+and works inside any [Dialog](/docs/components/dialog/).
+
+## API
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string | null',
+      description: 'Selected date as YYYY-MM-DD. Controlled when provided, including null.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial date for uncontrolled usage.',
+    },
+    {
+      name: 'onChange',
+      type: '(value: string | null) => void',
+      description: 'Called with the next YYYY-MM-DD value, or null when cleared.',
+    },
+    {
+      name: 'minDate / maxDate',
+      type: 'string',
+      description: 'Inclusive bounds as YYYY-MM-DD.',
+    },
+    {
+      name: 'disabledDates',
+      type: 'string[] | ((value: string) => boolean)',
+      description: 'Dates to block, as a list or a predicate on YYYY-MM-DD.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the trigger and prevents the popover from opening.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      default: "'Select a date'",
+      description: 'Text shown while no date is selected.',
+    },
+    {
+      name: 'format',
+      type: "'short' | 'medium' | 'long' | 'full' | ((value: string) => string)",
+      default: "'medium'",
+      description: 'Display format. Presets map to Intl.DateTimeFormat dateStyle.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      default: "'en-US'",
+      description: 'BCP 47 locale used for names and formatting.',
+    },
+    {
+      name: 'weekStartsOn',
+      type: '0 | 1 | 2 | 3 | 4 | 5 | 6',
+      description: 'First day of the week. Derived from locale when omitted.',
+    },
+    {
+      name: 'captionLayout',
+      type: "'label' | 'select'",
+      default: "'label'",
+      description: 'Month caption, or month and year pickers inside the popover.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Control and calendar scale.',
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows a clear action while a date is selected.',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies the invalid border.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name. Renders a hidden input carrying the value.',
+    },
+    {
+      name: 'labels',
+      type: 'Partial<DatePickerLabels>',
+      description: 'Overrides the accessible names for the dialog, today, and clear actions.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The trigger is a button with `aria-haspopup="dialog"` and `aria-expanded`, so the popup is announced
+  before it opens.
+- `Enter` or `Space` opens the calendar; focus moves into the grid; `Escape` closes it and returns focus
+  to the trigger.
+- The grid is a single tab stop with full arrow-key navigation, described in the
+  [Calendar documentation](/docs/components/calendar/#accessibility).
+- The clear action has its own accessible name and never sits inside the trigger, so it stays a
+  separate, reachable target.
