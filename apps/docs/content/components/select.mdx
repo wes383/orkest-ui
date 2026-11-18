@@ -36,6 +36,11 @@ Set `searchable` to turn the trigger into a text input. Typing filters option la
 case-insensitive match; clear the query to restore the full list. Pass `filterOption` to replace the
 default matcher, or `onSearchChange` together with `loading` for async search.
 
+Search mode is the same widget as [Combobox](/docs/components/combobox/), so filtering, groups,
+loading, and keyboard behaviour are identical. The difference is the API: `Select` reports a cleared
+value as `undefined` and always renders the standard option row, while `Combobox` uses `null` and
+accepts `renderItem` / `loadingMessage`.
+
 <ComponentPreview
   title="Searchable select"
   code={`import { Select } from '@orkest/ui/client';

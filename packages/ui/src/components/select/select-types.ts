@@ -71,9 +71,9 @@ export interface SelectBaseProps {
 }
 
 /**
- * Props shared by the two components that filter as you type. `Select` keeps
- * its own base because it does not render a list of items the caller can
- * restyle.
+ * Props shared by the components that filter as you type. `Select` exposes only
+ * the base set on purpose: its rows are fixed, so `renderItem` and
+ * `loadingMessage` stay on the standalone `Combobox`, which is the same widget.
  */
 export interface FilterableSelectBaseProps extends SelectBaseProps {
   /** Replaces the default option content inside the listbox. */
