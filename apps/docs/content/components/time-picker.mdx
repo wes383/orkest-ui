@@ -1,6 +1,6 @@
 ---
 title: Time Picker
-description: Pick a time of day from scrollable columns, with typed entry and keyboard stepping.
+description: Pick a time of day with per-unit segments, keyboard stepping, and scrollable columns.
 section: components
 ---
 
@@ -35,8 +35,14 @@ export function Example() {
   <TimePickerBasicExample />
 </ComponentPreview>
 
-The field accepts typed entry. `930`, `1430`, `09:30`, and `1:45 PM` all parse, and an unparseable
-entry reverts to the last committed value instead of silently clearing it.
+Each unit is its own segment: `hh`, `mm`, and `ss` when seconds are shown, plus `AM/PM` in 12-hour
+mode. Click a segment and type digits — the value advances to the next segment as soon as the digits
+are unambiguous, so `1430` fills hours and minutes without a separator. `ArrowUp` and `ArrowDown`
+step the focused segment, the horizontal arrows move between segments, and `Backspace` clears the
+segment under the focus.
+
+The field only commits once every segment is filled. Clearing one unit leaves the field showing the
+remaining segments until the time is complete again.
 
 ## 12-hour display
 
@@ -65,14 +71,16 @@ export function Example() {
   <TimePickerTwelveHourExample />
 </ComponentPreview>
 
-The hour column lists all 24 hours with their day period in the label, so `1 PM` is one click rather
-than a separate AM/PM switch.
+The hour segment shows a zero-padded 12-hour clock face (`01`-`12`) and the day-period segment
+beside it holds `AM` or `PM`; typing `a` or `p` while it is focused flips the period. The panel keeps
+a single hour column of all 24 hours with the period folded into the label, so `1 PM` stays one
+click there.
 
 ## Minute step, seconds, and range
 
-`minuteStep` trims the minute column to the intervals you actually accept. `showSeconds` adds a third
-column and widens the stored value to `HH:mm:ss`. `minTime` and `maxTime` bound both the columns and
-typed entry.
+`minuteStep` trims the minute column to the intervals you actually accept and sets the arrow-key
+step for the minute segment. `showSeconds` adds a seconds segment and column and widens the stored
+value to `HH:mm:ss`. `minTime` and `maxTime` bound the columns, typed entry, and segment stepping.
 
 <ComponentPreview
   title="Seconds and a working-hours range"
@@ -143,8 +151,8 @@ export function Example() {
 
 ## Hiding the actions
 
-`showIcon={false}` removes the clock action that opens the panel. The field still accepts typed input
-and arrow-key stepping. `clearable={false}` removes the clear action.
+`showIcon={false}` removes the clock action that opens the panel. Every segment still accepts typed
+digits and arrow-key stepping. `clearable={false}` removes the clear action.
 
 <ComponentPreview
   title="Field without the clock or the clear action"
@@ -172,8 +180,7 @@ export function Example() {
 
 `TimePicker` is built from parts you can use on their own:
 
-- `TimePickerInput` is the text field. It owns the keyboard contract: `ArrowUp` and `ArrowDown` call
-  `onStep`, `Enter` commits, `Escape` reverts.
+- The field is segmented: one `role="spinbutton"` per unit, each with its own label and value range.
 - `TimePickerContent` is the panel body that lays columns out side by side.
 - `TimePickerColumn` is one scrollable list (`role="listbox"`) with roving `tabindex`.
 - `TimePickerItem` styling ships with the column; reach for `TimePickerColumn` when you need a
@@ -232,7 +239,7 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
       name: 'showSeconds',
       type: 'boolean',
       default: 'false',
-      description: 'Adds a seconds column and stores HH:mm:ss.',
+      description: 'Adds a seconds segment and column and stores HH:mm:ss.',
     },
     {
       name: 'minTime / maxTime',
@@ -284,20 +291,22 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
     {
       name: 'name',
       type: 'string',
-      description: 'Form field name inherited by the input.',
+      description: 'Form field name, submitted through a hidden input.',
     },
     {
       name: 'labels',
       type: 'Partial<TimePickerLabels>',
-      description: 'Overrides the accessible names for the dialog, trigger, and columns.',
+      description: 'Overrides the accessible names for the dialog, trigger, segments, clear action, and columns.',
     },
   ]}
 />
 
 ## Accessibility
 
-- The field is a real text input, so screen readers announce the current value and the typed text is
-  editable with the usual caret and selection behavior.
+- The field is a `group` of `spinbutton`s. Each segment carries its own label, `aria-valuenow`,
+  `aria-valuemin`, and `aria-valuemax`, so screen readers announce the unit and its value.
+- Segments are separate tab stops. The horizontal arrows and `Home`/`End` also move between them, so
+  the whole time can be edited without leaving the keyboard.
 - The clock button at the start of the field is a separate, labelled button with
   `aria-haspopup="dialog"`.
 - Inside the panel each column is a labelled listbox. `ArrowUp` and `ArrowDown` move the selection,
