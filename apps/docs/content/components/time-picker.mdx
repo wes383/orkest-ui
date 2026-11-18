@@ -36,10 +36,10 @@ export function Example() {
 </ComponentPreview>
 
 Each unit is its own segment: `hh`, `mm`, and `ss` when seconds are shown, plus `AM/PM` in 12-hour
-mode. Click a segment and type digits — the value advances to the next segment as soon as the digits
-are unambiguous, so `1430` fills hours and minutes without a separator. `ArrowUp` and `ArrowDown`
-step the focused segment, the horizontal arrows move between segments, and `Backspace` clears the
-segment under the focus.
+mode. Clicking a segment selects its digits, so typing replaces the whole unit instead of inserting
+next to them. The value advances to the next segment as soon as the digits are unambiguous, so `1430`
+fills hours and minutes without a separator. `ArrowUp` and `ArrowDown` step the focused segment, the
+horizontal arrows move between segments, and `Backspace` clears the segment under the focus.
 
 The field only commits once every segment is filled. Clearing one unit leaves the field showing the
 remaining segments until the time is complete again.
@@ -307,6 +307,8 @@ export function HalfHours({ value, onChange }: { value: number; onChange: (v: nu
   `aria-valuemin`, and `aria-valuemax`, so screen readers announce the unit and its value.
 - Segments are separate tab stops. The horizontal arrows and `Home`/`End` also move between them, so
   the whole time can be edited without leaving the keyboard.
+- The selected digits are the focus indicator, as in a native time field: the field does not draw a
+  ring around the unit, and the highlight stays on the unit that owns the focus.
 - The clock button at the start of the field is a separate, labelled button with
   `aria-haspopup="dialog"`.
 - Inside the panel each column is a labelled listbox. `ArrowUp` and `ArrowDown` move the selection,
