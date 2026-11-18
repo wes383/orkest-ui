@@ -24,7 +24,7 @@ export function Example() {
 
   return (
     <Stack gap={3} align="start">
-      <Calendar value={value} onChange={setValue} month="2026-11" />
+      <Calendar value={value} onChange={setValue} defaultMonth="2026-11" />
       <Text size="sm" tone="muted">
         Selected: {value}
       </Text>
@@ -52,7 +52,7 @@ export function Example() {
     <Calendar
       value={value}
       onChange={setValue}
-      month="2026-11"
+      defaultMonth="2026-11"
       captionLayout="select"
     />
   );
@@ -63,6 +63,10 @@ export function Example() {
 
 The header arrows stay available in both layouts. A disabled bound is reflected on the arrow, so the
 reader can see there is nothing earlier or later to reach.
+
+Both pickers are listbox comboboxes rendered by the component rather than native `select` elements,
+so the panel follows the same surface, radius, and shadow tokens as the rest of the library, and the
+focused trigger does not pick up the browser's blue focus box.
 
 ## Range limits and blocked dates
 
@@ -81,7 +85,7 @@ export function Example() {
     <Calendar
       value={value}
       onChange={setValue}
-      month="2026-11"
+      defaultMonth="2026-11"
       minDate="2026-11-10"
       maxDate="2026-11-24"
       disabledDates={['2026-11-13', '2026-11-20']}
@@ -242,4 +246,6 @@ export function CompactCalendar() {
 - Every day exposes its full date as its accessible name, plus `aria-selected` and
   `aria-current="date"` for today, so the reader never has to infer the month from position.
 - The header arrows are icon buttons with names that follow the locale labels.
+- The month and year pickers are comboboxes over a listbox: arrow keys move the highlight, `Enter`
+  commits, and `Escape` closes the panel without changing the month.
 - Focus follows the navigated date, including when a key press lands in another month.

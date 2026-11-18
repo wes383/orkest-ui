@@ -10,7 +10,7 @@ export function CalendarBasicExample() {
 
   return (
     <Stack gap={3} align="start">
-      <Calendar value={value} onChange={setValue} month="2026-11" />
+      <Calendar value={value} onChange={setValue} defaultMonth="2026-11" />
       <Text size="sm" tone="muted">
         Selected: {value}
       </Text>
@@ -25,7 +25,7 @@ export function CalendarCaptionSelectExample() {
     <Calendar
       value={value}
       onChange={setValue}
-      month="2026-11"
+      defaultMonth="2026-11"
       captionLayout="select"
     />
   );
@@ -38,7 +38,7 @@ export function CalendarRangeExample() {
     <Calendar
       value={value}
       onChange={setValue}
-      month="2026-11"
+      defaultMonth="2026-11"
       minDate="2026-11-10"
       maxDate="2026-11-24"
       disabledDates={['2026-11-13', '2026-11-20']}
