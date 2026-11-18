@@ -127,6 +127,12 @@
   padding-inline-end: calc(1.25rem + var(--ok-space-2));
 }
 
+/* The clear action is positioned over the field, so a typing field reserves the
+   same gutter the value text does and never runs underneath it. */
+.field[data-clearable="true"] .input {
+  padding-inline-end: calc(1.25rem + var(--ok-space-2));
+}
+
 .value[data-placeholder] {
   color: var(--ui-subtle-foreground);
 }
