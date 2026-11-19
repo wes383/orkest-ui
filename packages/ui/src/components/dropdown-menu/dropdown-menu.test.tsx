@@ -178,6 +178,7 @@ describe('DropdownMenu', () => {
     await user.tab();
     await user.keyboard('{Enter}');
     await screen.findByRole('menu');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Edit' })).toHaveFocus());
     await user.keyboard('{ArrowDown}{Enter}');
 
     await waitFor(() => {
@@ -283,7 +284,8 @@ describe('DropdownMenu', () => {
     const duplicate = screen.getByRole('menuitem', { name: 'Duplicate' });
     const settings = screen.getByRole('menuitem', { name: 'Settings' });
 
-    expect(edit).toHaveFocus();
+    // The menu moves focus to its first item once the popup has mounted.
+    await waitFor(() => expect(edit).toHaveFocus());
 
     await user.keyboard('{ArrowDown}');
     expect(duplicate).toHaveFocus();
@@ -308,6 +310,9 @@ describe('DropdownMenu', () => {
     await user.tab();
     await user.keyboard('{Enter}');
     await screen.findByRole('menu');
+
+    // Wait for the initial highlight before stepping through the items.
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Edit' })).toHaveFocus());
 
     await user.keyboard('{ArrowDown}');
     expect(screen.getByRole('menuitem', { name: 'Duplicate' })).toHaveFocus();
@@ -339,7 +344,7 @@ describe('DropdownMenu', () => {
     await screen.findByRole('menu');
 
     const edit = screen.getByRole('menuitem', { name: 'Edit' });
-    expect(edit).toHaveFocus();
+    await waitFor(() => expect(edit).toHaveFocus());
 
     await user.keyboard('{End}');
     expect(edit).toHaveFocus();
