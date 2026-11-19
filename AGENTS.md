@@ -361,6 +361,9 @@ pnpm test
 pnpm typecheck
 pnpm build
 pnpm smoke:package
+pnpm e2e:build
+pnpm test:e2e
+pnpm test:visual
 ```
 
 If a script does not exist, do not silently invent it or claim it was

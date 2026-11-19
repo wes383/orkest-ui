@@ -15,6 +15,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "smoke:package": "pnpm --filter @orkest/ui build && node scripts/smoke-package.mjs",
+    "e2e:build": "pnpm --filter @orkest/ui build && pnpm --filter @orkest/docs exec next build",
+    "test:e2e": "playwright test tests/smoke.spec.ts",
+    "test:visual": "playwright test tests/visual.spec.ts",
+    "test:visual:update": "playwright test tests/visual.spec.ts --update-snapshots",
     "docs:dev": "pnpm --filter @orkest/docs dev",
     "docs:build": "pnpm --filter @orkest/docs build",
     "playground:dev": "pnpm --filter @orkest/playground dev",
@@ -25,6 +29,7 @@
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
     "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.65.1",
     "eslint": "^9.39.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",

@@ -72,3 +72,45 @@ jobs:
 
       - name: Verify the packed package in a consumer
         run: node scripts/smoke-package.mjs
+
+  playwright:
+    name: Playwright
+    # Visual baselines are generated on Windows; run the same platform in CI.
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.11.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm build
+
+      - name: Build documentation site
+        run: pnpm --filter @orkest/docs exec next build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install chromium
+
+      - name: Run Playwright
+        run: pnpm exec playwright test
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
