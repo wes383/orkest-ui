@@ -247,6 +247,29 @@ export type {
 export { Combobox } from './components/combobox';
 export type { ComboboxProps } from './components/combobox';
 
+export {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from './components/command';
+export type {
+  CommandDialogProps,
+  CommandEmptyProps,
+  CommandGroupProps,
+  CommandInputProps,
+  CommandItemProps,
+  CommandListProps,
+  CommandProps,
+  CommandSeparatorProps,
+  CommandShortcutProps,
+} from './components/command';
+
 export { MultiSelect, Select } from './components/select';
 export type {
   MultiSelectProps,

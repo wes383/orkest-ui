@@ -145,6 +145,11 @@ import {
   ComboboxStatesExample,
 } from '../examples/combobox-examples';
 import {
+  CommandBasicExample,
+  CommandDialogExample,
+  CommandShortcutExample,
+} from '../examples/command-examples';
+import {
   BasicSelectExample,
   DetailedSelectExample,
   MultiSelect,
@@ -326,6 +331,9 @@ export const mdxComponents = {
   ComboboxCustomItemExample,
   ComboboxGroupedExample,
   ComboboxStatesExample,
+  CommandBasicExample,
+  CommandDialogExample,
+  CommandShortcutExample,
   DatePickerBasicExample,
   DatePickerBareExample,
   DatePickerCaptionSelectExample,

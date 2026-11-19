@@ -12,6 +12,7 @@ import { Calendar } from './components/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/card';
 import { Checkbox } from './components/checkbox';
 import { Combobox } from './components/combobox';
+import { Command, CommandDialog } from './components/command';
 import { DataTable } from './components/data-table';
 import { DatePicker } from './components/date-picker';
 import {
@@ -252,6 +253,47 @@ describe('accessibility', () => {
     await screen.findByRole('dialog');
 
     expect(await axe(document.body)).toHaveNoViolations();
+  });
+
+  it('renders a command palette without violations', async () => {
+    render(
+      <main>
+        <Command label="Command menu">
+          <Command.Input placeholder="Search commands" />
+          <Command.List>
+            <Command.Empty>No results found.</Command.Empty>
+            <Command.Group heading="Pages">
+              <Command.Item value="Home">Home</Command.Item>
+              <Command.Item value="Settings">Settings</Command.Item>
+            </Command.Group>
+          </Command.List>
+        </Command>
+      </main>,
+    );
+
+    expect(await axe(document.body)).toHaveNoViolations();
+  });
+
+  it('renders an open command dialog without violations', async () => {
+    render(
+      <CommandDialog defaultOpen title="Command menu">
+        <Command.Input placeholder="Search commands" />
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
+          <Command.Item value="Home" onSelect={() => undefined}>
+            Home
+          </Command.Item>
+        </Command.List>
+      </CommandDialog>,
+    );
+
+    await screen.findByRole('dialog', { name: 'Command menu' });
+
+    // The popup renders in a portal outside any landmark, so the page-level
+    // region rule cannot apply to this isolated fixture.
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders an open date picker without violations', async () => {

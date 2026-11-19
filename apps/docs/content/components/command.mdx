@@ -1,0 +1,291 @@
+---
+title: Command
+description: A keyboard-first palette for searching and running actions, in a dialog or inline.
+section: components
+---
+
+`Command` is a searchable list of actions. Typing filters the list, the arrow keys move the
+highlight, and `Enter` runs the highlighted command. It is the right component for "do something"
+surfaces: jumping to a page, creating a record, or switching a setting.
+
+Pick the component that matches the intent:
+
+- `Combobox` commits a value from a known set of options.
+- `Command` runs an action and usually closes.
+- `Dropdown Menu` shows a short, visible set of actions without searching.
+
+Import it from `@orkest/ui/client`.
+
+## Live preview
+
+Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>⌘</kbd> + <kbd>K</kbd> on macOS), or use the button.
+
+export const dialogCommandCode = `import { useEffect, useState } from 'react';
+import { Button } from '@orkest/ui';
+import { Command } from '@orkest/ui/client';
+
+export function Example() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function handleShortcut(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setOpen((current) => !current);
+      }
+    }
+
+    window.addEventListener('keydown', handleShortcut);
+    return () => window.removeEventListener('keydown', handleShortcut);
+  }, []);
+
+  return (
+    <>
+      <Button variant="outline" onClick={() => setOpen(true)}>
+        Open command menu
+      </Button>
+      <Command.Dialog open={open} onOpenChange={setOpen} title="Command menu">
+        <Command.Input placeholder="Type a command or search…" />
+        <Command.List>
+          <Command.Empty>No matching commands.</Command.Empty>
+          <Command.Group heading="Suggested">
+            <Command.Item value="Open project" onSelect={() => setOpen(false)}>
+              Open project
+            </Command.Item>
+            <Command.Item value="New note" onSelect={() => setOpen(false)}>
+              New note
+            </Command.Item>
+          </Command.Group>
+        </Command.List>
+      </Command.Dialog>
+    </>
+  );
+}`;
+
+<ComponentPreview title="Command dialog" code={dialogCommandCode}>
+  <CommandDialogExample />
+</ComponentPreview>
+
+The shortcut is registered once by the application, not by each palette. A listener per instance
+would fire every mounted palette at the same time, and it would fight with editors that already use
+the same combination.
+
+## Standalone
+
+`Command` also works without a dialog: embed it in a page, a sidebar, or a popover when the list
+should stay visible.
+
+
+export const basicCommandCode = `import { Command } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Command label="Command menu">
+      <Command.Input placeholder="Type a command or search…" />
+      <Command.List>
+        <Command.Empty>No matching commands.</Command.Empty>
+        <Command.Group heading="Pages">
+          <Command.Item value="Home" onSelect={(value) => console.log(value)}>
+            Home
+          </Command.Item>
+          <Command.Item value="Settings" onSelect={(value) => console.log(value)}>
+            Settings
+          </Command.Item>
+        </Command.Group>
+        <Command.Group heading="Actions">
+          <Command.Item value="New project" onSelect={(value) => console.log(value)}>
+            New project
+          </Command.Item>
+        </Command.Group>
+      </Command.List>
+    </Command>
+  );
+}`;
+
+<ComponentPreview title="Inline command list" code={basicCommandCode}>
+  <CommandBasicExample />
+</ComponentPreview>
+
+Each `Item` needs a `value`: it is passed to `onSelect`, and it is the text the filter matches.
+`keywords` adds synonyms that are searchable but not displayed, such as `['create', 'todo']` for a
+"New task" command.
+
+## Shortcuts and disabled commands
+
+`Command.Shortcut` renders the key hint at the end of the row. It is decorative: screen readers
+announce the command name, not the keys.
+
+
+export const shortcutCommandCode = `import { Command } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Command label="Command menu">
+      <Command.Input placeholder="Search commands…" />
+      <Command.List>
+        <Command.Group heading="Workspace">
+          <Command.Item value="New project">
+            New project
+            <Command.Shortcut>⌘N</Command.Shortcut>
+          </Command.Item>
+          <Command.Item value="Open settings">
+            Open settings
+            <Command.Shortcut>⌘,</Command.Shortcut>
+          </Command.Item>
+          <Command.Item value="Archive project" disabled>
+            Archive project
+            <Command.Shortcut>⇧⌘A</Command.Shortcut>
+          </Command.Item>
+        </Command.Group>
+      </Command.List>
+    </Command>
+  );
+}`;
+
+<ComponentPreview title="Key hints and a disabled command" code={shortcutCommandCode}>
+  <CommandShortcutExample />
+</ComponentPreview>
+
+A disabled command stays in the list and in the filter, but the arrow keys skip it and neither
+pointer nor keyboard activation runs it.
+
+## Keyboard
+
+| Key            | Action                                     |
+| -------------- | ------------------------------------------ |
+| `↑` / `↓`      | Move the highlight, skipping disabled rows |
+| `Home` / `End` | Jump to the first or last command          |
+| `Enter`        | Run the highlighted command                |
+| `Escape`       | Close the dialog                           |
+| Typing         | Filter the list and highlight the match    |
+
+The highlight wraps by default. Set `loop={false}` to stop at the ends of the list.
+
+## Accessibility
+
+- The search field is a `combobox` that owns the highlight through `aria-activedescendant`, so focus
+  never leaves the input while the user browses.
+- The list is a labelled `listbox`; every command is an `option` with `aria-selected`, and disabled
+  commands expose `aria-disabled`.
+- Groups are labelled sections, and a group with no matches collapses together with its heading.
+- A polite live region announces the number of results after each query.
+- `Command.Dialog` renders a real dialog title, traps focus while open, and returns focus to the
+  trigger when it closes.
+- Opening the dialog focuses the search field; reopening starts from an empty query and no
+  highlight.
+
+## Props
+
+### Command
+
+<PropsTable
+  rows={[
+    {
+      name: 'search',
+      type: 'string',
+      description: 'Controlled query. Leave undefined to let the component own it.',
+    },
+    {
+      name: 'defaultSearch',
+      type: 'string',
+      default: "''",
+      description: 'Initial query for uncontrolled usage.',
+    },
+    {
+      name: 'onSearchChange',
+      type: '(search: string) => void',
+      description: 'Called on every keystroke in Command.Input.',
+    },
+    {
+      name: 'shouldFilter',
+      type: 'boolean',
+      default: 'true',
+      description: 'Set to false when the list is filtered elsewhere, for example on a server.',
+    },
+    {
+      name: 'loop',
+      type: 'boolean',
+      default: 'true',
+      description: 'Wraps the highlight at the ends of the list.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: 'Commands',
+      description: 'Accessible name for the listbox.',
+    },
+  ]}
+/>
+
+### Command.Item
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Stable command id passed to onSelect; also the text the filter matches.',
+    },
+    {
+      name: 'keywords',
+      type: 'string[]',
+      description: 'Extra searchable words that are not displayed.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Keeps the row visible but not selectable, skipped by the arrow keys.',
+    },
+    {
+      name: 'onSelect',
+      type: '(value: string) => void',
+      description: 'Runs the command for pointer clicks and Enter, and receives the item value.',
+    },
+  ]}
+/>
+
+### Command.Dialog
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state. Omit it to use defaultOpen with internal state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Called when the dialog opens or closes, including Escape and overlay clicks.',
+    },
+    {
+      name: 'title',
+      type: 'string',
+      default: 'Command menu',
+      description: 'Accessible dialog name. It is announced but not drawn.',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      description: 'Optional supporting text announced with the dialog.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Command.Input and Command.List content rendered inside the dialog.',
+    },
+  ]}
+/>
+
+## Related
+
+- [Combobox](/docs/components/combobox/) for picking a value from a list.
+- [Dropdown Menu](/docs/components/dropdown-menu/) for a short, always-visible set of actions.
+- [Dialog](/docs/components/dialog/) for the modal behavior behind `Command.Dialog`.
