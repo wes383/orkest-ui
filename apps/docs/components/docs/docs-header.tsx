@@ -19,7 +19,7 @@ export function DocsHeader({
     <header className="site-header">
       <div className="site-header-inner">
         <Link href="/" className="brand">
-          Orkest UI
+          <span className="brand-accent">O</span>rkest UI
         </Link>
 
         <PrimaryNav />

@@ -136,6 +136,10 @@ kbd {
   white-space: nowrap;
 }
 
+.brand-accent {
+  color: var(--ui-accent);
+}
+
 .primary-nav {
   display: flex;
   align-items: center;
