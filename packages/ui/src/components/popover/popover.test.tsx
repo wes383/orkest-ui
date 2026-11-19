@@ -166,11 +166,10 @@ describe('Popover', () => {
     const popover = await screen.findByRole('dialog');
     expect(popover).toHaveAttribute('data-side', 'top');
     expect(popover).toHaveAttribute('data-align', 'start');
-    expect(popover).toHaveStyle({
-      minWidth: '16rem',
-      maxWidth: '20rem',
-      maxHeight: '12rem',
-    });
+    // jsdom 31 folds max-width/max-height into the max-size shorthand.
+    expect(popover.style.minWidth).toBe('16rem');
+    expect(popover.style.maxWidth).toBe('20rem');
+    expect(popover.style.maxHeight).toBe('12rem');
   });
 
   it('forwards refs to the content', async () => {

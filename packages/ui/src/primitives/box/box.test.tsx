@@ -73,7 +73,7 @@ describe('Box', () => {
     render(<Box data-testid="box" background="transparent" color="inherit" border="strong" />);
 
     const box = screen.getByTestId('box');
-    expect(box.style.background).toBe('transparent');
+    expect(box.style.backgroundColor).toBe('transparent');
     expect(box.style.color).toBe('inherit');
     expect(box.style.borderColor).toBe('var(--ui-border-strong)');
   });

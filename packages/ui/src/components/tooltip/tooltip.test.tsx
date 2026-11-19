@@ -131,10 +131,9 @@ describe('Tooltip', () => {
     const tooltip = await screen.findByRole('tooltip');
     expect(tooltip).toHaveAttribute('data-side', 'bottom');
     expect(tooltip).toHaveAttribute('data-align', 'start');
-    expect(tooltip).toHaveStyle({
-      maxWidth: '12rem',
-      maxHeight: '8rem',
-    });
+    // jsdom 31 folds max-width/max-height into the max-size shorthand.
+    expect(tooltip.style.maxWidth).toBe('12rem');
+    expect(tooltip.style.maxHeight).toBe('8rem');
   });
 
   it('forwards refs to the tooltip content', async () => {

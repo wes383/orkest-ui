@@ -573,11 +573,10 @@ describe('DropdownMenu', () => {
 
     expect(menu).toHaveAttribute('data-side', 'bottom');
     expect(menu).toHaveAttribute('data-align', 'start');
-    expect(menu).toHaveStyle({
-      minWidth: '18rem',
-      maxWidth: '320px',
-      maxHeight: '12rem',
-    });
+    // jsdom 31 folds max-width/max-height into the max-size shorthand.
+    expect(menu.style.minWidth).toBe('18rem');
+    expect(menu.style.maxWidth).toBe('320px');
+    expect(menu.style.maxHeight).toBe('12rem');
   });
 
   it('forwards refs to the menu surface', async () => {

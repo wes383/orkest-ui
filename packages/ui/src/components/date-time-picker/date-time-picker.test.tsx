@@ -255,7 +255,8 @@ describe('DateTimePicker time menu', () => {
 
     // The default 25rem cap is narrower than the grid plus the columns, which
     // used to make the popover body scroll sideways.
-    expect(menuDialog.style.maxWidth).toBe('calc(100vw - 2rem)');
+    // jsdom 31 normalizes the operand order of calc().
+    expect(['calc(100vw - 2rem)', 'calc(-2rem + 100vw)']).toContain(menuDialog.style.maxWidth);
 
     menu.unmount();
 
