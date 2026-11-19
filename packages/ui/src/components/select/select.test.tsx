@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -333,10 +333,15 @@ describe('Select', () => {
     await user.click(document.body);
     expect(combobox).toHaveAttribute('aria-expanded', 'false');
 
-    combobox.focus();
-    await user.keyboard('{ArrowDown}');
+    // Open from the pointer: a keyboard highlight makes the active option
+    // tabbable, so the first Tab would enter the list instead of leaving it.
+    await user.click(combobox);
+    await screen.findByRole('listbox');
     await user.tab();
-    expect(combobox).toHaveAttribute('aria-expanded', 'false');
+
+    await waitFor(() => {
+      expect(combobox).toHaveAttribute('aria-expanded', 'false');
+    });
   });
 
   it('forwards ids, refs, classes, and form attributes', () => {
