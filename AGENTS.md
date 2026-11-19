@@ -318,6 +318,9 @@ immediately before its `<ComponentPreview>` and pass `code={<name>Code}`.
 `MDXRemote`'s scope. Never put the template literal directly in the
 `code={...}` JSX attribute: MDX strips its common indentation, which
 flattens the example code shown on the page and in "Copy as Markdown".
+`apps/docs/content` is excluded from Prettier for the same reason:
+its MDX printer rewrites the braces inside those template literals and
+destroys the indentation of the samples.
 
 Update relevant documentation when changing:
 

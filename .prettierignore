@@ -10,3 +10,8 @@ blob-report
 *.tgz
 *.map
 LICENSE
+
+# Prettier's MDX printer rewrites the braces inside the template literals that
+# hold the example sources, which flattens the code shown on the page and in
+# "Copy as Markdown".
+apps/docs/content
