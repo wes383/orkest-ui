@@ -230,4 +230,44 @@ describe('Command.Dialog', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('starts from an empty query when it reopens', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <CommandDialog open title="Command menu">
+        <Command.Input placeholder="Type a command" />
+        <Command.List>
+          <Command.Item value="Home">Home</Command.Item>
+        </Command.List>
+      </CommandDialog>,
+    );
+
+    const input = await screen.findByRole('combobox');
+    await user.type(input, 'home');
+    expect(input).toHaveValue('home');
+
+    rerender(
+      <CommandDialog open={false} title="Command menu">
+        <Command.Input placeholder="Type a command" />
+        <Command.List>
+          <Command.Item value="Home">Home</Command.Item>
+        </Command.List>
+      </CommandDialog>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    rerender(
+      <CommandDialog open title="Command menu">
+        <Command.Input placeholder="Type a command" />
+        <Command.List>
+          <Command.Item value="Home">Home</Command.Item>
+        </Command.List>
+      </CommandDialog>,
+    );
+
+    expect(await screen.findByRole('combobox')).toHaveValue('');
+  });
 });
