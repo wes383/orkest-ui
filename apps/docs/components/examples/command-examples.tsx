@@ -68,14 +68,19 @@ function subscribeToPlatform() {
   return () => undefined;
 }
 
+/** Platform-aware key labels. The server snapshot assumes the non-Mac keyboard. */
+function useIsMac() {
+  return useSyncExternalStore(
+    subscribeToPlatform,
+    () => /Mac|iPhone|iPad/.test(navigator.platform),
+    () => false,
+  );
+}
+
 export function CommandDialogExample() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState('No command has run.');
-  const shortcut = useSyncExternalStore(
-    subscribeToPlatform,
-    () => (/Mac|iPhone|iPad/.test(navigator.platform) ? '⌘ K' : 'Ctrl K'),
-    () => 'Ctrl K',
-  );
+  const shortcut = useIsMac() ? '⌘ K' : 'Ctrl K';
 
   useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
@@ -123,6 +128,10 @@ export function CommandDialogExample() {
 }
 
 export function CommandShortcutExample() {
+  const isMac = useIsMac();
+  const mod = isMac ? '⌘' : 'Ctrl+';
+  const shiftMod = isMac ? '⇧⌘' : 'Ctrl+Shift+';
+
   return (
     <Box border radius="xl" background="surface-raised" style={{ maxWidth: 440 }}>
       <Command label="Command menu">
@@ -133,17 +142,17 @@ export function CommandShortcutExample() {
             <Command.Item value="New project" keywords={['create']}>
               <Icon icon={Plus} size="sm" />
               New project
-              <Command.Shortcut>⌘N</Command.Shortcut>
+              <Command.Shortcut>{mod}N</Command.Shortcut>
             </Command.Item>
             <Command.Item value="Open settings" keywords={['preferences']}>
               <Icon icon={Settings} size="sm" />
               Open settings
-              <Command.Shortcut>⌘,</Command.Shortcut>
+              <Command.Shortcut>{mod},</Command.Shortcut>
             </Command.Item>
             <Command.Item value="Archive project" disabled>
               <Icon icon={FolderOpen} size="sm" />
               Archive project
-              <Command.Shortcut>⇧⌘A</Command.Shortcut>
+              <Command.Shortcut>{shiftMod}A</Command.Shortcut>
             </Command.Item>
           </Command.Group>
         </Command.List>
