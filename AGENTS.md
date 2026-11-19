@@ -285,6 +285,14 @@ The repository uses a custom documentation site in `apps/docs` instead
 of Storybook. Do not add Storybook or a second component implementation
 for documentation examples.
 
+Write documentation for consumers, not maintainers. Component pages
+should explain what a component does, how to use its API, and what
+behavior to expect. Do not document implementation details such as
+internal class names, CSS selectors, DOM structure, internal state, or
+styling token mechanics. Foundations and token reference pages may list
+public design tokens, but component pages should describe the outcome,
+not how it is implemented.
+
 Add or update an MDX page when adding a component or changing meaningful
 behavior. Documentation pages should demonstrate real component usage
 and cover important public states, such as:
