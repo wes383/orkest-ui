@@ -44,6 +44,7 @@ import { ColorPalette } from './color-palette';
 import { Callout } from './callout';
 import { PropsTable } from './props-table';
 import { SemanticColorTable } from './semantic-color-table';
+import { SemanticTokenTable } from './semantic-token-table';
 import { SpacingScale } from './spacing-scale';
 import { TokenPreviewGrid } from './token-preview-grid';
 import { TokenTable } from './token-table';
@@ -486,6 +487,7 @@ export const mdxComponents = {
   TokenTable,
   ColorPalette,
   SemanticColorTable,
+  SemanticTokenTable,
   SpacingScale,
   TokenPreviewGrid,
   TypographySample,

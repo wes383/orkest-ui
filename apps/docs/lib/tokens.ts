@@ -98,10 +98,6 @@ const semanticTokenGroups = [
     ],
   },
   {
-    title: 'Elevation',
-    tokens: ['--ui-shadow-xs', '--ui-shadow-sm', '--ui-shadow-md', '--ui-shadow-lg'],
-  },
-  {
     title: 'Selection',
     tokens: ['--ui-selection-background'],
   },
@@ -223,4 +219,27 @@ export function getSemanticTokenGroups(): TokenGroup[] {
       };
     }),
   }));
+}
+
+/** Resolves every semantic token whose name starts with `prefix` in both themes. */
+export function getSemanticTokensByPrefix(prefix: string): TokenRecord[] {
+  const { primitives, light, dark } = getCssVariables();
+
+  return [...light.entries()]
+    .filter(([name]) => name.startsWith(prefix))
+    .map(([name, lightValue]) => {
+      const darkValue = dark.get(name);
+
+      if (!darkValue) {
+        throw new Error(`Semantic token "${name}" must be defined in both light and dark themes.`);
+      }
+
+      return {
+        name,
+        value: resolveValue(lightValue, primitives),
+        light: resolveValue(lightValue, primitives),
+        dark: resolveValue(darkValue, primitives),
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }));
 }
