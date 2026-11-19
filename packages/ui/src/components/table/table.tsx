@@ -164,11 +164,20 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(functi
   );
 });
 
-export interface TableCaptionProps extends HTMLAttributes<HTMLTableCaptionElement> {}
+export interface TableCaptionProps extends HTMLAttributes<HTMLTableCaptionElement> {
+  /** Visually hides the caption while keeping it as the accessible table name. */
+  srOnly?: boolean;
+}
 
 /** Caption rendered as the table's native description. */
 export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
-  function TableCaption({ className, ...rest }, ref) {
-    return <caption ref={ref} className={cx(styles.caption, className)} {...rest} />;
+  function TableCaption({ srOnly = false, className, ...rest }, ref) {
+    return (
+      <caption
+        ref={ref}
+        className={cx(styles.caption, srOnly && styles.srOnly, className)}
+        {...rest}
+      />
+    );
   },
 );

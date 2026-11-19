@@ -57,6 +57,28 @@ describe('Table', () => {
     expect(screen.getByRole('cell', { name: 'INV-1' })).toBeInTheDocument();
   });
 
+  it('keeps a visually hidden caption as the accessible table name', () => {
+    render(
+      <Table>
+        <TableCaption srOnly>Invoices issued this quarter.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Invoice</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>INV-1</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>,
+    );
+
+    expect(
+      screen.getByRole('table', { name: 'Invoices issued this quarter.' }),
+    ).toBeInTheDocument();
+  });
+
   it('applies the default attributes to the wrapper', () => {
     const wrapper = renderTable(<Table />);
 

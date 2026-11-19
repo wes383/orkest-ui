@@ -24,7 +24,7 @@ export const invoiceListCode = `import {
 export function Example() {
   return (
     <Table hoverable>
-      <TableCaption>Invoices issued this quarter.</TableCaption>
+      <TableCaption srOnly>Invoices issued this quarter.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Invoice</TableHead>
@@ -68,7 +68,7 @@ export function Example() {
   code={invoiceListCode}
 >
   <Table hoverable>
-    <TableCaption>Invoices issued this quarter.</TableCaption>
+    <TableCaption srOnly>Invoices issued this quarter.</TableCaption>
     <TableHeader>
       <TableRow>
         <TableHead>Invoice</TableHead>
@@ -634,7 +634,8 @@ first column readable with `minWidth` when the table has many columns.
 - Every part maps to its native element: `table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td`, and
   `caption`. Do not replace them with `div` grids, which would need roles and keyboard handling that
   the platform already provides.
-- Give the table an accessible name with `TableCaption` or `aria-label`.
+- Give the table an accessible name with `TableCaption` or `aria-label`. Pass `srOnly` when the
+  caption is only needed for assistive technology.
 - Header cells default to `scope="col"`. Use `scope="row"` for cells that label their own row.
 - Do not use a table for layout. If the content is not tabular, use `Grid` or `Stack`.
 - Sorting, filtering, and pagination are not part of this component. When they are needed, compose a
@@ -706,6 +707,13 @@ first column readable with `minWidth` when the table has many columns.
       type: "'col' | 'row' | 'colgroup' | 'rowgroup'",
       default: "'col'",
       description: 'TableHead only. Use `row` for cells that label their own row.',
+    },
+    {
+      name: 'srOnly',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'TableCaption only. Hides the caption visually while keeping it as the accessible table name.',
     },
     {
       name: 'colSpan / rowSpan',

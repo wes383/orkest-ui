@@ -6,7 +6,7 @@
   --table-stripe: color-mix(in srgb, var(--ui-foreground) 2.5%, transparent);
   max-width: 100%;
   border: var(--ok-border-width) solid var(--ui-border-subtle);
-  border-radius: var(--ok-radius-lg);
+  border-radius: var(--ok-radius-xl);
   background: var(--ui-surface);
   overflow-x: auto;
   scrollbar-color: var(--ui-subtle-foreground) transparent;
@@ -66,11 +66,26 @@
 }
 
 .caption {
-  padding: 0 var(--table-cell-padding-x) var(--ok-space-2);
-  color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-xs);
+  padding: var(--table-cell-padding-y) var(--table-cell-padding-x) var(--ok-space-2);
+  color: var(--ui-foreground);
+  font-size: var(--table-font-size);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: var(--ok-line-height-snug);
   text-align: left;
+  text-wrap: pretty;
   caption-side: top;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
 }
 
 .head {

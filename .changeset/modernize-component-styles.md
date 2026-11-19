@@ -10,4 +10,6 @@ Modernize component styling across the library.
   input zoom.
 - Refresh table headers, selected rows, pagination, alerts, toasts, dialog backdrop, spinner,
   checkbox, switch, tabs, and popup surfaces.
+- Increase the table and card surface radii to match the elevation scale.
+- Add an `srOnly` option to `TableCaption` for accessible-only table names.
 - Add `--ok-control-action-size-*`, spin, and shimmer duration tokens.

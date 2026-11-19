@@ -1,6 +1,6 @@
 .card {
   --card-padding: var(--ok-space-4);
-  --card-radius: var(--ok-radius-xl);
+  --card-radius: var(--ok-radius-2xl);
   display: flex;
   flex-direction: column;
   gap: var(--ok-space-4);
