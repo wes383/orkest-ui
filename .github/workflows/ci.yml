@@ -47,3 +47,28 @@ jobs:
       - name: Build documentation site
         # The library is already built above, so skip the prebuild rebuild.
         run: pnpm --filter @orkest/docs exec next build
+
+  package:
+    name: Package smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.11.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm build
+
+      - name: Verify the packed package in a consumer
+        run: node scripts/smoke-package.mjs

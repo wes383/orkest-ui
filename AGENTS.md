@@ -360,6 +360,7 @@ configuration, these may include:
 pnpm test
 pnpm typecheck
 pnpm build
+pnpm smoke:package
 ```
 
 If a script does not exist, do not silently invent it or claim it was
