@@ -22,14 +22,8 @@ describe('RadioGroup', () => {
 
     const group = screen.getByRole('radiogroup', { name: 'Plan' });
     expect(group).toHaveAttribute('aria-orientation', 'vertical');
-    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
-    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute(
-      'aria-checked',
-      'false',
-    );
+    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute('aria-checked', 'false');
   });
 
   it('selects one option and reports the value', async () => {
@@ -41,14 +35,8 @@ describe('RadioGroup', () => {
     await user.click(screen.getByText('Pro'));
 
     expect(onValueChange).toHaveBeenCalledWith('pro');
-    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
-    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute(
-      'aria-checked',
-      'false',
-    );
+    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute('aria-checked', 'false');
   });
 
   it('supports arrow-key selection', async () => {
@@ -61,18 +49,13 @@ describe('RadioGroup', () => {
     await user.keyboard('{ArrowDown}');
 
     expect(onValueChange).toHaveBeenCalledWith('pro');
-    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
+    expect(screen.getByRole('radio', { name: 'Pro' })).toHaveAttribute('aria-checked', 'true');
   });
 
   it('shares a single generated name across the group', () => {
     const { container } = renderGroup();
 
-    const inputs = Array.from(
-      container.querySelectorAll<HTMLInputElement>('input[type="radio"]'),
-    );
+    const inputs = Array.from(container.querySelectorAll<HTMLInputElement>('input[type="radio"]'));
     expect(inputs).toHaveLength(3);
 
     const names = new Set(inputs.map((input) => input.getAttribute('name')));
@@ -88,10 +71,7 @@ describe('RadioGroup', () => {
     await user.click(screen.getByText('Enterprise'));
 
     expect(onValueChange).toHaveBeenCalledWith('enterprise');
-    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
+    expect(screen.getByRole('radio', { name: 'Basic' })).toHaveAttribute('aria-checked', 'true');
   });
 
   it('propagates disabled, required, orientation, and size', () => {
@@ -131,13 +111,7 @@ describe('RadioGroup', () => {
 
     render(
       <RadioGroup aria-label="Plan">
-        <Radio
-          ref={ref}
-          inputRef={inputRef}
-          label="Pro"
-          value="pro"
-          aria-describedby="plan-help"
-        />
+        <Radio ref={ref} inputRef={inputRef} label="Pro" value="pro" aria-describedby="plan-help" />
       </RadioGroup>,
     );
 

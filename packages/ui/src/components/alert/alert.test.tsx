@@ -28,10 +28,7 @@ describe('Alert', () => {
 
     const alert = screen.getByRole('status');
     expect(alert).toHaveAttribute('data-variant', 'info');
-    expect(container.querySelector('svg')).toHaveAttribute(
-      'aria-hidden',
-      'true',
-    );
+    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it.each(variants)('applies the %s variant', (variant) => {
@@ -41,10 +38,7 @@ describe('Alert', () => {
       </Alert>,
     );
 
-    expect(container.firstElementChild).toHaveAttribute(
-      'data-variant',
-      variant,
-    );
+    expect(container.firstElementChild).toHaveAttribute('data-variant', variant);
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
@@ -144,9 +138,7 @@ describe('Alert', () => {
       </Alert>,
     );
 
-    expect(
-      screen.getByRole('button', { name: 'Dismiss warning' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Dismiss warning' })).toBeInTheDocument();
   });
 
   it('does not render a close button by default', () => {
@@ -198,12 +190,7 @@ describe('Alert', () => {
     const ref = createRef<HTMLDivElement>();
 
     render(
-      <Alert
-        ref={ref}
-        id="account-status"
-        className="custom"
-        aria-label="Account status"
-      >
+      <Alert ref={ref} id="account-status" className="custom" aria-label="Account status">
         <AlertTitle>Active</AlertTitle>
       </Alert>,
     );

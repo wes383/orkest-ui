@@ -205,7 +205,7 @@
 .action::after {
   position: absolute;
   inset: -4px;
-  content: '';
+  content: "";
   border-radius: inherit;
 }
 

@@ -28,17 +28,13 @@ describe('DateTimePicker', () => {
   it('formats the date and the time together', () => {
     render(<DateTimePicker defaultValue="2026-11-18T09:30" />);
 
-    expect(
-      screen.getByRole('button', { name: 'Nov 18, 2026, 09:30' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Nov 18, 2026, 09:30' })).toBeInTheDocument();
   });
 
   it('renders the time in a 12-hour clock when asked', () => {
     render(<DateTimePicker defaultValue="2026-11-18T09:30" timeFormat="12h" />);
 
-    expect(
-      screen.getByRole('button', { name: 'Nov 18, 2026, 9:30 AM' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Nov 18, 2026, 9:30 AM' })).toBeInTheDocument();
   });
 
   it('keeps the panel open and commits the selected day with the current time', async () => {
@@ -93,9 +89,7 @@ describe('DateTimePicker', () => {
     await open(user);
     await user.click(screen.getByRole('button', { name: 'Now' }));
 
-    expect(onChange).toHaveBeenCalledWith(
-      expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/),
-    );
+    expect(onChange).toHaveBeenCalledWith(expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/));
   });
 
   it('closes from the Done action', async () => {
@@ -161,9 +155,7 @@ describe('DateTimePicker time menu', () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    render(
-      <DateTimePicker value="2026-11-18T09:30" onChange={onChange} timeMode="menu" />,
-    );
+    render(<DateTimePicker value="2026-11-18T09:30" onChange={onChange} timeMode="menu" />);
     await open(user, 'Nov 18, 2026, 09:30');
 
     expect(screen.queryByRole('spinbutton', { name: 'Hours' })).not.toBeInTheDocument();

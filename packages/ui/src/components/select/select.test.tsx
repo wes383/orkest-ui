@@ -62,14 +62,7 @@ describe('Select', () => {
   it('supports controlled values without changing internally', async () => {
     const onChange = vi.fn();
 
-    render(
-      <Select
-        aria-label="Team"
-        options={options}
-        value="design"
-        onChange={onChange}
-      />,
-    );
+    render(<Select aria-label="Team" options={options} value="design" onChange={onChange} />);
 
     const { user, combobox } = await openSelect();
 
@@ -85,9 +78,7 @@ describe('Select', () => {
   it('selects the default value', () => {
     render(<Select aria-label="Team" options={options} defaultValue="engineering" />);
 
-    expect(screen.getByRole('combobox', { name: 'Team' })).toHaveTextContent(
-      'Engineering',
-    );
+    expect(screen.getByRole('combobox', { name: 'Team' })).toHaveTextContent('Engineering');
   });
 
   it('clears the value when clearable', async () => {
@@ -106,12 +97,8 @@ describe('Select', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: 'Clear selection' }));
 
     expect(onChange).toHaveBeenCalledWith(undefined, undefined);
-    expect(screen.getByRole('combobox', { name: 'Team' })).toHaveTextContent(
-      'Select an option',
-    );
-    expect(
-      screen.queryByRole('button', { name: 'Clear selection' }),
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Team' })).toHaveTextContent('Select an option');
+    expect(screen.queryByRole('button', { name: 'Clear selection' })).not.toBeInTheDocument();
   });
 
   it('does not select disabled options', async () => {
@@ -133,12 +120,7 @@ describe('Select', () => {
     const onChange = vi.fn();
 
     render(
-      <Select
-        aria-label="Team"
-        options={options}
-        defaultValue="design"
-        onChange={onChange}
-      />,
+      <Select aria-label="Team" options={options} defaultValue="design" onChange={onChange} />,
     );
 
     const user = userEvent.setup();
@@ -197,12 +179,7 @@ describe('Select', () => {
     const onSearchChange = vi.fn();
 
     render(
-      <Select
-        aria-label="Team"
-        options={options}
-        searchable
-        onSearchChange={onSearchChange}
-      />,
+      <Select aria-label="Team" options={options} searchable onSearchChange={onSearchChange} />,
     );
 
     const user = userEvent.setup();
@@ -240,9 +217,7 @@ describe('Select', () => {
   });
 
   it('shows an empty state and loading row', async () => {
-    const { rerender } = render(
-      <Select aria-label="Team" options={options} searchable />,
-    );
+    const { rerender } = render(<Select aria-label="Team" options={options} searchable />);
 
     const user = userEvent.setup();
     const combobox = screen.getByRole('combobox', { name: 'Team' });
@@ -298,9 +273,7 @@ describe('Select', () => {
         options={options}
         searchable
         emptyMessage="Nothing matched"
-        filterOption={(option, query) =>
-          option.value === 'product' && query === 'prod'
-        }
+        filterOption={(option, query) => option.value === 'product' && query === 'prod'}
       />,
     );
 
@@ -337,9 +310,7 @@ describe('Select', () => {
     const group = screen.getByRole('group', { name: 'Teams' });
 
     expect(within(group).getAllByRole('option')).toHaveLength(2);
-    expect(
-      screen.getByRole('option', { name: /Design Product design/ }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: /Design Product design/ })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'No team' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('option', { name: 'No team' }));

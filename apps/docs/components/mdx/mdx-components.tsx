@@ -1,9 +1,5 @@
 import Link from 'next/link';
-import {
-  isValidElement,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-} from 'react';
+import { isValidElement, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 
 import {
   Badge,

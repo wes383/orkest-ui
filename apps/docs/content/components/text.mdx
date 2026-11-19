@@ -26,10 +26,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Text hierarchy"
-  code={textHierarchyCode}
->
+<ComponentPreview title="Text hierarchy" code={textHierarchyCode}>
   <Stack gap={2}>
     <Text size="xl" weight="semibold">
       {'Design with clarity'}
@@ -55,10 +52,7 @@ export const fontFamiliesCode = `<Stack gap={2}>
   </Text>
 </Stack>`;
 
-<ComponentPreview
-  title="Font families"
-  code={fontFamiliesCode}
->
+<ComponentPreview title="Font families" code={fontFamiliesCode}>
   <Stack gap={2}>
     <Text font="display" size="xl" weight="semibold">
       {'Build with clarity.'}
@@ -92,10 +86,7 @@ export const sizesAndWeightsCode = `<Stack gap={1}>
   <Text size="5xl">5xl · 48px</Text>
 </Stack>`;
 
-<ComponentPreview
-  title="Sizes and weights"
-  code={sizesAndWeightsCode}
->
+<ComponentPreview title="Sizes and weights" code={sizesAndWeightsCode}>
   <Stack gap={1}>
     <Text size="2xs">2xs · 12px</Text>
     <Text size="xs">xs · 13px</Text>
@@ -158,17 +149,16 @@ export const truncationCode = `<Box style={{ width: '22rem' }}>
   </Stack>
 </Box>`;
 
-<ComponentPreview
-  title="Truncation"
-  code={truncationCode}
->
+<ComponentPreview title="Truncation" code={truncationCode}>
   <Box style={{ width: '22rem' }}>
     <Stack gap={2}>
       <Text as="p" truncate>
         {'Single-line truncation keeps long copy from wrapping onto a second line.'}
       </Text>
       <Text as="p" lineClamp={2}>
-        {'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews and summaries.'}
+        {
+          'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews and summaries.'
+        }
       </Text>
     </Stack>
   </Box>

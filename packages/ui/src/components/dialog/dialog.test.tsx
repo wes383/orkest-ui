@@ -57,12 +57,8 @@ describe('Dialog', () => {
 
     expect(dialog).toBeInTheDocument();
     expect(container.contains(dialog)).toBe(false);
-    expect(
-      screen.getByRole('heading', { name: 'Edit profile' }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Update your account details.'),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Edit profile' })).toBeInTheDocument();
+    expect(screen.getByText('Update your account details.')).toBeInTheDocument();
   });
 
   it('closes on Escape and returns focus to the trigger', async () => {
@@ -180,9 +176,7 @@ describe('Dialog', () => {
     );
 
     expect(screen.getByRole('dialog')).toHaveAttribute('data-size', 'lg');
-    expect(
-      screen.queryByRole('button', { name: 'Close' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Close' })).not.toBeInTheDocument();
   });
 
   it('forwards refs to the dialog surface', () => {

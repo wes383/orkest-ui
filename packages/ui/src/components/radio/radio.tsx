@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  forwardRef,
-  useContext,
-  useId,
-  useMemo,
-  type ReactNode,
-} from 'react';
+import { createContext, forwardRef, useContext, useId, useMemo, type ReactNode } from 'react';
 import { Radio as BaseRadio } from '@base-ui/react/radio';
 import type { RadioRootProps } from '@base-ui/react/radio';
 import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
@@ -26,11 +19,10 @@ interface RadioGroupUiContextValue {
 
 const RadioGroupUiContext = createContext<RadioGroupUiContextValue | null>(null);
 
-export interface RadioProps
-  extends Omit<
-    RadioRootProps<string>,
-    'children' | 'className' | 'nativeButton' | 'render'
-  > {
+export interface RadioProps extends Omit<
+  RadioRootProps<string>,
+  'children' | 'className' | 'nativeButton' | 'render'
+> {
   className?: string;
   /** Control size. Defaults to `md`, or the parent RadioGroup size. */
   size?: RadioSize;
@@ -56,11 +48,10 @@ export const Radio = forwardRef<HTMLElement, RadioProps>(function Radio(
   );
 });
 
-export interface RadioGroupProps
-  extends Omit<
-    BaseRadioGroupProps<string>,
-    'children' | 'className' | 'defaultValue' | 'onValueChange' | 'value'
-  > {
+export interface RadioGroupProps extends Omit<
+  BaseRadioGroupProps<string>,
+  'children' | 'className' | 'defaultValue' | 'onValueChange' | 'value'
+> {
   className?: string;
   /** Controlled selected value. */
   value?: string;
@@ -78,55 +69,50 @@ export interface RadioGroupProps
 }
 
 /** Managed radio group backed by Base UI keyboard navigation and form semantics. */
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-  function RadioGroup(
-    {
-      name: nameProp,
-      value,
-      defaultValue,
-      onValueChange,
-      invalid = false,
-      orientation = 'vertical',
-      size = 'md',
-      className,
-      children,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-describedby': ariaDescribedBy,
-      ...rest
-    },
-    ref,
-  ) {
-    const field = useFieldContext();
-    const generatedId = useId().replace(/:/g, '');
-    const name =
-      nameProp ??
-      field?.name ??
-      `radio-group-${generatedId}`;
-    const resolvedInvalid = invalid || field?.invalid || false;
-    const resolvedDescribedBy = mergeIds(ariaDescribedBy, field?.describedBy);
-    const resolvedLabelledBy = ariaLabelledBy ?? field?.labelId;
-    const contextValue = useMemo(() => ({ size }), [size]);
-
-    return (
-      <RadioGroupUiContext.Provider value={contextValue}>
-        <BaseRadioGroup
-          ref={ref}
-          {...rest}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          onValueChange={(nextValue) => onValueChange?.(nextValue)}
-          aria-orientation={orientation}
-          aria-invalid={resolvedInvalid || undefined}
-          aria-labelledby={resolvedLabelledBy}
-          aria-describedby={resolvedDescribedBy}
-          data-orientation={orientation}
-          data-invalid={resolvedInvalid || undefined}
-          className={cx(styles.group, className)}
-        >
-          {children}
-        </BaseRadioGroup>
-      </RadioGroupUiContext.Provider>
-    );
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
+  {
+    name: nameProp,
+    value,
+    defaultValue,
+    onValueChange,
+    invalid = false,
+    orientation = 'vertical',
+    size = 'md',
+    className,
+    children,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    ...rest
   },
-);
+  ref,
+) {
+  const field = useFieldContext();
+  const generatedId = useId().replace(/:/g, '');
+  const name = nameProp ?? field?.name ?? `radio-group-${generatedId}`;
+  const resolvedInvalid = invalid || field?.invalid || false;
+  const resolvedDescribedBy = mergeIds(ariaDescribedBy, field?.describedBy);
+  const resolvedLabelledBy = ariaLabelledBy ?? field?.labelId;
+  const contextValue = useMemo(() => ({ size }), [size]);
+
+  return (
+    <RadioGroupUiContext.Provider value={contextValue}>
+      <BaseRadioGroup
+        ref={ref}
+        {...rest}
+        name={name}
+        value={value}
+        defaultValue={defaultValue}
+        onValueChange={(nextValue) => onValueChange?.(nextValue)}
+        aria-orientation={orientation}
+        aria-invalid={resolvedInvalid || undefined}
+        aria-labelledby={resolvedLabelledBy}
+        aria-describedby={resolvedDescribedBy}
+        data-orientation={orientation}
+        data-invalid={resolvedInvalid || undefined}
+        className={cx(styles.group, className)}
+      >
+        {children}
+      </BaseRadioGroup>
+    </RadioGroupUiContext.Provider>
+  );
+});

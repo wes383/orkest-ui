@@ -121,8 +121,7 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
           // whose target is the dialog. Only close when the press started on
           // the backdrop itself.
           const clickedBackdrop =
-            event.target === dialogRef.current &&
-            backdropPointerDownRef.current;
+            event.target === dialogRef.current && backdropPointerDownRef.current;
 
           backdropPointerDownRef.current = false;
 

@@ -2,14 +2,7 @@ import { createRef } from 'react';
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  Copy,
-  Pencil,
-  Settings,
-  Share2,
-  Trash2,
-  type LucideIcon,
-} from 'lucide-react';
+import { Copy, Pencil, Settings, Share2, Trash2, type LucideIcon } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Button } from '../button';
@@ -66,11 +59,7 @@ function ActionsMenu({
           <DropdownMenuItem disabled onClick={onArchive}>
             Archive
           </DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            leftIcon={Trash2}
-            onClick={onDelete}
-          >
+          <DropdownMenuItem variant="destructive" leftIcon={Trash2} onClick={onDelete}>
             Delete
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -103,9 +92,7 @@ function itemMenu(items: 'checkbox' | 'radio' | 'submenu') {
       <DropdownMenu defaultOpen>
         <DropdownMenuPortal>
           <DropdownMenuContent>
-            <DropdownMenuCheckboxItem defaultChecked>
-              Show grid
-            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem defaultChecked>Show grid</DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem>Show ruler</DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenuPortal>
@@ -366,9 +353,7 @@ describe('DropdownMenu', () => {
     const onEdit = vi.fn();
     const onDuplicate = vi.fn();
 
-    const { unmount } = render(
-      <ActionsMenu onEdit={onEdit} onDuplicate={onDuplicate} />,
-    );
+    const { unmount } = render(<ActionsMenu onEdit={onEdit} onDuplicate={onDuplicate} />);
     await openActionsMenu(user);
     await user.keyboard('{ArrowDown}');
     await user.keyboard('{Enter}');
@@ -453,9 +438,10 @@ describe('DropdownMenu', () => {
       </DropdownMenu>,
     );
 
-    expect(
-      await screen.findByRole('menuitem', { name: 'Preferences' }),
-    ).toHaveAttribute('data-inset', 'true');
+    expect(await screen.findByRole('menuitem', { name: 'Preferences' })).toHaveAttribute(
+      'data-inset',
+      'true',
+    );
   });
 
   it('renders groups, labels, and separators', async () => {
@@ -514,10 +500,7 @@ describe('DropdownMenu', () => {
       <DropdownMenu defaultOpen>
         <DropdownMenuPortal>
           <DropdownMenuContent>
-            <DropdownMenuRadioGroup
-              defaultValue="list"
-              onValueChange={onValueChange}
-            >
+            <DropdownMenuRadioGroup defaultValue="list" onValueChange={onValueChange}>
               <DropdownMenuRadioItem value="list">List</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="grid">Grid</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
@@ -552,9 +535,7 @@ describe('DropdownMenu', () => {
 
     await user.click(trigger);
 
-    expect(
-      await screen.findByRole('menuitem', { name: 'Email' }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('menuitem', { name: 'Email' })).toBeInTheDocument();
     expect(screen.getAllByRole('menu')).toHaveLength(2);
   });
 
@@ -581,11 +562,7 @@ describe('DropdownMenu', () => {
     render(
       <DropdownMenu defaultOpen>
         <DropdownMenuPortal>
-          <DropdownMenuContent
-            minWidth="18rem"
-            maxWidth={320}
-            maxHeight="12rem"
-          >
+          <DropdownMenuContent minWidth="18rem" maxWidth={320} maxHeight="12rem">
             <DropdownMenuItem>One</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenuPortal>
@@ -626,9 +603,7 @@ describe('DropdownMenu', () => {
 
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger
-          render={<Button variant="ghost" aria-label="Open actions" />}
-        />
+        <DropdownMenuTrigger render={<Button variant="ghost" aria-label="Open actions" />} />
         <DropdownMenuPortal>
           <DropdownMenuContent>
             <DropdownMenuItem>Edit</DropdownMenuItem>

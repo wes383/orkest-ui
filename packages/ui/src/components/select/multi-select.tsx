@@ -27,10 +27,7 @@ import {
   selectIconSizeBySize,
   toSelectRenderGroups,
 } from './select-utils';
-import type {
-  FilterableSelectBaseProps,
-  SelectOption,
-} from './select-types';
+import type { FilterableSelectBaseProps, SelectOption } from './select-types';
 import styles from './select.module.css';
 
 export interface MultiSelectProps extends FilterableSelectBaseProps {
@@ -57,10 +54,7 @@ export interface MultiSelectProps extends FilterableSelectBaseProps {
   /** Accessible name of the counter chip. Defaults to `Show N more`. */
   showMoreLabel?: (count: number) => string;
   /** Replaces the default tag display for selected values. */
-  renderValue?: (
-    selected: SelectOption[],
-    remove: (value: string) => void,
-  ) => ReactNode;
+  renderValue?: (selected: SelectOption[], remove: (value: string) => void) => ReactNode;
   /** Accessible label prefix for a tag remove action. */
   removeLabel?: string;
 }
@@ -126,9 +120,7 @@ function MultiSelectImpl({
   });
   const comboboxId = control.id ?? `multi-select-${generatedId}`;
 
-  const [internalValues, setInternalValues] = useState<string[]>(
-    defaultValue ?? [],
-  );
+  const [internalValues, setInternalValues] = useState<string[]>(defaultValue ?? []);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [expanded, setExpanded] = useState(false);
@@ -156,8 +148,7 @@ function MultiSelectImpl({
     [currentValues, optionByValue],
   );
 
-  const atLimit =
-    maxSelected !== undefined && currentValues.length >= maxSelected;
+  const atLimit = maxSelected !== undefined && currentValues.length >= maxSelected;
 
   const visibleItems = useMemo(() => {
     let items = options;
@@ -173,10 +164,7 @@ function MultiSelectImpl({
     () => flattenSelectOptions(visibleItems).filter((option) => !option.disabled),
     [visibleItems],
   );
-  const visibleGroups = useMemo(
-    () => toSelectRenderGroups(visibleItems),
-    [visibleItems],
-  );
+  const visibleGroups = useMemo(() => toSelectRenderGroups(visibleItems), [visibleItems]);
   const selectableOptions = useMemo(
     () => allOptions.filter((option) => !option.disabled),
     [allOptions],
@@ -241,9 +229,7 @@ function MultiSelectImpl({
 
   const removeValue = useCallback(
     (removedValue: string) => {
-      commitValues(
-        currentValues.filter((currentValue) => currentValue !== removedValue),
-      );
+      commitValues(currentValues.filter((currentValue) => currentValue !== removedValue));
     },
     [commitValues, currentValues],
   );
@@ -252,8 +238,7 @@ function MultiSelectImpl({
     if (allSelected) {
       commitValues(
         currentValues.filter(
-          (currentValue) =>
-            !selectableOptions.some((option) => option.value === currentValue),
+          (currentValue) => !selectableOptions.some((option) => option.value === currentValue),
         ),
       );
       return;
@@ -334,10 +319,7 @@ function MultiSelectImpl({
         type="button"
         className={styles.selectAll}
         aria-pressed={allSelected}
-        disabled={
-          control.disabled ||
-          (!allSelected && (visibleSelectable.length === 0 || atLimit))
-        }
+        disabled={control.disabled || (!allSelected && (visibleSelectable.length === 0 || atLimit))}
         onClick={handleToggleAll}
       >
         <span className={styles.selectAllMark} aria-hidden="true">
@@ -419,11 +401,7 @@ function MultiSelectImpl({
                     const label = option?.label ?? chipValue;
 
                     return (
-                      <BaseCombobox.Chip
-                        key={chipValue}
-                        className={styles.chip}
-                        aria-label={label}
-                      >
+                      <BaseCombobox.Chip key={chipValue} className={styles.chip} aria-label={label}>
                         {option?.icon ? (
                           <span className={styles.chipIcon}>
                             <Icon icon={option.icon} size="xs" />

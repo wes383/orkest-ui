@@ -123,9 +123,7 @@ describe('AvatarImage', () => {
 
     expect(image).toHaveAttribute('data-state', 'error');
     expect(image).toHaveAttribute('aria-hidden', 'true');
-    expect(
-      screen.queryByRole('img', { name: 'Jordan Lee' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('img', { name: 'Jordan Lee' })).not.toBeInTheDocument();
     expect(screen.getByText('JL')).toBeInTheDocument();
     expect(screen.getByText('JL')).toHaveAttribute('data-state', 'error');
   });
@@ -148,10 +146,7 @@ describe('AvatarImage', () => {
       </Avatar>,
     );
 
-    expect(container.querySelector('img')).toHaveAttribute(
-      'data-state',
-      'loading',
-    );
+    expect(container.querySelector('img')).toHaveAttribute('data-state', 'loading');
     expect(screen.getByText('AM')).toHaveAttribute('data-state', 'loading');
   });
 

@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useCallback,
-  useMemo,
-  useState,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, useCallback, useMemo, useState, type HTMLAttributes } from 'react';
 import { CalendarDays, X } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
@@ -111,8 +105,10 @@ function splitValue(value: string | null): { date: string | null; time: TimePart
   };
 }
 
-export interface DateTimePickerProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
+export interface DateTimePickerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onChange' | 'defaultValue' | 'children'
+> {
   /**
    * Selected date and time as `YYYY-MM-DDTHH:mm`, or `YYYY-MM-DDTHH:mm:ss` with
    * `showSeconds`. It is wall-clock time with no offset, so it never shifts
@@ -291,10 +287,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
       [handleTimeChange, showSeconds, time],
     );
 
-    const hourOptions = useMemo(
-      () => buildHourOptions(timeFormat, locale),
-      [timeFormat, locale],
-    );
+    const hourOptions = useMemo(() => buildHourOptions(timeFormat, locale), [timeFormat, locale]);
     const minuteOptions = useMemo(() => buildMinuteOptions(minuteStep), [minuteStep]);
     const secondOptions = useMemo(() => buildSecondOptions(), []);
 
@@ -438,12 +431,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                   </div>
                 ) : null}
                 <div className={styles.footer}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleNow}
-                    disabled={nowDisabled}
-                  >
+                  <Button variant="ghost" size="sm" onClick={handleNow} disabled={nowDisabled}>
                     {mergedLabels.now}
                   </Button>
                   <div className={styles.footerActions}>

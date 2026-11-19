@@ -11,17 +11,7 @@ import type { PolymorphicProps } from '../types';
 import styles from './text.module.css';
 
 export type TextSize =
-  | '2xs'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | 'inherit';
+  '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'inherit';
 export type TextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 export type TextTone = 'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger';
 export type TextAlign = 'start' | 'center' | 'end' | 'justify';

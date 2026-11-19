@@ -29,9 +29,7 @@ export function DialogBasicExample() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Update the name and email shown on your account.
-            </DialogDescription>
+            <DialogDescription>Update the name and email shown on your account.</DialogDescription>
           </DialogHeader>
           <DialogBody>
             <Stack gap={4}>
@@ -145,9 +143,7 @@ export function DialogScrollExample() {
         <DialogContent size="lg">
           <DialogHeader>
             <DialogTitle>Service terms</DialogTitle>
-            <DialogDescription>
-              Review the full text before accepting.
-            </DialogDescription>
+            <DialogDescription>Review the full text before accepting.</DialogDescription>
           </DialogHeader>
           <DialogBody>
             <Stack gap={3}>

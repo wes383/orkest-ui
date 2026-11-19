@@ -193,23 +193,12 @@ export { DataTable } from './components/data-table';
 export type { DataColumn, DataTableProps } from './components/data-table';
 
 export { Radio, RadioGroup } from './components/radio';
-export type {
-  RadioGroupProps,
-  RadioOrientation,
-  RadioProps,
-  RadioSize,
-} from './components/radio';
+export type { RadioGroupProps, RadioOrientation, RadioProps, RadioSize } from './components/radio';
 
 export { Switch } from './components/switch';
 export type { SwitchProps, SwitchSize } from './components/switch';
 
-export {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from './components/tabs';
+export { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from './components/tabs';
 export type {
   TabsActivationMode,
   TabsContentProps,
@@ -303,11 +292,7 @@ export type {
 } from './components/calendar';
 
 export { DatePicker } from './components/date-picker';
-export type {
-  DatePickerLabels,
-  DatePickerProps,
-  DatePickerSize,
-} from './components/date-picker';
+export type { DatePickerLabels, DatePickerProps, DatePickerSize } from './components/date-picker';
 
 export { DateRangePicker } from './components/date-range-picker';
 export type {
@@ -324,11 +309,7 @@ export type {
   DateTimePickerSize,
 } from './components/date-time-picker';
 
-export {
-  TimePicker,
-  TimePickerColumn,
-  TimePickerContent,
-} from './components/time-picker';
+export { TimePicker, TimePickerColumn, TimePickerContent } from './components/time-picker';
 export type {
   TimeFormat,
   TimeParts,

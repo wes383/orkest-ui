@@ -22,10 +22,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes"
-  code={sizesCode}
->
+<ComponentPreview title="Sizes" code={sizesCode}>
   <Stack direction="row" gap={4} align="center">
     <Spinner size="sm" label="Loading" />
     <Spinner size="md" label="Loading" />
@@ -51,10 +48,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Decorative spinner"
-  code={decorativeSpinnerCode}
->
+<ComponentPreview title="Decorative spinner" code={decorativeSpinnerCode}>
   <Stack direction="row" gap={2} align="center" role="status">
     <Spinner size="sm" label={null} />
     <Text size="sm" tone="muted">
@@ -80,10 +74,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Custom colour"
-  code={customColourCode}
->
+<ComponentPreview title="Custom colour" code={customColourCode}>
   <Stack direction="row" gap={4} align="center">
     <Spinner color="var(--ui-accent)" label="Saving" />
     <Spinner color="var(--ui-success)" label="Syncing" />

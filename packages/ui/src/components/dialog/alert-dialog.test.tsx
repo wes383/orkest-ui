@@ -26,9 +26,7 @@ function ExampleAlertDialog(props: AlertDialogProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete project?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone.
-            </AlertDialogDescription>
+            <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -53,12 +51,8 @@ describe('AlertDialog', () => {
     const dialog = await openAlertDialog(user);
 
     expect(dialog).toHaveAttribute('aria-modal', 'true');
-    expect(
-      screen.getByRole('heading', { name: 'Delete project?' }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('This action cannot be undone.'),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Delete project?' })).toBeInTheDocument();
+    expect(screen.getByText('This action cannot be undone.')).toBeInTheDocument();
   });
 
   it('does not close on Escape', async () => {
@@ -116,9 +110,7 @@ describe('AlertDialog', () => {
 
     await openAlertDialog(user);
 
-    expect(
-      screen.queryByRole('button', { name: 'Close' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Close' })).not.toBeInTheDocument();
   });
 
   it('focuses the cancel action by default', async () => {

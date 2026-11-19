@@ -14,21 +14,18 @@ Import it from `@orkest/ui/client`.
 export const basicSelectCode = `import { Select } from '@orkest/ui/client';
 
 const fruits = [
-  { value: 'apple', label: 'Apple' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'cherry', label: 'Cherry' },
-  { value: 'grape', label: 'Grape' },
-  { value: 'mango', label: 'Mango' },
+{ value: 'apple', label: 'Apple' },
+{ value: 'banana', label: 'Banana' },
+{ value: 'cherry', label: 'Cherry' },
+{ value: 'grape', label: 'Grape' },
+{ value: 'mango', label: 'Mango' },
 ];
 
 export function Example() {
   return <Select aria-label="Fruit" options={fruits} defaultValue="apple" clearable />;
 }`;
 
-<ComponentPreview
-  title="Basic select"
-  code={basicSelectCode}
->
+<ComponentPreview title="Basic select" code={basicSelectCode}>
   <BasicSelectExample />
 </ComponentPreview>
 
@@ -46,12 +43,12 @@ accepts `renderItem` / `loadingMessage`.
 export const searchableSelectCode = `import { Select } from '@orkest/ui/client';
 
 const languages = [
-  { value: 'javascript', label: 'JavaScript' },
-  { value: 'typescript', label: 'TypeScript' },
-  { value: 'python', label: 'Python' },
-  { value: 'go', label: 'Go' },
-  { value: 'rust', label: 'Rust' },
-  { value: 'swift', label: 'Swift' },
+{ value: 'javascript', label: 'JavaScript' },
+{ value: 'typescript', label: 'TypeScript' },
+{ value: 'python', label: 'Python' },
+{ value: 'go', label: 'Go' },
+{ value: 'rust', label: 'Rust' },
+{ value: 'swift', label: 'Swift' },
 ];
 
 export function Example() {
@@ -66,10 +63,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Searchable select"
-  code={searchableSelectCode}
->
+<ComponentPreview title="Searchable select" code={searchableSelectCode}>
   <SearchableSelectExample />
 </ComponentPreview>
 
@@ -112,52 +106,49 @@ export const groupsDescriptionsAndIconsCode = `import { Briefcase, Code, Layers,
 import { Select } from '@orkest/ui/client';
 
 const teams = [
-  {
-    label: 'Product',
-    options: [
-      {
-        value: 'design',
-        label: 'Design',
-        description: 'Product design and research',
-        icon: Palette,
-      },
-      {
-        value: 'product',
-        label: 'Product',
-        description: 'Planning and strategy',
-        icon: Briefcase,
-      },
-      {
-        value: 'marketing',
-        label: 'Marketing',
-        description: 'Campaigns and brand',
-        icon: Megaphone,
-      },
-    ],
-  },
-  {
-    label: 'Engineering',
-    options: [
-      { value: 'frontend', label: 'Frontend', description: 'Web interfaces', icon: Code },
-      { value: 'backend', label: 'Backend', description: 'APIs and services', icon: Server },
-      {
-        value: 'platform',
-        label: 'Platform',
-        description: 'Infrastructure and tooling',
-        icon: Layers,
-      },
-    ],
-  },
+{
+label: 'Product',
+options: [
+{
+value: 'design',
+label: 'Design',
+description: 'Product design and research',
+icon: Palette,
+},
+{
+value: 'product',
+label: 'Product',
+description: 'Planning and strategy',
+icon: Briefcase,
+},
+{
+value: 'marketing',
+label: 'Marketing',
+description: 'Campaigns and brand',
+icon: Megaphone,
+},
+],
+},
+{
+label: 'Engineering',
+options: [
+{ value: 'frontend', label: 'Frontend', description: 'Web interfaces', icon: Code },
+{ value: 'backend', label: 'Backend', description: 'APIs and services', icon: Server },
+{
+value: 'platform',
+label: 'Platform',
+description: 'Infrastructure and tooling',
+icon: Layers,
+},
+],
+},
 ];
 
 export function Example() {
   return <Select aria-label="Team" options={teams} defaultValue="design" clearable />;
 }`;
 
-<ComponentPreview
-  title="Groups, descriptions, and icons"
-  code={groupsDescriptionsAndIconsCode}
->
+<ComponentPreview title="Groups, descriptions, and icons" code={groupsDescriptionsAndIconsCode}>
   <DetailedSelectExample />
 </ComponentPreview>
 
@@ -169,9 +160,9 @@ export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
 const priorities = [
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
+{ value: 'low', label: 'Low' },
+{ value: 'medium', label: 'Medium' },
+{ value: 'high', label: 'High' },
 ];
 
 export function Example() {
@@ -184,10 +175,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={smallMediumAndLargeCode}
->
+<ComponentPreview title="Small, medium, and large" code={smallMediumAndLargeCode}>
   <SelectSizesExample />
 </ComponentPreview>
 
@@ -200,9 +188,9 @@ export const disabledInvalidAndClearableCode = `import { Stack } from '@orkest/u
 import { Select } from '@orkest/ui/client';
 
 const statuses = [
-  { value: 'active', label: 'Active' },
-  { value: 'paused', label: 'Paused' },
-  { value: 'archived', label: 'Archived' },
+{ value: 'active', label: 'Active' },
+{ value: 'paused', label: 'Paused' },
+{ value: 'archived', label: 'Archived' },
 ];
 
 export function Example() {
@@ -215,10 +203,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Disabled, invalid, and clearable"
-  code={disabledInvalidAndClearableCode}
->
+<ComponentPreview title="Disabled, invalid, and clearable" code={disabledInvalidAndClearableCode}>
   <SelectStatesExample />
 </ComponentPreview>
 
@@ -242,10 +227,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Loading options"
-  code={loadingOptionsCode}
->
+<ComponentPreview title="Loading options" code={loadingOptionsCode}>
   <SelectLoadingExample />
 </ComponentPreview>
 
@@ -335,8 +317,7 @@ export function Example() {
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description:
-        'Marks the field required and forwards it to Base UI hidden form input.',
+      description: 'Marks the field required and forwards it to Base UI hidden form input.',
     },
     {
       name: 'invalid',
@@ -395,14 +376,14 @@ export function Example() {
   for single selection. `name` identifies the field.
 - Associate a visible label with `id` and `htmlFor`, or use `aria-label` / `aria-labelledby`.
 
-| Key | Behavior |
-| --- | --- |
-| `Enter` | Opens the menu or selects the highlighted option |
-| `Space` | Opens the menu; inserts a space in searchable mode |
-| `ArrowDown` / `ArrowUp` | Opens the menu or moves the highlight |
-| `Escape` | Closes the menu and restores focus |
-| `Tab` | Closes the menu and moves focus |
-| Letter keys | Typeahead; filters when searchable |
+| Key                     | Behavior                                           |
+| ----------------------- | -------------------------------------------------- |
+| `Enter`                 | Opens the menu or selects the highlighted option   |
+| `Space`                 | Opens the menu; inserts a space in searchable mode |
+| `ArrowDown` / `ArrowUp` | Opens the menu or moves the highlight              |
+| `Escape`                | Closes the menu and restores focus                 |
+| `Tab`                   | Closes the menu and moves focus                    |
+| Letter keys             | Typeahead; filters when searchable                 |
 
 ## Related
 

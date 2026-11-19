@@ -97,13 +97,9 @@ export function toDayNumber(date: CivilDate): number {
   const year = date.year - (month <= 2 ? 1 : 0);
   const era = Math.floor(year / 400);
   const yearOfEra = year - era * 400;
-  const dayOfYear =
-    Math.floor((153 * (month + (month > 2 ? -3 : 9)) + 2) / 5) + date.day - 1;
+  const dayOfYear = Math.floor((153 * (month + (month > 2 ? -3 : 9)) + 2) / 5) + date.day - 1;
   const dayOfEra =
-    yearOfEra * 365 +
-    Math.floor(yearOfEra / 4) -
-    Math.floor(yearOfEra / 100) +
-    dayOfYear;
+    yearOfEra * 365 + Math.floor(yearOfEra / 4) - Math.floor(yearOfEra / 100) + dayOfYear;
 
   return era * 146097 + dayOfEra - 719468;
 }
@@ -133,7 +129,7 @@ export function fromDayNumber(dayNumber: number): CivilDate {
 export function weekdayOf(date: CivilDate): Weekday {
   const dayNumber = toDayNumber(date);
 
-  return (((dayNumber + 4) % 7) + 7) % 7 as Weekday;
+  return ((((dayNumber + 4) % 7) + 7) % 7) as Weekday;
 }
 
 export function addDays(date: CivilDate, amount: number): CivilDate {

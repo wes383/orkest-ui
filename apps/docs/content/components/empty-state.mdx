@@ -29,10 +29,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Basic empty state"
-  code={basicEmptyStateCode}
->
+<ComponentPreview title="Basic empty state" code={basicEmptyStateCode}>
   <EmptyStateBasicExample />
 </ComponentPreview>
 
@@ -60,10 +57,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="sm, md, and lg"
-  code={smMdAndLgCode}
->
+<ComponentPreview title="sm, md, and lg" code={smMdAndLgCode}>
   <EmptyStateSizesExample />
 </ComponentPreview>
 
@@ -103,10 +97,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Center and start"
-  code={centerAndStartCode}
->
+<ComponentPreview title="Center and start" code={centerAndStartCode}>
   <EmptyStateAlignExample />
 </ComponentPreview>
 
@@ -145,10 +136,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Custom composition"
-  code={customCompositionCode}
->
+<ComponentPreview title="Custom composition" code={customCompositionCode}>
   <EmptyStateCompositionExample />
 </ComponentPreview>
 
@@ -181,10 +169,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Illustration in a dashed region"
-  code={illustrationInADashedRegionCode}
->
+<ComponentPreview title="Illustration in a dashed region" code={illustrationInADashedRegionCode}>
   <EmptyStateImageExample />
 </ComponentPreview>
 
@@ -226,10 +211,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Inside a panel"
-  code={insideAPanelCode}
->
+<ComponentPreview title="Inside a panel" code={insideAPanelCode}>
   <EmptyStateEmbeddedExample />
 </ComponentPreview>
 
@@ -275,7 +257,8 @@ vertical padding; keep `sm` for genuinely tight regions such as a widget or an e
     {
       name: 'icon',
       type: 'LucideIcon',
-      description: 'Decorative Lucide icon component. Omit it for a text-only state. Use EmptyStateIcon with children for a custom visual.',
+      description:
+        'Decorative Lucide icon component. Omit it for a text-only state. Use EmptyStateIcon with children for a custom visual.',
     },
     {
       name: 'image',
@@ -290,12 +273,14 @@ vertical padding; keep `sm` for genuinely tight regions such as a widget or an e
     {
       name: 'children',
       type: 'ReactNode',
-      description: 'Custom composition built from the parts. Replaces all shorthand content but keeps size and align.',
+      description:
+        'Custom composition built from the parts. Replaces all shorthand content but keeps size and align.',
     },
     {
       name: 'native attributes',
       type: 'HTMLAttributes<HTMLDivElement>',
-      description: 'className, style, ARIA attributes, event handlers, and ref are forwarded to the root div. The native title attribute is replaced by the ReactNode title prop.',
+      description:
+        'className, style, ARIA attributes, event handlers, and ref are forwarded to the root div. The native title attribute is replaced by the ReactNode title prop.',
     },
   ]}
 />
@@ -304,12 +289,12 @@ vertical padding; keep `sm` for genuinely tight regions such as a widget or an e
   rows={[
     {
       name: 'EmptyStateIcon',
-      type: "HTMLAttributes<HTMLSpanElement> & { icon?: LucideIcon }",
+      type: 'HTMLAttributes<HTMLSpanElement> & { icon?: LucideIcon }',
       description: 'Rounded rectangle surface for an icon or any custom children.',
     },
     {
       name: 'EmptyStateTitle',
-      type: "HTMLAttributes<HTMLHeadingElement> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }",
+      type: 'HTMLAttributes<HTMLHeadingElement> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }',
       description: 'Heading, h3 by default.',
     },
     {

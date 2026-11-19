@@ -47,23 +47,17 @@ interface DropdownMenuInteractionContextValue {
   loopFocus: boolean;
 }
 
-const DropdownMenuFocusRingContext =
-  createContext<DropdownMenuFocusRingContextValue | null>(null);
+const DropdownMenuFocusRingContext = createContext<DropdownMenuFocusRingContextValue | null>(null);
 
-const DropdownMenuInteractionContext =
-  createContext<DropdownMenuInteractionContextValue>({
-    orientation: 'vertical',
-    loopFocus: true,
-  });
+const DropdownMenuInteractionContext = createContext<DropdownMenuInteractionContextValue>({
+  orientation: 'vertical',
+  loopFocus: true,
+});
 
-const menuItemSelector =
-  '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
+const menuItemSelector = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
 function isMenuItemDisabled(item: HTMLElement): boolean {
-  return (
-    item.getAttribute('aria-disabled') === 'true' ||
-    item.hasAttribute('data-disabled')
-  );
+  return item.getAttribute('aria-disabled') === 'true' || item.hasAttribute('data-disabled');
 }
 
 /**
@@ -92,9 +86,9 @@ function handleMenuKeyDownCapture(
   }
 
   const popup = event.currentTarget;
-  const items = Array.from(
-    popup.querySelectorAll<HTMLElement>(menuItemSelector),
-  ).filter((item) => item.closest('[role="menu"]') === popup);
+  const items = Array.from(popup.querySelectorAll<HTMLElement>(menuItemSelector)).filter(
+    (item) => item.closest('[role="menu"]') === popup,
+  );
 
   if (items.length === 0) {
     return;
@@ -113,8 +107,7 @@ function handleMenuKeyDownCapture(
   } else if (event.key === 'End') {
     targetIndex = items.length - 1;
   } else {
-    targetIndex =
-      currentIndex + (event.key === 'ArrowDown' ? 1 : -1);
+    targetIndex = currentIndex + (event.key === 'ArrowDown' ? 1 : -1);
   }
 
   if (targetIndex < 0 || targetIndex >= items.length) {
@@ -131,8 +124,7 @@ function handleMenuKeyDownCapture(
 
   function findEnabled(startIndex: number, direction: 1 | -1): number {
     for (let step = 0; step < items.length; step += 1) {
-      const index =
-        (startIndex + step * direction + items.length) % items.length;
+      const index = (startIndex + step * direction + items.length) % items.length;
       const item = items[index];
 
       if (item && !isMenuItemDisabled(item)) {
@@ -148,10 +140,7 @@ function handleMenuKeyDownCapture(
       ? findEnabled(0, 1)
       : event.key === 'End'
         ? findEnabled(items.length - 1, -1)
-        : findEnabled(
-            targetIndex,
-            event.key === 'ArrowDown' ? 1 : -1,
-          );
+        : findEnabled(targetIndex, event.key === 'ArrowDown' ? 1 : -1);
 
   event.preventDefault();
   event.stopPropagation();
@@ -189,12 +178,8 @@ export function DropdownMenu({
   }
 
   return (
-    <DropdownMenuFocusRingContext.Provider
-      value={{ suppressFocusRing, setSuppressFocusRing }}
-    >
-      <DropdownMenuInteractionContext.Provider
-        value={{ orientation, loopFocus }}
-      >
+    <DropdownMenuFocusRingContext.Provider value={{ suppressFocusRing, setSuppressFocusRing }}>
+      <DropdownMenuInteractionContext.Provider value={{ orientation, loopFocus }}>
         <BaseMenu.Root
           {...rest}
           orientation={orientation}
@@ -220,42 +205,36 @@ export interface DropdownMenuTriggerProps extends ButtonProps {
 }
 
 /** Button that opens the surrounding dropdown menu. */
-export const DropdownMenuTrigger = forwardRef<
-  HTMLButtonElement,
-  DropdownMenuTriggerProps
->(function DropdownMenuTrigger(
-  { variant = 'secondary', render, className, onBlur, ...rest },
-  ref,
-) {
-  const focusRing = useContext(DropdownMenuFocusRingContext);
+export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTriggerProps>(
+  function DropdownMenuTrigger({ variant = 'secondary', render, className, onBlur, ...rest }, ref) {
+    const focusRing = useContext(DropdownMenuFocusRingContext);
 
-  return (
-    <BaseMenu.Trigger
-      ref={ref}
-      render={render ?? <Button variant={variant} />}
-      className={cx(styles.trigger, className)}
-      data-focus-ring={focusRing?.suppressFocusRing ? 'none' : undefined}
-      onBlur={(event) => {
-        focusRing?.setSuppressFocusRing(false);
-        onBlur?.(event);
-      }}
-      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-    />
-  );
-});
+    return (
+      <BaseMenu.Trigger
+        ref={ref}
+        render={render ?? <Button variant={variant} />}
+        className={cx(styles.trigger, className)}
+        data-focus-ring={focusRing?.suppressFocusRing ? 'none' : undefined}
+        onBlur={(event) => {
+          focusRing?.setSuppressFocusRing(false);
+          onBlur?.(event);
+        }}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      />
+    );
+  },
+);
 
 export type DropdownMenuPortalProps = MenuPortalProps;
 
 /** Renders the menu outside the parent stacking and overflow context. */
-export const DropdownMenuPortal = forwardRef<
-  HTMLDivElement,
-  DropdownMenuPortalProps
->(function DropdownMenuPortal(props, ref) {
-  return <BaseMenu.Portal ref={ref} {...props} />;
-});
+export const DropdownMenuPortal = forwardRef<HTMLDivElement, DropdownMenuPortalProps>(
+  function DropdownMenuPortal(props, ref) {
+    return <BaseMenu.Portal ref={ref} {...props} />;
+  },
+);
 
-export interface DropdownMenuContentProps
-  extends Omit<MenuPopupProps, 'className'> {
+export interface DropdownMenuContentProps extends Omit<MenuPopupProps, 'className'> {
   className?: string;
   /** Side of the trigger the menu is placed on. Defaults to `bottom`. */
   side?: MenuPositionerProps['side'];
@@ -276,368 +255,28 @@ export interface DropdownMenuContentProps
 }
 
 /** Menu surface with collision-aware positioning, scrolling, and animation. */
-export const DropdownMenuContent = forwardRef<
-  HTMLDivElement,
-  DropdownMenuContentProps
->(function DropdownMenuContent(
-  {
-    children,
-    className,
-    side = 'bottom',
-    align = 'start',
-    sideOffset = 6,
-    alignOffset = 0,
-    collisionPadding,
-    minWidth,
-    maxWidth,
-    maxHeight,
-    style,
-    onKeyDownCapture,
-    ...rest
-  },
-  ref,
-) {
-  const interaction = useContext(DropdownMenuInteractionContext);
-
-  return (
-    <BaseMenu.Positioner
-      side={side}
-      align={align}
-      sideOffset={sideOffset}
-      alignOffset={alignOffset}
-      collisionPadding={collisionPadding}
-      className={styles.positioner}
-    >
-      <BaseMenu.Popup
-        ref={ref}
-        {...rest}
-        className={cx(styles.content, className)}
-        style={{ ...style, minWidth, maxWidth, maxHeight }}
-        onKeyDownCapture={(event) => {
-          handleMenuKeyDownCapture(event, interaction);
-          onKeyDownCapture?.(event);
-        }}
-      >
-        {children}
-      </BaseMenu.Popup>
-    </BaseMenu.Positioner>
-  );
-});
-
-export type DropdownMenuItemVariant = 'default' | 'destructive';
-
-export interface DropdownMenuItemProps extends Omit<MenuItemProps, 'className'> {
-  className?: string;
-  /** Visual treatment. `destructive` marks irreversible actions. */
-  variant?: DropdownMenuItemVariant;
-  /** Decorative Lucide icon rendered before the label. */
-  leftIcon?: LucideIcon;
-  /**
-   * Aligns the label with items that render a leading icon or indicator.
-   * Use it when a group mixes items with and without icons.
-   */
-  inset?: boolean;
-}
-
-/** Interactive menu item that closes the menu when activated. */
-export const DropdownMenuItem = forwardRef<HTMLElement, DropdownMenuItemProps>(
-  function DropdownMenuItem(
+export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>(
+  function DropdownMenuContent(
     {
       children,
       className,
-      variant = 'default',
-      leftIcon,
-      inset = false,
+      side = 'bottom',
+      align = 'start',
+      sideOffset = 6,
+      alignOffset = 0,
+      collisionPadding,
+      minWidth,
+      maxWidth,
+      maxHeight,
+      style,
+      onKeyDownCapture,
       ...rest
     },
     ref,
   ) {
+    const interaction = useContext(DropdownMenuInteractionContext);
+
     return (
-      <BaseMenu.Item
-        ref={ref}
-        {...rest}
-        className={cx(styles.item, className)}
-        data-variant={variant}
-        data-inset={inset || undefined}
-      >
-        {leftIcon ? (
-          <span className={styles.itemIcon}>
-            <Icon icon={leftIcon} size="sm" />
-          </span>
-        ) : null}
-        <span className={styles.itemContent}>{children}</span>
-      </BaseMenu.Item>
-    );
-  },
-);
-
-export interface DropdownMenuLinkItemProps
-  extends Omit<MenuLinkItemProps, 'className'> {
-  className?: string;
-  /** Visual treatment. `destructive` marks irreversible actions. */
-  variant?: DropdownMenuItemVariant;
-  /** Decorative Lucide icon rendered before the label. */
-  leftIcon?: LucideIcon;
-  /**
-   * Aligns the label with items that render a leading icon or indicator.
-   * Use it when a group mixes items with and without icons.
-   */
-  inset?: boolean;
-}
-
-/** Menu item rendered as a link that closes the menu when followed. */
-export const DropdownMenuLinkItem = forwardRef<
-  HTMLAnchorElement,
-  DropdownMenuLinkItemProps
->(function DropdownMenuLinkItem(
-  {
-    children,
-    className,
-    variant = 'default',
-    leftIcon,
-    inset = false,
-    closeOnClick = true,
-    ...rest
-  },
-  ref,
-) {
-  return (
-    <BaseMenu.LinkItem
-      ref={ref as Ref<Element>}
-      {...rest}
-      closeOnClick={closeOnClick}
-      className={cx(styles.item, className)}
-      data-variant={variant}
-      data-inset={inset || undefined}
-    >
-      {leftIcon ? (
-        <span className={styles.itemIcon}>
-          <Icon icon={leftIcon} size="sm" />
-        </span>
-      ) : null}
-      <span className={styles.itemContent}>{children}</span>
-    </BaseMenu.LinkItem>
-  );
-});
-
-export interface DropdownMenuGroupProps extends Omit<MenuGroupProps, 'className'> {
-  className?: string;
-}
-
-/** Groups related menu items. */
-export const DropdownMenuGroup = forwardRef<HTMLDivElement, DropdownMenuGroupProps>(
-  function DropdownMenuGroup({ className, ...rest }, ref) {
-    return (
-      <BaseMenu.Group
-        ref={ref}
-        {...rest}
-        className={cx(styles.group, className)}
-      />
-    );
-  },
-);
-
-export interface DropdownMenuLabelProps
-  extends Omit<MenuGroupLabelProps, 'className'> {
-  className?: string;
-}
-
-/** Accessible label for a group or radio group. */
-export const DropdownMenuLabel = forwardRef<HTMLDivElement, DropdownMenuLabelProps>(
-  function DropdownMenuLabel({ className, ...rest }, ref) {
-    return (
-      <BaseMenu.GroupLabel
-        ref={ref}
-        {...rest}
-        className={cx(styles.label, className)}
-      />
-    );
-  },
-);
-
-export type DropdownMenuSeparatorProps = ComponentPropsWithoutRef<'div'>;
-
-/** Horizontal divider between menu sections. */
-export const DropdownMenuSeparator = forwardRef<
-  HTMLDivElement,
-  DropdownMenuSeparatorProps
->(function DropdownMenuSeparator({ className, ...rest }, ref) {
-  return (
-    <BaseMenu.Separator
-      ref={ref}
-      {...rest}
-      className={cx(styles.separator, className)}
-    />
-  );
-});
-
-export interface DropdownMenuCheckboxItemProps
-  extends Omit<MenuCheckboxItemProps, 'className'> {
-  className?: string;
-}
-
-/** Menu item that toggles a setting and keeps the menu open. */
-export const DropdownMenuCheckboxItem = forwardRef<
-  HTMLElement,
-  DropdownMenuCheckboxItemProps
->(function DropdownMenuCheckboxItem({ children, className, ...rest }, ref) {
-  return (
-    <BaseMenu.CheckboxItem
-      ref={ref}
-      {...rest}
-      className={cx(styles.item, className)}
-    >
-      <span className={styles.indicatorSlot}>
-        <BaseMenu.CheckboxItemIndicator className={styles.itemIndicator}>
-          <Icon icon={Check} size="sm" />
-        </BaseMenu.CheckboxItemIndicator>
-      </span>
-      <span className={styles.itemContent}>{children}</span>
-    </BaseMenu.CheckboxItem>
-  );
-});
-
-export interface DropdownMenuRadioGroupProps
-  extends Omit<
-    MenuRadioGroupProps,
-    'className' | 'value' | 'defaultValue' | 'onValueChange'
-  > {
-  className?: string;
-  /** Controlled selected value. */
-  value?: string;
-  /** Initial selected value for uncontrolled usage. */
-  defaultValue?: string;
-  /** Called with the next selected value. */
-  onValueChange?: (
-    value: string,
-    eventDetails: MenuRadioGroupChangeEventDetails,
-  ) => void;
-}
-
-/** Groups radio items that keep the menu open when selected. */
-export const DropdownMenuRadioGroup = forwardRef<
-  HTMLDivElement,
-  DropdownMenuRadioGroupProps
->(function DropdownMenuRadioGroup(
-  { className, value, defaultValue, onValueChange, ...rest },
-  ref,
-) {
-  return (
-    <BaseMenu.RadioGroup
-      ref={ref}
-      {...rest}
-      className={cx(styles.group, className)}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={
-        onValueChange as MenuRadioGroupProps['onValueChange'] | undefined
-      }
-    />
-  );
-});
-
-export interface DropdownMenuRadioItemProps
-  extends Omit<MenuRadioItemProps, 'className' | 'value'> {
-  className?: string;
-  /** Value selected in the surrounding radio group. */
-  value: string;
-}
-
-/** Menu item that selects one value from a radio group. */
-export const DropdownMenuRadioItem = forwardRef<
-  HTMLElement,
-  DropdownMenuRadioItemProps
->(function DropdownMenuRadioItem({ children, className, value, ...rest }, ref) {
-  return (
-    <BaseMenu.RadioItem
-      ref={ref}
-      {...rest}
-      value={value}
-      className={cx(styles.item, className)}
-    >
-      <span className={styles.indicatorSlot}>
-        <BaseMenu.RadioItemIndicator className={styles.itemIndicator}>
-          <span className={styles.radioDot} />
-        </BaseMenu.RadioItemIndicator>
-      </span>
-      <span className={styles.itemContent}>{children}</span>
-    </BaseMenu.RadioItem>
-  );
-});
-
-export type DropdownMenuSubProps = MenuSubmenuRootProps;
-
-/** Groups a submenu trigger and its content. */
-export function DropdownMenuSub(props: DropdownMenuSubProps) {
-  return <BaseMenu.SubmenuRoot {...props} />;
-}
-
-export interface DropdownMenuSubTriggerProps
-  extends Omit<MenuSubmenuTriggerProps, 'className'> {
-  className?: string;
-  /** Decorative Lucide icon rendered before the label. */
-  leftIcon?: LucideIcon;
-  /**
-   * Aligns the label with items that render a leading icon or indicator.
-   * Use it when a group mixes items with and without icons.
-   */
-  inset?: boolean;
-}
-
-/** Menu item that opens a nested submenu. */
-export const DropdownMenuSubTrigger = forwardRef<
-  HTMLElement,
-  DropdownMenuSubTriggerProps
->(function DropdownMenuSubTrigger(
-  { children, className, leftIcon, inset = false, ...rest },
-  ref,
-) {
-  return (
-    <BaseMenu.SubmenuTrigger
-      ref={ref}
-      {...rest}
-      className={cx(styles.item, className)}
-      data-inset={inset || undefined}
-    >
-      {leftIcon ? (
-        <span className={styles.itemIcon}>
-          <Icon icon={leftIcon} size="sm" />
-        </span>
-      ) : null}
-      <span className={styles.itemContent}>{children}</span>
-      <Icon icon={ChevronRight} size="sm" className={styles.submenuChevron} />
-    </BaseMenu.SubmenuTrigger>
-  );
-});
-
-export interface DropdownMenuSubContentProps extends DropdownMenuContentProps {}
-
-/** Submenu surface rendered in its own portal and positioner. */
-export const DropdownMenuSubContent = forwardRef<
-  HTMLDivElement,
-  DropdownMenuSubContentProps
->(function DropdownMenuSubContent(
-  {
-    children,
-    className,
-    side,
-    align = 'start',
-    sideOffset = 4,
-    alignOffset = -4,
-    collisionPadding,
-    minWidth,
-    maxWidth,
-    maxHeight,
-    style,
-    onKeyDownCapture,
-    ...rest
-  },
-  ref,
-) {
-  const interaction = useContext(DropdownMenuInteractionContext);
-
-  return (
-    <BaseMenu.Portal>
       <BaseMenu.Positioner
         side={side}
         align={align}
@@ -659,24 +298,301 @@ export const DropdownMenuSubContent = forwardRef<
           {children}
         </BaseMenu.Popup>
       </BaseMenu.Positioner>
-    </BaseMenu.Portal>
-  );
-});
+    );
+  },
+);
 
-export interface DropdownMenuShortcutProps
-  extends ComponentPropsWithoutRef<'kbd'> {}
+export type DropdownMenuItemVariant = 'default' | 'destructive';
+
+export interface DropdownMenuItemProps extends Omit<MenuItemProps, 'className'> {
+  className?: string;
+  /** Visual treatment. `destructive` marks irreversible actions. */
+  variant?: DropdownMenuItemVariant;
+  /** Decorative Lucide icon rendered before the label. */
+  leftIcon?: LucideIcon;
+  /**
+   * Aligns the label with items that render a leading icon or indicator.
+   * Use it when a group mixes items with and without icons.
+   */
+  inset?: boolean;
+}
+
+/** Interactive menu item that closes the menu when activated. */
+export const DropdownMenuItem = forwardRef<HTMLElement, DropdownMenuItemProps>(
+  function DropdownMenuItem(
+    { children, className, variant = 'default', leftIcon, inset = false, ...rest },
+    ref,
+  ) {
+    return (
+      <BaseMenu.Item
+        ref={ref}
+        {...rest}
+        className={cx(styles.item, className)}
+        data-variant={variant}
+        data-inset={inset || undefined}
+      >
+        {leftIcon ? (
+          <span className={styles.itemIcon}>
+            <Icon icon={leftIcon} size="sm" />
+          </span>
+        ) : null}
+        <span className={styles.itemContent}>{children}</span>
+      </BaseMenu.Item>
+    );
+  },
+);
+
+export interface DropdownMenuLinkItemProps extends Omit<MenuLinkItemProps, 'className'> {
+  className?: string;
+  /** Visual treatment. `destructive` marks irreversible actions. */
+  variant?: DropdownMenuItemVariant;
+  /** Decorative Lucide icon rendered before the label. */
+  leftIcon?: LucideIcon;
+  /**
+   * Aligns the label with items that render a leading icon or indicator.
+   * Use it when a group mixes items with and without icons.
+   */
+  inset?: boolean;
+}
+
+/** Menu item rendered as a link that closes the menu when followed. */
+export const DropdownMenuLinkItem = forwardRef<HTMLAnchorElement, DropdownMenuLinkItemProps>(
+  function DropdownMenuLinkItem(
+    {
+      children,
+      className,
+      variant = 'default',
+      leftIcon,
+      inset = false,
+      closeOnClick = true,
+      ...rest
+    },
+    ref,
+  ) {
+    return (
+      <BaseMenu.LinkItem
+        ref={ref as Ref<Element>}
+        {...rest}
+        closeOnClick={closeOnClick}
+        className={cx(styles.item, className)}
+        data-variant={variant}
+        data-inset={inset || undefined}
+      >
+        {leftIcon ? (
+          <span className={styles.itemIcon}>
+            <Icon icon={leftIcon} size="sm" />
+          </span>
+        ) : null}
+        <span className={styles.itemContent}>{children}</span>
+      </BaseMenu.LinkItem>
+    );
+  },
+);
+
+export interface DropdownMenuGroupProps extends Omit<MenuGroupProps, 'className'> {
+  className?: string;
+}
+
+/** Groups related menu items. */
+export const DropdownMenuGroup = forwardRef<HTMLDivElement, DropdownMenuGroupProps>(
+  function DropdownMenuGroup({ className, ...rest }, ref) {
+    return <BaseMenu.Group ref={ref} {...rest} className={cx(styles.group, className)} />;
+  },
+);
+
+export interface DropdownMenuLabelProps extends Omit<MenuGroupLabelProps, 'className'> {
+  className?: string;
+}
+
+/** Accessible label for a group or radio group. */
+export const DropdownMenuLabel = forwardRef<HTMLDivElement, DropdownMenuLabelProps>(
+  function DropdownMenuLabel({ className, ...rest }, ref) {
+    return <BaseMenu.GroupLabel ref={ref} {...rest} className={cx(styles.label, className)} />;
+  },
+);
+
+export type DropdownMenuSeparatorProps = ComponentPropsWithoutRef<'div'>;
+
+/** Horizontal divider between menu sections. */
+export const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSeparatorProps>(
+  function DropdownMenuSeparator({ className, ...rest }, ref) {
+    return <BaseMenu.Separator ref={ref} {...rest} className={cx(styles.separator, className)} />;
+  },
+);
+
+export interface DropdownMenuCheckboxItemProps extends Omit<MenuCheckboxItemProps, 'className'> {
+  className?: string;
+}
+
+/** Menu item that toggles a setting and keeps the menu open. */
+export const DropdownMenuCheckboxItem = forwardRef<HTMLElement, DropdownMenuCheckboxItemProps>(
+  function DropdownMenuCheckboxItem({ children, className, ...rest }, ref) {
+    return (
+      <BaseMenu.CheckboxItem ref={ref} {...rest} className={cx(styles.item, className)}>
+        <span className={styles.indicatorSlot}>
+          <BaseMenu.CheckboxItemIndicator className={styles.itemIndicator}>
+            <Icon icon={Check} size="sm" />
+          </BaseMenu.CheckboxItemIndicator>
+        </span>
+        <span className={styles.itemContent}>{children}</span>
+      </BaseMenu.CheckboxItem>
+    );
+  },
+);
+
+export interface DropdownMenuRadioGroupProps extends Omit<
+  MenuRadioGroupProps,
+  'className' | 'value' | 'defaultValue' | 'onValueChange'
+> {
+  className?: string;
+  /** Controlled selected value. */
+  value?: string;
+  /** Initial selected value for uncontrolled usage. */
+  defaultValue?: string;
+  /** Called with the next selected value. */
+  onValueChange?: (value: string, eventDetails: MenuRadioGroupChangeEventDetails) => void;
+}
+
+/** Groups radio items that keep the menu open when selected. */
+export const DropdownMenuRadioGroup = forwardRef<HTMLDivElement, DropdownMenuRadioGroupProps>(
+  function DropdownMenuRadioGroup({ className, value, defaultValue, onValueChange, ...rest }, ref) {
+    return (
+      <BaseMenu.RadioGroup
+        ref={ref}
+        {...rest}
+        className={cx(styles.group, className)}
+        value={value}
+        defaultValue={defaultValue}
+        onValueChange={onValueChange as MenuRadioGroupProps['onValueChange'] | undefined}
+      />
+    );
+  },
+);
+
+export interface DropdownMenuRadioItemProps extends Omit<
+  MenuRadioItemProps,
+  'className' | 'value'
+> {
+  className?: string;
+  /** Value selected in the surrounding radio group. */
+  value: string;
+}
+
+/** Menu item that selects one value from a radio group. */
+export const DropdownMenuRadioItem = forwardRef<HTMLElement, DropdownMenuRadioItemProps>(
+  function DropdownMenuRadioItem({ children, className, value, ...rest }, ref) {
+    return (
+      <BaseMenu.RadioItem ref={ref} {...rest} value={value} className={cx(styles.item, className)}>
+        <span className={styles.indicatorSlot}>
+          <BaseMenu.RadioItemIndicator className={styles.itemIndicator}>
+            <span className={styles.radioDot} />
+          </BaseMenu.RadioItemIndicator>
+        </span>
+        <span className={styles.itemContent}>{children}</span>
+      </BaseMenu.RadioItem>
+    );
+  },
+);
+
+export type DropdownMenuSubProps = MenuSubmenuRootProps;
+
+/** Groups a submenu trigger and its content. */
+export function DropdownMenuSub(props: DropdownMenuSubProps) {
+  return <BaseMenu.SubmenuRoot {...props} />;
+}
+
+export interface DropdownMenuSubTriggerProps extends Omit<MenuSubmenuTriggerProps, 'className'> {
+  className?: string;
+  /** Decorative Lucide icon rendered before the label. */
+  leftIcon?: LucideIcon;
+  /**
+   * Aligns the label with items that render a leading icon or indicator.
+   * Use it when a group mixes items with and without icons.
+   */
+  inset?: boolean;
+}
+
+/** Menu item that opens a nested submenu. */
+export const DropdownMenuSubTrigger = forwardRef<HTMLElement, DropdownMenuSubTriggerProps>(
+  function DropdownMenuSubTrigger({ children, className, leftIcon, inset = false, ...rest }, ref) {
+    return (
+      <BaseMenu.SubmenuTrigger
+        ref={ref}
+        {...rest}
+        className={cx(styles.item, className)}
+        data-inset={inset || undefined}
+      >
+        {leftIcon ? (
+          <span className={styles.itemIcon}>
+            <Icon icon={leftIcon} size="sm" />
+          </span>
+        ) : null}
+        <span className={styles.itemContent}>{children}</span>
+        <Icon icon={ChevronRight} size="sm" className={styles.submenuChevron} />
+      </BaseMenu.SubmenuTrigger>
+    );
+  },
+);
+
+export interface DropdownMenuSubContentProps extends DropdownMenuContentProps {}
+
+/** Submenu surface rendered in its own portal and positioner. */
+export const DropdownMenuSubContent = forwardRef<HTMLDivElement, DropdownMenuSubContentProps>(
+  function DropdownMenuSubContent(
+    {
+      children,
+      className,
+      side,
+      align = 'start',
+      sideOffset = 4,
+      alignOffset = -4,
+      collisionPadding,
+      minWidth,
+      maxWidth,
+      maxHeight,
+      style,
+      onKeyDownCapture,
+      ...rest
+    },
+    ref,
+  ) {
+    const interaction = useContext(DropdownMenuInteractionContext);
+
+    return (
+      <BaseMenu.Portal>
+        <BaseMenu.Positioner
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+          collisionPadding={collisionPadding}
+          className={styles.positioner}
+        >
+          <BaseMenu.Popup
+            ref={ref}
+            {...rest}
+            className={cx(styles.content, className)}
+            style={{ ...style, minWidth, maxWidth, maxHeight }}
+            onKeyDownCapture={(event) => {
+              handleMenuKeyDownCapture(event, interaction);
+              onKeyDownCapture?.(event);
+            }}
+          >
+            {children}
+          </BaseMenu.Popup>
+        </BaseMenu.Positioner>
+      </BaseMenu.Portal>
+    );
+  },
+);
+
+export interface DropdownMenuShortcutProps extends ComponentPropsWithoutRef<'kbd'> {}
 
 /** Visual keyboard shortcut hint aligned to the end of a menu item. */
-export const DropdownMenuShortcut = forwardRef<
-  HTMLElement,
-  DropdownMenuShortcutProps
->(function DropdownMenuShortcut({ className, ...rest }, ref) {
-  return (
-    <kbd
-      ref={ref}
-      {...rest}
-      aria-hidden="true"
-      className={cx(styles.shortcut, className)}
-    />
-  );
-});
+export const DropdownMenuShortcut = forwardRef<HTMLElement, DropdownMenuShortcutProps>(
+  function DropdownMenuShortcut({ className, ...rest }, ref) {
+    return (
+      <kbd ref={ref} {...rest} aria-hidden="true" className={cx(styles.shortcut, className)} />
+    );
+  },
+);

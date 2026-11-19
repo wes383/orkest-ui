@@ -24,10 +24,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Fixed and removable tags"
-  code={fixedAndRemovableTagsCode}
->
+<ComponentPreview title="Fixed and removable tags" code={fixedAndRemovableTagsCode}>
   <Stack direction="row" gap={2} wrap>
     <Tag>Design</Tag>
     <Tag variant="info">Engineering</Tag>
@@ -52,10 +49,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Variants"
-  code={variantsCode}
->
+<ComponentPreview title="Variants" code={variantsCode}>
   <Stack direction="row" gap={2} wrap>
     <Tag>Default</Tag>
     <Tag variant="info">Info</Tag>
@@ -83,10 +77,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes and shapes"
-  code={sizesAndShapesCode}
->
+<ComponentPreview title="Sizes and shapes" code={sizesAndShapesCode}>
   <Stack direction="row" gap={2} align="center" wrap>
     <Tag size="sm">Small</Tag>
     <Tag size="md">Medium</Tag>
@@ -113,10 +104,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Icons"
-  code={iconsCode}
->
+<ComponentPreview title="Icons" code={iconsCode}>
   <Stack direction="row" gap={2} align="center" wrap>
     <Tag variant="info" leftIcon={Circle}>
       {'Info'}
@@ -137,25 +125,22 @@ import { Stack, Tag } from '@orkest/ui';
 export function Example() {
   const [tags, setTags] = useState(['Design', 'Engineering']);
 
-  return (
-    <Stack direction="row" gap={2} wrap>
-      {tags.map((tag) => (
-        <Tag
-          key={tag}
-          removable
-          onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
-        >
-          {tag}
-        </Tag>
-      ))}
-    </Stack>
-  );
+return (
+
+<Stack direction="row" gap={2} wrap>
+{tags.map((tag) => (
+<Tag
+key={tag}
+removable
+onRemove={() => setTags((current) => current.filter((item) => item !== tag))} >
+{tag}
+</Tag>
+))}
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Removable tags"
-  code={removableTagsCode}
->
+<ComponentPreview title="Removable tags" code={removableTagsCode}>
   <RemovableTagExample />
 </ComponentPreview>
 
@@ -167,21 +152,18 @@ import { Tag } from '@orkest/ui';
 export function Example() {
   const [active, setActive] = useState(false);
 
-  return (
-    <Tag
-      interactive
-      variant={active ? 'success' : 'outline'}
-      onClick={() => setActive((value) => !value)}
-    >
-      {active ? 'Selected' : 'Select tag'}
-    </Tag>
-  );
+return (
+
+<Tag
+interactive
+variant={active ? 'success' : 'outline'}
+onClick={() => setActive((value) => !value)} >
+{active ? 'Selected' : 'Select tag'}
+</Tag>
+);
 }`;
 
-<ComponentPreview
-  title="Clickable tag"
-  code={clickableTagCode}
->
+<ComponentPreview title="Clickable tag" code={clickableTagCode}>
   <InteractiveTagExample />
 </ComponentPreview>
 
@@ -193,10 +175,7 @@ export function Example() {
   return <Tag color="#7c3aed">Custom</Tag>;
 }`;
 
-<ComponentPreview
-  title="Custom color"
-  code={customColorCode}
->
+<ComponentPreview title="Custom color" code={customColorCode}>
   <Tag color="#7c3aed">Custom</Tag>
 </ComponentPreview>
 
@@ -258,7 +237,8 @@ export function Example() {
       name: 'interactive',
       type: 'boolean',
       default: 'false',
-      description: 'Renders a native button with keyboard and focus behavior. Ignored when removable.',
+      description:
+        'Renders a native button with keyboard and focus behavior. Ignored when removable.',
     },
     {
       name: 'disabled',

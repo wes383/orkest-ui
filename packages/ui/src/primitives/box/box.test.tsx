@@ -70,14 +70,7 @@ describe('Box', () => {
   });
 
   it('supports border tokens and transparent or inherited colors', () => {
-    render(
-      <Box
-        data-testid="box"
-        background="transparent"
-        color="inherit"
-        border="strong"
-      />,
-    );
+    render(<Box data-testid="box" background="transparent" color="inherit" border="strong" />);
 
     const box = screen.getByTestId('box');
     expect(box.style.background).toBe('transparent');

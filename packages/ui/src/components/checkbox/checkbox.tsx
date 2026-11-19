@@ -9,11 +9,10 @@ import styles from './checkbox.module.css';
 
 export type CheckboxSize = 'sm' | 'md' | 'lg';
 
-export interface CheckboxProps
-  extends Omit<
-    CheckboxRootProps,
-    'children' | 'className' | 'nativeButton' | 'render'
-  > {
+export interface CheckboxProps extends Omit<
+  CheckboxRootProps,
+  'children' | 'className' | 'nativeButton' | 'render'
+> {
   className?: string;
   /** Control size. Defaults to `md`. */
   size?: CheckboxSize;
@@ -22,20 +21,21 @@ export interface CheckboxProps
 }
 
 /** Base UI checkbox with token styling and an optional label. */
-export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(
-  function Checkbox({ size = 'md', label, className, ...rest }, ref) {
-    return (
-      <label className={cx(styles.root, className)} data-size={size}>
-        <BaseCheckbox.Root ref={ref} {...rest} className={styles.control}>
-          <BaseCheckbox.Indicator keepMounted className={styles.indicator}>
-            <svg className={styles.check} viewBox="0 0 12 12" aria-hidden="true">
-              <path className={styles.checkPath} d="M2.5 6.5 5 9l4.5-6" />
-            </svg>
-            <span className={styles.dash} aria-hidden="true" />
-          </BaseCheckbox.Indicator>
-        </BaseCheckbox.Root>
-        {label ? <span className={styles.label}>{label}</span> : null}
-      </label>
-    );
-  },
-);
+export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox(
+  { size = 'md', label, className, ...rest },
+  ref,
+) {
+  return (
+    <label className={cx(styles.root, className)} data-size={size}>
+      <BaseCheckbox.Root ref={ref} {...rest} className={styles.control}>
+        <BaseCheckbox.Indicator keepMounted className={styles.indicator}>
+          <svg className={styles.check} viewBox="0 0 12 12" aria-hidden="true">
+            <path className={styles.checkPath} d="M2.5 6.5 5 9l4.5-6" />
+          </svg>
+          <span className={styles.dash} aria-hidden="true" />
+        </BaseCheckbox.Indicator>
+      </BaseCheckbox.Root>
+      {label ? <span className={styles.label}>{label}</span> : null}
+    </label>
+  );
+});

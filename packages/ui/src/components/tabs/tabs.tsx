@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  forwardRef,
-  useContext,
-  type ReactNode,
-} from 'react';
+import { createContext, forwardRef, useContext, type ReactNode } from 'react';
 import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import type {
   TabsIndicatorProps as BaseTabsIndicatorProps,
@@ -34,9 +29,7 @@ const iconSizeByTabsSize: Record<TabsSize, IconSize> = {
   lg: 'md',
 };
 
-type TabsListKeyDownEvent = Parameters<
-  NonNullable<BaseTabsListProps['onKeyDown']>
->[0];
+type TabsListKeyDownEvent = Parameters<NonNullable<BaseTabsListProps['onKeyDown']>>[0];
 
 function isTabDisabled(tab: HTMLElement | undefined): boolean {
   return tab?.getAttribute('aria-disabled') === 'true';
@@ -98,8 +91,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
   );
 });
 
-export interface TabsListProps
-  extends Omit<BaseTabsListProps, 'className'> {
+export interface TabsListProps extends Omit<BaseTabsListProps, 'className'> {
   className?: string;
   /** Visual style of the tab list. Defaults to `underline`. */
   variant?: TabsVariant;
@@ -117,120 +109,104 @@ export interface TabsListProps
 }
 
 /** Container for the tab triggers and the optional indicator. */
-export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
-  function TabsList(
-    {
-      children,
-      className,
-      variant = 'underline',
-      size = 'md',
-      fullWidth = false,
-      activationMode = 'automatic',
-      loop = true,
-      onKeyDown,
-      ...rest
-    },
-    ref,
-  ) {
-    const tabsDisabled = useContext(TabsDisabledContext);
+export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(function TabsList(
+  {
+    children,
+    className,
+    variant = 'underline',
+    size = 'md',
+    fullWidth = false,
+    activationMode = 'automatic',
+    loop = true,
+    onKeyDown,
+    ...rest
+  },
+  ref,
+) {
+  const tabsDisabled = useContext(TabsDisabledContext);
 
-    function handleKeyDown(event: TabsListKeyDownEvent) {
-      onKeyDown?.(event);
+  function handleKeyDown(event: TabsListKeyDownEvent) {
+    onKeyDown?.(event);
 
-      const key = event.key;
+    const key = event.key;
 
-      if (
-        !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(
-          key,
-        )
-      ) {
-        return;
-      }
-
-      const list = event.currentTarget;
-
-      // Base UI focuses the next tab in a microtask. Event handlers from
-      // `elementProps` run first, so wait two microtasks before correcting the
-      // focus target.
-      queueMicrotask(() => {
-        queueMicrotask(() => {
-          const active = list.ownerDocument.activeElement;
-
-          if (!(active instanceof HTMLElement) || !list.contains(active)) {
-            return;
-          }
-
-          if (!isTabDisabled(active)) {
-            return;
-          }
-
-          const tabs = Array.from(
-            list.querySelectorAll<HTMLElement>('[role="tab"]'),
-          );
-          const index = tabs.indexOf(active);
-
-          if (index === -1) {
-            return;
-          }
-
-          let startIndex: number;
-          let step: 1 | -1;
-          let wrap = loop;
-
-          if (key === 'Home') {
-            startIndex = 0;
-            step = 1;
-            wrap = false;
-          } else if (key === 'End') {
-            startIndex = tabs.length - 1;
-            step = -1;
-            wrap = false;
-          } else if (key === 'ArrowRight' || key === 'ArrowDown') {
-            startIndex = index + 1;
-            step = 1;
-          } else {
-            startIndex = index - 1;
-            step = -1;
-          }
-
-          const targetIndex = findEnabledTabIndex(
-            tabs,
-            startIndex,
-            step,
-            wrap,
-          );
-
-          if (targetIndex !== undefined) {
-            tabs[targetIndex]?.focus();
-          }
-        });
-      });
+    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) {
+      return;
     }
 
-    return (
-      <BaseTabs.List
-        ref={ref}
-        {...rest}
-        activateOnFocus={activationMode === 'automatic'}
-        loopFocus={loop}
-        inert={tabsDisabled || undefined}
-        aria-disabled={tabsDisabled || undefined}
-        onKeyDown={handleKeyDown}
-        className={cx(styles.list, className)}
-        data-variant={variant}
-        data-size={size}
-        data-full-width={fullWidth || undefined}
-      >
-        <TabsSizeContext.Provider value={size}>
-          {children}
-        </TabsSizeContext.Provider>
-      </BaseTabs.List>
-    );
-  },
-);
+    const list = event.currentTarget;
 
-export interface TabsTriggerProps
-  extends Omit<BaseTabsTabProps, 'className'> {
+    // Base UI focuses the next tab in a microtask. Event handlers from
+    // `elementProps` run first, so wait two microtasks before correcting the
+    // focus target.
+    queueMicrotask(() => {
+      queueMicrotask(() => {
+        const active = list.ownerDocument.activeElement;
+
+        if (!(active instanceof HTMLElement) || !list.contains(active)) {
+          return;
+        }
+
+        if (!isTabDisabled(active)) {
+          return;
+        }
+
+        const tabs = Array.from(list.querySelectorAll<HTMLElement>('[role="tab"]'));
+        const index = tabs.indexOf(active);
+
+        if (index === -1) {
+          return;
+        }
+
+        let startIndex: number;
+        let step: 1 | -1;
+        let wrap = loop;
+
+        if (key === 'Home') {
+          startIndex = 0;
+          step = 1;
+          wrap = false;
+        } else if (key === 'End') {
+          startIndex = tabs.length - 1;
+          step = -1;
+          wrap = false;
+        } else if (key === 'ArrowRight' || key === 'ArrowDown') {
+          startIndex = index + 1;
+          step = 1;
+        } else {
+          startIndex = index - 1;
+          step = -1;
+        }
+
+        const targetIndex = findEnabledTabIndex(tabs, startIndex, step, wrap);
+
+        if (targetIndex !== undefined) {
+          tabs[targetIndex]?.focus();
+        }
+      });
+    });
+  }
+
+  return (
+    <BaseTabs.List
+      ref={ref}
+      {...rest}
+      activateOnFocus={activationMode === 'automatic'}
+      loopFocus={loop}
+      inert={tabsDisabled || undefined}
+      aria-disabled={tabsDisabled || undefined}
+      onKeyDown={handleKeyDown}
+      className={cx(styles.list, className)}
+      data-variant={variant}
+      data-size={size}
+      data-full-width={fullWidth || undefined}
+    >
+      <TabsSizeContext.Provider value={size}>{children}</TabsSizeContext.Provider>
+    </BaseTabs.List>
+  );
+});
+
+export interface TabsTriggerProps extends Omit<BaseTabsTabProps, 'className'> {
   className?: string;
   /** Decorative Lucide icon rendered before the label. */
   icon?: LucideIcon;
@@ -239,50 +215,34 @@ export interface TabsTriggerProps
 }
 
 /** Individual tab trigger. */
-export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
-  function TabsTrigger(
-    { className, icon, badge, disabled, children, ...rest },
-    ref,
-  ) {
-    const size = useContext(TabsSizeContext);
+export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(function TabsTrigger(
+  { className, icon, badge, disabled, children, ...rest },
+  ref,
+) {
+  const size = useContext(TabsSizeContext);
 
-    return (
-      <BaseTabs.Tab
-        ref={ref}
-        {...rest}
-        disabled={disabled}
-        className={cx(styles.trigger, className)}
-      >
-        {icon ? <Icon icon={icon} size={iconSizeByTabsSize[size]} /> : null}
-        <span className={styles.label}>{children}</span>
-        {badge !== undefined && badge !== null ? (
-          <span className={styles.badge}>{badge}</span>
-        ) : null}
-      </BaseTabs.Tab>
-    );
-  },
-);
+  return (
+    <BaseTabs.Tab ref={ref} {...rest} disabled={disabled} className={cx(styles.trigger, className)}>
+      {icon ? <Icon icon={icon} size={iconSizeByTabsSize[size]} /> : null}
+      <span className={styles.label}>{children}</span>
+      {badge !== undefined && badge !== null ? <span className={styles.badge}>{badge}</span> : null}
+    </BaseTabs.Tab>
+  );
+});
 
-export interface TabsContentProps
-  extends Omit<BaseTabsPanelProps, 'className'> {
+export interface TabsContentProps extends Omit<BaseTabsPanelProps, 'className'> {
   className?: string;
 }
 
 /** Panel shown while its matching tab is active. */
-export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
-  function TabsContent({ className, ...rest }, ref) {
-    return (
-      <BaseTabs.Panel
-        ref={ref}
-        {...rest}
-        className={cx(styles.content, className)}
-      />
-    );
-  },
-);
+export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(function TabsContent(
+  { className, ...rest },
+  ref,
+) {
+  return <BaseTabs.Panel ref={ref} {...rest} className={cx(styles.content, className)} />;
+});
 
-export interface TabsIndicatorProps
-  extends Omit<BaseTabsIndicatorProps, 'className'> {
+export interface TabsIndicatorProps extends Omit<BaseTabsIndicatorProps, 'className'> {
   className?: string;
 }
 
@@ -290,14 +250,9 @@ export interface TabsIndicatorProps
  * Optional moving indicator. Place it inside `TabsList` to animate a line or
  * surface beneath the active tab.
  */
-export const TabsIndicator = forwardRef<HTMLSpanElement, TabsIndicatorProps>(
-  function TabsIndicator({ className, ...rest }, ref) {
-    return (
-      <BaseTabs.Indicator
-        ref={ref}
-        {...rest}
-        className={cx(styles.indicator, className)}
-      />
-    );
-  },
-);
+export const TabsIndicator = forwardRef<HTMLSpanElement, TabsIndicatorProps>(function TabsIndicator(
+  { className, ...rest },
+  ref,
+) {
+  return <BaseTabs.Indicator ref={ref} {...rest} className={cx(styles.indicator, className)} />;
+});

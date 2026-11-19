@@ -88,9 +88,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
   }, []);
 
   const registerDescription = useCallback((id: string) => {
-    setDescriptionIds((current) =>
-      current.includes(id) ? current : [...current, id],
-    );
+    setDescriptionIds((current) => (current.includes(id) ? current : [...current, id]));
 
     return () => {
       setDescriptionIds((current) => current.filter((item) => item !== id));
@@ -98,9 +96,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
   }, []);
 
   const registerMessage = useCallback((id: string) => {
-    setMessageIds((current) =>
-      current.includes(id) ? current : [...current, id],
-    );
+    setMessageIds((current) => (current.includes(id) ? current : [...current, id]));
 
     return () => {
       setMessageIds((current) => current.filter((item) => item !== id));
@@ -129,10 +125,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
           const contextValue: FieldContextValue = {
             controlId,
             labelId,
-            describedBy: mergeIds(
-              descriptionIds.join(' '),
-              messageIds.join(' '),
-            ),
+            describedBy: mergeIds(descriptionIds.join(' '), messageIds.join(' ')),
             disabled: isDisabled,
             invalid: Boolean(invalid || validity.validity.valid === false),
             required,
@@ -144,11 +137,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
             registerMessage,
           };
 
-          return (
-            <FieldContext.Provider value={contextValue}>
-              {children}
-            </FieldContext.Provider>
-          );
+          return <FieldContext.Provider value={contextValue}>{children}</FieldContext.Provider>;
         }}
       </BaseField.Validity>
     </BaseField.Root>

@@ -16,20 +16,21 @@ export const searchableSelectCode = `import { useState } from 'react';
 import { Combobox } from '@orkest/ui/client';
 
 const fruits = [
-  { value: 'apple', label: 'Apple' },
-  { value: 'apricot', label: 'Apricot' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'blueberry', label: 'Blueberry' },
-  { value: 'cherry', label: 'Cherry' },
-  { value: 'grape', label: 'Grape' },
-  { value: 'mango', label: 'Mango' },
+{ value: 'apple', label: 'Apple' },
+{ value: 'apricot', label: 'Apricot' },
+{ value: 'banana', label: 'Banana' },
+{ value: 'blueberry', label: 'Blueberry' },
+{ value: 'cherry', label: 'Cherry' },
+{ value: 'grape', label: 'Grape' },
+{ value: 'mango', label: 'Mango' },
 ];
 
 export function Example() {
   const [value, setValue] = useState<string | null>('apple');
 
-  return (
-    <Combobox
+return (
+
+<Combobox
       aria-label="Fruit"
       options={fruits}
       value={value}
@@ -38,23 +39,20 @@ export function Example() {
       placeholder="Pick a fruit"
       searchPlaceholder="Search fruit"
     />
-  );
+);
 }`;
 
-<ComponentPreview
-  title="Searchable select"
-  code={searchableSelectCode}
->
+<ComponentPreview title="Searchable select" code={searchableSelectCode}>
   <ComboboxBasicExample />
 </ComponentPreview>
 
 ## When to use it
 
-| Component | Use it for |
-| --- | --- |
-| `Select` | Choosing from a short, fixed list with no search. |
-| `Combobox` | Searching a long list and choosing exactly one option. |
-| `MultiSelect` | Searching a long list and choosing several options. |
+| Component     | Use it for                                             |
+| ------------- | ------------------------------------------------------ |
+| `Select`      | Choosing from a short, fixed list with no search.      |
+| `Combobox`    | Searching a long list and choosing exactly one option. |
+| `MultiSelect` | Searching a long list and choosing several options.    |
 
 `Combobox` always renders an input. Opening the field starts a fresh search, so a new query never
 needs the old label deleted first; closing it puts the chosen label back.
@@ -88,17 +86,17 @@ listbox and is not selectable itself.
 export const groupedOptionsCode = `import { Combobox } from '@orkest/ui/client';
 
 const projects = [
-  {
-    label: 'Engineering',
-    options: [
-      { value: 'frontend', label: 'Frontend', description: 'Web interfaces' },
-      { value: 'backend', label: 'Backend', description: 'APIs and services' },
-    ],
-  },
-  {
-    label: 'Marketing',
-    options: [{ value: 'website', label: 'Website', description: 'Public site' }],
-  },
+{
+label: 'Engineering',
+options: [
+{ value: 'frontend', label: 'Frontend', description: 'Web interfaces' },
+{ value: 'backend', label: 'Backend', description: 'APIs and services' },
+],
+},
+{
+label: 'Marketing',
+options: [{ value: 'website', label: 'Website', description: 'Public site' }],
+},
 ];
 
 export function Example() {
@@ -112,10 +110,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Grouped options"
-  code={groupedOptionsCode}
->
+<ComponentPreview title="Grouped options" code={groupedOptionsCode}>
   <ComboboxGroupedExample />
 </ComponentPreview>
 
@@ -142,10 +137,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Custom rows"
-  code={customRowsCode}
->
+<ComponentPreview title="Custom rows" code={customRowsCode}>
   <ComboboxCustomItemExample />
 </ComponentPreview>
 
@@ -172,7 +164,7 @@ const [loading, setLoading] = useState(false);
     setLoading(false);
   }}
   emptyMessage="No country matched"
-/>
+/>;
 ```
 
 export const serverSideSearchCode = `<Combobox
@@ -185,10 +177,7 @@ export const serverSideSearchCode = `<Combobox
   emptyMessage="No country matched"
 />`;
 
-<ComponentPreview
-  title="Server-side search"
-  code={serverSideSearchCode}
->
+<ComponentPreview title="Server-side search" code={serverSideSearchCode}>
   <ComboboxAsyncExample />
 </ComponentPreview>
 
@@ -203,10 +192,7 @@ export const disabledInvalidAndLargeCode = `<Combobox aria-label="Fruit" options
 <Combobox aria-label="Team fruit" options={fruits} invalid placeholder="Invalid" />
 <Combobox aria-label="Sized fruit" options={fruits} size="lg" placeholder="Large" />`;
 
-<ComponentPreview
-  title="Disabled, invalid, and large"
-  code={disabledInvalidAndLargeCode}
->
+<ComponentPreview title="Disabled, invalid, and large" code={disabledInvalidAndLargeCode}>
   <ComboboxStatesExample />
 </ComponentPreview>
 

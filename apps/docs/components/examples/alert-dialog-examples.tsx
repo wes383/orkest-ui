@@ -27,8 +27,7 @@ export function AlertDialogBasicExample() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete project?</AlertDialogTitle>
             <AlertDialogDescription>
-              This permanently deletes the project and its data. This action
-              cannot be undone.
+              This permanently deletes the project and its data. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -64,17 +63,12 @@ export function AlertDialogControlledExample() {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete account?</AlertDialogTitle>
               <AlertDialogDescription>
-                All projects and data will be removed. This action cannot be
-                undone.
+                All projects and data will be removed. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-              <Button
-                variant="destructive"
-                loading={loading}
-                onClick={handleDelete}
-              >
+              <Button variant="destructive" loading={loading} onClick={handleDelete}>
                 Delete account
               </Button>
             </AlertDialogFooter>

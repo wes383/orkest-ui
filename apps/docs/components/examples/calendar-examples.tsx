@@ -22,12 +22,7 @@ export function CalendarCaptionSelectExample() {
   const [value, setValue] = useState('2026-11-18');
 
   return (
-    <Calendar
-      value={value}
-      onChange={setValue}
-      defaultMonth="2026-11"
-      captionLayout="select"
-    />
+    <Calendar value={value} onChange={setValue} defaultMonth="2026-11" captionLayout="select" />
   );
 }
 

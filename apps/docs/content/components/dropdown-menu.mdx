@@ -51,10 +51,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Project actions"
-  code={projectActionsCode}
->
+<ComponentPreview title="Project actions" code={projectActionsCode}>
   <DropdownMenuBasicExample />
 </ComponentPreview>
 
@@ -129,10 +126,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Grouped settings"
-  code={groupedSettingsCode}
->
+<ComponentPreview title="Grouped settings" code={groupedSettingsCode}>
   <DropdownMenuGroupExample />
 </ComponentPreview>
 
@@ -154,33 +148,30 @@ import {
 export function Example() {
   const [density, setDensity] = useState('comfortable');
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger variant="outline">
-        Density: {density}
-      </DropdownMenuTrigger>
-      <DropdownMenuPortal>
-        <DropdownMenuContent>
-          <DropdownMenuRadioGroup
-            value={density}
-            onValueChange={(value) => setDensity(value)}
-          >
-            <DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="comfortable">
-              Comfortable
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="spacious">Spacious</DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenuPortal>
-    </DropdownMenu>
-  );
+return (
+
+<DropdownMenu>
+<DropdownMenuTrigger variant="outline">
+Density: {density}
+</DropdownMenuTrigger>
+<DropdownMenuPortal>
+<DropdownMenuContent>
+<DropdownMenuRadioGroup
+value={density}
+onValueChange={(value) => setDensity(value)} >
+<DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
+<DropdownMenuRadioItem value="comfortable">
+Comfortable
+</DropdownMenuRadioItem>
+<DropdownMenuRadioItem value="spacious">Spacious</DropdownMenuRadioItem>
+</DropdownMenuRadioGroup>
+</DropdownMenuContent>
+</DropdownMenuPortal>
+</DropdownMenu>
+);
 }`;
 
-<ComponentPreview
-  title="Density"
-  code={densityCode}
->
+<ComponentPreview title="Density" code={densityCode}>
   <DropdownMenuRadioExample />
 </ComponentPreview>
 
@@ -226,10 +217,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Share submenu"
-  code={shareSubmenuCode}
->
+<ComponentPreview title="Share submenu" code={shareSubmenuCode}>
   <DropdownMenuSubmenuExample />
 </ComponentPreview>
 
@@ -253,32 +241,30 @@ import { Copy, Pencil, Trash2 } from 'lucide-react';
 export function Example() {
   const [open, setOpen] = useState(false);
 
-  return (
-    <Stack direction="row" gap={3} wrap align="center">
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger variant="outline">Project actions</DropdownMenuTrigger>
-        <DropdownMenuPortal>
-          <DropdownMenuContent>
-            <DropdownMenuItem leftIcon={Pencil}>Rename</DropdownMenuItem>
-            <DropdownMenuItem leftIcon={Copy}>Duplicate</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
-              Delete project
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenuPortal>
-      </DropdownMenu>
-      <Text size="sm" tone="muted">
-        {open ? 'Status: open' : 'Status: closed'}
-      </Text>
-    </Stack>
-  );
+return (
+
+<Stack direction="row" gap={3} wrap align="center">
+<DropdownMenu open={open} onOpenChange={setOpen}>
+<DropdownMenuTrigger variant="outline">Project actions</DropdownMenuTrigger>
+<DropdownMenuPortal>
+<DropdownMenuContent>
+<DropdownMenuItem leftIcon={Pencil}>Rename</DropdownMenuItem>
+<DropdownMenuItem leftIcon={Copy}>Duplicate</DropdownMenuItem>
+<DropdownMenuSeparator />
+<DropdownMenuItem variant="destructive" leftIcon={Trash2}>
+Delete project
+</DropdownMenuItem>
+</DropdownMenuContent>
+</DropdownMenuPortal>
+</DropdownMenu>
+<Text size="sm" tone="muted">
+{open ? 'Status: open' : 'Status: closed'}
+</Text>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Controlled menu"
-  code={controlledMenuCode}
->
+<ComponentPreview title="Controlled menu" code={controlledMenuCode}>
   <DropdownMenuControlledExample />
 </ComponentPreview>
 
@@ -317,10 +303,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sized menu"
-  code={sizedMenuCode}
->
+<ComponentPreview title="Sized menu" code={sizedMenuCode}>
   <DropdownMenuSizingExample />
 </ComponentPreview>
 
@@ -330,15 +313,15 @@ available viewport height.
 
 ## Item types
 
-| Type | Component | Behavior |
-| --- | --- | --- |
-| Action | `DropdownMenuItem` | Executes an action and closes the menu |
-| Link | `DropdownMenuLinkItem` | Renders an anchor and closes the menu after navigation |
-| Destructive | `DropdownMenuItem variant="destructive"` | Uses the danger color for irreversible actions |
-| Checkbox | `DropdownMenuCheckboxItem` | Toggles a setting and keeps the menu open |
-| Radio | `DropdownMenuRadioItem` | Selects one value in a `DropdownMenuRadioGroup` |
-| Submenu | `DropdownMenuSub` | Opens a nested menu |
-| Shortcut | `DropdownMenuShortcut` | Displays a keyboard hint without changing the accessible name |
+| Type        | Component                                | Behavior                                                      |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------- |
+| Action      | `DropdownMenuItem`                       | Executes an action and closes the menu                        |
+| Link        | `DropdownMenuLinkItem`                   | Renders an anchor and closes the menu after navigation        |
+| Destructive | `DropdownMenuItem variant="destructive"` | Uses the danger color for irreversible actions                |
+| Checkbox    | `DropdownMenuCheckboxItem`               | Toggles a setting and keeps the menu open                     |
+| Radio       | `DropdownMenuRadioItem`                  | Selects one value in a `DropdownMenuRadioGroup`               |
+| Submenu     | `DropdownMenuSub`                        | Opens a nested menu                                           |
+| Shortcut    | `DropdownMenuShortcut`                   | Displays a keyboard hint without changing the accessible name |
 
 Mix icon and non-icon items with `inset` so labels stay aligned:
 
@@ -630,7 +613,8 @@ Mix icon and non-icon items with `inset` so labels stay aligned:
     {
       name: 'DropdownMenuShortcut',
       type: 'HTMLAttributes<HTMLElement>',
-      description: 'Rendered as a hidden keyboard hint. Content is announced through the item label.',
+      description:
+        'Rendered as a hidden keyboard hint. Content is announced through the item label.',
     },
   ]}
 />

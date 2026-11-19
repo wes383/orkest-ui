@@ -4,13 +4,7 @@ import Link from 'next/link';
 
 import type { NavItem } from '@/lib/docs-types';
 
-export function PrevNext({
-  previous,
-  next,
-}: {
-  previous: NavItem | null;
-  next: NavItem | null;
-}) {
+export function PrevNext({ previous, next }: { previous: NavItem | null; next: NavItem | null }) {
   if (!previous && !next) {
     return null;
   }

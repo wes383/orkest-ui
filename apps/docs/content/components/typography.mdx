@@ -29,10 +29,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Article composition"
-  code={articleCompositionCode}
->
+<ComponentPreview title="Article composition" code={articleCompositionCode}>
   <Stack gap={3}>
     <Heading level={3}>Release notes</Heading>
     <Paragraph>
@@ -67,10 +64,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Heading scale"
-  code={headingScaleCode}
->
+<ComponentPreview title="Heading scale" code={headingScaleCode}>
   <Stack gap={2}>
     <Heading level={2}>Level 2 heading</Heading>
     <Heading level={3}>Level 3 heading</Heading>
@@ -107,10 +101,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Type scale"
-  code={typeScaleCode}
->
+<ComponentPreview title="Type scale" code={typeScaleCode}>
   <Stack gap={1}>
     <Text size="2xs">2xs · 12px</Text>
     <Text size="xs">xs · 13px</Text>
@@ -140,10 +131,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Weights"
-  code={weightsCode}
->
+<ComponentPreview title="Weights" code={weightsCode}>
   <Stack gap={1}>
     <Text weight="regular">Regular 400</Text>
     <Text weight="medium">Medium 500</Text>
@@ -220,7 +208,9 @@ export function Example() {
         {'Single-line truncation keeps long copy from wrapping onto a second line.'}
       </Text>
       <Text as="p" lineClamp={2}>
-        {'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews, cards, and feed summaries.'}
+        {
+          'Multi-line clamping stops after two lines and hides the remainder, which is useful for previews, cards, and feed summaries.'
+        }
       </Text>
     </Stack>
   </Box>
@@ -253,10 +243,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Labels, emphasis, code, and links"
-  code={labelsEmphasisCodeAndLinksCode}
->
+<ComponentPreview title="Labels, emphasis, code, and links" code={labelsEmphasisCodeAndLinksCode}>
   <Stack gap={4}>
     <Stack gap={1}>
       <Label htmlFor="typography-project">Project name</Label>

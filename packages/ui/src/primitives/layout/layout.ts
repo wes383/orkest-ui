@@ -5,8 +5,7 @@ export type SpaceStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20;
 export const responsiveBreakpoints = ['sm', 'md', 'lg', 'xl'] as const;
 
 export type ResponsiveBreakpoint = (typeof responsiveBreakpoints)[number];
-export type ResponsiveObject<T> = { base?: T } &
-  Partial<Record<ResponsiveBreakpoint, T>>;
+export type ResponsiveObject<T> = { base?: T } & Partial<Record<ResponsiveBreakpoint, T>>;
 export type ResponsiveValue<T> = T | ResponsiveObject<T>;
 
 export type LayoutStyle = CSSProperties & Record<`--${string}`, string>;

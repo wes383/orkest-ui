@@ -66,24 +66,22 @@ describe('parseTimeInput', () => {
 
 describe('formatTimeLabel', () => {
   it('formats 24-hour text without a day period', () => {
-    expect(
-      formatTimeLabel({ hours: 9, minutes: 5, seconds: 0 }, { format: '24h' }),
-    ).toBe('09:05');
+    expect(formatTimeLabel({ hours: 9, minutes: 5, seconds: 0 }, { format: '24h' })).toBe('09:05');
   });
 
   it('formats 12-hour text for the locale', () => {
-    expect(
-      formatTimeLabel({ hours: 13, minutes: 45, seconds: 0 }, { format: '12h' }),
-    ).toBe('1:45 PM');
-    expect(
-      formatTimeLabel({ hours: 9, minutes: 30, seconds: 0 }, { format: '12h' }),
-    ).toBe('9:30 AM');
+    expect(formatTimeLabel({ hours: 13, minutes: 45, seconds: 0 }, { format: '12h' })).toBe(
+      '1:45 PM',
+    );
+    expect(formatTimeLabel({ hours: 9, minutes: 30, seconds: 0 }, { format: '12h' })).toBe(
+      '9:30 AM',
+    );
   });
 
   it('inclues seconds when asked', () => {
-    expect(
-      formatTimeLabel({ hours: 9, minutes: 30, seconds: 7 }, { showSeconds: true }),
-    ).toBe('09:30:07');
+    expect(formatTimeLabel({ hours: 9, minutes: 30, seconds: 7 }, { showSeconds: true })).toBe(
+      '09:30:07',
+    );
   });
 });
 
@@ -101,24 +99,34 @@ describe('formatHourLabel', () => {
 
 describe('stepTime', () => {
   it('moves by the minute step and wraps at midnight', () => {
-    expect(
-      stepTime({ hours: 9, minutes: 30, seconds: 0 }, 1, { minuteStep: 15 }),
-    ).toEqual({ hours: 9, minutes: 45, seconds: 0 });
-    expect(
-      stepTime({ hours: 23, minutes: 45, seconds: 0 }, 1, { minuteStep: 15 }),
-    ).toEqual({ hours: 0, minutes: 0, seconds: 0 });
-    expect(
-      stepTime({ hours: 0, minutes: 0, seconds: 0 }, -1, { minuteStep: 15 }),
-    ).toEqual({ hours: 23, minutes: 45, seconds: 0 });
+    expect(stepTime({ hours: 9, minutes: 30, seconds: 0 }, 1, { minuteStep: 15 })).toEqual({
+      hours: 9,
+      minutes: 45,
+      seconds: 0,
+    });
+    expect(stepTime({ hours: 23, minutes: 45, seconds: 0 }, 1, { minuteStep: 15 })).toEqual({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
+    expect(stepTime({ hours: 0, minutes: 0, seconds: 0 }, -1, { minuteStep: 15 })).toEqual({
+      hours: 23,
+      minutes: 45,
+      seconds: 0,
+    });
   });
 
   it('aligns an unaligned value before stepping', () => {
-    expect(
-      stepTime({ hours: 9, minutes: 7, seconds: 0 }, 1, { minuteStep: 15 }),
-    ).toEqual({ hours: 9, minutes: 15, seconds: 0 });
-    expect(
-      stepTime({ hours: 9, minutes: 7, seconds: 0 }, -1, { minuteStep: 15 }),
-    ).toEqual({ hours: 9, minutes: 0, seconds: 0 });
+    expect(stepTime({ hours: 9, minutes: 7, seconds: 0 }, 1, { minuteStep: 15 })).toEqual({
+      hours: 9,
+      minutes: 15,
+      seconds: 0,
+    });
+    expect(stepTime({ hours: 9, minutes: 7, seconds: 0 }, -1, { minuteStep: 15 })).toEqual({
+      hours: 9,
+      minutes: 0,
+      seconds: 0,
+    });
   });
 
   it('clamps to the allowed range', () => {
@@ -184,12 +192,7 @@ describe('column options', () => {
   });
 
   it('lists minutes by step', () => {
-    expect(buildMinuteOptions(15).map((option) => option.label)).toEqual([
-      '00',
-      '15',
-      '30',
-      '45',
-    ]);
+    expect(buildMinuteOptions(15).map((option) => option.label)).toEqual(['00', '15', '30', '45']);
     expect(buildMinuteOptions(60)).toHaveLength(1);
   });
 

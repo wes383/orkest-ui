@@ -3,7 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { Ellipsis } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuTrigger } from '../dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from '../dropdown-menu';
 import { IconButton } from '../icon-button';
 
 import { DataTable, type DataColumn } from './data-table';
@@ -96,9 +102,7 @@ describe('DataTable', () => {
 
   it('filters rows through the global search', async () => {
     const user = userEvent.setup();
-    render(
-      <DataTable columns={columns} data={people} caption="Team" getRowId={(row) => row.id} />,
-    );
+    render(<DataTable columns={columns} data={people} caption="Team" getRowId={(row) => row.id} />);
 
     await user.type(screen.getByLabelText('Search rows'), 'engineer');
 
@@ -210,7 +214,14 @@ describe('DataTable', () => {
         cell: (row) => (
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={<IconButton icon={Ellipsis} label={`Actions for ${row.name}`} size="sm" variant="ghost" />}
+              render={
+                <IconButton
+                  icon={Ellipsis}
+                  label={`Actions for ${row.name}`}
+                  size="sm"
+                  variant="ghost"
+                />
+              }
             />
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">

@@ -5,13 +5,7 @@ import { Icon, type IconSize } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
 import styles from './button.module.css';
 
-export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'ghost'
-  | 'destructive'
-  | 'link';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link';
 
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -85,7 +79,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       data-full-width={fullWidth || undefined}
     >
       {iconOnly ? (
-        leading ?? children
+        (leading ?? children)
       ) : (
         <>
           {leading}

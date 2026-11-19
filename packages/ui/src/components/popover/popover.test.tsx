@@ -19,9 +19,7 @@ import {
   type PopoverProps,
 } from './popover';
 
-function ExamplePopover(
-  props: PopoverProps & { contentProps?: PopoverContentProps },
-) {
+function ExamplePopover(props: PopoverProps & { contentProps?: PopoverContentProps }) {
   const { contentProps, ...rootProps } = props;
 
   return (
@@ -58,9 +56,7 @@ describe('Popover', () => {
 
     expect(container.contains(popover)).toBe(false);
     expect(popover).toHaveAccessibleName('Filters');
-    expect(popover).toHaveAccessibleDescription(
-      'Choose how results are filtered.',
-    );
+    expect(popover).toHaveAccessibleDescription('Choose how results are filtered.');
     const arrow = screen.getByTestId('arrow');
     expect(arrow).toBeInTheDocument();
     // The arrow must sit directly in the popup, outside the scrolling body,
@@ -159,11 +155,7 @@ describe('Popover', () => {
       <Popover defaultOpen>
         <PopoverPortal>
           <PopoverPositioner side="top" align="start">
-            <PopoverContent
-              minWidth="16rem"
-              maxWidth="20rem"
-              maxHeight="12rem"
-            >
+            <PopoverContent minWidth="16rem" maxWidth="20rem" maxHeight="12rem">
               <PopoverTitle>Settings</PopoverTitle>
             </PopoverContent>
           </PopoverPositioner>

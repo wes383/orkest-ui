@@ -15,17 +15,8 @@ export function ChoiceDemo() {
       <Heading level={2} size="xl">
         Choice controls
       </Heading>
-      <Checkbox
-        label="Accept terms"
-        checked={accepted}
-        onCheckedChange={setAccepted}
-      />
-      <RadioGroup
-        aria-label="Plan"
-        orientation="horizontal"
-        value={plan}
-        onValueChange={setPlan}
-      >
+      <Checkbox label="Accept terms" checked={accepted} onCheckedChange={setAccepted} />
+      <RadioGroup aria-label="Plan" orientation="horizontal" value={plan} onValueChange={setPlan}>
         <Radio value="standard" label="Standard" />
         <Radio value="pro" label="Pro" />
         <Radio value="enterprise" label="Enterprise" />

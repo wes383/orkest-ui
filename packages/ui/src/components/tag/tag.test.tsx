@@ -7,14 +7,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { Tag, type TagSize, type TagVariant } from './tag';
 
-const variants: TagVariant[] = [
-  'default',
-  'info',
-  'success',
-  'warning',
-  'destructive',
-  'outline',
-];
+const variants: TagVariant[] = ['default', 'info', 'success', 'warning', 'destructive', 'outline'];
 
 const sizes: TagSize[] = ['sm', 'md', 'lg'];
 

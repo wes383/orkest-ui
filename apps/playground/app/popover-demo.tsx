@@ -2,12 +2,7 @@
 
 import { useState } from 'react';
 
-import {
-  Heading,
-  IconButton,
-  Stack,
-  Text,
-} from '@orkest/ui';
+import { Heading, IconButton, Stack, Text } from '@orkest/ui';
 import {
   Field,
   FieldLabel,
@@ -70,9 +65,7 @@ export function PopoverDemo() {
               <PopoverContent maxWidth="18rem">
                 <Stack gap={2}>
                   <PopoverTitle>Controlled popover</PopoverTitle>
-                  <PopoverDescription>
-                    The playground owns the open state.
-                  </PopoverDescription>
+                  <PopoverDescription>The playground owns the open state.</PopoverDescription>
                   <PopoverClose>Close</PopoverClose>
                 </Stack>
               </PopoverContent>

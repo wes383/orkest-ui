@@ -11,16 +11,7 @@ function StrongImpl(
 ) {
   const Component = (as ?? 'strong') as ElementType;
 
-  return (
-    <Text
-      ref={ref}
-      as={Component}
-      size={size}
-      weight={weight}
-      tone={tone}
-      {...rest}
-    />
-  );
+  return <Text ref={ref} as={Component} size={size} weight={weight} tone={tone} {...rest} />;
 }
 
 StrongImpl.displayName = 'Strong';

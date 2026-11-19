@@ -69,20 +69,14 @@ export function DropdownMenuGroupExample() {
         <DropdownMenuContent>
           <DropdownMenuGroup>
             <DropdownMenuLabel>Panels</DropdownMenuLabel>
-            <DropdownMenuCheckboxItem defaultChecked>
-              Show grid
-            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem defaultChecked>Show grid</DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem>Show ruler</DropdownMenuCheckboxItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuLabel>Resources</DropdownMenuLabel>
-            <DropdownMenuItem leftIcon={Settings}>
-              Preferences
-            </DropdownMenuItem>
-            <DropdownMenuItem leftIcon={Keyboard}>
-              Keyboard shortcuts
-            </DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Settings}>Preferences</DropdownMenuItem>
+            <DropdownMenuItem leftIcon={Keyboard}>Keyboard shortcuts</DropdownMenuItem>
             <DropdownMenuLinkItem href="/docs/components/button/">
               Button documentation
             </DropdownMenuLinkItem>
@@ -98,24 +92,13 @@ export function DropdownMenuRadioExample() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger variant="outline">
-        Density: {density}
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger variant="outline">Density: {density}</DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent>
-          <DropdownMenuRadioGroup
-            value={density}
-            onValueChange={(value) => setDensity(value)}
-          >
-            <DropdownMenuRadioItem value="compact">
-              Compact
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="comfortable">
-              Comfortable
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="spacious">
-              Spacious
-            </DropdownMenuRadioItem>
+          <DropdownMenuRadioGroup value={density} onValueChange={(value) => setDensity(value)}>
+            <DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="comfortable">Comfortable</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="spacious">Spacious</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenuPortal>
@@ -131,14 +114,10 @@ export function DropdownMenuSubmenuExample() {
         <DropdownMenuContent>
           <DropdownMenuItem leftIcon={Copy}>Copy link</DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger leftIcon={Share2}>
-              Share via
-            </DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger leftIcon={Share2}>Share via</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
-              <DropdownMenuItem leftIcon={MessageSquare}>
-                Message
-              </DropdownMenuItem>
+              <DropdownMenuItem leftIcon={MessageSquare}>Message</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>More options…</DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -155,9 +134,7 @@ export function DropdownMenuControlledExample() {
   return (
     <Stack direction="row" gap={3} wrap align="center">
       <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger variant="outline">
-          Project actions
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger variant="outline">Project actions</DropdownMenuTrigger>
         <DropdownMenuPortal>
           <DropdownMenuContent>
             <DropdownMenuItem leftIcon={Pencil}>Rename</DropdownMenuItem>

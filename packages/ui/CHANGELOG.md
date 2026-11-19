@@ -5,7 +5,7 @@
 ### Minor Changes
 
 - 111b59a: Modernize component styling across the library.
-  
+
   - Add theme-aware `--ui-shadow-*` elevation tokens and a layered light surface scale.
   - Draw a soft focus halo around input, select, date, and time controls.
   - Guard hover styles behind `hover: hover`, enlarge small action hit areas, and prevent iOS
@@ -21,7 +21,7 @@
 ### Minor Changes
 
 - aacc04c: Add date, time, and searchable pickers, and extend the multi-value select.
-  
+
   - `Calendar` is a standalone month grid with keyboard navigation, listbox month and year switching,
     inclusive `minDate`/`maxDate` bounds, `disabledDates`, and a `range` span that paints an interval
     without changing the selected day. Dates are `YYYY-MM-DD` strings.
@@ -57,7 +57,7 @@
 ### Minor Changes
 
 - caf8e54: Add the next batch of components: Skeleton, Spinner, Card, Table, DataTable, Pagination, and Empty State.
-  
+
   - `Skeleton` and `Spinner` hold layout and show progress while content loads.
   - `Card`, `Table`, and `EmptyState` ship as composable presentational parts with shorthand APIs where useful.
   - `DataTable` adds client-side sorting, search, pagination, selection, expandable rows, and column visibility from `@orkest/ui/client`.
@@ -75,7 +75,7 @@
 ### Minor Changes
 
 - 438fdd0: Prepare the first public release.
-  
+
   - Primitives and typography: `Box`, `Stack`, `Grid`, `Separator`, `Icon`, `Text`, `Heading`,
     `Paragraph`, `Label`, `Caption`, `Small`, `Strong`, `Code`, and `Link`.
   - Content components: `Badge`, `Tag`, `Alert` with its parts, `Avatar` with image, fallback, and

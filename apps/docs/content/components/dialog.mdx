@@ -64,10 +64,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Edit profile"
-  code={editProfileCode}
->
+<ComponentPreview title="Edit profile" code={editProfileCode}>
   <DialogBasicExample />
 </ComponentPreview>
 
@@ -105,36 +102,34 @@ import {
 export function Example() {
   const [open, setOpen] = useState(false);
 
-  return (
-    <Stack direction="row" gap={3} wrap align="center">
-      <Button onClick={() => setOpen(true)}>Open settings</Button>
-      <Text size="sm" tone="muted">
-        {open ? 'Status: open' : 'Status: closed'}
-      </Text>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogPortal>
-          <DialogOverlay />
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Workspace settings</DialogTitle>
-              <DialogDescription>
-                The dialog state is owned by the parent component.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose>Done</DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
-    </Stack>
-  );
+return (
+
+<Stack direction="row" gap={3} wrap align="center">
+<Button onClick={() => setOpen(true)}>Open settings</Button>
+<Text size="sm" tone="muted">
+{open ? 'Status: open' : 'Status: closed'}
+</Text>
+<Dialog open={open} onOpenChange={setOpen}>
+<DialogPortal>
+<DialogOverlay />
+<DialogContent>
+<DialogHeader>
+<DialogTitle>Workspace settings</DialogTitle>
+<DialogDescription>
+The dialog state is owned by the parent component.
+</DialogDescription>
+</DialogHeader>
+<DialogFooter>
+<DialogClose>Done</DialogClose>
+</DialogFooter>
+</DialogContent>
+</DialogPortal>
+</Dialog>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Controlled dialog"
-  code={controlledDialogCode}
->
+<ComponentPreview title="Controlled dialog" code={controlledDialogCode}>
   <DialogControlledExample />
 </ComponentPreview>
 
@@ -187,10 +182,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Size presets"
-  code={sizePresetsCode}
->
+<ComponentPreview title="Size presets" code={sizePresetsCode}>
   <DialogSizesExample />
 </ComponentPreview>
 
@@ -215,9 +207,9 @@ import {
 } from '@orkest/ui/client';
 
 const clauses = Array.from(
-  { length: 40 },
-  (_, index) =>
-    \`Clause \${index + 1}. This section is long enough to demonstrate a scrollable dialog body while the header and footer stay visible. It includes additional wording so the example overflows on large screens as well.\`,
+{ length: 40 },
+(\_, index) =>
+\`Clause \${index + 1}. This section is long enough to demonstrate a scrollable dialog body while the header and footer stay visible. It includes additional wording so the example overflows on large screens as well.\`,
 );
 
 export function Example() {
@@ -251,10 +243,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Scrollable dialog"
-  code={scrollableDialogCode}
->
+<ComponentPreview title="Scrollable dialog" code={scrollableDialogCode}>
   <DialogScrollExample />
 </ComponentPreview>
 

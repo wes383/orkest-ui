@@ -64,8 +64,7 @@
 
   /* Focus */
   --ui-focus-ring: var(--ok-color-accent-500);
-  --ui-focus-halo: 0 0 0 3px
-    color-mix(in srgb, var(--ui-focus-ring) 32%, transparent);
+  --ui-focus-halo: 0 0 0 3px color-mix(in srgb, var(--ui-focus-ring) 32%, transparent);
 
   /* Status */
   --ui-success: var(--ok-color-green-600);
@@ -140,8 +139,7 @@
 
   /* Focus */
   --ui-focus-ring: var(--ok-color-accent-400);
-  --ui-focus-halo: 0 0 0 3px
-    color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
+  --ui-focus-halo: 0 0 0 3px color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
 
   /* Status */
   --ui-success: var(--ok-color-green-300);
@@ -161,12 +159,9 @@
 
   /* Elevation — deeper shadows keep overlays legible on near-black surfaces */
   --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  --ui-shadow-sm:
-    0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-  --ui-shadow-md:
-    0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
-  --ui-shadow-lg:
-    0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
+  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --ui-shadow-md: 0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
+  --ui-shadow-lg: 0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
 }
 
 /* System preference applies only when the host has not forced a theme. */
@@ -221,8 +216,7 @@
 
     /* Focus */
     --ui-focus-ring: var(--ok-color-accent-400);
-    --ui-focus-halo: 0 0 0 3px
-      color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
+    --ui-focus-halo: 0 0 0 3px color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
 
     /* Status */
     --ui-success: var(--ok-color-green-300);
@@ -242,11 +236,8 @@
 
     /* Elevation */
     --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-    --ui-shadow-sm:
-      0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-    --ui-shadow-md:
-      0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
-    --ui-shadow-lg:
-      0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
+    --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --ui-shadow-md: 0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
+    --ui-shadow-lg: 0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
   }
 }

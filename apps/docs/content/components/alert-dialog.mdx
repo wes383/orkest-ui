@@ -11,13 +11,13 @@ It is built on Base UI Alert Dialog and exported from `@orkest/ui/client`.
 
 ## Dialog vs Alert Dialog
 
-| Behavior | Dialog | Alert Dialog |
-| --- | --- | --- |
-| Overlay press closes | Yes by default | No |
-| Escape closes | Yes by default | No |
-| Focus management | Yes | Yes |
-| Requires an explicit choice | No | Yes |
-| Typical use | Edit, view, create | Delete, discard, reset |
+| Behavior                    | Dialog             | Alert Dialog           |
+| --------------------------- | ------------------ | ---------------------- |
+| Overlay press closes        | Yes by default     | No                     |
+| Escape closes               | Yes by default     | No                     |
+| Focus management            | Yes                | Yes                    |
+| Requires an explicit choice | No                 | Yes                    |
+| Typical use                 | Edit, view, create | Delete, discard, reset |
 
 Alert Dialog does not render a built-in close icon. The only ways out are the cancel and confirming
 actions.
@@ -62,10 +62,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Delete confirmation"
-  code={deleteConfirmationCode}
->
+<ComponentPreview title="Delete confirmation" code={deleteConfirmationCode}>
   <AlertDialogBasicExample />
 </ComponentPreview>
 
@@ -95,50 +92,48 @@ export function Example() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function handleDelete() {
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setLoading(false);
-    setOpen(false);
-  }
+async function handleDelete() {
+setLoading(true);
+await new Promise((resolve) => setTimeout(resolve, 600));
+setLoading(false);
+setOpen(false);
+}
 
-  return (
-    <>
-      <Button variant="destructive" onClick={() => setOpen(true)}>
-        Delete account
-      </Button>
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogPortal>
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete account?</AlertDialogTitle>
-              <AlertDialogDescription>
-                All projects and data will be removed. This action cannot be
-                undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-              <Button
+return (
+
+<>
+<Button variant="destructive" onClick={() => setOpen(true)}>
+Delete account
+</Button>
+<AlertDialog open={open} onOpenChange={setOpen}>
+<AlertDialogPortal>
+<AlertDialogOverlay />
+<AlertDialogContent>
+<AlertDialogHeader>
+<AlertDialogTitle>Delete account?</AlertDialogTitle>
+<AlertDialogDescription>
+All projects and data will be removed. This action cannot be
+undone.
+</AlertDialogDescription>
+</AlertDialogHeader>
+<AlertDialogFooter>
+<AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+<Button
                 variant="destructive"
                 loading={loading}
                 onClick={handleDelete}
               >
-                Delete account
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogPortal>
-      </AlertDialog>
-    </>
-  );
+Delete account
+</Button>
+</AlertDialogFooter>
+</AlertDialogContent>
+</AlertDialogPortal>
+</AlertDialog>
+</>
+);
 }`;
 
-<ComponentPreview
-  title="Async confirmation"
-  code={asyncConfirmationCode}
->
+<ComponentPreview title="Async confirmation" code={asyncConfirmationCode}>
   <AlertDialogControlledExample />
 </ComponentPreview>
 

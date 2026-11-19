@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Children,
-  forwardRef,
-  isValidElement,
-  type CSSProperties,
-  type ReactElement,
-} from 'react';
+import { Children, forwardRef, isValidElement, type CSSProperties, type ReactElement } from 'react';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import type {
   PopoverArrowProps as BasePopoverArrowProps,
@@ -41,18 +35,17 @@ export interface PopoverTriggerProps extends ButtonProps {
 }
 
 /** Button that toggles the surrounding popover. */
-export const PopoverTrigger = forwardRef<
-  HTMLButtonElement,
-  PopoverTriggerProps
->(function PopoverTrigger({ variant = 'secondary', render, ...rest }, ref) {
-  return (
-    <BasePopover.Trigger
-      ref={ref}
-      render={render ?? <Button variant={variant} />}
-      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-    />
-  );
-});
+export const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>(
+  function PopoverTrigger({ variant = 'secondary', render, ...rest }, ref) {
+    return (
+      <BasePopover.Trigger
+        ref={ref}
+        render={render ?? <Button variant={variant} />}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      />
+    );
+  },
+);
 
 export type PopoverPortalProps = BasePopoverPortalProps;
 
@@ -63,41 +56,31 @@ export const PopoverPortal = forwardRef<HTMLDivElement, PopoverPortalProps>(
   },
 );
 
-export interface PopoverPositionerProps
-  extends Omit<BasePopoverPositionerProps, 'className'> {
+export interface PopoverPositionerProps extends Omit<BasePopoverPositionerProps, 'className'> {
   className?: string;
 }
 
 /** Positions the popover against its trigger and handles viewport collisions. */
-export const PopoverPositioner = forwardRef<
-  HTMLDivElement,
-  PopoverPositionerProps
->(function PopoverPositioner(
-  {
-    className,
-    side = 'bottom',
-    align = 'center',
-    sideOffset = 8,
-    alignOffset = 0,
-    ...rest
+export const PopoverPositioner = forwardRef<HTMLDivElement, PopoverPositionerProps>(
+  function PopoverPositioner(
+    { className, side = 'bottom', align = 'center', sideOffset = 8, alignOffset = 0, ...rest },
+    ref,
+  ) {
+    return (
+      <BasePopover.Positioner
+        ref={ref}
+        {...rest}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+        className={cx(styles.positioner, className)}
+      />
+    );
   },
-  ref,
-) {
-  return (
-    <BasePopover.Positioner
-      ref={ref}
-      {...rest}
-      side={side}
-      align={align}
-      sideOffset={sideOffset}
-      alignOffset={alignOffset}
-      className={cx(styles.positioner, className)}
-    />
-  );
-});
+);
 
-export interface PopoverContentProps
-  extends Omit<PopoverPopupProps, 'className'> {
+export interface PopoverContentProps extends Omit<PopoverPopupProps, 'className'> {
   className?: string;
   /** Width of the popover surface. Defaults to fitting its content. */
   width?: CSSProperties['width'];
@@ -115,25 +98,12 @@ export interface PopoverContentProps
  */
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   function PopoverContent(
-    {
-      children,
-      className,
-      width,
-      minWidth,
-      maxWidth,
-      maxHeight,
-      style,
-      ...rest
-    },
+    { children, className, width, minWidth, maxWidth, maxHeight, style, ...rest },
     ref,
   ) {
     const childArray = Children.toArray(children);
-    const arrow = childArray.find(
-      (child) => isValidElement(child) && child.type === PopoverArrow,
-    );
-    const bodyChildren = arrow
-      ? childArray.filter((child) => child !== arrow)
-      : childArray;
+    const arrow = childArray.find((child) => isValidElement(child) && child.type === PopoverArrow);
+    const bodyChildren = arrow ? childArray.filter((child) => child !== arrow) : childArray;
 
     return (
       <BasePopover.Popup
@@ -149,80 +119,51 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   },
 );
 
-export interface PopoverArrowProps
-  extends Omit<BasePopoverArrowProps, 'className'> {
+export interface PopoverArrowProps extends Omit<BasePopoverArrowProps, 'className'> {
   className?: string;
 }
 
 /** Optional arrow pointing from the popover to its trigger. */
-export const PopoverArrow = forwardRef<HTMLDivElement, PopoverArrowProps>(
-  function PopoverArrow({ className, children, ...rest }, ref) {
-    return (
-      <BasePopover.Arrow
-        ref={ref}
-        {...rest}
-        className={cx(styles.arrow, className)}
-      >
-        {children ?? (
-          <svg
-            className={styles.arrowSvg}
-            viewBox="0 0 12 6"
-            aria-hidden="true"
-          >
-            <rect
-              className={styles.arrowFill}
-              x="0"
-              y="5"
-              width="12"
-              height="2"
-            />
-            <path
-              className={styles.arrowShape}
-              d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6"
-            />
-          </svg>
-        )}
-      </BasePopover.Arrow>
-    );
-  },
-);
+export const PopoverArrow = forwardRef<HTMLDivElement, PopoverArrowProps>(function PopoverArrow(
+  { className, children, ...rest },
+  ref,
+) {
+  return (
+    <BasePopover.Arrow ref={ref} {...rest} className={cx(styles.arrow, className)}>
+      {children ?? (
+        <svg className={styles.arrowSvg} viewBox="0 0 12 6" aria-hidden="true">
+          <rect className={styles.arrowFill} x="0" y="5" width="12" height="2" />
+          <path className={styles.arrowShape} d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6" />
+        </svg>
+      )}
+    </BasePopover.Arrow>
+  );
+});
 
-export interface PopoverTitleProps
-  extends Omit<BasePopoverTitleProps, 'className'> {
+export interface PopoverTitleProps extends Omit<BasePopoverTitleProps, 'className'> {
   className?: string;
 }
 
 /** Accessible popover title. Renders an `h2` by default. */
-export const PopoverTitle = forwardRef<HTMLHeadingElement, PopoverTitleProps>(
-  function PopoverTitle({ className, ...rest }, ref) {
-    return (
-      <BasePopover.Title
-        ref={ref}
-        {...rest}
-        className={cx(styles.title, className)}
-      />
-    );
-  },
-);
+export const PopoverTitle = forwardRef<HTMLHeadingElement, PopoverTitleProps>(function PopoverTitle(
+  { className, ...rest },
+  ref,
+) {
+  return <BasePopover.Title ref={ref} {...rest} className={cx(styles.title, className)} />;
+});
 
-export interface PopoverDescriptionProps
-  extends Omit<BasePopoverDescriptionProps, 'className'> {
+export interface PopoverDescriptionProps extends Omit<BasePopoverDescriptionProps, 'className'> {
   className?: string;
 }
 
 /** Supporting popover text associated through aria-describedby. */
-export const PopoverDescription = forwardRef<
-  HTMLParagraphElement,
-  PopoverDescriptionProps
->(function PopoverDescription({ className, ...rest }, ref) {
-  return (
-    <BasePopover.Description
-      ref={ref}
-      {...rest}
-      className={cx(styles.description, className)}
-    />
-  );
-});
+export const PopoverDescription = forwardRef<HTMLParagraphElement, PopoverDescriptionProps>(
+  function PopoverDescription({ className, ...rest }, ref) {
+    return (
+      <BasePopover.Description ref={ref} {...rest} className={cx(styles.description, className)} />
+    );
+  },
+);
 
 export interface PopoverCloseProps extends ButtonProps {
   /** Replaces the default secondary Button. */
@@ -230,14 +171,15 @@ export interface PopoverCloseProps extends ButtonProps {
 }
 
 /** Button that closes the surrounding popover. */
-export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(
-  function PopoverClose({ variant = 'secondary', render, ...rest }, ref) {
-    return (
-      <BasePopover.Close
-        ref={ref}
-        render={render ?? <Button variant={variant} />}
-        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-      />
-    );
-  },
-);
+export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(function PopoverClose(
+  { variant = 'secondary', render, ...rest },
+  ref,
+) {
+  return (
+    <BasePopover.Close
+      ref={ref}
+      render={render ?? <Button variant={variant} />}
+      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+    />
+  );
+});

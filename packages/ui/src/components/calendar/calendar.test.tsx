@@ -180,9 +180,7 @@ describe('Calendar', () => {
     render(<Calendar defaultMonth={NOVEMBER} showOutsideDays={false} />);
 
     expect(screen.getAllByRole('gridcell')).toHaveLength(42);
-    expect(
-      screen.queryByRole('gridcell', { name: /October 31, 2026/ }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('gridcell', { name: /October 31, 2026/ })).not.toBeInTheDocument();
   });
 
   it('forwards class names and refs, and composes from parts', () => {
@@ -201,9 +199,7 @@ describe('Calendar', () => {
   });
 
   it('throws when a part is used outside the calendar', () => {
-    expect(() => render(<CalendarDay date="2026-11-18" />)).toThrow(
-      /outside|inside <Calendar>/i,
-    );
+    expect(() => render(<CalendarDay date="2026-11-18" />)).toThrow(/outside|inside <Calendar>/i);
   });
 
   it('disables every day when the calendar is disabled', async () => {

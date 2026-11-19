@@ -32,7 +32,15 @@ describe('getPaginationRange', () => {
   });
 
   it('surrounds the current page in the middle', () => {
-    expect(getPaginationRange(10, 20)).toEqual([1, 'start-ellipsis', 9, 10, 11, 'end-ellipsis', 20]);
+    expect(getPaginationRange(10, 20)).toEqual([
+      1,
+      'start-ellipsis',
+      9,
+      10,
+      11,
+      'end-ellipsis',
+      20,
+    ]);
   });
 
   it('honours siblingCount', () => {
@@ -90,9 +98,7 @@ describe('Pagination', () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
 
-    const { rerender } = render(
-      <Pagination page={1} totalPages={5} onPageChange={onPageChange} />,
-    );
+    const { rerender } = render(<Pagination page={1} totalPages={5} onPageChange={onPageChange} />);
 
     const previous = screen.getByRole('button', { name: 'Previous page' });
     expect(previous).toBeDisabled();
@@ -144,9 +150,7 @@ describe('Pagination', () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
 
-    render(
-      <Pagination page={10} totalPages={20} showFirstLast onPageChange={onPageChange} />,
-    );
+    render(<Pagination page={10} totalPages={20} showFirstLast onPageChange={onPageChange} />);
 
     await user.click(screen.getByRole('button', { name: 'Last page' }));
     expect(onPageChange).toHaveBeenCalledWith(20);
@@ -200,7 +204,10 @@ describe('Pagination', () => {
     );
 
     const nav = screen.getByRole('navigation', { name: 'Results pages' });
-    expect(within(nav).getByRole('button', { name: 'First' })).toHaveAttribute('aria-current', 'page');
+    expect(within(nav).getByRole('button', { name: 'First' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
     expect(within(nav).queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument();
   });
 });

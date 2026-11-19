@@ -49,10 +49,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Variants"
-  code={variantsCode}
->
+<ComponentPreview title="Variants" code={variantsCode}>
   <AlertVariantsExample />
 </ComponentPreview>
 
@@ -100,10 +97,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Without title or icon"
-  code={withoutTitleOrIconCode}
->
+<ComponentPreview title="Without title or icon" code={withoutTitleOrIconCode}>
   <AlertWithoutTitleExample />
 </ComponentPreview>
 
@@ -133,10 +127,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Custom icon"
-  code={customIconCode}
->
+<ComponentPreview title="Custom icon" code={customIconCode}>
   <AlertCustomIconExample />
 </ComponentPreview>
 
@@ -156,28 +147,27 @@ import {
 export function Example() {
   const [visible, setVisible] = useState(true);
 
-  if (!visible) {
-    return (
-      <Button variant="outline" onClick={() => setVisible(true)}>
-        Show alert again
-      </Button>
-    );
-  }
+if (!visible) {
+return (
 
-  return (
-    <Alert variant="warning" closable onClose={() => setVisible(false)}>
-      <AlertTitle>Verify your email</AlertTitle>
-      <AlertDescription>
-        Some features stay limited until the address is confirmed.
-      </AlertDescription>
-    </Alert>
-  );
+<Button variant="outline" onClick={() => setVisible(true)}>
+Show alert again
+</Button>
+);
+}
+
+return (
+
+<Alert variant="warning" closable onClose={() => setVisible(false)}>
+<AlertTitle>Verify your email</AlertTitle>
+<AlertDescription>
+Some features stay limited until the address is confirmed.
+</AlertDescription>
+</Alert>
+);
 }`;
 
-<ComponentPreview
-  title="Dismissible alert"
-  code={dismissibleAlertCode}
->
+<ComponentPreview title="Dismissible alert" code={dismissibleAlertCode}>
   <AlertClosableExample />
 </ComponentPreview>
 
@@ -213,10 +203,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Retry action"
-  code={retryActionCode}
->
+<ComponentPreview title="Retry action" code={retryActionCode}>
   <AlertActionExample />
 </ComponentPreview>
 
@@ -325,7 +312,8 @@ export function Example() {
     {
       name: 'AlertAction',
       type: 'HTMLAttributes<HTMLDivElement>',
-      description: 'Action slot rendered below the text. Accepts buttons, links, or other controls.',
+      description:
+        'Action slot rendered below the text. Accepts buttons, links, or other controls.',
     },
     {
       name: 'AlertClose.label',

@@ -25,10 +25,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Checkbox states"
-  code={checkboxStatesCode}
->
+<ComponentPreview title="Checkbox states" code={checkboxStatesCode}>
   <Stack gap={3}>
     <Checkbox label="Unchecked" />
     <Checkbox label="Checked" defaultChecked />
@@ -52,10 +49,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={smallMediumAndLargeCode}
->
+<ComponentPreview title="Small, medium, and large" code={smallMediumAndLargeCode}>
   <Stack gap={3}>
     <Checkbox size="sm" label="Small" defaultChecked />
     <Checkbox size="md" label="Medium" defaultChecked />
@@ -79,36 +73,34 @@ export function Example() {
   const allSelected = selected.length === teams.length;
   const partiallySelected = selected.length > 0 && !allSelected;
 
-  return (
-    <Stack gap={2}>
-      <Checkbox
-        label="All teams"
-        checked={allSelected}
-        indeterminate={partiallySelected}
-        onCheckedChange={() => setSelected(allSelected ? [] : teams)}
-      />
-      {teams.map((team) => (
-        <Checkbox
-          key={team}
-          label={team}
-          checked={selected.includes(team)}
-          onCheckedChange={() =>
-            setSelected((current) =>
-              current.includes(team)
-                ? current.filter((item) => item !== team)
-                : [...current, team],
-            )
-          }
-        />
-      ))}
-    </Stack>
-  );
+return (
+
+<Stack gap={2}>
+<Checkbox
+label="All teams"
+checked={allSelected}
+indeterminate={partiallySelected}
+onCheckedChange={() => setSelected(allSelected ? [] : teams)}
+/>
+{teams.map((team) => (
+<Checkbox
+key={team}
+label={team}
+checked={selected.includes(team)}
+onCheckedChange={() =>
+setSelected((current) =>
+current.includes(team)
+? current.filter((item) => item !== team)
+: [...current, team],
+)
+}
+/>
+))}
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Select all"
-  code={selectAllCode}
->
+<ComponentPreview title="Select all" code={selectAllCode}>
   <IndeterminateCheckboxExample />
 </ComponentPreview>
 

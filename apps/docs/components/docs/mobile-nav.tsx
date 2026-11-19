@@ -13,9 +13,12 @@ import { useScrollOverflow } from './use-scroll-overflow';
 export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pathname = usePathname();
-  const { ref: scrollRef, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(
-    navigation,
-  );
+  const {
+    ref: scrollRef,
+    overflowing,
+    atTop,
+    atBottom,
+  } = useScrollOverflow<HTMLDivElement>(navigation);
   const bodyClassName = [
     'mobile-nav-body',
     overflowing && !atTop ? 'mobile-nav-fade-top' : '',

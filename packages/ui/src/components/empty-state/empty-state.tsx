@@ -35,7 +35,18 @@ export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 't
  * loading (use Skeleton) or failures (use an error state with a retry action).
  */
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
-  { size = 'md', align = 'center', title, description, icon, image, action, children, className, ...rest },
+  {
+    size = 'md',
+    align = 'center',
+    title,
+    description,
+    icon,
+    image,
+    action,
+    children,
+    className,
+    ...rest
+  },
   ref,
 ) {
   return (

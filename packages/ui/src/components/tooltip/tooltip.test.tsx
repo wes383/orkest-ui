@@ -120,12 +120,7 @@ describe('Tooltip', () => {
         <Tooltip defaultOpen>
           <TooltipTrigger aria-label="Details">Details</TooltipTrigger>
           <TooltipPortal>
-            <TooltipContent
-              side="bottom"
-              align="start"
-              maxWidth="12rem"
-              maxHeight="8rem"
-            >
+            <TooltipContent side="bottom" align="start" maxWidth="12rem" maxHeight="8rem">
               Details
             </TooltipContent>
           </TooltipPortal>

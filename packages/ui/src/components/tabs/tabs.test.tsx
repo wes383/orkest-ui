@@ -70,21 +70,14 @@ describe('Tabs', () => {
       expect.objectContaining({ reason: 'none' }),
     );
     expect(screen.getByRole('tabpanel')).toHaveTextContent('Activity panel');
-    expect(screen.getByRole('tab', { name: 'Activity' })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    );
+    expect(screen.getByRole('tab', { name: 'Activity' })).toHaveAttribute('aria-selected', 'true');
   });
 
   it('supports controlled values without changing internally', async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
 
-    render(
-      <ExampleTabs
-        rootProps={{ value: 'overview', onValueChange }}
-      />,
-    );
+    render(<ExampleTabs rootProps={{ value: 'overview', onValueChange }} />);
 
     await user.click(screen.getByRole('tab', { name: 'Settings' }));
 
@@ -147,10 +140,7 @@ describe('Tabs', () => {
     render(<ExampleTabs rootProps={{ orientation: 'vertical' }} />);
 
     const [first, second] = getTabs();
-    expect(screen.getByRole('tablist')).toHaveAttribute(
-      'aria-orientation',
-      'vertical',
-    );
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
 
     first?.focus();
     await user.keyboard('{ArrowDown}');

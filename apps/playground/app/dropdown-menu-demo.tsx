@@ -60,9 +60,7 @@ export function DropdownMenuDemo() {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuLabel>Panels</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem defaultChecked>
-                  Show grid
-                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem defaultChecked>Show grid</DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem>Show ruler</DropdownMenuCheckboxItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -72,15 +70,9 @@ export function DropdownMenuDemo() {
                   value={density}
                   onValueChange={(value) => setDensity(value)}
                 >
-                  <DropdownMenuRadioItem value="compact">
-                    Compact
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="comfortable">
-                    Comfortable
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="spacious">
-                    Spacious
-                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="comfortable">Comfortable</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="spacious">Spacious</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -93,9 +85,7 @@ export function DropdownMenuDemo() {
             <DropdownMenuContent>
               <DropdownMenuItem leftIcon={Copy}>Copy link</DropdownMenuItem>
               <DropdownMenuSub>
-                <DropdownMenuSubTrigger leftIcon={Share2}>
-                  Share via
-                </DropdownMenuSubTrigger>
+                <DropdownMenuSubTrigger leftIcon={Share2}>Share via</DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
                   <DropdownMenuItem>Message</DropdownMenuItem>

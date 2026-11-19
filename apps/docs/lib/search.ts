@@ -40,7 +40,8 @@ export function searchDocs(index: SearchIndexItem[], rawQuery: string): SearchRe
       score,
       result: {
         title: item.title,
-        description: headingMatch && !hasTitleMatch ? `Section: ${headingMatch.text}` : item.description,
+        description:
+          headingMatch && !hasTitleMatch ? `Section: ${headingMatch.text}` : item.description,
         href: `${item.href}${anchor}`,
         sectionLabel: item.sectionLabel,
         excerpt: makeExcerpt(item.content, terms[0] ?? query, 150),

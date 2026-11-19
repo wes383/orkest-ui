@@ -27,13 +27,9 @@ describe('DateRangePicker', () => {
   });
 
   it('formats both ends with the default medium style', () => {
-    render(
-      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} />,
-    );
+    render(<DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} />);
 
-    expect(
-      screen.getByRole('button', { name: 'Nov 18, 2026 – Nov 22, 2026' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Nov 18, 2026 – Nov 22, 2026' })).toBeInTheDocument();
   });
 
   it('opens two consecutive months', async () => {
@@ -50,16 +46,18 @@ describe('DateRangePicker', () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    render(<DateRangePicker defaultValue={{ start: '2026-11-10', end: '2026-11-12' }} onChange={onChange} />);
+    render(
+      <DateRangePicker
+        defaultValue={{ start: '2026-11-10', end: '2026-11-12' }}
+        onChange={onChange}
+      />,
+    );
     await open(user, 'Nov 10, 2026 – Nov 12, 2026');
 
     await user.click(day('November 2026', /November 18, 2026/));
 
     expect(onChange).not.toHaveBeenCalled();
-    expect(day('November 2026', /November 18, 2026/)).toHaveAttribute(
-      'data-range-start',
-      'true',
-    );
+    expect(day('November 2026', /November 18, 2026/)).toHaveAttribute('data-range-start', 'true');
 
     await user.click(day('November 2026', /November 22, 2026/));
 
@@ -96,14 +94,8 @@ describe('DateRangePicker', () => {
     await user.click(day('November 2026', /November 18, 2026/));
     await user.hover(day('November 2026', /November 22, 2026/));
 
-    expect(day('November 2026', /November 20, 2026/)).toHaveAttribute(
-      'data-in-range',
-      'true',
-    );
-    expect(day('November 2026', /November 22, 2026/)).toHaveAttribute(
-      'data-range-preview',
-      'true',
-    );
+    expect(day('November 2026', /November 20, 2026/)).toHaveAttribute('data-in-range', 'true');
+    expect(day('November 2026', /November 22, 2026/)).toHaveAttribute('data-range-preview', 'true');
   });
 
   it('clears both ends', async () => {
@@ -146,19 +138,13 @@ describe('DateRangePicker', () => {
     );
     await open(user, 'Nov 10, 2026 – Nov 12, 2026');
 
-    expect(day('November 2026', /November 4, 2026/)).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(day('November 2026', /November 4, 2026/)).toHaveAttribute('aria-disabled', 'true');
     expect(screen.getAllByRole('button', { name: 'Previous month' })[0]).toBeDisabled();
   });
 
   it('submits both ends through hidden inputs', () => {
     const { container } = render(
-      <DateRangePicker
-        defaultValue={{ start: '2026-11-18', end: '2026-11-22' }}
-        name="stay"
-      />,
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} name="stay" />,
     );
 
     expect(container.querySelector('input[name="stay-start"]')).toHaveValue('2026-11-18');

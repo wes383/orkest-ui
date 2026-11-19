@@ -1,0 +1,12 @@
+node_modules
+dist
+.next
+out
+coverage
+pnpm-lock.yaml
+playwright-report
+test-results
+blob-report
+*.tgz
+*.map
+LICENSE

@@ -24,9 +24,7 @@ describe('EmptyState', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'No invoices' })).toBeInTheDocument();
-    expect(
-      screen.getByText('Invoices appear here once a customer is billed.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Invoices appear here once a customer is billed.')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Create invoice' })).toBeInTheDocument();
   });
 

@@ -47,9 +47,7 @@ export function DialogDemo() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Update the name shown on your account.
-                </DialogDescription>
+                <DialogDescription>Update the name shown on your account.</DialogDescription>
               </DialogHeader>
               <DialogBody>
                 <Stack gap={4}>
@@ -71,9 +69,7 @@ export function DialogDemo() {
           </DialogPortal>
         </Dialog>
         <AlertDialog>
-          <AlertDialogTrigger variant="destructive">
-            Delete project
-          </AlertDialogTrigger>
+          <AlertDialogTrigger variant="destructive">Delete project</AlertDialogTrigger>
           <AlertDialogPortal>
             <AlertDialogOverlay />
             <AlertDialogContent>
@@ -100,9 +96,7 @@ export function DialogDemo() {
           <DialogContent size="lg">
             <DialogHeader>
               <DialogTitle>Workspace settings</DialogTitle>
-              <DialogDescription>
-                This dialog is controlled by the playground.
-              </DialogDescription>
+              <DialogDescription>This dialog is controlled by the playground.</DialogDescription>
             </DialogHeader>
             <DialogBody>
               <Stack gap={4}>

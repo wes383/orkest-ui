@@ -3,14 +3,7 @@
 import { useState } from 'react';
 
 import { Stack, Text } from '@orkest/ui';
-import {
-  Switch,
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Switch, Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 import { Bell, Settings, User } from 'lucide-react';
 
 export function TabsBasicExample() {
@@ -211,11 +204,7 @@ export function TabsDisabledExample() {
 
   return (
     <Stack gap={3}>
-      <Switch
-        label="Disable the whole tab list"
-        checked={disabled}
-        onCheckedChange={setDisabled}
-      />
+      <Switch label="Disable the whole tab list" checked={disabled} onCheckedChange={setDisabled} />
       <Tabs defaultValue="general" disabled={disabled}>
         <TabsList>
           <TabsTrigger value="general">General</TabsTrigger>

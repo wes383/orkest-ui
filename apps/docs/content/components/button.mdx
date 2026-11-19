@@ -18,10 +18,7 @@ export function Example() {
   return <Button>Save changes</Button>;
 }`;
 
-<ComponentPreview
-  title="Default button"
-  code={defaultButtonCode}
->
+<ComponentPreview title="Default button" code={defaultButtonCode}>
   <Button>Save changes</Button>
 </ComponentPreview>
 
@@ -42,10 +39,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Variants"
-  code={variantsCode}
->
+<ComponentPreview title="Variants" code={variantsCode}>
   <Stack direction="row" gap={2} wrap>
     <Button>Primary</Button>
     <Button variant="secondary">Secondary</Button>
@@ -76,10 +70,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes"
-  code={sizesCode}
->
+<ComponentPreview title="Sizes" code={sizesCode}>
   <Stack direction="row" gap={2} align="center" wrap>
     <Button size="sm">Small</Button>
     <Button size="md">Medium</Button>
@@ -108,10 +99,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Leading, trailing, and icon-only"
-  code={leadingTrailingAndIconOnlyCode}
->
+<ComponentPreview title="Leading, trailing, and icon-only" code={leadingTrailingAndIconOnlyCode}>
   <Stack direction="row" gap={2} align="center" wrap>
     <Button leftIcon={Plus}>New project</Button>
     <Button variant="secondary" rightIcon={ArrowRight}>
@@ -140,10 +128,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Disabled and loading"
-  code={disabledAndLoadingCode}
->
+<ComponentPreview title="Disabled and loading" code={disabledAndLoadingCode}>
   <Stack direction="row" gap={2} align="center" wrap>
     <Button disabled>Disabled</Button>
     <Button loading>Saving</Button>
@@ -169,10 +154,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Full width"
-  code={fullWidthCode}
->
+<ComponentPreview title="Full width" code={fullWidthCode}>
   <Box style={{ width: '18rem' }}>
     <Button fullWidth>Continue</Button>
   </Box>

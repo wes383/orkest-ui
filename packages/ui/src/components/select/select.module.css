@@ -254,7 +254,7 @@
 .chipRemove::after {
   position: absolute;
   inset: -4px;
-  content: '';
+  content: "";
   border-radius: inherit;
 }
 
@@ -332,7 +332,7 @@
 .iconButton::after {
   position: absolute;
   inset: -4px;
-  content: '';
+  content: "";
   border-radius: inherit;
 }
 

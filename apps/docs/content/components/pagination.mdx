@@ -18,20 +18,18 @@ import { Pagination, Stack, Text } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(1);
 
-  return (
-    <Stack gap={2} align="center">
-      <Pagination page={page} totalPages={5} onPageChange={setPage} />
-      <Text size="sm" tone="muted">
-        Page {page} of 5
-      </Text>
-    </Stack>
-  );
+return (
+
+<Stack gap={2} align="center">
+<Pagination page={page} totalPages={5} onPageChange={setPage} />
+<Text size="sm" tone="muted">
+Page {page} of 5
+</Text>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Basic pagination"
-  code={basicPaginationCode}
->
+<ComponentPreview title="Basic pagination" code={basicPaginationCode}>
   <PaginationBasicExample />
 </ComponentPreview>
 
@@ -43,19 +41,17 @@ import { Pagination, Stack } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(2);
 
-  return (
-    <Stack gap={3} align="start">
-      <Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
-      <Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
-      <Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
-    </Stack>
-  );
+return (
+
+<Stack gap={3} align="start">
+<Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
+<Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
+<Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Small, medium, and large"
-  code={smallMediumAndLargeCode}
->
+<ComponentPreview title="Small, medium, and large" code={smallMediumAndLargeCode}>
   <PaginationSizesExample />
 </ComponentPreview>
 
@@ -69,13 +65,10 @@ import { Pagination } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(1);
 
-  return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
+return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
 }`;
 
-<ComponentPreview
-  title="Twenty pages"
-  code={twentyPagesCode}
->
+<ComponentPreview title="Twenty pages" code={twentyPagesCode}>
   <PaginationManyPagesExample />
 </ComponentPreview>
 
@@ -91,13 +84,10 @@ import { Pagination } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(10);
 
-  return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
+return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
 }`;
 
-<ComponentPreview
-  title="First and last jumps"
-  code={firstAndLastJumpsCode}
->
+<ComponentPreview title="First and last jumps" code={firstAndLastJumpsCode}>
   <PaginationFirstLastExample />
 </ComponentPreview>
 
@@ -128,7 +118,11 @@ import {
 <Pagination page={page} totalPages={20} onPageChange={setPage} label="Search results">
   <PaginationContent>
     <PaginationItem>
-      <PaginationPrevious label="Previous" disabled={page === 1} onClick={() => setPage(page - 1)} />
+      <PaginationPrevious
+        label="Previous"
+        disabled={page === 1}
+        onClick={() => setPage(page - 1)}
+      />
     </PaginationItem>
     <PaginationItem>
       <PaginationLink page={1} isActive={page === 1} onClick={() => setPage(1)} />
@@ -241,7 +235,8 @@ import {
     {
       name: 'PaginationLink',
       type: 'ButtonHTMLAttributes & { page: number; isActive?: boolean }',
-      description: 'Page number button. `isActive` adds `aria-current="page"` and the active styling.',
+      description:
+        'Page number button. `isActive` adds `aria-current="page"` and the active styling.',
     },
     {
       name: 'PaginationPrevious / PaginationNext',

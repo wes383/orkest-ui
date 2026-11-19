@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  type ElementType,
-  type ForwardedRef,
-  type ReactElement,
-} from 'react';
+import { forwardRef, type ElementType, type ForwardedRef, type ReactElement } from 'react';
 
 import { cx } from '../../utils/cx';
 import {

@@ -289,8 +289,7 @@ export function DataTable<TData>({
     setHiddenIds(next);
   }
 
-  const columnCount =
-    visibleColumns.length + (selectable ? 1 : 0) + (expandable ? 1 : 0);
+  const columnCount = visibleColumns.length + (selectable ? 1 : 0) + (expandable ? 1 : 0);
   const firstRow = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const lastRow = paginated ? Math.min(currentPage * pageSize, total) : total;
 
@@ -441,9 +440,7 @@ export function DataTable<TData>({
 
                   {visibleColumns.map((column) => (
                     <TableCell key={column.id} align={column.align}>
-                      {column.cell
-                        ? column.cell(row)
-                        : String(column.accessor(row) ?? '')}
+                      {column.cell ? column.cell(row) : String(column.accessor(row) ?? '')}
                     </TableCell>
                   ))}
                 </TableRow>

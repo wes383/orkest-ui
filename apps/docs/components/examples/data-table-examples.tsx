@@ -64,7 +64,9 @@ const columns: DataColumn<Invoice>[] = [
 ];
 
 export function DataTableExample() {
-  return <DataTable columns={columns} data={invoices} caption="Invoices" getRowId={(row) => row.id} />;
+  return (
+    <DataTable columns={columns} data={invoices} caption="Invoices" getRowId={(row) => row.id} />
+  );
 }
 
 export function DataTableSelectionExample() {
@@ -129,12 +131,7 @@ const columnsWithActions: DataColumn<Invoice>[] = [
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
-            <IconButton
-              icon={Ellipsis}
-              label={`Actions for ${row.id}`}
-              size="sm"
-              variant="ghost"
-            />
+            <IconButton icon={Ellipsis} label={`Actions for ${row.id}`} size="sm" variant="ghost" />
           }
         />
         <DropdownMenuPortal>

@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  type ElementType,
-  type ForwardedRef,
-  type ReactElement,
-} from 'react';
+import { forwardRef, type ElementType, type ForwardedRef, type ReactElement } from 'react';
 
 import { cx } from '../../utils/cx';
 import { mergeStyles, sizeValue, spaceValue, type SpaceStep } from '../layout';
@@ -154,12 +149,7 @@ function BoxImpl(
   );
 
   return (
-    <Component
-      ref={ref}
-      {...rest}
-      className={cx(styles.box, className)}
-      style={layoutStyle}
-    />
+    <Component ref={ref} {...rest} className={cx(styles.box, className)} style={layoutStyle} />
   );
 }
 

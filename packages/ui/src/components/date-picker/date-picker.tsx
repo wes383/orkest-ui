@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useCallback,
-  useMemo,
-  useState,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, useCallback, useMemo, useState, type HTMLAttributes } from 'react';
 import { CalendarDays, X } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
@@ -68,8 +62,10 @@ const actionIconSizeBySize: Record<DatePickerSize, IconSize> = {
   lg: 'md',
 };
 
-export interface DatePickerProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
+export interface DatePickerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onChange' | 'defaultValue' | 'children'
+> {
   /** Selected date as `YYYY-MM-DD`. Controlled when provided, including `null`. */
   value?: string | null;
   /** Initial date for uncontrolled usage. */
@@ -156,11 +152,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
   const todayDate = useMemo(() => today(), []);
   const todayIso = formatISODate(todayDate);
   const todayDisabled = useMemo(() => {
-    const inRange = isWithinRange(
-      todayDate,
-      parseISODate(minDate),
-      parseISODate(maxDate),
-    );
+    const inRange = isWithinRange(todayDate, parseISODate(minDate), parseISODate(maxDate));
 
     if (!inRange) {
       return true;

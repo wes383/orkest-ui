@@ -124,7 +124,8 @@ function layoutStyle(
 }
 
 export interface TableHeadProps
-  extends Omit<ThHTMLAttributes<HTMLTableCellElement>, 'align' | 'width' | 'valign'>,
+  extends
+    Omit<ThHTMLAttributes<HTMLTableCellElement>, 'align' | 'width' | 'valign'>,
     CellLayoutProps {}
 
 /** Header cell. Renders `th` with `scope="col"` by default. */
@@ -145,7 +146,8 @@ export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(functi
 });
 
 export interface TableCellProps
-  extends Omit<TdHTMLAttributes<HTMLTableCellElement>, 'align' | 'width' | 'valign'>,
+  extends
+    Omit<TdHTMLAttributes<HTMLTableCellElement>, 'align' | 'width' | 'valign'>,
     CellLayoutProps {}
 
 /** Data cell. Renders `td`. */

@@ -121,8 +121,8 @@ export default function Page() {
           Orkest UI playground
         </Heading>
         <Text tone="muted">
-          Consumer app validating the built package, both themes, and the client entry in Next.js App
-          Router.
+          Consumer app validating the built package, both themes, and the client entry in Next.js
+          App Router.
         </Text>
       </Stack>
       <section className="showcase" data-orkest-theme="light">

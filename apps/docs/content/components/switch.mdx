@@ -17,19 +17,17 @@ import { Switch } from '@orkest/ui/client';
 export function Example() {
   const [enabled, setEnabled] = useState(true);
 
-  return (
-    <Switch
+return (
+
+<Switch
       label="Email notifications"
       checked={enabled}
       onCheckedChange={setEnabled}
     />
-  );
+);
 }`;
 
-<ComponentPreview
-  title="Controlled switch"
-  code={controlledSwitchCode}
->
+<ComponentPreview title="Controlled switch" code={controlledSwitchCode}>
   <SwitchExample />
 </ComponentPreview>
 
@@ -50,10 +48,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Off, on, disabled, and sizes"
-  code={offOnDisabledAndSizesCode}
->
+<ComponentPreview title="Off, on, disabled, and sizes" code={offOnDisabledAndSizesCode}>
   <Stack gap={3}>
     <Switch label="Off" />
     <Switch label="On" defaultChecked />

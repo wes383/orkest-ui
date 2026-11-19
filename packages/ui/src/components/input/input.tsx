@@ -21,8 +21,7 @@ import styles from './input.module.css';
 
 export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
   /** Control size. Defaults to `md`. */
   size?: InputSize;
   /** Applies the invalid border and `aria-invalid`. */
@@ -109,8 +108,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const actionIconSize = actionIconSizeByInputSize[size];
   const resolvedType = type === 'password' && passwordVisible ? 'text' : type;
   const showClear = clearable && length > 0 && !control.disabled && !readOnly;
-  const showPasswordAction =
-    passwordToggle && type === 'password' && !control.disabled;
+  const showPasswordAction = passwordToggle && type === 'password' && !control.disabled;
   const hasActions = showClear || showPasswordAction;
   const countText = maxLength === undefined ? String(length) : `${length} / ${maxLength}`;
 
@@ -190,10 +188,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           <span className={styles.affix}>{prefix}</span>
         ) : null}
         {field ? (
-          <BaseInput
-            ref={setInputRef as unknown as Ref<HTMLElement>}
-            {...inputProps}
-          />
+          <BaseInput ref={setInputRef as unknown as Ref<HTMLElement>} {...inputProps} />
         ) : (
           <input ref={setInputRef} {...inputProps} />
         )}

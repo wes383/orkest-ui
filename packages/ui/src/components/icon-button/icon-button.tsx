@@ -3,11 +3,10 @@ import type { LucideIcon } from 'lucide-react';
 
 import { Button, type ButtonProps } from '../button';
 
-export interface IconButtonProps
-  extends Omit<
-    ButtonProps,
-    'children' | 'leftIcon' | 'rightIcon' | 'iconOnly' | 'fullWidth' | 'aria-label'
-  > {
+export interface IconButtonProps extends Omit<
+  ButtonProps,
+  'children' | 'leftIcon' | 'rightIcon' | 'iconOnly' | 'fullWidth' | 'aria-label'
+> {
   /** Lucide icon rendered inside the button. */
   icon: LucideIcon;
   /** Accessible name applied as `aria-label`. */

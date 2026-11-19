@@ -25,14 +25,7 @@ import type {
   ToastViewportProps as BaseToastViewportProps,
 } from '@base-ui/react/toast';
 import type { LucideIcon } from 'lucide-react';
-import {
-  AlertTriangle,
-  CheckCircle,
-  CircleX,
-  Info,
-  LoaderCircle,
-  X,
-} from 'lucide-react';
+import { AlertTriangle, CheckCircle, CircleX, Info, LoaderCircle, X } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
@@ -41,12 +34,7 @@ import styles from './toast.module.css';
 export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'loading';
 
 export type ToastPosition =
-  | 'top-left'
-  | 'top-center'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-center'
-  | 'bottom-right';
+  'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 
 export interface ToastActionOptions {
   /** Visible action label, for example "Undo". */
@@ -81,9 +69,7 @@ export interface ToastPromiseMessages<Value> {
 
 type ToastData = Record<string, unknown>;
 
-function mapToastOptions(
-  options: ToastOptions,
-): ToastManagerUpdateOptions<ToastData> {
+function mapToastOptions(options: ToastOptions): ToastManagerUpdateOptions<ToastData> {
   const mapped: ToastManagerUpdateOptions<ToastData> = {};
 
   if (options.title !== undefined) {
@@ -115,9 +101,7 @@ function mapToastOptions(
   return mapped;
 }
 
-function mapToastAddOptions(
-  options: ToastOptions,
-): ToastManagerAddOptions<ToastData> {
+function mapToastAddOptions(options: ToastOptions): ToastManagerAddOptions<ToastData> {
   const mapped: ToastManagerAddOptions<ToastData> = mapToastOptions(options);
 
   if (options.id !== undefined) {
@@ -176,18 +160,13 @@ function createToastApi(manager: ToastManager<ToastData>): ToastApi {
           mapToastAddOptions({
             ...options,
             title:
-              typeof messages.success === 'function'
-                ? messages.success(value)
-                : messages.success,
+              typeof messages.success === 'function' ? messages.success(value) : messages.success,
             type: 'success',
           }),
         error: (error) =>
           mapToastAddOptions({
             ...options,
-            title:
-              typeof messages.error === 'function'
-                ? messages.error(error)
-                : messages.error,
+            title: typeof messages.error === 'function' ? messages.error(error) : messages.error,
             type: 'error',
           }),
       }),
@@ -223,15 +202,11 @@ export interface ToastProviderProps extends BaseToastProviderProps {
 }
 
 /** Provides toast state and connects the imperative API to the viewport. */
-export function ToastProvider({
-  toastManager = globalToastManager,
-  ...rest
-}: ToastProviderProps) {
+export function ToastProvider({ toastManager = globalToastManager, ...rest }: ToastProviderProps) {
   return <BaseToast.Provider {...rest} toastManager={toastManager} />;
 }
 
-export interface ToastViewportProps
-  extends Omit<BaseToastViewportProps, 'children' | 'className'> {
+export interface ToastViewportProps extends Omit<BaseToastViewportProps, 'children' | 'className'> {
   className?: string;
   /** Corner or edge where toasts stack. Defaults to `bottom-right`. */
   position?: ToastPosition;
@@ -253,8 +228,7 @@ const iconSize: IconSize = 'sm';
 
 const ToastTypeContext = createContext<string | undefined>(undefined);
 
-export interface ToastProps
-  extends Omit<ToastRootProps, 'children' | 'className' | 'toast'> {
+export interface ToastProps extends Omit<ToastRootProps, 'children' | 'className' | 'toast'> {
   className?: string;
   children?: ReactNode;
   toast: ToastRootProps['toast'];
@@ -266,73 +240,48 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   ref,
 ) {
   return (
-    <BaseToast.Root
-      ref={ref}
-      {...rest}
-      toast={toastObject}
-      className={cx(styles.toast, className)}
-    >
-      <ToastTypeContext.Provider value={toastObject.type}>
-        {children}
-      </ToastTypeContext.Provider>
+    <BaseToast.Root ref={ref} {...rest} toast={toastObject} className={cx(styles.toast, className)}>
+      <ToastTypeContext.Provider value={toastObject.type}>{children}</ToastTypeContext.Provider>
     </BaseToast.Root>
   );
 });
 
-export interface ToastContentProps
-  extends Omit<BaseToastContentProps, 'className'> {
+export interface ToastContentProps extends Omit<BaseToastContentProps, 'className'> {
   className?: string;
 }
 
 /** Layout container for the toast icon, text, action, and close button. */
-export const ToastContent = forwardRef<HTMLDivElement, ToastContentProps>(
-  function ToastContent({ className, ...rest }, ref) {
-    return (
-      <BaseToast.Content
-        ref={ref}
-        {...rest}
-        className={cx(styles.content, className)}
-      />
-    );
-  },
-);
+export const ToastContent = forwardRef<HTMLDivElement, ToastContentProps>(function ToastContent(
+  { className, ...rest },
+  ref,
+) {
+  return <BaseToast.Content ref={ref} {...rest} className={cx(styles.content, className)} />;
+});
 
-export interface ToastTitleProps
-  extends Omit<BaseToastTitleProps, 'className'> {
+export interface ToastTitleProps extends Omit<BaseToastTitleProps, 'className'> {
   className?: string;
 }
 
 /** Toast title. Draws its text from the toast options. */
-export const ToastTitle = forwardRef<HTMLHeadingElement, ToastTitleProps>(
-  function ToastTitle({ className, ...rest }, ref) {
-    return (
-      <BaseToast.Title
-        ref={ref}
-        {...rest}
-        className={cx(styles.title, className)}
-      />
-    );
-  },
-);
+export const ToastTitle = forwardRef<HTMLHeadingElement, ToastTitleProps>(function ToastTitle(
+  { className, ...rest },
+  ref,
+) {
+  return <BaseToast.Title ref={ref} {...rest} className={cx(styles.title, className)} />;
+});
 
-export interface ToastDescriptionProps
-  extends Omit<BaseToastDescriptionProps, 'className'> {
+export interface ToastDescriptionProps extends Omit<BaseToastDescriptionProps, 'className'> {
   className?: string;
 }
 
 /** Supporting text for the toast. */
-export const ToastDescription = forwardRef<
-  HTMLParagraphElement,
-  ToastDescriptionProps
->(function ToastDescription({ className, ...rest }, ref) {
-  return (
-    <BaseToast.Description
-      ref={ref}
-      {...rest}
-      className={cx(styles.description, className)}
-    />
-  );
-});
+export const ToastDescription = forwardRef<HTMLParagraphElement, ToastDescriptionProps>(
+  function ToastDescription({ className, ...rest }, ref) {
+    return (
+      <BaseToast.Description ref={ref} {...rest} className={cx(styles.description, className)} />
+    );
+  },
+);
 
 export interface ToastIconProps {
   className?: string;
@@ -343,49 +292,38 @@ export interface ToastIconProps {
 }
 
 /** Status icon derived from the toast type. */
-export const ToastIcon = forwardRef<HTMLSpanElement, ToastIconProps>(
-  function ToastIcon({ className, icon, type: typeProp }, ref) {
-    const contextType = useContext(ToastTypeContext);
-    const type = typeProp ?? contextType;
-    const Glyph = icon ?? (type ? iconsByType[type] : undefined);
+export const ToastIcon = forwardRef<HTMLSpanElement, ToastIconProps>(function ToastIcon(
+  { className, icon, type: typeProp },
+  ref,
+) {
+  const contextType = useContext(ToastTypeContext);
+  const type = typeProp ?? contextType;
+  const Glyph = icon ?? (type ? iconsByType[type] : undefined);
 
-    if (!Glyph) {
-      return null;
-    }
+  if (!Glyph) {
+    return null;
+  }
 
-    return (
-      <span
-        ref={ref}
-        className={cx(styles.icon, className)}
-        data-type={type}
-        aria-hidden="true"
-      >
-        <Icon icon={Glyph} size={iconSize} />
-      </span>
-    );
-  },
-);
+  return (
+    <span ref={ref} className={cx(styles.icon, className)} data-type={type} aria-hidden="true">
+      <Icon icon={Glyph} size={iconSize} />
+    </span>
+  );
+});
 
-export interface ToastActionProps
-  extends Omit<BaseToastActionProps, 'className'> {
+export interface ToastActionProps extends Omit<BaseToastActionProps, 'className'> {
   className?: string;
 }
 
 /** Optional action button, such as "Undo". */
-export const ToastAction = forwardRef<HTMLButtonElement, ToastActionProps>(
-  function ToastAction({ className, ...rest }, ref) {
-    return (
-      <BaseToast.Action
-        ref={ref}
-        {...rest}
-        className={cx(styles.action, className)}
-      />
-    );
-  },
-);
+export const ToastAction = forwardRef<HTMLButtonElement, ToastActionProps>(function ToastAction(
+  { className, ...rest },
+  ref,
+) {
+  return <BaseToast.Action ref={ref} {...rest} className={cx(styles.action, className)} />;
+});
 
-export interface ToastCloseProps
-  extends Omit<BaseToastCloseProps, 'children' | 'className'> {
+export interface ToastCloseProps extends Omit<BaseToastCloseProps, 'children' | 'className'> {
   className?: string;
   /** Accessible name for the icon-only close button. */
   label?: string;
@@ -393,29 +331,21 @@ export interface ToastCloseProps
 }
 
 /** Closes the surrounding toast. Renders an icon-only button by default. */
-export const ToastClose = forwardRef<HTMLButtonElement, ToastCloseProps>(
-  function ToastClose(
-    {
-      className,
-      label = 'Close notification',
-      children,
-      'aria-label': ariaLabel,
-      ...rest
-    },
-    ref,
-  ) {
-    return (
-      <BaseToast.Close
-        ref={ref}
-        {...rest}
-        aria-label={ariaLabel ?? label}
-        className={cx(styles.close, className)}
-      >
-        {children ?? <Icon icon={X} size="sm" />}
-      </BaseToast.Close>
-    );
-  },
-);
+export const ToastClose = forwardRef<HTMLButtonElement, ToastCloseProps>(function ToastClose(
+  { className, label = 'Close notification', children, 'aria-label': ariaLabel, ...rest },
+  ref,
+) {
+  return (
+    <BaseToast.Close
+      ref={ref}
+      {...rest}
+      aria-label={ariaLabel ?? label}
+      className={cx(styles.close, className)}
+    >
+      {children ?? <Icon icon={X} size="sm" />}
+    </BaseToast.Close>
+  );
+});
 
 function DefaultToast({ toastObject }: { toastObject: ToastObject<ToastData> }) {
   return (
@@ -437,38 +367,26 @@ function DefaultToast({ toastObject }: { toastObject: ToastObject<ToastData> }) 
  * Fixed viewport that renders the toast stack. Place a single viewport next to
  * the app-level `ToastProvider`.
  */
-export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
-  function ToastViewport(
-    {
-      className,
-      position = 'bottom-right',
-      children,
-      container,
-      ...rest
-    },
-    ref,
-  ) {
-    const { toasts } = BaseToast.useToastManager();
+export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(function ToastViewport(
+  { className, position = 'bottom-right', children, container, ...rest },
+  ref,
+) {
+  const { toasts } = BaseToast.useToastManager();
 
-    return (
-      <BaseToast.Portal container={container}>
-        <BaseToast.Viewport
-          ref={ref}
-          {...rest}
-          className={cx(styles.viewport, className)}
-          data-position={position}
-        >
-          {toasts.map((toastObject) => (
-            <Fragment key={toastObject.id}>
-              {children ? (
-                children(toastObject)
-              ) : (
-                <DefaultToast toastObject={toastObject} />
-              )}
-            </Fragment>
-          ))}
-        </BaseToast.Viewport>
-      </BaseToast.Portal>
-    );
-  },
-);
+  return (
+    <BaseToast.Portal container={container}>
+      <BaseToast.Viewport
+        ref={ref}
+        {...rest}
+        className={cx(styles.viewport, className)}
+        data-position={position}
+      >
+        {toasts.map((toastObject) => (
+          <Fragment key={toastObject.id}>
+            {children ? children(toastObject) : <DefaultToast toastObject={toastObject} />}
+          </Fragment>
+        ))}
+      </BaseToast.Viewport>
+    </BaseToast.Portal>
+  );
+});

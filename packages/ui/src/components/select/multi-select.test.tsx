@@ -26,17 +26,11 @@ async function openMultiSelect(name = 'Teams') {
 describe('MultiSelect', () => {
   it('renders selected values as removable tags', () => {
     render(
-      <MultiSelect
-        aria-label="Teams"
-        options={options}
-        defaultValue={['design', 'engineering']}
-      />,
+      <MultiSelect aria-label="Teams" options={options} defaultValue={['design', 'engineering']} />,
     );
 
     expect(screen.getByRole('button', { name: 'Remove Design' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Remove Engineering' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Remove Engineering' })).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: 'Teams' })).toHaveAttribute(
       'aria-expanded',
       'false',
@@ -46,9 +40,7 @@ describe('MultiSelect', () => {
   it('opens a multi-selectable listbox and toggles values', async () => {
     const onChange = vi.fn();
 
-    render(
-      <MultiSelect aria-label="Teams" options={options} onChange={onChange} />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} onChange={onChange} />);
 
     const { user, combobox } = await openMultiSelect();
     const listbox = screen.getByRole('listbox');
@@ -68,9 +60,7 @@ describe('MultiSelect', () => {
     await user.click(screen.getByRole('option', { name: 'Design' }));
 
     expect(onChange).toHaveBeenLastCalledWith([], []);
-    expect(
-      screen.queryByRole('button', { name: 'Remove Design' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Remove Design' })).not.toBeInTheDocument();
   });
 
   it('removes a single value and clears all values', async () => {
@@ -94,16 +84,12 @@ describe('MultiSelect', () => {
       ['engineering'],
       [expect.objectContaining({ value: 'engineering' })],
     );
-    expect(
-      screen.queryByRole('button', { name: 'Remove Design' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Remove Design' })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Clear selection' }));
 
     expect(onChange).toHaveBeenLastCalledWith([], []);
-    expect(
-      screen.queryByRole('button', { name: 'Remove Engineering' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Remove Engineering' })).not.toBeInTheDocument();
   });
 
   it('enforces maxSelected', async () => {
@@ -131,13 +117,7 @@ describe('MultiSelect', () => {
   });
 
   it('updates the selection count when maxSelected is set', async () => {
-    render(
-      <MultiSelect
-        aria-label="Teams"
-        options={options}
-        maxSelected={3}
-      />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} maxSelected={3} />);
 
     const { user } = await openMultiSelect();
 
@@ -150,12 +130,7 @@ describe('MultiSelect', () => {
 
   it('hides selected options when hideSelected is set', async () => {
     render(
-      <MultiSelect
-        aria-label="Teams"
-        options={options}
-        defaultValue={['design']}
-        hideSelected
-      />,
+      <MultiSelect aria-label="Teams" options={options} defaultValue={['design']} hideSelected />,
     );
 
     await openMultiSelect();
@@ -197,9 +172,7 @@ describe('MultiSelect', () => {
   it('supports keyboard opening and toggling', async () => {
     const onChange = vi.fn();
 
-    render(
-      <MultiSelect aria-label="Teams" options={options} onChange={onChange} />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} onChange={onChange} />);
 
     const user = userEvent.setup();
     const combobox = screen.getByRole('combobox', { name: 'Teams' });
@@ -243,22 +216,13 @@ describe('MultiSelect', () => {
 
     await user.click(screen.getByRole('option', { name: 'Engineering' }));
 
-    expect(
-      screen.getByRole('button', { name: 'Remove Engineering' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Remove Engineering' })).toBeInTheDocument();
   });
 
   it('auto-highlights the first search result for Enter selection', async () => {
     const onChange = vi.fn();
 
-    render(
-      <MultiSelect
-        aria-label="Teams"
-        options={options}
-        searchable
-        onChange={onChange}
-      />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} searchable onChange={onChange} />);
 
     const user = userEvent.setup();
     const combobox = screen.getByRole('combobox', { name: 'Teams' });
@@ -266,9 +230,7 @@ describe('MultiSelect', () => {
     await user.click(combobox);
     await user.type(combobox, 'eng');
 
-    expect(
-      screen.getByRole('option', { name: 'Engineering' }),
-    ).toHaveAttribute('data-highlighted');
+    expect(screen.getByRole('option', { name: 'Engineering' })).toHaveAttribute('data-highlighted');
 
     await user.keyboard('{Enter}');
 
@@ -281,9 +243,7 @@ describe('MultiSelect', () => {
   it('keeps the menu and query when Enter has no matching option', async () => {
     const user = userEvent.setup();
 
-    render(
-      <MultiSelect aria-label="Teams" options={options} searchable />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} searchable />);
 
     const combobox = screen.getByRole('combobox', { name: 'Teams' });
 
@@ -301,9 +261,7 @@ describe('MultiSelect', () => {
   it('does not select disabled options', async () => {
     const onChange = vi.fn();
 
-    render(
-      <MultiSelect aria-label="Teams" options={options} onChange={onChange} />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} onChange={onChange} />);
 
     const { user } = await openMultiSelect();
     const product = screen.getByRole('option', { name: 'Product' });
@@ -339,10 +297,7 @@ describe('MultiSelect', () => {
     expect(combobox).toHaveAttribute('aria-describedby', 'teams-help');
 
     const hidden = container.querySelectorAll<HTMLInputElement>('input[name="teams"]');
-    expect(Array.from(hidden, (input) => input.value)).toEqual([
-      'design',
-      'engineering',
-    ]);
+    expect(Array.from(hidden, (input) => input.value)).toEqual(['design', 'engineering']);
     expect(container.querySelector('[data-size="lg"]')).toBeInTheDocument();
   });
 
@@ -359,9 +314,7 @@ describe('MultiSelect', () => {
   it('selects every enabled option from the select-all row', async () => {
     const onChange = vi.fn();
 
-    render(
-      <MultiSelect aria-label="Teams" options={options} selectAll onChange={onChange} />,
-    );
+    render(<MultiSelect aria-label="Teams" options={options} selectAll onChange={onChange} />);
 
     const { user } = await openMultiSelect();
     const selectAll = screen.getByRole('button', { name: 'Select all' });
@@ -411,10 +364,7 @@ describe('MultiSelect', () => {
     await user.click(selectAll);
 
     // Only one seat is left, so the second option is the only addition.
-    expect(onChange).toHaveBeenLastCalledWith(
-      ['design', 'engineering'],
-      expect.anything(),
-    );
+    expect(onChange).toHaveBeenLastCalledWith(['design', 'engineering'], expect.anything());
     expect(screen.getByRole('button', { name: 'Select all' })).toBeDisabled();
   });
 
@@ -429,9 +379,7 @@ describe('MultiSelect', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Remove Design' })).toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Remove Engineering' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Remove Engineering' })).not.toBeInTheDocument();
 
     const overflow = screen.getByRole('button', { name: 'Show 1 more' });
 
@@ -439,9 +387,7 @@ describe('MultiSelect', () => {
 
     await userEvent.setup().click(overflow);
 
-    expect(
-      screen.getByRole('button', { name: 'Remove Engineering' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Remove Engineering' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Show 1 more' })).not.toBeInTheDocument();
   });
 
@@ -467,8 +413,6 @@ describe('MultiSelect', () => {
 
     expect(screen.getByText(/Loading options…/)).toBeInTheDocument();
     expect(screen.queryByRole('option')).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Select all' }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Select all' })).not.toBeInTheDocument();
   });
 });

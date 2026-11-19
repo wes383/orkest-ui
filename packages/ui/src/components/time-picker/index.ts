@@ -1,8 +1,4 @@
-export {
-  TimePicker,
-  TimePickerColumn,
-  TimePickerContent,
-} from './time-picker';
+export { TimePicker, TimePickerColumn, TimePickerContent } from './time-picker';
 export type {
   TimePickerColumnOption,
   TimePickerColumnProps,

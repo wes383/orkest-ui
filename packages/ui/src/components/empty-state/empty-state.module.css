@@ -80,9 +80,7 @@
 
 /* Title and description read as one block, so they sit closer than the other parts. */
 .title + .description {
-  margin-top: calc(
-    var(--empty-state-copy-gap, 0px) - var(--empty-state-gap, 0px)
-  );
+  margin-top: calc(var(--empty-state-copy-gap, 0px) - var(--empty-state-gap, 0px));
 }
 
 .description {

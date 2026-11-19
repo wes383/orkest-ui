@@ -49,10 +49,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Underline tabs"
-  code={underlineTabsCode}
->
+<ComponentPreview title="Underline tabs" code={underlineTabsCode}>
   <TabsBasicExample />
 </ComponentPreview>
 
@@ -97,10 +94,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Pills"
-  code={pillsCode}
->
+<ComponentPreview title="Pills" code={pillsCode}>
   <TabsPillsExample />
 </ComponentPreview>
 
@@ -131,10 +125,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Enclosed"
-  code={enclosedCode}
->
+<ComponentPreview title="Enclosed" code={enclosedCode}>
   <TabsEnclosedExample />
 </ComponentPreview>
 
@@ -181,10 +172,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Vertical settings navigation"
-  code={verticalSettingsNavigationCode}
->
+<ComponentPreview title="Vertical settings navigation" code={verticalSettingsNavigationCode}>
   <TabsVerticalExample />
 </ComponentPreview>
 
@@ -236,10 +224,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes"
-  code={sizesCode}
->
+<ComponentPreview title="Sizes" code={sizesCode}>
   <TabsSizesExample />
 </ComponentPreview>
 
@@ -267,10 +252,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Full width"
-  code={fullWidthCode}
->
+<ComponentPreview title="Full width" code={fullWidthCode}>
   <TabsFullWidthExample />
 </ComponentPreview>
 
@@ -320,10 +302,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Manual activation"
-  code={manualActivationCode}
->
+<ComponentPreview title="Manual activation" code={manualActivationCode}>
   <TabsManualExample />
 </ComponentPreview>
 
@@ -342,26 +321,24 @@ import {
 export function Example() {
   const [value, setValue] = useState('overview');
 
-  return (
-    <Stack gap={2}>
-      <Tabs value={value} onValueChange={setValue}>
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
-          <TabsIndicator />
-        </TabsList>
-        <TabsContent value="overview">Overview panel.</TabsContent>
-        <TabsContent value="activity">Activity panel.</TabsContent>
-      </Tabs>
-      <Text size="sm" tone="muted">Active tab: {value}</Text>
-    </Stack>
-  );
+return (
+
+<Stack gap={2}>
+<Tabs value={value} onValueChange={setValue}>
+<TabsList>
+<TabsTrigger value="overview">Overview</TabsTrigger>
+<TabsTrigger value="activity">Activity</TabsTrigger>
+<TabsIndicator />
+</TabsList>
+<TabsContent value="overview">Overview panel.</TabsContent>
+<TabsContent value="activity">Activity panel.</TabsContent>
+</Tabs>
+<Text size="sm" tone="muted">Active tab: {value}</Text>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Controlled tabs"
-  code={controlledTabsCode}
->
+<ComponentPreview title="Controlled tabs" code={controlledTabsCode}>
   <TabsControlledExample />
 </ComponentPreview>
 
@@ -386,46 +363,44 @@ import {
 export function Example() {
   const [disabled, setDisabled] = useState(false);
 
-  return (
-    <Stack gap={3}>
-      <Switch
+return (
+
+<Stack gap={3}>
+<Switch
         label="Disable the whole tab list"
         checked={disabled}
         onCheckedChange={setDisabled}
       />
-      <Tabs defaultValue="general" disabled={disabled}>
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="billing" disabled>
-            Billing
-          </TabsTrigger>
-          <TabsTrigger value="advanced">Advanced</TabsTrigger>
-          <TabsIndicator />
-        </TabsList>
-        <TabsContent value="general">General settings.</TabsContent>
-        <TabsContent value="billing">Billing settings.</TabsContent>
-        <TabsContent value="advanced">Advanced settings.</TabsContent>
-      </Tabs>
-    </Stack>
-  );
+<Tabs defaultValue="general" disabled={disabled}>
+<TabsList>
+<TabsTrigger value="general">General</TabsTrigger>
+<TabsTrigger value="billing" disabled>
+Billing
+</TabsTrigger>
+<TabsTrigger value="advanced">Advanced</TabsTrigger>
+<TabsIndicator />
+</TabsList>
+<TabsContent value="general">General settings.</TabsContent>
+<TabsContent value="billing">Billing settings.</TabsContent>
+<TabsContent value="advanced">Advanced settings.</TabsContent>
+</Tabs>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Disabled states"
-  code={disabledStatesCode}
->
+<ComponentPreview title="Disabled states" code={disabledStatesCode}>
   <TabsDisabledExample />
 </ComponentPreview>
 
 ## Keyboard interaction
 
-| Key                     | Behavior                                              |
-| ----------------------- | ----------------------------------------------------- |
-| ArrowLeft / ArrowRight  | Move focus between horizontal tabs                    |
-| ArrowUp / ArrowDown     | Move focus between vertical tabs                      |
-| Home / End              | Move to the first or last enabled tab                 |
-| Enter / Space           | Activate the focused tab in manual mode                |
-| Tab                     | Move into or out of the tab list                      |
+| Key                    | Behavior                                |
+| ---------------------- | --------------------------------------- |
+| ArrowLeft / ArrowRight | Move focus between horizontal tabs      |
+| ArrowUp / ArrowDown    | Move focus between vertical tabs        |
+| Home / End             | Move to the first or last enabled tab   |
+| Enter / Space          | Activate the focused tab in manual mode |
+| Tab                    | Move into or out of the tab list        |
 
 Focus wraps at the ends by default. Set `loop={false}` on `TabsList` to stop at the last tab.
 Disabled tabs are skipped.

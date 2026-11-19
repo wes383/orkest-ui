@@ -8,14 +8,7 @@ import styles from './typography.module.css';
 export type CodeProps<T extends ElementType = 'code'> = PolymorphicProps<T, TextOwnProps>;
 
 function CodeImpl(
-  {
-    as,
-    className,
-    size = 'inherit',
-    font = 'mono',
-    tone = 'inherit',
-    ...rest
-  }: CodeProps<'code'>,
+  { as, className, size = 'inherit', font = 'mono', tone = 'inherit', ...rest }: CodeProps<'code'>,
   ref: ForwardedRef<HTMLElement>,
 ) {
   const Component = (as ?? 'code') as ElementType;

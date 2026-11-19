@@ -88,8 +88,10 @@ export interface CalendarRange {
   preview?: string | null;
 }
 
-export interface CalendarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
+export interface CalendarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onChange' | 'defaultValue' | 'children'
+> {
   /** Selected date as `YYYY-MM-DD`. Controlled when provided, including `null`. */
   value?: string | null;
   /** Initial date for uncontrolled usage. */
@@ -177,14 +179,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(function Calen
   const isMonthControlled = month !== undefined;
   const [internalMonth, setInternalMonth] = useState<CivilDate>(() => {
     return (
-      parseISOMonth(month) ??
-      parseISOMonth(defaultMonth) ??
-      startOfMonth(selectedDate ?? todayDate)
+      parseISOMonth(month) ?? parseISOMonth(defaultMonth) ?? startOfMonth(selectedDate ?? todayDate)
     );
   });
-  const visibleMonth = isMonthControlled
-    ? (parseISOMonth(month) ?? internalMonth)
-    : internalMonth;
+  const visibleMonth = isMonthControlled ? (parseISOMonth(month) ?? internalMonth) : internalMonth;
 
   const [focusedDate, setFocusedDate] = useState<CivilDate>(() =>
     clampDate(selectedDate ?? todayDate, min, max),
@@ -546,11 +544,10 @@ function CalendarCaptionSelects() {
   const months = useMemo(() => {
     return Array.from({ length: 12 }, (_, index) => ({
       value: String(index),
-      label: formatMonthLabel(
-        { year: visibleMonth.year, month: index, day: 1 },
-        locale,
-        { withYear: false, width: 'long' },
-      ),
+      label: formatMonthLabel({ year: visibleMonth.year, month: index, day: 1 }, locale, {
+        withYear: false,
+        width: 'long',
+      }),
     }));
   }, [locale, visibleMonth.year]);
 
@@ -564,9 +561,7 @@ function CalendarCaptionSelects() {
         options={months}
         sizer={monthLabels}
         disabled={disabled}
-        onValueChange={(next) =>
-          setVisibleMonth({ ...visibleMonth, month: Number(next), day: 1 })
-        }
+        onValueChange={(next) => setVisibleMonth({ ...visibleMonth, month: Number(next), day: 1 })}
       />
       <CalendarCaptionSelect
         label={labels.year}
@@ -586,113 +581,114 @@ export interface CalendarGridProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Six-week day grid with roving tabindex and arrow-key navigation. */
-export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
-  function CalendarGrid({ className, showWeekdays = true, onKeyDown, ...rest }, ref) {
-    const context = useCalendarContext();
-    const { visibleMonth, weekStartsOn, locale, showOutsideDays, focusDate, gridRef } = context;
-    const weeks = useMemo(
-      () => buildCalendarWeeks(visibleMonth, weekStartsOn),
-      [visibleMonth, weekStartsOn],
-    );
+export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(function CalendarGrid(
+  { className, showWeekdays = true, onKeyDown, ...rest },
+  ref,
+) {
+  const context = useCalendarContext();
+  const { visibleMonth, weekStartsOn, locale, showOutsideDays, focusDate, gridRef } = context;
+  const weeks = useMemo(
+    () => buildCalendarWeeks(visibleMonth, weekStartsOn),
+    [visibleMonth, weekStartsOn],
+  );
 
-    // The root focuses a day after arrow-key navigation, so the grid must
-    // always register itself even when the consumer supplies its own ref.
-    const setRefs = useCallback(
-      (node: HTMLDivElement | null) => {
-        gridRef.current = node;
-        assignRef(ref, node);
-      },
-      [gridRef, ref],
-    );
+  // The root focuses a day after arrow-key navigation, so the grid must
+  // always register itself even when the consumer supplies its own ref.
+  const setRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      gridRef.current = node;
+      assignRef(ref, node);
+    },
+    [gridRef, ref],
+  );
 
-    function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-      onKeyDown?.(event);
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    onKeyDown?.(event);
 
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      const cell = (event.target as HTMLElement).closest<HTMLElement>('[data-day]');
-      const current = parseISODate(cell?.dataset.day);
-      const offset = current ? (weekdayOf(current) - weekStartsOn + 7) % 7 : 0;
-      let next: CivilDate | null = null;
-
-      switch (event.key) {
-        case 'ArrowLeft':
-          next = current && addDays(current, -1);
-          break;
-        case 'ArrowRight':
-          next = current && addDays(current, 1);
-          break;
-        case 'ArrowUp':
-          next = current && addDays(current, -7);
-          break;
-        case 'ArrowDown':
-          next = current && addDays(current, 7);
-          break;
-        case 'Home':
-          next = current && addDays(current, -offset);
-          break;
-        case 'End':
-          next = current && addDays(current, 6 - offset);
-          break;
-        case 'PageUp':
-          next = current && addMonths(current, event.shiftKey ? -12 : -1);
-          break;
-        case 'PageDown':
-          next = current && addMonths(current, event.shiftKey ? 12 : 1);
-          break;
-        default:
-          return;
-      }
-
-      if (!next) {
-        return;
-      }
-
-      event.preventDefault();
-      focusDate(next, { focus: true });
+    if (event.defaultPrevented) {
+      return;
     }
 
-    return (
-      <div
-        ref={setRefs}
-        role="grid"
-        tabIndex={-1}
-        aria-label={formatMonthLabel(visibleMonth, locale)}
-        className={cx(styles.grid, className)}
-        onKeyDown={handleKeyDown}
-        {...rest}
-      >
-        {showWeekdays ? (
-          <div role="row" className={cx(styles.week, styles.weekdays)}>
-            {weekdayOrder(weekStartsOn).map((weekday) => (
-              <div
-                key={weekday}
-                role="columnheader"
-                className={styles.weekday}
-                aria-label={formatWeekdayLabel(weekday, locale, 'long')}
-              >
-                {formatWeekdayLabel(weekday, locale, 'short')}
-              </div>
-            ))}
-          </div>
-        ) : null}
-        {weeks.map((week) => (
-          <div role="row" key={formatISODate(week[0] ?? visibleMonth)} className={styles.week}>
-            {week.map((date) =>
-              showOutsideDays || isSameMonth(date, visibleMonth) ? (
-                <CalendarDay key={formatISODate(date)} date={formatISODate(date)} />
-              ) : (
-                <span key={formatISODate(date)} role="gridcell" className={styles.emptyCell} />
-              ),
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  },
-);
+    const cell = (event.target as HTMLElement).closest<HTMLElement>('[data-day]');
+    const current = parseISODate(cell?.dataset.day);
+    const offset = current ? (weekdayOf(current) - weekStartsOn + 7) % 7 : 0;
+    let next: CivilDate | null = null;
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        next = current && addDays(current, -1);
+        break;
+      case 'ArrowRight':
+        next = current && addDays(current, 1);
+        break;
+      case 'ArrowUp':
+        next = current && addDays(current, -7);
+        break;
+      case 'ArrowDown':
+        next = current && addDays(current, 7);
+        break;
+      case 'Home':
+        next = current && addDays(current, -offset);
+        break;
+      case 'End':
+        next = current && addDays(current, 6 - offset);
+        break;
+      case 'PageUp':
+        next = current && addMonths(current, event.shiftKey ? -12 : -1);
+        break;
+      case 'PageDown':
+        next = current && addMonths(current, event.shiftKey ? 12 : 1);
+        break;
+      default:
+        return;
+    }
+
+    if (!next) {
+      return;
+    }
+
+    event.preventDefault();
+    focusDate(next, { focus: true });
+  }
+
+  return (
+    <div
+      ref={setRefs}
+      role="grid"
+      tabIndex={-1}
+      aria-label={formatMonthLabel(visibleMonth, locale)}
+      className={cx(styles.grid, className)}
+      onKeyDown={handleKeyDown}
+      {...rest}
+    >
+      {showWeekdays ? (
+        <div role="row" className={cx(styles.week, styles.weekdays)}>
+          {weekdayOrder(weekStartsOn).map((weekday) => (
+            <div
+              key={weekday}
+              role="columnheader"
+              className={styles.weekday}
+              aria-label={formatWeekdayLabel(weekday, locale, 'long')}
+            >
+              {formatWeekdayLabel(weekday, locale, 'short')}
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {weeks.map((week) => (
+        <div role="row" key={formatISODate(week[0] ?? visibleMonth)} className={styles.week}>
+          {week.map((date) =>
+            showOutsideDays || isSameMonth(date, visibleMonth) ? (
+              <CalendarDay key={formatISODate(date)} date={formatISODate(date)} />
+            ) : (
+              <span key={formatISODate(date)} role="gridcell" className={styles.emptyCell} />
+            ),
+          )}
+        </div>
+      ))}
+    </div>
+  );
+});
 
 export interface CalendarDayProps extends HTMLAttributes<HTMLButtonElement> {
   /** Date rendered by this cell, as `YYYY-MM-DD`. */
@@ -700,56 +696,57 @@ export interface CalendarDayProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 /** Single day cell. Reads selection, range, and focus state from `Calendar`. */
-export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
-  function CalendarDay({ date, className, onClick, ...rest }, ref) {
-    const context = useCalendarContext();
-    const parsed = parseISODate(date);
+export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(function CalendarDay(
+  { date, className, onClick, ...rest },
+  ref,
+) {
+  const context = useCalendarContext();
+  const parsed = parseISODate(date);
 
-    if (!parsed) {
-      throw new Error(`CalendarDay received an invalid date: ${date}`);
-    }
+  if (!parsed) {
+    throw new Error(`CalendarDay received an invalid date: ${date}`);
+  }
 
-    const disabled = context.isDateDisabled(parsed);
-    const selected = context.isDateSelected(parsed);
-    const rangePosition = context.getRangePosition(parsed);
-    const isToday = isSameDate(parsed, context.todayDate);
-    const outside = !isSameMonth(parsed, context.visibleMonth);
+  const disabled = context.isDateDisabled(parsed);
+  const selected = context.isDateSelected(parsed);
+  const rangePosition = context.getRangePosition(parsed);
+  const isToday = isSameDate(parsed, context.todayDate);
+  const outside = !isSameMonth(parsed, context.visibleMonth);
 
-    return (
-      <button
-        ref={ref}
-        type="button"
-        role="gridcell"
-        className={cx(styles.day, className)}
-        data-day={date}
-        data-selected={selected || undefined}
-        data-today={isToday || undefined}
-        data-outside={outside || undefined}
-        data-in-range={rangePosition === 'inside' || undefined}
-        data-range-start={rangePosition === 'start' || undefined}
-        data-range-end={rangePosition === 'end' || undefined}
-        data-range-preview={rangePosition === 'preview' || undefined}
-        aria-label={formatDateLabel(parsed, context.locale)}
-        aria-selected={selected}
-        aria-current={isToday ? 'date' : undefined}
-        aria-disabled={disabled || undefined}
-        tabIndex={context.isDateFocused(parsed) ? 0 : -1}
-        onClick={(event) => {
-          onClick?.(event);
+  return (
+    <button
+      ref={ref}
+      type="button"
+      role="gridcell"
+      className={cx(styles.day, className)}
+      data-day={date}
+      data-selected={selected || undefined}
+      data-today={isToday || undefined}
+      data-outside={outside || undefined}
+      data-in-range={rangePosition === 'inside' || undefined}
+      data-range-start={rangePosition === 'start' || undefined}
+      data-range-end={rangePosition === 'end' || undefined}
+      data-range-preview={rangePosition === 'preview' || undefined}
+      aria-label={formatDateLabel(parsed, context.locale)}
+      aria-selected={selected}
+      aria-current={isToday ? 'date' : undefined}
+      aria-disabled={disabled || undefined}
+      tabIndex={context.isDateFocused(parsed) ? 0 : -1}
+      onClick={(event) => {
+        onClick?.(event);
 
-          if (!event.defaultPrevented && !disabled) {
-            context.selectDate(parsed);
-          }
-        }}
-        onFocus={() => {
-          if (!context.isDateFocused(parsed)) {
-            context.focusDate(parsed);
-          }
-        }}
-        {...rest}
-      >
-        {parsed.day}
-      </button>
-    );
-  },
-);
+        if (!event.defaultPrevented && !disabled) {
+          context.selectDate(parsed);
+        }
+      }}
+      onFocus={() => {
+        if (!context.isDateFocused(parsed)) {
+          context.focusDate(parsed);
+        }
+      }}
+      {...rest}
+    >
+      {parsed.day}
+    </button>
+  );
+});

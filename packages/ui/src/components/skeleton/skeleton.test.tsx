@@ -25,10 +25,7 @@ describe('Skeleton', () => {
   });
 
   it.each(variants)('applies the %s variant', (variant) => {
-    expect(renderSkeleton(<Skeleton variant={variant} />)).toHaveAttribute(
-      'data-variant',
-      variant,
-    );
+    expect(renderSkeleton(<Skeleton variant={variant} />)).toHaveAttribute('data-variant', variant);
   });
 
   it.each(animations)('applies the %s animation', (animation) => {

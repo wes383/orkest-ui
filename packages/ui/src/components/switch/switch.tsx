@@ -9,11 +9,10 @@ import styles from './switch.module.css';
 
 export type SwitchSize = 'sm' | 'md' | 'lg';
 
-export interface SwitchProps
-  extends Omit<
-    SwitchRootProps,
-    'children' | 'className' | 'nativeButton' | 'render'
-  > {
+export interface SwitchProps extends Omit<
+  SwitchRootProps,
+  'children' | 'className' | 'nativeButton' | 'render'
+> {
   className?: string;
   /** Control size. Defaults to `md`. */
   size?: SwitchSize;

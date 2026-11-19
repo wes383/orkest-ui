@@ -3,13 +3,7 @@
 import { useState } from 'react';
 
 import { Heading, Stack, Text } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 import { Bell, Settings, User } from 'lucide-react';
 
 export function TabsDemo() {

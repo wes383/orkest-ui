@@ -1,8 +1,4 @@
-import {
-  getPrimitiveToken,
-  getPrimitiveTokensByPrefix,
-  type TokenRecord,
-} from '@/lib/tokens';
+import { getPrimitiveToken, getPrimitiveTokensByPrefix, type TokenRecord } from '@/lib/tokens';
 
 import { TableScroll } from './table-scroll';
 

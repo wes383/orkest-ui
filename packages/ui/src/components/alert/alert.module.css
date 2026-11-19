@@ -6,8 +6,7 @@
   gap: var(--ok-space-3);
   box-sizing: border-box;
   padding: var(--ok-space-3) var(--ok-space-4);
-  border: var(--ok-border-width) solid
-    color-mix(in srgb, var(--alert-accent) 24%, transparent);
+  border: var(--ok-border-width) solid color-mix(in srgb, var(--alert-accent) 24%, transparent);
   border-radius: var(--ok-radius-2xl);
   background: var(--alert-surface);
   color: var(--ui-foreground);

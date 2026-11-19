@@ -65,18 +65,9 @@ export function DateRangePickerFieldExample() {
 export function DateRangePickerSizesExample() {
   return (
     <Stack gap={3} style={{ width: '100%', maxWidth: '20rem' }}>
-      <DateRangePicker
-        defaultValue={{ start: '2026-11-18', end: '2026-11-22' }}
-        size="sm"
-      />
-      <DateRangePicker
-        defaultValue={{ start: '2026-11-18', end: '2026-11-22' }}
-        size="md"
-      />
-      <DateRangePicker
-        defaultValue={{ start: '2026-11-18', end: '2026-11-22' }}
-        size="lg"
-      />
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="sm" />
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="md" />
+      <DateRangePicker defaultValue={{ start: '2026-11-18', end: '2026-11-22' }} size="lg" />
     </Stack>
   );
 }

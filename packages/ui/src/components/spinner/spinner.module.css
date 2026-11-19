@@ -11,16 +11,16 @@
   vertical-align: middle;
 }
 
-.root[data-size='sm'] {
+.root[data-size="sm"] {
   --spinner-size: var(--ok-font-size-md);
   font-size: var(--ok-font-size-xs);
 }
 
-.root[data-size='md'] {
+.root[data-size="md"] {
   --spinner-size: var(--ok-font-size-xl);
 }
 
-.root[data-size='lg'] {
+.root[data-size="lg"] {
   --spinner-size: calc(var(--ok-space-6) + var(--ok-space-1));
   font-size: var(--ok-font-size-md);
 }

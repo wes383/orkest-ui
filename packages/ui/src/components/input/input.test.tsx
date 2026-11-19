@@ -163,9 +163,7 @@ describe('Input', () => {
   it('toggles password visibility', async () => {
     const user = userEvent.setup();
 
-    render(
-      <Input type="password" passwordToggle defaultValue="secret" aria-label="Password" />,
-    );
+    render(<Input type="password" passwordToggle defaultValue="secret" aria-label="Password" />);
 
     const input = screen.getByLabelText('Password') as HTMLInputElement;
     expect(input.type).toBe('password');

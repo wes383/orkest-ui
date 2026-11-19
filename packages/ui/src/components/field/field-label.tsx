@@ -19,73 +19,71 @@ export interface FieldLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 /** Field label with automatic control association and required or optional markers. */
-export const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(
-  function FieldLabel(
-    {
-      children,
-      required,
-      optional = false,
-      disabled = false,
-      htmlFor,
-      id: idProp,
-      className,
-      ...rest
-    },
-    ref,
-  ) {
-    const field = useFieldContext();
-    const generatedId = useId().replace(/:/g, '');
-    const labelId = idProp ?? `field-label-${generatedId}`;
-    const isRequired = required ?? field?.required ?? false;
-    const isOptional = !isRequired && optional;
-    const isDisabled = disabled || field?.disabled || false;
+export const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(function FieldLabel(
+  {
+    children,
+    required,
+    optional = false,
+    disabled = false,
+    htmlFor,
+    id: idProp,
+    className,
+    ...rest
+  },
+  ref,
+) {
+  const field = useFieldContext();
+  const generatedId = useId().replace(/:/g, '');
+  const labelId = idProp ?? `field-label-${generatedId}`;
+  const isRequired = required ?? field?.required ?? false;
+  const isOptional = !isRequired && optional;
+  const isDisabled = disabled || field?.disabled || false;
 
-    useFieldRegistration('label', labelId);
+  useFieldRegistration('label', labelId);
 
-    const content = (
-      <>
-        {children}
-        {isRequired ? (
-          <>
-            {' '}
-            <FieldRequiredIndicator />
-          </>
-        ) : null}
-        {isOptional ? (
-          <>
-            {' '}
-            <span className={styles.optional}>Optional</span>
-          </>
-        ) : null}
-      </>
-    );
+  const content = (
+    <>
+      {children}
+      {isRequired ? (
+        <>
+          {' '}
+          <FieldRequiredIndicator />
+        </>
+      ) : null}
+      {isOptional ? (
+        <>
+          {' '}
+          <span className={styles.optional}>Optional</span>
+        </>
+      ) : null}
+    </>
+  );
 
-    if (field) {
-      return (
-        <BaseField.Label
-          ref={ref}
-          {...rest}
-          id={labelId}
-          {...(htmlFor !== undefined ? { htmlFor } : {})}
-          className={cx(styles.label, className)}
-          data-disabled={isDisabled || undefined}
-        >
-          {content}
-        </BaseField.Label>
-      );
-    }
-
+  if (field) {
     return (
-      <label
+      <BaseField.Label
         ref={ref}
         {...rest}
         id={labelId}
-        htmlFor={htmlFor}
+        {...(htmlFor !== undefined ? { htmlFor } : {})}
         className={cx(styles.label, className)}
         data-disabled={isDisabled || undefined}
       >
         {content}
-      </label>
+      </BaseField.Label>
     );
-  },
-);
+  }
+
+  return (
+    <label
+      ref={ref}
+      {...rest}
+      id={labelId}
+      htmlFor={htmlFor}
+      className={cx(styles.label, className)}
+      data-disabled={isDisabled || undefined}
+    >
+      {content}
+    </label>
+  );
+});

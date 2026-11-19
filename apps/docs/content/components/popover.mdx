@@ -53,10 +53,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Filter popover"
-  code={filterPopoverCode}
->
+<ComponentPreview title="Filter popover" code={filterPopoverCode}>
   <PopoverBasicExample />
 </ComponentPreview>
 
@@ -110,10 +107,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Right-aligned popover"
-  code={rightAlignedPopoverCode}
->
+<ComponentPreview title="Right-aligned popover" code={rightAlignedPopoverCode}>
   <PopoverPositionExample />
 </ComponentPreview>
 
@@ -135,35 +129,33 @@ import {
 export function Example() {
   const [open, setOpen] = useState(false);
 
-  return (
-    <Stack direction="row" gap={3} wrap align="center">
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger>Toggle popover</PopoverTrigger>
-        <PopoverPortal>
-          <PopoverPositioner>
-            <PopoverContent maxWidth="18rem">
-              <Stack gap={2}>
-                <PopoverTitle>Controlled popover</PopoverTitle>
-                <PopoverDescription>
-                  The parent owns the open state.
-                </PopoverDescription>
-                <PopoverClose>Close</PopoverClose>
-              </Stack>
-            </PopoverContent>
-          </PopoverPositioner>
-        </PopoverPortal>
-      </Popover>
-      <Text size="sm" tone="muted">
-        {open ? 'Status: open' : 'Status: closed'}
-      </Text>
-    </Stack>
-  );
+return (
+
+<Stack direction="row" gap={3} wrap align="center">
+<Popover open={open} onOpenChange={setOpen}>
+<PopoverTrigger>Toggle popover</PopoverTrigger>
+<PopoverPortal>
+<PopoverPositioner>
+<PopoverContent maxWidth="18rem">
+<Stack gap={2}>
+<PopoverTitle>Controlled popover</PopoverTitle>
+<PopoverDescription>
+The parent owns the open state.
+</PopoverDescription>
+<PopoverClose>Close</PopoverClose>
+</Stack>
+</PopoverContent>
+</PopoverPositioner>
+</PopoverPortal>
+</Popover>
+<Text size="sm" tone="muted">
+{open ? 'Status: open' : 'Status: closed'}
+</Text>
+</Stack>
+);
 }`;
 
-<ComponentPreview
-  title="Controlled popover"
-  code={controlledPopoverCode}
->
+<ComponentPreview title="Controlled popover" code={controlledPopoverCode}>
   <PopoverControlledExample />
 </ComponentPreview>
 
@@ -217,10 +209,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Region semantics"
-  code={regionSemanticsCode}
->
+<ComponentPreview title="Region semantics" code={regionSemanticsCode}>
   <PopoverRegionExample />
 </ComponentPreview>
 

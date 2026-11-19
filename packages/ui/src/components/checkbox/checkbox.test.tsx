@@ -22,11 +22,7 @@ describe('Checkbox', () => {
     const onCheckedChange = vi.fn();
 
     const { unmount } = render(
-      <Checkbox
-        label="Default checked"
-        defaultChecked
-        onCheckedChange={onCheckedChange}
-      />,
+      <Checkbox label="Default checked" defaultChecked onCheckedChange={onCheckedChange} />,
     );
 
     expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
@@ -35,29 +31,18 @@ describe('Checkbox', () => {
     expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'false');
     unmount();
 
-    render(
-      <Checkbox
-        label="Controlled checked"
-        checked
-        onCheckedChange={onCheckedChange}
-      />,
+    render(<Checkbox label="Controlled checked" checked onCheckedChange={onCheckedChange} />);
+    expect(screen.getByRole('checkbox', { name: 'Controlled checked' })).toHaveAttribute(
+      'aria-checked',
+      'true',
     );
-    expect(
-      screen.getByRole('checkbox', { name: 'Controlled checked' }),
-    ).toHaveAttribute('aria-checked', 'true');
   });
 
   it('exposes an independent indeterminate state', async () => {
     const user = userEvent.setup();
     const onCheckedChange = vi.fn();
 
-    render(
-      <Checkbox
-        label="Select all"
-        indeterminate
-        onCheckedChange={onCheckedChange}
-      />,
-    );
+    render(<Checkbox label="Select all" indeterminate onCheckedChange={onCheckedChange} />);
 
     const checkbox = screen.getByRole('checkbox', { name: 'Select all' });
     expect(checkbox).toHaveAttribute('aria-checked', 'mixed');
@@ -72,9 +57,7 @@ describe('Checkbox', () => {
     const user = userEvent.setup();
     const onCheckedChange = vi.fn();
 
-    render(
-      <Checkbox label="Disabled" disabled onCheckedChange={onCheckedChange} />,
-    );
+    render(<Checkbox label="Disabled" disabled onCheckedChange={onCheckedChange} />);
 
     const checkbox = screen.getByRole('checkbox', { name: 'Disabled' });
     expect(checkbox).toHaveAttribute('aria-disabled', 'true');
@@ -101,9 +84,10 @@ describe('Checkbox', () => {
     expect(input).toHaveAttribute('name', 'newsletter');
     expect(input).toHaveAttribute('value', 'weekly');
     expect(input).toBeRequired();
-    expect(
-      screen.getByRole('checkbox', { name: 'Newsletter' }),
-    ).toHaveAttribute('aria-describedby', 'newsletter-help');
+    expect(screen.getByRole('checkbox', { name: 'Newsletter' })).toHaveAttribute(
+      'aria-describedby',
+      'newsletter-help',
+    );
   });
 
   it.each(sizes)('applies the %s size', (size) => {
@@ -116,15 +100,7 @@ describe('Checkbox', () => {
     const ref = createRef<HTMLElement>();
     const inputRef = createRef<HTMLInputElement>();
 
-    render(
-      <Checkbox
-        ref={ref}
-        inputRef={inputRef}
-        label="Ref"
-        className="custom"
-        id="terms"
-      />,
-    );
+    render(<Checkbox ref={ref} inputRef={inputRef} label="Ref" className="custom" id="terms" />);
 
     const checkbox = screen.getByRole('checkbox', { name: 'Ref' });
     expect(ref.current).toBe(checkbox);

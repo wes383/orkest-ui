@@ -83,8 +83,10 @@ const iconSizeBySize: Record<TimePickerSize, IconSize> = {
   lg: 'md',
 };
 
-export interface TimePickerProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
+export interface TimePickerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onChange' | 'defaultValue' | 'children'
+> {
   /** Selected time as `HH:mm`, or `HH:mm:ss` with `showSeconds`. */
   value?: string | null;
   /** Initial time for uncontrolled usage. */
@@ -164,18 +166,14 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
   const max = useMemo(() => parseTimeValue(maxTime), [maxTime]);
 
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState<string | null>(
-    () => defaultValue ?? null,
-  );
+  const [internalValue, setInternalValue] = useState<string | null>(() => defaultValue ?? null);
   const currentValue = isControlled ? (value ?? null) : internalValue;
   const parts = parseTimeValue(currentValue);
   const [open, setOpen] = useState(false);
 
   const commit = useCallback(
     (next: TimeParts | null) => {
-      const nextValue = next
-        ? toTimeValue(clampTime(next, min, max), { showSeconds })
-        : null;
+      const nextValue = next ? toTimeValue(clampTime(next, min, max), { showSeconds }) : null;
 
       if (!isControlled) {
         setInternalValue(nextValue);
@@ -263,9 +261,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(function T
                   options={hourOptions}
                   disabled={control.disabled}
                   onValueChange={(hours) => applyParts({ hours })}
-                  isOptionDisabled={(hours) =>
-                    !isWithinTimeRange({ ...active, hours }, min, max)
-                  }
+                  isOptionDisabled={(hours) => !isWithinTimeRange({ ...active, hours }, min, max)}
                 />
                 <TimePickerColumn
                   label={mergedLabels.minutes}
@@ -311,11 +307,7 @@ interface TimeFieldState {
 const EMPTY_FIELD_STATE: TimeFieldState = { hours: null, minutes: null, seconds: null };
 
 function isCompleteState(state: TimeFieldState, showSeconds: boolean): boolean {
-  return (
-    state.hours !== null &&
-    state.minutes !== null &&
-    (!showSeconds || state.seconds !== null)
-  );
+  return state.hours !== null && state.minutes !== null && (!showSeconds || state.seconds !== null);
 }
 
 function pad2(value: number): string {
@@ -395,10 +387,7 @@ function TimePickerField({
   const segmentNodes = useRef<Partial<Record<TimeSegmentKey, HTMLSpanElement | null>>>({});
 
   const committed = useMemo<TimeFieldState | null>(
-    () =>
-      value
-        ? { hours: value.hours, minutes: value.minutes, seconds: value.seconds }
-        : null,
+    () => (value ? { hours: value.hours, minutes: value.minutes, seconds: value.seconds } : null),
     [value],
   );
   const state = draft ?? committed;
@@ -421,13 +410,12 @@ function TimePickerField({
   const displayHours = state?.hours ?? null;
   // Two digits in both formats: the segment keeps a fixed width, so the colon
   // never drifts when a single-digit hour becomes a two-digit one.
-  const hourText = displayHours === null ? null : pad2(format === '12h' ? to12Hour(displayHours) : displayHours);
-  const minuteText = state?.minutes === null || state?.minutes === undefined
-    ? null
-    : pad2(state.minutes);
-  const secondText = state?.seconds === null || state?.seconds === undefined
-    ? null
-    : pad2(state.seconds);
+  const hourText =
+    displayHours === null ? null : pad2(format === '12h' ? to12Hour(displayHours) : displayHours);
+  const minuteText =
+    state?.minutes === null || state?.minutes === undefined ? null : pad2(state.minutes);
+  const secondText =
+    state?.seconds === null || state?.seconds === undefined ? null : pad2(state.seconds);
   const periodText = displayHours === null ? null : formatDayPeriod(displayHours, locale);
 
   // React swaps the text node whenever a segment changes, which drops the
@@ -503,11 +491,7 @@ function TimePickerField({
   function setPeriod(period: DayPeriod) {
     const base = state ?? EMPTY_FIELD_STATE;
     const hours =
-      base.hours === null
-        ? period === 'pm'
-          ? 12
-          : 0
-        : from12Hour(to12Hour(base.hours), period);
+      base.hours === null ? (period === 'pm' ? 12 : 0) : from12Hour(to12Hour(base.hours), period);
 
     commitState({ ...base, hours });
   }
@@ -675,7 +659,11 @@ function TimePickerField({
 
     if (/^\d$/.test(event.key)) {
       event.preventDefault();
-      typeDigit(key, Number(event.key), key === 'hours' && format === '12h' ? 12 : key === 'hours' ? 23 : 59);
+      typeDigit(
+        key,
+        Number(event.key),
+        key === 'hours' && format === '12h' ? 12 : key === 'hours' ? 23 : 59,
+      );
     }
   }
 
@@ -785,11 +773,7 @@ function TimePickerField({
           text: hourText,
           ghost: 'hh',
           now:
-            displayHours === null
-              ? null
-              : format === '12h'
-                ? to12Hour(displayHours)
-                : displayHours,
+            displayHours === null ? null : format === '12h' ? to12Hour(displayHours) : displayHours,
           min: format === '12h' ? 1 : 0,
           max: format === '12h' ? 12 : 23,
         })}
@@ -891,7 +875,16 @@ export interface TimePickerColumnProps extends HTMLAttributes<HTMLDivElement> {
 /** Scrollable list of time options with arrow-key navigation. */
 export const TimePickerColumn = forwardRef<HTMLDivElement, TimePickerColumnProps>(
   function TimePickerColumn(
-    { label, value, options, onValueChange, disabled = false, isOptionDisabled, className, ...rest },
+    {
+      label,
+      value,
+      options,
+      onValueChange,
+      disabled = false,
+      isOptionDisabled,
+      className,
+      ...rest
+    },
     ref,
   ) {
     const listRef = useRef<HTMLDivElement>(null);
@@ -917,9 +910,7 @@ export const TimePickerColumn = forwardRef<HTMLDivElement, TimePickerColumnProps
       }
 
       onValueChange(option.value);
-      const node = listRef.current?.querySelector<HTMLElement>(
-        `[data-value="${option.value}"]`,
-      );
+      const node = listRef.current?.querySelector<HTMLElement>(`[data-value="${option.value}"]`);
       node?.focus();
     }
 
@@ -942,7 +933,12 @@ export const TimePickerColumn = forwardRef<HTMLDivElement, TimePickerColumnProps
         return;
       }
 
-      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'Home' && event.key !== 'End') {
+      if (
+        event.key !== 'ArrowDown' &&
+        event.key !== 'ArrowUp' &&
+        event.key !== 'Home' &&
+        event.key !== 'End'
+      ) {
         return;
       }
 

@@ -11,7 +11,7 @@
   --docs-table-divider: var(--ok-color-neutral-200);
 }
 
-:root[data-orkest-theme='dark'] {
+:root[data-orkest-theme="dark"] {
   /* A darker step is invisible against the near-black page, so raise it instead. */
   --ui-surface-sunken: var(--ok-color-neutral-900);
   --docs-nav-foreground: var(--ui-foreground);
@@ -163,7 +163,7 @@ kbd {
   color: var(--docs-nav-foreground);
 }
 
-.primary-nav-link[aria-current='page'] {
+.primary-nav-link[aria-current="page"] {
   color: var(--docs-nav-foreground);
 }
 
@@ -279,7 +279,7 @@ kbd {
   left: 0;
   z-index: 1;
   height: 32px;
-  content: '';
+  content: "";
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
@@ -361,7 +361,7 @@ kbd {
   color: var(--ui-foreground);
 }
 
-.docs-nav-link[aria-current='page'] {
+.docs-nav-link[aria-current="page"] {
   background: var(--ui-secondary);
   color: var(--ui-foreground);
   font-weight: var(--ok-font-weight-medium);
@@ -405,7 +405,7 @@ kbd {
 .breadcrumbs li:not(:last-child)::after {
   margin-left: var(--ok-space-2);
   color: var(--ui-border-strong);
-  content: '/';
+  content: "/";
 }
 
 .breadcrumbs a {
@@ -461,11 +461,11 @@ kbd {
   transition: color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.page-copy[data-state='copied'] > svg {
+.page-copy[data-state="copied"] > svg {
   color: var(--ui-success);
 }
 
-.page-copy[data-state='error'] {
+.page-copy[data-state="error"] {
   color: var(--ui-danger);
 }
 
@@ -494,7 +494,7 @@ kbd {
   height: 6px;
   border-radius: var(--ok-radius-full);
   background: var(--ui-accent);
-  content: '';
+  content: "";
 }
 
 .page-title {
@@ -668,8 +668,8 @@ kbd {
   font-size: inherit;
 }
 
-[data-orkest-theme='dark'] .shiki,
-[data-orkest-theme='dark'] .shiki span {
+[data-orkest-theme="dark"] .shiki,
+[data-orkest-theme="dark"] .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
@@ -701,7 +701,7 @@ kbd {
   width: 2.5rem;
   opacity: 0;
   pointer-events: none;
-  content: '';
+  content: "";
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
@@ -1236,7 +1236,7 @@ kbd {
   left: 0;
   z-index: 1;
   height: 32px;
-  content: '';
+  content: "";
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
@@ -1291,7 +1291,7 @@ kbd {
   color: var(--ui-foreground);
 }
 
-.toc-link[aria-current='location'] {
+.toc-link[aria-current="location"] {
   color: var(--ui-foreground);
 }
 
@@ -1641,7 +1641,7 @@ kbd {
   left: 0;
   z-index: 1;
   height: 32px;
-  content: '';
+  content: "";
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
@@ -2065,8 +2065,8 @@ kbd {
     min-width: 32rem;
   }
 
-  .table-scroll-frame[data-scrollable='true'][data-at-start='false']::before,
-  .table-scroll-frame[data-scrollable='true'][data-at-end='false']::after {
+  .table-scroll-frame[data-scrollable="true"][data-at-start="false"]::before,
+  .table-scroll-frame[data-scrollable="true"][data-at-end="false"]::after {
     opacity: 1;
   }
 }

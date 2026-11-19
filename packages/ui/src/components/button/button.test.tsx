@@ -36,10 +36,7 @@ describe('Button', () => {
   it.each(variants)('applies the %s variant', (variant) => {
     render(<Button variant={variant}>Action</Button>);
 
-    expect(screen.getByRole('button', { name: 'Action' })).toHaveAttribute(
-      'data-variant',
-      variant,
-    );
+    expect(screen.getByRole('button', { name: 'Action' })).toHaveAttribute('data-variant', variant);
   });
 
   it.each(sizes)('applies the %s size', (size) => {

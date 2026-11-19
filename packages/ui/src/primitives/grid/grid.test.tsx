@@ -35,15 +35,9 @@ describe('Grid', () => {
     render(<Grid columns={{ base: 1, md: 3 }} data-testid="grid" />);
 
     const grid = screen.getByTestId('grid');
-    expect(grid.style.getPropertyValue('--grid-columns-base')).toBe(
-      'repeat(1, minmax(0, 1fr))',
-    );
-    expect(grid.style.getPropertyValue('--grid-columns-sm')).toBe(
-      'repeat(1, minmax(0, 1fr))',
-    );
-    expect(grid.style.getPropertyValue('--grid-columns-md')).toBe(
-      'repeat(3, minmax(0, 1fr))',
-    );
+    expect(grid.style.getPropertyValue('--grid-columns-base')).toBe('repeat(1, minmax(0, 1fr))');
+    expect(grid.style.getPropertyValue('--grid-columns-sm')).toBe('repeat(1, minmax(0, 1fr))');
+    expect(grid.style.getPropertyValue('--grid-columns-md')).toBe('repeat(3, minmax(0, 1fr))');
   });
 
   it('supports numeric and template rows', () => {
@@ -53,9 +47,7 @@ describe('Grid', () => {
     );
 
     render(<Grid rows="auto 1fr" data-testid="rows" />);
-    expect(screen.getByTestId('rows').style.getPropertyValue('--grid-rows-base')).toBe(
-      'auto 1fr',
-    );
+    expect(screen.getByTestId('rows').style.getPropertyValue('--grid-rows-base')).toBe('auto 1fr');
   });
 
   it('maps gap props to spacing tokens', () => {
@@ -63,9 +55,7 @@ describe('Grid', () => {
 
     const grid = screen.getByTestId('grid');
     expect(grid.style.getPropertyValue('--grid-gap-base')).toBe('var(--ok-space-4)');
-    expect(grid.style.getPropertyValue('--grid-column-gap-base')).toBe(
-      'var(--ok-space-2)',
-    );
+    expect(grid.style.getPropertyValue('--grid-column-gap-base')).toBe('var(--ok-space-2)');
     expect(grid.style.getPropertyValue('--grid-row-gap-base')).toBe('var(--ok-space-6)');
   });
 
@@ -79,14 +69,7 @@ describe('Grid', () => {
   });
 
   it('maps alignment and auto flow to data attributes', () => {
-    render(
-      <Grid
-        data-testid="grid"
-        align="center"
-        justify="end"
-        autoFlow="row dense"
-      />,
-    );
+    render(<Grid data-testid="grid" align="center" justify="end" autoFlow="row dense" />);
 
     const grid = screen.getByTestId('grid');
     expect(grid).toHaveAttribute('data-align', 'center');

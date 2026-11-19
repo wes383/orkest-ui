@@ -34,11 +34,7 @@ export function TooltipProvider({
   timeout,
 }: TooltipProviderProps) {
   return (
-    <BaseTooltip.Provider
-      delay={delay}
-      closeDelay={closeDelay}
-      timeout={timeout}
-    >
+    <BaseTooltip.Provider delay={delay} closeDelay={closeDelay} timeout={timeout}>
       {children}
     </BaseTooltip.Provider>
   );
@@ -70,30 +66,24 @@ export interface TooltipTriggerProps extends ButtonProps {
 }
 
 /** Trigger that shows the tooltip on hover and keyboard focus. */
-export const TooltipTrigger = forwardRef<
-  HTMLButtonElement,
-  TooltipTriggerProps
->(function TooltipTrigger(
-  {
-    variant = 'ghost',
-    render,
-    'aria-describedby': ariaDescribedBy,
-    ...rest
-  },
-  ref,
-) {
-  const tooltipId = useContext(TooltipIdContext);
-  const describedBy = [ariaDescribedBy, tooltipId].filter(Boolean).join(' ');
+export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
+  function TooltipTrigger(
+    { variant = 'ghost', render, 'aria-describedby': ariaDescribedBy, ...rest },
+    ref,
+  ) {
+    const tooltipId = useContext(TooltipIdContext);
+    const describedBy = [ariaDescribedBy, tooltipId].filter(Boolean).join(' ');
 
-  return (
-    <BaseTooltip.Trigger
-      ref={ref}
-      render={render ?? <Button variant={variant} />}
-      aria-describedby={describedBy || undefined}
-      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-    />
-  );
-});
+    return (
+      <BaseTooltip.Trigger
+        ref={ref}
+        render={render ?? <Button variant={variant} />}
+        aria-describedby={describedBy || undefined}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      />
+    );
+  },
+);
 
 export type TooltipPortalProps = BaseTooltipPortalProps;
 
@@ -104,8 +94,7 @@ export const TooltipPortal = forwardRef<HTMLDivElement, TooltipPortalProps>(
   },
 );
 
-export interface TooltipContentProps
-  extends Omit<TooltipPopupProps, 'className'> {
+export interface TooltipContentProps extends Omit<TooltipPopupProps, 'className'> {
   className?: string;
   /** Side of the trigger the tooltip is placed on. Defaults to `top`. */
   side?: BaseTooltipPositionerProps['side'];
@@ -173,33 +162,22 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   },
 );
 
-export interface TooltipArrowProps
-  extends Omit<BaseTooltipArrowProps, 'className'> {
+export interface TooltipArrowProps extends Omit<BaseTooltipArrowProps, 'className'> {
   className?: string;
 }
 
 /** Optional arrow pointing from the tooltip to its trigger. */
-export const TooltipArrow = forwardRef<HTMLDivElement, TooltipArrowProps>(
-  function TooltipArrow({ className, children, ...rest }, ref) {
-    return (
-      <BaseTooltip.Arrow
-        ref={ref}
-        {...rest}
-        className={cx(styles.arrow, className)}
-      >
-        {children ?? (
-          <svg
-            className={styles.arrowSvg}
-            viewBox="0 0 12 6"
-            aria-hidden="true"
-          >
-            <path
-              className={styles.arrowShape}
-              d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6"
-            />
-          </svg>
-        )}
-      </BaseTooltip.Arrow>
-    );
-  },
-);
+export const TooltipArrow = forwardRef<HTMLDivElement, TooltipArrowProps>(function TooltipArrow(
+  { className, children, ...rest },
+  ref,
+) {
+  return (
+    <BaseTooltip.Arrow ref={ref} {...rest} className={cx(styles.arrow, className)}>
+      {children ?? (
+        <svg className={styles.arrowSvg} viewBox="0 0 12 6" aria-hidden="true">
+          <path className={styles.arrowShape} d="M0 6 L5.1 0.9 Q6 0 6.9 0.9 L12 6" />
+        </svg>
+      )}
+    </BaseTooltip.Arrow>
+  );
+});

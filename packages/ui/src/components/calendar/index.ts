@@ -1,9 +1,4 @@
-export {
-  Calendar,
-  CalendarDay,
-  CalendarGrid,
-  CalendarHeader,
-} from './calendar';
+export { Calendar, CalendarDay, CalendarGrid, CalendarHeader } from './calendar';
 export type {
   CalendarDayProps,
   CalendarGridProps,

@@ -28,10 +28,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes"
-  code={sizesCode}
->
+<ComponentPreview title="Sizes" code={sizesCode}>
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Circle} size="xs" />
     <Icon icon={Circle} size="sm" />
@@ -65,10 +62,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Semantic tones"
-  code={semanticTonesCode}
->
+<ComponentPreview title="Semantic tones" code={semanticTonesCode}>
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Check} tone="default" />
     <Icon icon={Check} tone="muted" />
@@ -97,10 +91,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Stroke widths"
-  code={strokeWidthsCode}
->
+<ComponentPreview title="Stroke widths" code={strokeWidthsCode}>
   <Stack direction="row" align="center" gap={4}>
     <Icon icon={Circle} strokeWidth={1.25} />
     <Icon icon={Circle} />
@@ -120,10 +111,7 @@ export function Example() {
   return <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />;
 }`;
 
-<ComponentPreview
-  title="Inline style"
-  code={inlineStyleCode}
->
+<ComponentPreview title="Inline style" code={inlineStyleCode}>
   <Icon icon={Circle} size="xl" style={{ color: 'var(--ui-warning)' }} />
 </ComponentPreview>
 
@@ -148,10 +136,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Inside buttons"
-  code={insideButtonsCode}
->
+<ComponentPreview title="Inside buttons" code={insideButtonsCode}>
   <Stack direction="row" align="center" gap={2} wrap>
     <Button leftIcon={Plus}>New project</Button>
     <Button variant="secondary" rightIcon={ArrowRight}>
@@ -186,8 +171,7 @@ export function Example() {
     {
       name: 'label',
       type: 'string',
-      description:
-        'Accessible name. When omitted, the icon is hidden from assistive technology.',
+      description: 'Accessible name. When omitted, the icon is hidden from assistive technology.',
     },
     {
       name: 'strokeWidth',
@@ -198,7 +182,8 @@ export function Example() {
     {
       name: 'className / style',
       type: 'string / CSSProperties',
-      description: 'Merged with the internal class and inline style, including the stroke override.',
+      description:
+        'Merged with the internal class and inline style, including the stroke override.',
     },
     {
       name: 'native SVG attributes',

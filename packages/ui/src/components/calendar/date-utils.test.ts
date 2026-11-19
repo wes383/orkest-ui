@@ -128,9 +128,7 @@ describe('buildCalendarWeeks', () => {
 
 describe('locale helpers', () => {
   it('formats a month caption', () => {
-    expect(formatMonthLabel({ year: 2026, month: 10, day: 1 }, 'en-US')).toBe(
-      'November 2026',
-    );
+    expect(formatMonthLabel({ year: 2026, month: 10, day: 1 }, 'en-US')).toBe('November 2026');
   });
 
   it('derives the first day of the week from the locale', () => {

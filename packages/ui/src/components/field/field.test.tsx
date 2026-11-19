@@ -106,25 +106,22 @@ describe('Field', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it.each(['success', 'warning', 'info'] as const)(
-    'renders %s messages as status',
-    (type) => {
-      render(
-        <Field>
-          <FieldLabel>Email</FieldLabel>
-          <Input />
-          <FieldMessage type={type} icon>
-            Field status
-          </FieldMessage>
-        </Field>,
-      );
+  it.each(['success', 'warning', 'info'] as const)('renders %s messages as status', (type) => {
+    render(
+      <Field>
+        <FieldLabel>Email</FieldLabel>
+        <Input />
+        <FieldMessage type={type} icon>
+          Field status
+        </FieldMessage>
+      </Field>,
+    );
 
-      const message = screen.getByRole('status');
-      expect(message).toHaveAttribute('data-type', type);
-      expect(message).toHaveTextContent('Field status');
-      expect(message.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
-    },
-  );
+    const message = screen.getByRole('status');
+    expect(message).toHaveAttribute('data-type', type);
+    expect(message).toHaveTextContent('Field status');
+    expect(message.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+  });
 
   it('renders standalone messages without a Field', () => {
     render(
@@ -186,9 +183,7 @@ describe('Field', () => {
     const input = screen.getByRole('textbox', { name: 'Username' });
     await user.type(input, 'taken');
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Username is already taken',
-    );
+    expect(await screen.findByRole('alert')).toHaveTextContent('Username is already taken');
     expect(input).toHaveAttribute('aria-invalid', 'true');
   });
 

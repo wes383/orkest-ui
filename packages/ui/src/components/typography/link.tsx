@@ -8,14 +8,7 @@ import styles from './typography.module.css';
 export type LinkProps<T extends ElementType = 'a'> = PolymorphicProps<T, TextOwnProps>;
 
 function LinkImpl(
-  {
-    as,
-    className,
-    size = 'inherit',
-    tone = 'accent',
-    underline = true,
-    ...rest
-  }: LinkProps<'a'>,
+  { as, className, size = 'inherit', tone = 'accent', underline = true, ...rest }: LinkProps<'a'>,
   ref: ForwardedRef<HTMLElement>,
 ) {
   const Component = (as ?? 'a') as ElementType;

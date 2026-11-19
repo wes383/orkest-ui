@@ -16,8 +16,7 @@ import { Icon } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
 import styles from './dialog.module.css';
 
-const useIsoLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect;
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 /**
  * Base UI's modal scroll lock reserves a stable scrollbar gutter. Remove the
@@ -96,24 +95,13 @@ function useDialogScrollbarCompensation(enabled: boolean): void {
 const DialogModalContext = createContext(true);
 
 /** Shares the modal state with the surface so it can expose aria-modal. */
-export function DialogModalProvider({
-  modal,
-  children,
-}: {
-  modal: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <DialogModalContext.Provider value={modal}>
-      {children}
-    </DialogModalContext.Provider>
-  );
+export function DialogModalProvider({ modal, children }: { modal: boolean; children: ReactNode }) {
+  return <DialogModalContext.Provider value={modal}>{children}</DialogModalContext.Provider>;
 }
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
-export interface DialogSurfaceProps
-  extends Omit<DialogPopupProps, 'children' | 'className'> {
+export interface DialogSurfaceProps extends Omit<DialogPopupProps, 'children' | 'className'> {
   children?: ReactNode;
   className?: string;
   /** Maximum width preset. Defaults to `md`. */
@@ -125,42 +113,30 @@ export interface DialogSurfaceProps
 }
 
 /** Shared viewport and popup used by Dialog and Alert Dialog. */
-export const DialogSurface = forwardRef<HTMLDivElement, DialogSurfaceProps>(
-  function DialogSurface(
-    {
-      children,
-      size = 'md',
-      showCloseButton = true,
-      closeLabel = 'Close',
-      className,
-      ...rest
-    },
-    ref,
-  ) {
-    const isModal = useContext(DialogModalContext);
-    useDialogScrollbarCompensation(isModal);
+export const DialogSurface = forwardRef<HTMLDivElement, DialogSurfaceProps>(function DialogSurface(
+  { children, size = 'md', showCloseButton = true, closeLabel = 'Close', className, ...rest },
+  ref,
+) {
+  const isModal = useContext(DialogModalContext);
+  useDialogScrollbarCompensation(isModal);
 
-    return (
-      <BaseDialog.Viewport className={styles.viewport} data-size={size}>
-        <BaseDialog.Popup
-          ref={ref}
-          {...rest}
-          className={cx(styles.content, className)}
-          data-size={size}
-          data-close-button={showCloseButton || undefined}
-          aria-modal={isModal || undefined}
-        >
-          {children}
-          {showCloseButton ? (
-            <BaseDialog.Close
-              className={styles.closeButton}
-              aria-label={closeLabel}
-            >
-              <Icon icon={X} size="sm" />
-            </BaseDialog.Close>
-          ) : null}
-        </BaseDialog.Popup>
-      </BaseDialog.Viewport>
-    );
-  },
-);
+  return (
+    <BaseDialog.Viewport className={styles.viewport} data-size={size}>
+      <BaseDialog.Popup
+        ref={ref}
+        {...rest}
+        className={cx(styles.content, className)}
+        data-size={size}
+        data-close-button={showCloseButton || undefined}
+        aria-modal={isModal || undefined}
+      >
+        {children}
+        {showCloseButton ? (
+          <BaseDialog.Close className={styles.closeButton} aria-label={closeLabel}>
+            <Icon icon={X} size="sm" />
+          </BaseDialog.Close>
+        ) : null}
+      </BaseDialog.Popup>
+    </BaseDialog.Viewport>
+  );
+});

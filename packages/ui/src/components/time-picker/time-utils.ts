@@ -264,7 +264,9 @@ export function snapToStep(parts: TimeParts, minuteStep: number): TimeParts {
 }
 
 export function compareTime(a: TimeParts, b: TimeParts): number {
-  return a.hours * 3600 + a.minutes * 60 + a.seconds - (b.hours * 3600 + b.minutes * 60 + b.seconds);
+  return (
+    a.hours * 3600 + a.minutes * 60 + a.seconds - (b.hours * 3600 + b.minutes * 60 + b.seconds)
+  );
 }
 
 export function isWithinTimeRange(
@@ -311,8 +313,7 @@ export function stepTime(
   const { minuteStep = 1, min, max } = options;
   const step = Math.max(1, Math.floor(minuteStep));
   const total = parts.hours * 60 + parts.minutes;
-  const base =
-    direction > 0 ? Math.floor(total / step) * step : Math.ceil(total / step) * step;
+  const base = direction > 0 ? Math.floor(total / step) * step : Math.ceil(total / step) * step;
   const next = fromMinutes(base + direction * step);
 
   return clampTime({ ...next, seconds: parts.seconds }, min, max);

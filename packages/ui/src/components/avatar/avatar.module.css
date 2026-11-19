@@ -113,8 +113,7 @@
   box-sizing: border-box;
   width: var(--avatar-status-size);
   height: var(--avatar-status-size);
-  border: var(--ok-border-width-strong) solid
-    var(--avatar-status-ring, var(--ui-background));
+  border: var(--ok-border-width-strong) solid var(--avatar-status-ring, var(--ui-background));
   border-radius: var(--ok-radius-full);
   transform: translate(25%, 25%);
 }

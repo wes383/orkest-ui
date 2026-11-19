@@ -65,7 +65,8 @@ export function DataTableDemo() {
         onSelectionChange={setSelected}
         renderExpanded={(row) => (
           <Text size="sm" tone="muted">
-            {row.customer} owes {row.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}.
+            {row.customer} owes{' '}
+            {row.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}.
           </Text>
         )}
       />

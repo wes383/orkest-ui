@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useCallback,
-  useMemo,
-  useState,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, useCallback, useMemo, useState, type HTMLAttributes } from 'react';
 import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
@@ -77,8 +71,10 @@ const actionIconSizeBySize: Record<DateRangePickerSize, IconSize> = {
   lg: 'md',
 };
 
-export interface DateRangePickerProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue' | 'children'> {
+export interface DateRangePickerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onChange' | 'defaultValue' | 'children'
+> {
   /** Selected range. Controlled when provided, including `null`. */
   value?: DateRange | null;
   /** Initial range for uncontrolled usage. */
@@ -172,8 +168,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const rangeStart = draftStart ?? currentValue?.start ?? null;
     const rangeEnd = draftStart ? null : (currentValue?.end ?? null);
-    const preview =
-      draftStart && hoveredDay && hoveredDay > draftStart ? hoveredDay : null;
+    const preview = draftStart && hoveredDay && hoveredDay > draftStart ? hoveredDay : null;
 
     const firstMonth = useMemo(() => {
       if (navigatedMonth) {
@@ -225,19 +220,16 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       [isControlled, onChange],
     );
 
-    const handleOpenChange = useCallback(
-      (next: boolean) => {
-        setOpen(next);
-        setDraftStart(null);
-        setHoveredDay(null);
+    const handleOpenChange = useCallback((next: boolean) => {
+      setOpen(next);
+      setDraftStart(null);
+      setHoveredDay(null);
 
-        if (next) {
-          // Reopen on the selected month rather than wherever the user left off.
-          setNavigatedMonth(null);
-        }
-      },
-      [],
-    );
+      if (next) {
+        // Reopen on the selected month rather than wherever the user left off.
+        setNavigatedMonth(null);
+      }
+    }, []);
 
     const handleSelect = useCallback(
       (iso: string) => {
@@ -348,17 +340,13 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
                               size="sm"
                               disabled={atStart}
                               onClick={() =>
-                                setNavigatedMonth(
-                                  formatISOMonth(addMonths(firstMonth, -1)),
-                                )
+                                setNavigatedMonth(formatISOMonth(addMonths(firstMonth, -1)))
                               }
                             />
                           ) : (
                             <span className={styles.navSpacer} />
                           )}
-                          <span className={styles.caption}>
-                            {formatMonthLabel(month, locale)}
-                          </span>
+                          <span className={styles.caption}>{formatMonthLabel(month, locale)}</span>
                           {index === panels.length - 1 ? (
                             <IconButton
                               icon={ChevronRight}
@@ -421,11 +409,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
         ) : null}
         {control.name ? (
           <>
-            <input
-              type="hidden"
-              name={`${control.name}-start`}
-              value={currentValue?.start ?? ''}
-            />
+            <input type="hidden" name={`${control.name}-start`} value={currentValue?.start ?? ''} />
             <input type="hidden" name={`${control.name}-end`} value={currentValue?.end ?? ''} />
           </>
         ) : null}

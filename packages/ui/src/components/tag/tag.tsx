@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  type CSSProperties,
-  type ForwardedRef,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, type CSSProperties, type ForwardedRef, type HTMLAttributes } from 'react';
 import { X, type LucideIcon } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';

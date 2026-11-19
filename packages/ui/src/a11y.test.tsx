@@ -170,7 +170,9 @@ describe('accessibility', () => {
 
     // The popup renders in a portal outside any landmark, so the page-level
     // region rule cannot apply to this isolated fixture.
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders an open combobox without violations', async () => {
@@ -186,7 +188,9 @@ describe('accessibility', () => {
 
     // The popup renders in a portal outside any landmark, so the page-level
     // region rule cannot apply to this isolated fixture.
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders a multi-select with the select-all row without violations', async () => {
@@ -205,7 +209,9 @@ describe('accessibility', () => {
     await user.click(screen.getByRole('combobox', { name: 'Team' }));
     await screen.findByRole('listbox');
 
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders an open month listbox in the calendar without violations', async () => {
@@ -218,7 +224,9 @@ describe('accessibility', () => {
 
     // The popup renders in a portal outside any landmark, so the page-level
     // region rule cannot apply to this isolated fixture.
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders an open modal dialog without violations', async () => {
@@ -256,7 +264,9 @@ describe('accessibility', () => {
 
     // The popup renders in a portal outside any landmark, so the page-level
     // region rule cannot apply to this isolated fixture.
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 
   it('renders an open time picker without violations', async () => {
@@ -267,6 +277,8 @@ describe('accessibility', () => {
     await user.click(screen.getByRole('button', { name: 'Open time picker' }));
     await screen.findByRole('dialog', { name: 'Choose a time' });
 
-    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(
+      await axe(document.body, { rules: { region: { enabled: false } } }),
+    ).toHaveNoViolations();
   });
 });

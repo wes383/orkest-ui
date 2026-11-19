@@ -2,13 +2,7 @@ import type { CSSProperties } from 'react';
 
 import { getPrimitiveTokensByPrefix } from '@/lib/tokens';
 
-export function TokenPreviewGrid({
-  prefix,
-  kind,
-}: {
-  prefix: string;
-  kind: 'radius' | 'shadow';
-}) {
+export function TokenPreviewGrid({ prefix, kind }: { prefix: string; kind: 'radius' | 'shadow' }) {
   const tokens = getPrimitiveTokensByPrefix(prefix);
 
   return (

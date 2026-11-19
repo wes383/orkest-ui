@@ -4,12 +4,7 @@ import { Bot } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@orkest/ui/client';
 
-export {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-} from '@orkest/ui/client';
+export { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from '@orkest/ui/client';
 
 export function AvatarIconExample() {
   return (

@@ -15,35 +15,32 @@ through. Import the component and the `DataColumn` type from `@orkest/ui/client`
 export const invoiceTableCode = `import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 interface Invoice {
-  id: string;
-  customer: string;
-  amount: number;
+id: string;
+customer: string;
+amount: number;
 }
 
 const invoices: Invoice[] = [
-  { id: 'INV-1042', customer: 'Northwind', amount: 2400 },
-  { id: 'INV-1043', customer: 'Contoso', amount: 980 },
+{ id: 'INV-1042', customer: 'Northwind', amount: 2400 },
+{ id: 'INV-1043', customer: 'Contoso', amount: 980 },
 ];
 
 const columns: DataColumn<Invoice>[] = [
-  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 160 },
-  {
-    id: 'amount',
-    header: 'Amount',
-    accessor: (row) => row.amount,
-    align: 'right',
-    cell: (row) => row.amount.toFixed(2),
-  },
+{ id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 160 },
+{
+id: 'amount',
+header: 'Amount',
+accessor: (row) => row.amount,
+align: 'right',
+cell: (row) => row.amount.toFixed(2),
+},
 ];
 
 export function Example() {
   return <DataTable columns={columns} data={invoices} getRowId={(row) => row.id} caption="Invoices" />;
 }`;
 
-<ComponentPreview
-  title="Invoice table"
-  code={invoiceTableCode}
->
+<ComponentPreview title="Invoice table" code={invoiceTableCode}>
   <DataTableExample />
 </ComponentPreview>
 
@@ -112,35 +109,33 @@ export const rowSelectionCode = `import { useState } from 'react';
 import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
-  { id: 'INV-1042', customer: 'Northwind' },
-  { id: 'INV-1043', customer: 'Contoso' },
+{ id: 'INV-1042', customer: 'Northwind' },
+{ id: 'INV-1043', customer: 'Contoso' },
 ];
 
 const columns: DataColumn<(typeof rows)[number]>[] = [
-  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+{ id: 'customer', header: 'Customer', accessor: (row) => row.customer },
 ];
 
 export function Example() {
   const [selected, setSelected] = useState<typeof rows>([]);
 
-  return (
-    <DataTable
-      columns={columns}
-      data={rows}
-      caption="Invoices"
-      selectable
-      variant="bordered"
-      paginated={false}
-      getRowId={(row) => row.id}
-      onSelectionChange={setSelected}
-    />
-  );
+return (
+
+<DataTable
+columns={columns}
+data={rows}
+caption="Invoices"
+selectable
+variant="bordered"
+paginated={false}
+getRowId={(row) => row.id}
+onSelectionChange={setSelected}
+/>
+);
 }`;
 
-<ComponentPreview
-  title="Row selection"
-  code={rowSelectionCode}
->
+<ComponentPreview title="Row selection" code={rowSelectionCode}>
   <DataTableSelectionExample />
 </ComponentPreview>
 
@@ -155,12 +150,12 @@ export const expandableRowsCode = `import { Text } from '@orkest/ui';
 import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
-  { id: 'INV-1042', customer: 'Northwind', owner: 'Ada' },
-  { id: 'INV-1043', customer: 'Contoso', owner: 'Grace' },
+{ id: 'INV-1042', customer: 'Northwind', owner: 'Ada' },
+{ id: 'INV-1043', customer: 'Contoso', owner: 'Grace' },
 ];
 
 const columns: DataColumn<(typeof rows)[number]>[] = [
-  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+{ id: 'customer', header: 'Customer', accessor: (row) => row.customer },
 ];
 
 export function Example() {
@@ -177,10 +172,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Expandable rows"
-  code={expandableRowsCode}
->
+<ComponentPreview title="Expandable rows" code={expandableRowsCode}>
   <DataTableExpandableExample />
 </ComponentPreview>
 
@@ -211,45 +203,43 @@ import {
 } from '@orkest/ui/client';
 
 const rows = [
-  { id: 'INV-1042', customer: 'Northwind' },
-  { id: 'INV-1043', customer: 'Contoso' },
+{ id: 'INV-1042', customer: 'Northwind' },
+{ id: 'INV-1043', customer: 'Contoso' },
 ];
 
 const columns: DataColumn<(typeof rows)[number]>[] = [
-  { id: 'customer', header: 'Customer', accessor: (row) => row.customer },
-  {
-    id: 'actions',
-    header: 'Actions',
-    accessor: () => null,
-    sortable: false,
-    searchable: false,
-    align: 'right',
-    cell: (row) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <IconButton icon={Ellipsis} label={'Actions for ' + row.id} size="sm" variant="ghost" />
-          }
-        />
-        <DropdownMenuPortal>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem leftIcon={Pencil}>Edit invoice</DropdownMenuItem>
-            <DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenuPortal>
-      </DropdownMenu>
-    ),
-  },
+{ id: 'customer', header: 'Customer', accessor: (row) => row.customer },
+{
+id: 'actions',
+header: 'Actions',
+accessor: () => null,
+sortable: false,
+searchable: false,
+align: 'right',
+cell: (row) => (
+
+<DropdownMenu>
+<DropdownMenuTrigger
+render={
+<IconButton icon={Ellipsis} label={'Actions for ' + row.id} size="sm" variant="ghost" />
+}
+/>
+<DropdownMenuPortal>
+<DropdownMenuContent align="end">
+<DropdownMenuItem leftIcon={Pencil}>Edit invoice</DropdownMenuItem>
+<DropdownMenuItem leftIcon={Trash2}>Delete</DropdownMenuItem>
+</DropdownMenuContent>
+</DropdownMenuPortal>
+</DropdownMenu>
+),
+},
 ];
 
 export function Example() {
   return <DataTable columns={columns} data={rows} caption="Invoices" paginated={false} />;
 }`;
 
-<ComponentPreview
-  title="Row actions column"
-  code={rowActionsColumnCode}
->
+<ComponentPreview title="Row actions column" code={rowActionsColumnCode}>
   <DataTableActionsExample />
 </ComponentPreview>
 
@@ -269,15 +259,15 @@ container scroll.
 export const wideTableWithHorizontalScrollCode = `import { DataTable, type DataColumn } from '@orkest/ui/client';
 
 const rows = [
-  { id: 'INV-1042', customer: 'Northwind', email: 'billing@northwind.example', region: 'EMEA' },
+{ id: 'INV-1042', customer: 'Northwind', email: 'billing@northwind.example', region: 'EMEA' },
 ];
 
 const columns: DataColumn<(typeof rows)[number]>[] = [
-  { id: 'id', header: 'Invoice', accessor: (row) => row.id, minWidth: 110 },
-  { id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 170 },
-  { id: 'email', header: 'Billing email', accessor: (row) => row.email, minWidth: 220 },
-  { id: 'region', header: 'Region', accessor: (row) => row.region, minWidth: 120 },
-  // …more columns with explicit minWidth
+{ id: 'id', header: 'Invoice', accessor: (row) => row.id, minWidth: 110 },
+{ id: 'customer', header: 'Customer', accessor: (row) => row.customer, minWidth: 170 },
+{ id: 'email', header: 'Billing email', accessor: (row) => row.email, minWidth: 220 },
+{ id: 'region', header: 'Region', accessor: (row) => row.region, minWidth: 120 },
+// …more columns with explicit minWidth
 ];
 
 export function Example() {
@@ -343,7 +333,12 @@ pagination stay put.
       default: "'md'",
       description: 'Cell density, passed to Table.',
     },
-    { name: 'striped', type: 'boolean', default: 'false', description: 'Alternating row background.' },
+    {
+      name: 'striped',
+      type: 'boolean',
+      default: 'false',
+      description: 'Alternating row background.',
+    },
     { name: 'hoverable', type: 'boolean', default: 'true', description: 'Row hover background.' },
     { name: 'sortable', type: 'boolean', default: 'true', description: 'Enables header sorting.' },
     {

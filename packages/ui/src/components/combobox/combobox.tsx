@@ -42,10 +42,7 @@ export interface ComboboxProps extends Omit<FilterableSelectBaseProps, 'searchab
  * the chosen option is written back into the field; unlike Autocomplete it only
  * ever commits values that exist in `options`.
  */
-export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
-  props,
-  ref,
-) {
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(props, ref) {
   return <ComboboxImpl {...props} forwardedRef={ref} />;
 });
 
@@ -113,12 +110,8 @@ function ComboboxImpl({
     () => filterItemsForQuery(options, query, filterOption),
     [options, query, filterOption],
   );
-  const visibleGroups = useMemo(
-    () => toSelectRenderGroups(visibleItems),
-    [visibleItems],
-  );
-  const selectedOption =
-    currentValue === null ? undefined : optionByValue.get(currentValue);
+  const visibleGroups = useMemo(() => toSelectRenderGroups(visibleItems), [visibleItems]);
+  const selectedOption = currentValue === null ? undefined : optionByValue.get(currentValue);
 
   const iconSize = selectIconSizeBySize[size];
   const actionIconSize = selectActionIconSizeBySize[size];
@@ -138,10 +131,7 @@ function ComboboxImpl({
         setInternalValue(nextValue);
       }
 
-      onChange?.(
-        nextValue,
-        nextValue === null ? undefined : optionByValue.get(nextValue),
-      );
+      onChange?.(nextValue, nextValue === null ? undefined : optionByValue.get(nextValue));
     },
     [isControlled, onChange, optionByValue],
   );

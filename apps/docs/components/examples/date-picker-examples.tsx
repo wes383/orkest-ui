@@ -39,11 +39,7 @@ export function DatePickerFormatExample() {
 
   return (
     <Stack gap={3} style={{ width: '100%', maxWidth: '18rem' }}>
-      <DatePicker
-        value={value}
-        onChange={setValue}
-        format={(iso) => iso.replaceAll('-', '/')}
-      />
+      <DatePicker value={value} onChange={setValue} format={(iso) => iso.replaceAll('-', '/')} />
       <DatePicker value={value} onChange={setValue} locale="en-GB" format="full" />
     </Stack>
   );

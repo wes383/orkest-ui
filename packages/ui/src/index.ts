@@ -158,11 +158,7 @@ export type {
 } from './components/empty-state';
 
 export { Skeleton } from './components/skeleton';
-export type {
-  SkeletonAnimation,
-  SkeletonProps,
-  SkeletonVariant,
-} from './components/skeleton';
+export type { SkeletonAnimation, SkeletonProps, SkeletonVariant } from './components/skeleton';
 
 export { Spinner } from './components/spinner';
 export type { SpinnerProps, SpinnerSize } from './components/spinner';

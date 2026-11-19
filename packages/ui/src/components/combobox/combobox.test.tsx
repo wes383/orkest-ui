@@ -40,9 +40,7 @@ describe('Combobox', () => {
     const user = userEvent.setup();
     const onSearchChange = vi.fn();
 
-    render(
-      <Combobox aria-label="Fruit" options={options} onSearchChange={onSearchChange} />,
-    );
+    render(<Combobox aria-label="Fruit" options={options} onSearchChange={onSearchChange} />);
 
     const combobox = screen.getByRole('combobox', { name: 'Fruit' });
 
@@ -85,24 +83,14 @@ describe('Combobox', () => {
     await user.type(combobox, 'apr');
     await user.keyboard('{ArrowDown}{Enter}');
 
-    expect(onChange).toHaveBeenCalledWith(
-      'apricot',
-      expect.objectContaining({ value: 'apricot' }),
-    );
+    expect(onChange).toHaveBeenCalledWith('apricot', expect.objectContaining({ value: 'apricot' }));
   });
 
   it('shows a controlled value and skips the internal state', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    render(
-      <Combobox
-        aria-label="Fruit"
-        options={options}
-        value="apricot"
-        onChange={onChange}
-      />,
-    );
+    render(<Combobox aria-label="Fruit" options={options} value="apricot" onChange={onChange} />);
 
     const combobox = screen.getByRole('combobox', { name: 'Fruit' });
 
@@ -120,13 +108,7 @@ describe('Combobox', () => {
     const onChange = vi.fn();
 
     render(
-      <Combobox
-        aria-label="Fruit"
-        options={options}
-        value="apple"
-        clearable
-        onChange={onChange}
-      />,
+      <Combobox aria-label="Fruit" options={options} value="apple" clearable onChange={onChange} />,
     );
 
     await user.click(screen.getByRole('button', { name: 'Clear selection' }));
@@ -156,10 +138,7 @@ describe('Combobox', () => {
 
     await user.click(screen.getByRole('combobox', { name: 'Fruit' }));
 
-    expect(screen.getByRole('option', { name: 'Cherry' })).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(screen.getByRole('option', { name: 'Cherry' })).toHaveAttribute('aria-disabled', 'true');
 
     await user.click(screen.getByRole('option', { name: 'Cherry' }));
 
@@ -184,9 +163,7 @@ describe('Combobox', () => {
   it('shows the empty state when nothing matches', async () => {
     const user = userEvent.setup();
 
-    render(
-      <Combobox aria-label="Fruit" options={options} emptyMessage="Nothing matched" />,
-    );
+    render(<Combobox aria-label="Fruit" options={options} emptyMessage="Nothing matched" />);
 
     const combobox = screen.getByRole('combobox', { name: 'Fruit' });
 

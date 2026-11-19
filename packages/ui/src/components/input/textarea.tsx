@@ -21,8 +21,7 @@ import styles from './input.module.css';
 export type TextareaSize = InputSize;
 export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 
-export interface TextareaProps
-  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
+export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
   /** Control size. Defaults to `md`. */
   size?: TextareaSize;
   /** Applies the invalid border and `aria-invalid`. */

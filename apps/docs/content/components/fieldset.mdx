@@ -33,10 +33,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Grouped fields"
-  code={groupedFieldsCode}
->
+<ComponentPreview title="Grouped fields" code={groupedFieldsCode}>
   <FieldsetBasicExample />
 </ComponentPreview>
 
@@ -69,10 +66,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Disabled fieldset"
-  code={disabledFieldsetCode}
->
+<ComponentPreview title="Disabled fieldset" code={disabledFieldsetCode}>
   <FieldsetDisabledExample />
 </ComponentPreview>
 
@@ -96,28 +90,26 @@ import {
 export function Example() {
   const [frequency, setFrequency] = useState('weekly');
 
-  return (
-    <Box width="100%" maxWidth="22rem">
-      <Fieldset>
-        <Legend>Email digest</Legend>
-        <Field required>
-          <FieldLabel>Frequency</FieldLabel>
-          <RadioGroup value={frequency} onValueChange={setFrequency}>
-            <Radio value="daily" label="Daily" />
-            <Radio value="weekly" label="Weekly" />
-            <Radio value="monthly" label="Monthly" />
-          </RadioGroup>
-          <FieldDescription>Choose when we send your summary.</FieldDescription>
-        </Field>
-      </Fieldset>
-    </Box>
-  );
+return (
+
+<Box width="100%" maxWidth="22rem">
+<Fieldset>
+<Legend>Email digest</Legend>
+<Field required>
+<FieldLabel>Frequency</FieldLabel>
+<RadioGroup value={frequency} onValueChange={setFrequency}>
+<Radio value="daily" label="Daily" />
+<Radio value="weekly" label="Weekly" />
+<Radio value="monthly" label="Monthly" />
+</RadioGroup>
+<FieldDescription>Choose when we send your summary.</FieldDescription>
+</Field>
+</Fieldset>
+</Box>
+);
 }`;
 
-<ComponentPreview
-  title="Radio group in a fieldset"
-  code={radioGroupInAFieldsetCode}
->
+<ComponentPreview title="Radio group in a fieldset" code={radioGroupInAFieldsetCode}>
   <FieldsetRadioExample />
 </ComponentPreview>
 

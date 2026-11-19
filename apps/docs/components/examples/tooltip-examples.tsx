@@ -35,12 +35,13 @@ export function TooltipBasicExample() {
           </TooltipPortal>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger
-            render={<IconButton icon={Copy} label="Copy link" variant="outline" />}
-          />
+          <TooltipTrigger render={<IconButton icon={Copy} label="Copy link" variant="outline" />} />
           <TooltipPortal>
             <TooltipContent>
-              Copy link <Text as="span" size="xs">⌘C</Text>
+              Copy link{' '}
+              <Text as="span" size="xs">
+                ⌘C
+              </Text>
             </TooltipContent>
           </TooltipPortal>
         </Tooltip>

@@ -18,24 +18,22 @@ import { Radio, RadioGroup } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState('standard');
 
-  return (
-    <RadioGroup
+return (
+
+<RadioGroup
       aria-label="Plan"
       value={value}
       onValueChange={setValue}
       orientation="horizontal"
     >
-      <Radio value="standard" label="Standard" />
-      <Radio value="pro" label="Pro" />
-      <Radio value="enterprise" label="Enterprise" />
-    </RadioGroup>
-  );
+<Radio value="standard" label="Standard" />
+<Radio value="pro" label="Pro" />
+<Radio value="enterprise" label="Enterprise" />
+</RadioGroup>
+);
 }`;
 
-<ComponentPreview
-  title="Radio group"
-  code={radioGroupCode}
->
+<ComponentPreview title="Radio group" code={radioGroupCode}>
   <RadioGroupExample />
 </ComponentPreview>
 
@@ -55,10 +53,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Vertical group"
-  code={verticalGroupCode}
->
+<ComponentPreview title="Vertical group" code={verticalGroupCode}>
   <RadioGroup aria-label="Notifications" defaultValue="all">
     <Radio value="all" label="All activity" />
     <Radio value="mentions" label="Mentions only" />
@@ -88,10 +83,7 @@ export function Example() {
   );
 }`;
 
-<ComponentPreview
-  title="Sizes and disabled group"
-  code={sizesAndDisabledGroupCode}
->
+<ComponentPreview title="Sizes and disabled group" code={sizesAndDisabledGroupCode}>
   <Stack gap={4}>
     <RadioGroup aria-label="Small plan" size="sm" defaultValue="basic">
       <Radio value="basic" label="Basic" />

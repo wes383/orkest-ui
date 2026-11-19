@@ -290,7 +290,7 @@
    apart, so the range reads as a run of squares instead of one merged bar. */
 .day[data-in-range]::before,
 .day[data-range-preview]::before {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
   inset: 0;
@@ -309,7 +309,7 @@
    version of the filled endpoint, so the click target is obvious before the
    second click lands. */
 .day[data-range-preview]::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
   inset: 0;

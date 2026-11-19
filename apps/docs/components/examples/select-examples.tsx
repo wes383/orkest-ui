@@ -96,14 +96,7 @@ const teamOptions: SelectItem[] = [
 ];
 
 export function BasicSelectExample() {
-  return (
-    <Select
-      aria-label="Fruit"
-      options={fruitOptions}
-      defaultValue="apple"
-      clearable
-    />
-  );
+  return <Select aria-label="Fruit" options={fruitOptions} defaultValue="apple" clearable />;
 }
 
 export function SearchableSelectExample() {
@@ -146,12 +139,7 @@ export function SelectSizesExample() {
 export function SelectStatesExample() {
   return (
     <Stack gap={3}>
-      <Select
-        aria-label="Disabled status"
-        options={statusOptions}
-        defaultValue="active"
-        disabled
-      />
+      <Select aria-label="Disabled status" options={statusOptions} defaultValue="active" disabled />
       <Select
         aria-label="Invalid status"
         options={statusOptions}
@@ -182,14 +170,7 @@ export function SelectLoadingExample() {
 }
 
 export function DetailedSelectExample() {
-  return (
-    <Select
-      aria-label="Team"
-      options={teamOptions}
-      defaultValue="design"
-      clearable
-    />
-  );
+  return <Select aria-label="Team" options={teamOptions} defaultValue="design" clearable />;
 }
 
 export function MultiSelectExample() {

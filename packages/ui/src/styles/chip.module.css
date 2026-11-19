@@ -131,7 +131,7 @@
   border-radius: inherit;
   background: currentColor;
   opacity: 0;
-  content: '';
+  content: "";
   pointer-events: none;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
 }
@@ -181,7 +181,7 @@
 .remove::after {
   position: absolute;
   inset: -4px;
-  content: '';
+  content: "";
   border-radius: inherit;
 }
 

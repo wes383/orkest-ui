@@ -1,12 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { IconSize } from '../../primitives/icon';
-import type {
-  SelectItem,
-  SelectOption,
-  SelectOptionGroup,
-  SelectSize,
-} from './select-types';
+import type { SelectItem, SelectOption, SelectOptionGroup, SelectSize } from './select-types';
 
 export const selectIconSizeBySize: Record<SelectSize, IconSize> = {
   sm: 'sm',
@@ -25,9 +20,7 @@ export function isSelectOptionGroup(item: SelectItem): item is SelectOptionGroup
 }
 
 export function flattenSelectOptions(items: SelectItem[]): SelectOption[] {
-  return items.flatMap((item) =>
-    isSelectOptionGroup(item) ? item.options : [item],
-  );
+  return items.flatMap((item) => (isSelectOptionGroup(item) ? item.options : [item]));
 }
 
 export function filterSelectItems(
@@ -55,10 +48,7 @@ export function filterSelectItems(
   return result;
 }
 
-export function excludeSelectValues(
-  items: SelectItem[],
-  values: Set<string>,
-): SelectItem[] {
+export function excludeSelectValues(items: SelectItem[], values: Set<string>): SelectItem[] {
   return filterSelectItems(items, (option) => !values.has(option.value));
 }
 

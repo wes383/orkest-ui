@@ -204,9 +204,7 @@ describe('Toast', () => {
       toast.info('Custom rendering');
     });
 
-    expect(await screen.findByTestId('custom-toast')).toHaveTextContent(
-      'Custom rendering',
-    );
+    expect(await screen.findByTestId('custom-toast')).toHaveTextContent('Custom rendering');
   });
 
   it('isolates a provider that uses its own manager', async () => {

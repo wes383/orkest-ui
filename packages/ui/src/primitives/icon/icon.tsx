@@ -5,20 +5,12 @@ import { cx } from '../../utils/cx';
 import styles from './icon.module.css';
 
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'inherit';
-export type IconTone =
-  | 'default'
-  | 'muted'
-  | 'subtle'
-  | 'inherit'
-  | 'accent'
-  | 'success'
-  | 'danger';
+export type IconTone = 'default' | 'muted' | 'subtle' | 'inherit' | 'accent' | 'success' | 'danger';
 
-export interface IconProps
-  extends Omit<
-    ComponentPropsWithoutRef<'svg'>,
-    'children' | 'width' | 'height' | 'strokeWidth'
-  > {
+export interface IconProps extends Omit<
+  ComponentPropsWithoutRef<'svg'>,
+  'children' | 'width' | 'height' | 'strokeWidth'
+> {
   /** A Lucide icon component, e.g. `import { Check } from 'lucide-react'`. */
   icon: LucideIcon;
   /** Icon size. `inherit` matches the surrounding font size. */
@@ -43,16 +35,7 @@ type IconStyle = CSSProperties & {
 
 /** Token-sized icon with the correct decorative or labelled accessibility semantics. */
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  {
-    icon: Glyph,
-    size = 'md',
-    tone = 'inherit',
-    label,
-    className,
-    style,
-    strokeWidth,
-    ...rest
-  },
+  { icon: Glyph, size = 'md', tone = 'inherit', label, className, style, strokeWidth, ...rest },
   ref,
 ) {
   const mergedStyle: IconStyle | undefined =

@@ -3,12 +3,7 @@
 import { useState } from 'react';
 
 import { Button, Heading, Stack } from '@orkest/ui';
-import {
-  Alert,
-  AlertAction,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+import { Alert, AlertAction, AlertDescription, AlertTitle } from '@orkest/ui/client';
 
 export function AlertDemo() {
   const [noticeVisible, setNoticeVisible] = useState(true);
@@ -30,11 +25,7 @@ export function AlertDemo() {
           <AlertDescription>Your profile is up to date.</AlertDescription>
         </Alert>
         {noticeVisible ? (
-          <Alert
-            variant="warning"
-            closable
-            onClose={() => setNoticeVisible(false)}
-          >
+          <Alert variant="warning" closable onClose={() => setNoticeVisible(false)}>
             <AlertTitle>Verify your email</AlertTitle>
             <AlertDescription>
               Some features stay limited until the address is confirmed.
@@ -47,9 +38,7 @@ export function AlertDemo() {
         )}
         <Alert variant="error">
           <AlertTitle>Could not load billing data</AlertTitle>
-          <AlertDescription>
-            The payment provider did not respond in time.
-          </AlertDescription>
+          <AlertDescription>The payment provider did not respond in time.</AlertDescription>
           <AlertAction>
             <Button size="sm" variant="outline">
               Retry

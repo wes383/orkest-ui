@@ -78,9 +78,7 @@ export function PopoverControlledExample() {
             <PopoverContent maxWidth="18rem">
               <Stack gap={2}>
                 <PopoverTitle>Controlled popover</PopoverTitle>
-                <PopoverDescription>
-                  The parent owns the open state.
-                </PopoverDescription>
+                <PopoverDescription>The parent owns the open state.</PopoverDescription>
                 <PopoverClose>Close</PopoverClose>
               </Stack>
             </PopoverContent>
@@ -106,8 +104,11 @@ export function PopoverRegionExample() {
                 Keyboard shortcuts
               </Text>
               <Text as="p" size="sm" tone="muted">
-                Press <Text as="span" size="sm">⌘K</Text> to search. Use arrow keys to move between
-                results.
+                Press{' '}
+                <Text as="span" size="sm">
+                  ⌘K
+                </Text>{' '}
+                to search. Use arrow keys to move between results.
               </Text>
               <PopoverClose>Got it</PopoverClose>
             </Stack>

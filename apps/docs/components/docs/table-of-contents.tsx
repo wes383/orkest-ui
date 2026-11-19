@@ -8,9 +8,12 @@ import { useScrollOverflow } from './use-scroll-overflow';
 
 export function TableOfContents({ headings }: { headings: DocHeading[] }) {
   const [activeId, setActiveId] = useState<string | null>(headings[0]?.id ?? null);
-  const { ref: scrollRef, overflowing, atTop, atBottom } = useScrollOverflow<HTMLDivElement>(
-    headings,
-  );
+  const {
+    ref: scrollRef,
+    overflowing,
+    atTop,
+    atBottom,
+  } = useScrollOverflow<HTMLDivElement>(headings);
   const bodyClassName = [
     'toc-body',
     overflowing && !atTop ? 'toc-fade-top' : '',

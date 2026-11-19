@@ -24,20 +24,14 @@ describe('Switch', () => {
 
     await user.click(screen.getByText('Notifications'));
     expect(onCheckedChange).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole('switch')).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
 
     screen.getByRole('switch').blur();
     await user.tab();
     expect(screen.getByRole('switch')).toHaveFocus();
 
     await user.keyboard(' ');
-    expect(screen.getByRole('switch')).toHaveAttribute(
-      'aria-checked',
-      'false',
-    );
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
     expect(onCheckedChange).toHaveBeenCalledTimes(2);
   });
 
@@ -45,13 +39,7 @@ describe('Switch', () => {
     const user = userEvent.setup();
     const onCheckedChange = vi.fn();
 
-    render(
-      <Switch
-        label="Controlled"
-        checked
-        onCheckedChange={onCheckedChange}
-      />,
-    );
+    render(<Switch label="Controlled" checked onCheckedChange={onCheckedChange} />);
 
     const control = screen.getByRole('switch', { name: 'Controlled' });
     expect(control).toHaveAttribute('aria-checked', 'true');
@@ -65,16 +53,11 @@ describe('Switch', () => {
     const user = userEvent.setup();
     const onCheckedChange = vi.fn();
 
-    render(
-      <Switch label="Disabled" disabled onCheckedChange={onCheckedChange} />,
-    );
+    render(<Switch label="Disabled" disabled onCheckedChange={onCheckedChange} />);
 
     await user.click(screen.getByText('Disabled'));
     expect(onCheckedChange).not.toHaveBeenCalled();
-    expect(screen.getByRole('switch')).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(screen.getByRole('switch')).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('forwards form attributes, refs, and size', () => {

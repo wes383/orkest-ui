@@ -60,8 +60,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   const countText =
     count === undefined ? undefined : count > maxCount ? `${maxCount}+` : String(count);
   const hasContent =
-    countText !== undefined ||
-    (children !== undefined && children !== null && children !== false);
+    countText !== undefined || (children !== undefined && children !== null && children !== false);
   const dotOnly = dot && !hasContent && !leftIcon && !rightIcon;
   const mergedStyle: BadgeStyle | undefined = color
     ? { ...style, '--chip-custom-color': color }

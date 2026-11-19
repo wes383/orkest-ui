@@ -81,11 +81,7 @@ export function OptionList({
           ? null
           : groups.map((group) =>
               group.label ? (
-                <BaseCombobox.Group
-                  key={group.key}
-                  items={group.items}
-                  className={styles.group}
-                >
+                <BaseCombobox.Group key={group.key} items={group.items} className={styles.group}>
                   <BaseCombobox.GroupLabel className={styles.groupLabel}>
                     {group.label}
                   </BaseCombobox.GroupLabel>

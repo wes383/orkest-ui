@@ -156,9 +156,7 @@ describe('DatePicker', () => {
   });
 
   it('submits through a hidden input', () => {
-    const { container } = render(
-      <DatePicker defaultValue="2026-11-18" name="dueDate" />,
-    );
+    const { container } = render(<DatePicker defaultValue="2026-11-18" name="dueDate" />);
 
     expect(container.querySelector('input[name="dueDate"]')).toHaveValue('2026-11-18');
   });
@@ -169,9 +167,6 @@ describe('DatePicker', () => {
     render(<DatePicker ref={ref} className="custom" id="due" />);
 
     expect(ref.current).toHaveClass('custom');
-    expect(screen.getByRole('button', { name: 'Select a date' })).toHaveAttribute(
-      'id',
-      'due',
-    );
+    expect(screen.getByRole('button', { name: 'Select a date' })).toHaveAttribute('id', 'due');
   });
 });
