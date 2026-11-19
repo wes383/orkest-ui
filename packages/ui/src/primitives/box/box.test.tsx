@@ -65,7 +65,7 @@ describe('Box', () => {
     expect(box.style.borderStyle).toBe('solid');
     expect(box.style.borderColor).toBe('var(--ui-border)');
     expect(box.style.borderRadius).toBe('var(--ok-radius-lg)');
-    expect(box.style.boxShadow).toBe('var(--ok-shadow-md)');
+    expect(box.style.boxShadow).toBe('var(--ui-shadow-md)');
     expect(box.style.overflow).toBe('hidden');
   });
 

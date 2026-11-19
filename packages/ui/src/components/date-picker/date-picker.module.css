@@ -7,7 +7,7 @@
   --date-picker-leading-inset: calc(var(--ok-space-2) + 2px);
   /* The clear action hugs its icon and scales with the control. The inset falls
      out of that size, so the gap around the hover surface stays even. */
-  --date-picker-action-size: 1.25rem;
+  --date-picker-action-size: var(--ok-control-action-size-md);
   --date-picker-action-inset: calc(
     (var(--date-picker-height) - var(--date-picker-action-size)) / 2
   );
@@ -23,7 +23,7 @@
   --date-picker-radius: var(--ok-radius-lg);
   --date-picker-font-size: var(--ok-font-size-xs);
   --date-picker-leading-inset: var(--ok-space-2);
-  --date-picker-action-size: 1rem;
+  --date-picker-action-size: var(--ok-control-action-size-sm);
 }
 
 .root[data-size="lg"] {
@@ -32,7 +32,7 @@
   --date-picker-radius: var(--ok-radius-xl);
   --date-picker-font-size: var(--ok-font-size-md);
   --date-picker-leading-inset: var(--ok-space-3);
-  --date-picker-action-size: 1.5rem;
+  --date-picker-action-size: var(--ok-control-action-size-lg);
 }
 
 .field {
@@ -59,18 +59,23 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.root:not([data-disabled="true"]) .field:hover {
-  border-color: var(--ui-border-strong);
+@media (hover: hover) {
+  .root:not([data-disabled="true"]) .field:hover {
+    border-color: var(--ui-border-strong);
+  }
 }
 
 .field:focus-visible {
-  border-color: var(--ui-subtle-foreground);
-  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
-  outline-offset: var(--ok-focus-ring-offset);
+  border-color: var(--ui-focus-ring);
+  box-shadow: var(--ui-focus-halo);
 }
 
 .field[data-invalid="true"] {
   border-color: var(--ui-danger);
+}
+
+.field[data-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-danger) 24%, transparent);
 }
 
 /* Without the leading icon the field falls back to the plain control padding. */
@@ -136,13 +141,23 @@
   transform: translateY(-50%);
 }
 
+/* Keep the visual icon size while giving small fields a 24px pointer target. */
+.clear::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+  border-radius: inherit;
+}
+
 .root[data-size="sm"] .clear {
   border-radius: var(--ok-radius-md);
 }
 
-.clear:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .clear:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .clear:focus-visible {
@@ -150,8 +165,12 @@
   outline-offset: 0;
 }
 
-.popover {
-  border-radius: var(--ok-radius-2xl);
+/* Windows High Contrast drops box-shadow, so restore an outline for keyboard focus. */
+@media (forced-colors: active) {
+  .field:focus-visible {
+    outline: var(--ok-focus-ring-width) solid CanvasText;
+    outline-offset: var(--ok-focus-ring-offset);
+  }
 }
 
 .footer {

@@ -33,8 +33,10 @@
   cursor: pointer;
 }
 
-.sortButton:hover {
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .sortButton:hover {
+    color: var(--ui-foreground);
+  }
 }
 
 .sortButton:focus-visible {
@@ -45,12 +47,14 @@
 
 .sortIcon {
   flex: none;
-  opacity: 0;
+  opacity: 0.45;
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.sortButton:hover .sortIcon {
-  opacity: 0.5;
+@media (hover: hover) {
+  .sortButton:hover .sortIcon {
+    opacity: 0.85;
+  }
 }
 
 .sortButton[data-direction] .sortIcon {
@@ -76,7 +80,12 @@
 }
 
 .root tr[data-selected] {
-  background: color-mix(in srgb, var(--ui-accent) 6%, transparent);
+  background: color-mix(in srgb, var(--ui-accent) 8%, transparent);
+}
+
+/* The inset accent rule marks the active rows without adding a layout column. */
+.root tr[data-selected] > td:first-child {
+  box-shadow: inset 2px 0 0 var(--ui-accent);
 }
 
 .expandedRow td {

@@ -116,16 +116,18 @@
   outline-offset: calc(var(--ok-focus-ring-offset) * -1);
 }
 
-.trigger:hover:not([data-active]):not([data-disabled]) {
-  color: var(--ui-foreground);
-}
+@media (hover: hover) {
+  .trigger:hover:not([data-active]):not([data-disabled]) {
+    color: var(--ui-foreground);
+  }
 
-.list[data-variant="pills"] .trigger:hover:not([data-active]):not([data-disabled]) {
-  background: var(--ui-surface-sunken);
-}
+  .list[data-variant="pills"] .trigger:hover:not([data-active]):not([data-disabled]) {
+    background: var(--ui-surface-sunken);
+  }
 
-.list[data-variant="enclosed"] .trigger:hover:not([data-active]):not([data-disabled]) {
-  background: var(--ui-secondary);
+  .list[data-variant="enclosed"] .trigger:hover:not([data-active]):not([data-disabled]) {
+    background: var(--ui-secondary);
+  }
 }
 
 .list[data-variant="pills"] .trigger[data-active] {
@@ -140,7 +142,7 @@
 
 .list[data-variant="enclosed"] .trigger[data-active] {
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-xs);
+  box-shadow: var(--ui-shadow-xs);
   color: var(--ui-foreground);
 }
 
@@ -217,13 +219,12 @@
 
 .list[data-variant="pills"] .indicator {
   background: var(--ui-secondary);
-  transition: none;
 }
 
 .list[data-variant="enclosed"] .indicator {
   border-radius: calc(var(--tabs-radius) - var(--ok-space-1));
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-xs);
+  box-shadow: var(--ui-shadow-xs);
 }
 
 .content {

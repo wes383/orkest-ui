@@ -22,7 +22,7 @@
   --field-radius: var(--ok-radius-xl);
   /* The action is a square hugging its icon. It steps with the control so the
      hover surface keeps the same weight at every size. */
-  --field-action-size: 1.25rem;
+  --field-action-size: var(--ok-control-action-size-md);
   --field-action-radius: var(--ok-radius-lg);
   display: flex;
   align-items: center;
@@ -45,7 +45,16 @@
 }
 
 .field:focus-within {
-  border-color: var(--ui-subtle-foreground);
+  border-color: var(--ui-focus-ring);
+}
+
+/* Keyboard focus adds a soft halo flush with the border instead of a second outline. */
+.field:has(:focus-visible) {
+  box-shadow: var(--ui-focus-halo);
+}
+
+.field[data-invalid="true"]:has(:focus-visible) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-danger) 24%, transparent);
 }
 
 .field[data-size="sm"] {
@@ -53,7 +62,7 @@
   --field-padding-x: var(--ok-control-padding-x-sm);
   --field-padding-y: var(--ok-space-1);
   --field-radius: var(--ok-radius-lg);
-  --field-action-size: 1rem;
+  --field-action-size: var(--ok-control-action-size-sm);
   --field-action-radius: var(--ok-radius-md);
   font-size: var(--ok-font-size-xs);
 }
@@ -71,7 +80,7 @@
   --field-padding-x: var(--ok-control-padding-x-lg);
   --field-padding-y: var(--ok-space-3);
   --field-radius: var(--ok-radius-xl);
-  --field-action-size: 1.5rem;
+  --field-action-size: var(--ok-control-action-size-lg);
   font-size: var(--ok-font-size-md);
 }
 
@@ -80,7 +89,7 @@
   --field-padding-x: var(--ok-control-padding-x-xl);
   --field-padding-y: var(--ok-space-3);
   --field-radius: var(--ok-radius-2xl);
-  --field-action-size: 1.75rem;
+  --field-action-size: var(--ok-control-action-size-xl);
   font-size: var(--ok-font-size-lg);
 }
 
@@ -88,10 +97,12 @@
   padding-right: calc((var(--field-height) - var(--field-action-size)) / 2);
 }
 
-.field:hover:not(:focus-within):not([data-disabled="true"]):not([data-read-only="true"]):not(
-    [data-invalid="true"]
-  ) {
-  border-color: var(--ui-border-strong);
+@media (hover: hover) {
+  .field:hover:not(:focus-within):not([data-disabled="true"]):not([data-read-only="true"]):not(
+      [data-invalid="true"]
+    ) {
+    border-color: var(--ui-border-strong);
+  }
 }
 
 .field[data-invalid="true"] {
@@ -175,6 +186,7 @@
 }
 
 .action {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -189,9 +201,19 @@
   cursor: pointer;
 }
 
-.action:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+/* Keep the visual icon size while giving small fields a 24px pointer target. */
+.action::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+  border-radius: inherit;
+}
+
+@media (hover: hover) {
+  .action:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .action:focus-visible {
@@ -261,6 +283,22 @@
 .textarea[data-auto-resize="true"] {
   resize: none;
   overflow-y: hidden;
+}
+
+/* Windows High Contrast drops box-shadow, so restore an outline for keyboard focus. */
+@media (forced-colors: active) {
+  .field:has(:focus-visible) {
+    outline: var(--ok-focus-ring-width) solid CanvasText;
+    outline-offset: var(--ok-focus-ring-offset);
+  }
+}
+
+/* iOS Safari zooms editable controls below 16px when they receive focus. */
+@media (pointer: coarse) {
+  .field[data-size="sm"],
+  .field[data-size="md"] {
+    font-size: var(--ok-font-size-md);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

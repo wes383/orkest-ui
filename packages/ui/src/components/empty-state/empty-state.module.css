@@ -75,6 +75,7 @@
   font-size: var(--empty-state-title-size);
   font-weight: var(--ok-font-weight-semibold);
   line-height: var(--ok-line-height-snug);
+  text-wrap: balance;
 }
 
 /* Title and description read as one block, so they sit closer than the other parts. */
@@ -90,6 +91,7 @@
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
   line-height: var(--ok-line-height-normal);
+  text-wrap: pretty;
 }
 
 .action {

@@ -136,8 +136,10 @@
   transition: opacity var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.chip[data-interactive="true"]:hover::after {
-  opacity: 0.08;
+@media (hover: hover) {
+  .chip[data-interactive="true"]:hover::after {
+    opacity: 0.08;
+  }
 }
 
 .chip[data-interactive="true"]:active::after {
@@ -159,6 +161,7 @@
 }
 
 .remove {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -174,8 +177,18 @@
   opacity: 0.7;
 }
 
-.remove:hover {
-  opacity: 1;
+/* Expand the hit area without changing the chip's visual height. */
+.remove::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+  border-radius: inherit;
+}
+
+@media (hover: hover) {
+  .remove:hover {
+    opacity: 1;
+  }
 }
 
 .remove:focus-visible {

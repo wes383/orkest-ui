@@ -59,15 +59,15 @@
 }
 
 .card[data-shadow="sm"] {
-  box-shadow: var(--ok-shadow-sm);
+  box-shadow: var(--ui-shadow-sm);
 }
 
 .card[data-shadow="md"] {
-  box-shadow: var(--ok-shadow-md);
+  box-shadow: var(--ui-shadow-md);
 }
 
 .card[data-shadow="lg"] {
-  box-shadow: var(--ok-shadow-lg);
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .header {
@@ -84,7 +84,8 @@
   font-size: var(--ok-font-size-lg);
   font-weight: var(--ok-font-weight-semibold);
   line-height: var(--ok-line-height-tight);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--ok-letter-spacing-tight);
+  text-wrap: balance;
 }
 
 .description {
@@ -92,6 +93,7 @@
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
   line-height: var(--ok-line-height-relaxed);
+  text-wrap: pretty;
 }
 
 .content {

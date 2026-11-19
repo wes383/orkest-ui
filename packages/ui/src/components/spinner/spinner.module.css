@@ -1,6 +1,5 @@
 .root {
   --spinner-size: var(--ok-font-size-xl);
-  --spinner-thickness: 2px;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -14,7 +13,6 @@
 
 .root[data-size='sm'] {
   --spinner-size: var(--ok-font-size-md);
-  --spinner-thickness: 1.5px;
   font-size: var(--ok-font-size-xs);
 }
 
@@ -24,19 +22,40 @@
 
 .root[data-size='lg'] {
   --spinner-size: calc(var(--ok-space-6) + var(--ok-space-1));
-  --spinner-thickness: 2.5px;
   font-size: var(--ok-font-size-md);
 }
 
 .track {
-  box-sizing: border-box;
+  display: inline-flex;
   flex: none;
   width: var(--spinner-size);
   height: var(--spinner-size);
-  border: var(--spinner-thickness) solid color-mix(in srgb, currentColor 22%, transparent);
-  border-top-color: currentColor;
-  border-radius: var(--ok-radius-full);
-  animation: spinner-rotate 750ms linear infinite;
+  color: inherit;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: spinner-rotate var(--ok-duration-spin) linear infinite;
+}
+
+/* The faint full ring anchors the arc so the spinner reads at small sizes. */
+.trackCircle,
+.arc {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.trackCircle {
+  opacity: 0.22;
+}
+
+.arc {
+  stroke-dasharray: 42 20;
 }
 
 @keyframes spinner-rotate {
@@ -55,7 +74,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track {
+  .svg {
     animation: spinner-fade 1.4s ease-in-out infinite;
   }
 }

@@ -38,19 +38,25 @@
 
 .root:has([data-disabled]) {
   cursor: not-allowed;
-  opacity: var(--ok-opacity-disabled);
+  color: var(--ui-disabled-foreground);
 }
 
 .track {
+  --switch-padding: 2px;
+  --switch-travel: calc(
+    var(--switch-width) - var(--switch-thumb-size) - (2 * var(--switch-padding)) -
+      (2 * var(--ok-border-width))
+  );
   display: block;
   flex: none;
   box-sizing: border-box;
   width: var(--switch-width);
   height: var(--switch-height);
-  padding: 2px;
+  padding: var(--switch-padding);
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-full);
   background: var(--ui-secondary);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.08);
   cursor: inherit;
   outline: none;
   transition:
@@ -64,14 +70,16 @@
   height: var(--switch-thumb-size);
   border-radius: var(--ok-radius-full);
   background: var(--ui-secondary-foreground);
-  box-shadow: var(--ok-shadow-xs);
+  box-shadow: var(--ui-shadow-xs);
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
     transform var(--ok-duration-normal) var(--ok-ease-standard);
 }
 
-.root:not(:has([data-disabled])):hover .track {
-  border-color: var(--ui-foreground);
+@media (hover: hover) {
+  .root:not(:has([data-disabled])):hover .track {
+    border-color: var(--ui-foreground);
+  }
 }
 
 .track:focus-visible {
@@ -86,9 +94,23 @@
 
 .track[data-checked] .thumb {
   background: var(--ui-primary-foreground);
-  transform: translateX(
-    calc(var(--switch-width) - var(--switch-thumb-size) - 6px)
-  );
+  transform: translateX(var(--switch-travel));
+}
+
+[dir="rtl"] .track[data-checked] .thumb {
+  transform: translateX(calc(var(--switch-travel) * -1));
+}
+
+/* Disabled uses the shared surface tokens instead of dimming the whole label. */
+.root:has([data-disabled]) .track,
+.root:has([data-disabled]) .track[data-checked] {
+  border-color: var(--ui-border-subtle);
+  background: var(--ui-disabled-surface);
+}
+
+.root:has([data-disabled]) .thumb,
+.root:has([data-disabled]) .track[data-checked] .thumb {
+  background: var(--ui-disabled-foreground);
 }
 
 .label {

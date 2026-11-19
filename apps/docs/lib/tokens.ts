@@ -75,7 +75,13 @@ const semanticTokenGroups = [
   },
   {
     title: 'Borders and focus',
-    tokens: ['--ui-border-subtle', '--ui-border', '--ui-border-strong', '--ui-focus-ring'],
+    tokens: [
+      '--ui-border-subtle',
+      '--ui-border',
+      '--ui-border-strong',
+      '--ui-focus-ring',
+      '--ui-focus-halo',
+    ],
   },
   {
     title: 'Status',
@@ -90,6 +96,10 @@ const semanticTokenGroups = [
       '--ui-danger-surface',
       '--ui-danger-surface-foreground',
     ],
+  },
+  {
+    title: 'Elevation',
+    tokens: ['--ui-shadow-xs', '--ui-shadow-sm', '--ui-shadow-md', '--ui-shadow-lg'],
   },
   {
     title: 'Selection',

@@ -29,9 +29,11 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.trigger:hover:not(:disabled) {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .trigger:hover:not(:disabled) {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .trigger:focus-visible {
@@ -119,7 +121,6 @@
 
 .popover {
   --popover-body-padding: var(--ok-space-1) var(--ok-space-2);
-  border-radius: var(--ok-radius-2xl);
 }
 
 .columns {
@@ -187,8 +188,10 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.item:hover:not([aria-disabled="true"]) {
-  background: var(--ui-surface-sunken);
+@media (hover: hover) {
+  .item:hover:not([aria-disabled="true"]) {
+    background: var(--ui-surface-sunken);
+  }
 }
 
 .item[aria-selected="true"] {
@@ -197,8 +200,10 @@
   font-weight: var(--ok-font-weight-semibold);
 }
 
-.item[aria-selected="true"]:hover {
-  background: var(--ui-primary-hover);
+@media (hover: hover) {
+  .item[aria-selected="true"]:hover {
+    background: var(--ui-primary-hover);
+  }
 }
 
 .item[aria-disabled="true"] {

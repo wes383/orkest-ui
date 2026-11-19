@@ -30,7 +30,7 @@
 
 .root:has([data-disabled]) {
   cursor: not-allowed;
-  opacity: var(--ok-opacity-disabled);
+  color: var(--ui-disabled-foreground);
 }
 
 .control {
@@ -53,8 +53,10 @@
     border-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.root:not(:has([data-disabled])):hover .control {
-  border-color: var(--ui-foreground);
+@media (hover: hover) {
+  .root:not(:has([data-disabled])):hover .control {
+    border-color: var(--ui-foreground);
+  }
 }
 
 .control:focus-visible {
@@ -75,37 +77,58 @@
   height: 100%;
 }
 
-.indicator::before,
-.indicator::after {
+.check {
   grid-area: 1 / 1;
-  content: "";
-  opacity: 0;
+  width: 75%;
+  height: 75%;
+  overflow: visible;
 }
 
-.indicator::before {
+.checkPath {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 12;
+  stroke-dashoffset: 12;
+  transition: stroke-dashoffset var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.control[data-checked] .checkPath {
+  stroke-dashoffset: 0;
+}
+
+.dash {
+  grid-area: 1 / 1;
+  place-self: center;
   width: 0.55em;
-  height: 0;
-  border-top: 2px solid currentColor;
-}
-
-.indicator::after {
-  width: 0.3em;
-  height: 0.55em;
-  border: solid currentColor;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg) translate(-0.03em, -0.06em);
-}
-
-.control[data-checked] .indicator::after {
-  opacity: 1;
-}
-
-.control[data-indeterminate] .indicator::before {
-  opacity: 1;
-}
-
-.control[data-indeterminate] .indicator::after {
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
   opacity: 0;
+  transform: scaleX(0.4);
+  transition:
+    opacity var(--ok-duration-fast) var(--ok-ease-standard),
+    transform var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.control[data-indeterminate] .dash {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.control[data-indeterminate] .checkPath {
+  stroke-dashoffset: 12;
+}
+
+/* Disabled uses the shared surface tokens instead of dimming the whole label. */
+.root:has([data-disabled]) .control,
+.root:has([data-disabled]) .control[data-checked],
+.root:has([data-disabled]) .control[data-indeterminate] {
+  border-color: var(--ui-border-subtle);
+  background: var(--ui-disabled-surface);
+  color: var(--ui-disabled-foreground);
 }
 
 .label {
@@ -113,7 +136,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .control {
+  .control,
+  .checkPath,
+  .dash {
     transition: none;
   }
 }

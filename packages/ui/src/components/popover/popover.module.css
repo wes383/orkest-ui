@@ -16,7 +16,7 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-lg);
+  box-shadow: var(--ui-shadow-lg);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-sm);
@@ -89,6 +89,7 @@
   font-weight: var(--ok-font-weight-semibold);
   line-height: var(--ok-line-height-tight);
   letter-spacing: var(--ok-letter-spacing-tight);
+  text-wrap: balance;
 }
 
 .description {
@@ -96,6 +97,7 @@
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
   line-height: var(--ok-line-height-normal);
+  text-wrap: pretty;
 }
 
 .arrow {

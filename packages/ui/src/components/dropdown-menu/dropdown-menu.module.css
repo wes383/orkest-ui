@@ -13,7 +13,7 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-md);
+  box-shadow: var(--ui-shadow-lg);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-sm);
@@ -153,8 +153,8 @@
   background: var(--ui-secondary);
   color: var(--ui-muted-foreground);
   font-family: var(--ok-font-sans);
-  font-size: 0.625rem;
-  line-height: 1.4;
+  font-size: var(--ok-font-size-2xs);
+  line-height: var(--ok-line-height-snug);
 }
 
 .indicatorSlot {

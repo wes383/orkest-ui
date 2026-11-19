@@ -1,5 +1,5 @@
 .root {
-  --pagination-size: 2rem;
+  --pagination-size: var(--ok-space-8);
   --pagination-radius: var(--ok-radius-xl);
   --pagination-font-size: var(--ok-font-size-sm);
   display: block;
@@ -8,13 +8,13 @@
 }
 
 .root[data-size="sm"] {
-  --pagination-size: 1.75rem;
+  --pagination-size: calc(var(--ok-space-8) - var(--ok-space-1));
   --pagination-radius: var(--ok-radius-lg);
   --pagination-font-size: var(--ok-font-size-xs);
 }
 
 .root[data-size="lg"] {
-  --pagination-size: 2.5rem;
+  --pagination-size: var(--ok-space-10);
   --pagination-font-size: var(--ok-font-size-md);
 }
 
@@ -59,9 +59,11 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.page:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--ui-foreground) 6%, transparent);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .page:hover:not(:disabled):not([aria-current="page"]) {
+    background: color-mix(in srgb, var(--ui-foreground) 6%, transparent);
+    color: var(--ui-foreground);
+  }
 }
 
 .page:focus-visible {
@@ -70,9 +72,9 @@
 }
 
 .page[aria-current="page"] {
-  border-color: var(--ui-border);
-  background: var(--ui-surface-raised);
-  color: var(--ui-foreground);
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+  color: var(--ui-primary-foreground);
   font-weight: var(--ok-font-weight-medium);
 }
 

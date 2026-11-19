@@ -5,6 +5,8 @@
 }
 
 /* Doubled class keeps the hover color above the Text tone rule in the cascade. */
-.link.link:hover {
-  color: var(--ui-accent-hover);
+@media (hover: hover) {
+  .link.link:hover {
+    color: var(--ui-accent-hover);
+  }
 }

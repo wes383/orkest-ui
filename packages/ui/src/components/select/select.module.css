@@ -8,8 +8,9 @@
 .field {
   --select-height: var(--ok-control-height-md);
   --select-padding-x: var(--ok-control-padding-x-md);
+  --select-action-size: var(--ok-control-action-size-md);
   --select-edge-padding: calc(
-    (var(--select-height) - 2 * var(--ok-border-width) - 1.25rem) / 2
+    (var(--select-height) - 2 * var(--ok-border-width) - var(--select-action-size)) / 2
   );
   --select-radius: var(--ok-radius-xl);
   --select-font-size: var(--ok-font-size-sm);
@@ -38,6 +39,7 @@
 .field[data-size="sm"] {
   --select-height: var(--ok-control-height-sm);
   --select-padding-x: var(--ok-control-padding-x-sm);
+  --select-action-size: var(--ok-control-action-size-sm);
   --select-radius: var(--ok-radius-lg);
   --select-font-size: var(--ok-font-size-xs);
 }
@@ -45,6 +47,7 @@
 .field[data-size="md"] {
   --select-height: var(--ok-control-height-md);
   --select-padding-x: var(--ok-control-padding-x-md);
+  --select-action-size: var(--ok-control-action-size-md);
   --select-radius: var(--ok-radius-xl);
   --select-font-size: var(--ok-font-size-sm);
 }
@@ -52,6 +55,7 @@
 .field[data-size="lg"] {
   --select-height: var(--ok-control-height-lg);
   --select-padding-x: var(--ok-control-padding-x-lg);
+  --select-action-size: var(--ok-control-action-size-lg);
   --select-radius: var(--ok-radius-xl);
   --select-font-size: var(--ok-font-size-md);
 }
@@ -63,14 +67,24 @@
   padding-inline-start: var(--ok-space-2);
 }
 
-.root:not([data-disabled="true"]):not([data-open="true"]):not([data-invalid="true"])
-  .field:hover {
-  border-color: var(--ui-border-strong);
+@media (hover: hover) {
+  .root:not([data-disabled="true"]):not([data-open="true"]):not([data-invalid="true"])
+    .field:hover {
+    border-color: var(--ui-border-strong);
+  }
 }
 
-.field:has(:focus-visible),
-.field[data-open="true"] {
-  border-color: var(--ui-subtle-foreground);
+.field[data-open="true"],
+.field:has(:focus-visible) {
+  border-color: var(--ui-focus-ring);
+}
+
+.root:not([data-disabled="true"]) .field:has(:focus-visible) {
+  box-shadow: var(--ui-focus-halo);
+}
+
+.root[data-invalid="true"] .field:has(:focus-visible) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-danger) 24%, transparent);
 }
 
 .root[data-invalid="true"] .field {
@@ -124,13 +138,13 @@
 }
 
 .field[data-clearable="true"] .value {
-  padding-inline-end: calc(1.25rem + var(--ok-space-2));
+  padding-inline-end: calc(var(--select-action-size) + var(--ok-space-2));
 }
 
 /* The clear action is positioned over the field, so a typing field reserves the
    same gutter the value text does and never runs underneath it. */
 .field[data-clearable="true"] .input {
-  padding-inline-end: calc(1.25rem + var(--ok-space-2));
+  padding-inline-end: calc(var(--select-action-size) + var(--ok-space-2));
 }
 
 .value[data-placeholder] {
@@ -221,6 +235,7 @@
 }
 
 .chipRemove {
+  position: relative;
   display: inline-grid;
   flex: none;
   place-items: center;
@@ -235,8 +250,18 @@
   opacity: 0.7;
 }
 
-.chipRemove:hover {
-  opacity: 1;
+/* Expand the hit area to 24px without enlarging the visible icon. */
+.chipRemove::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+  border-radius: inherit;
+}
+
+@media (hover: hover) {
+  .chipRemove:hover {
+    opacity: 1;
+  }
 }
 
 .chipRemove:focus-visible {
@@ -263,9 +288,11 @@
   cursor: pointer;
 }
 
-.overflowChip:hover {
-  background: var(--ui-secondary-hover);
-  color: var(--ui-secondary-foreground);
+@media (hover: hover) {
+  .overflowChip:hover {
+    background: var(--ui-secondary-hover);
+    color: var(--ui-secondary-foreground);
+  }
 }
 
 .overflowChip:focus-visible {
@@ -285,12 +312,13 @@
 
 .clear,
 .iconButton {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--select-action-size);
+  height: var(--select-action-size);
   padding: 0;
   border: 0;
   border-radius: var(--ok-radius-lg);
@@ -299,18 +327,29 @@
   cursor: pointer;
 }
 
+/* Keep the visual box but give the action a 24px pointer target at every size. */
+.clear::after,
+.iconButton::after {
+  position: absolute;
+  inset: -4px;
+  content: '';
+  border-radius: inherit;
+}
+
 .field[data-clearable="true"] .clear {
   position: absolute;
   top: 50%;
-  right: calc(var(--select-edge-padding) + 1.25rem + var(--ok-space-2));
+  right: calc(var(--select-edge-padding) + var(--select-action-size) + var(--ok-space-2));
   z-index: 1;
   transform: translateY(-50%);
 }
 
-.clear:hover,
-.iconButton:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .clear:hover,
+  .iconButton:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .clear:focus-visible,
@@ -332,18 +371,20 @@
 .chevronButton {
   display: inline-grid;
   place-items: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--select-action-size);
+  height: var(--select-action-size);
   border-radius: var(--ok-radius-lg);
 }
 
-.chevronButton:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
-}
+@media (hover: hover) {
+  .chevronButton:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 
-.root[data-disabled="true"] .chevronButton:hover {
-  background: transparent;
+  .root[data-disabled="true"] .chevronButton:hover {
+    background: transparent;
+  }
 }
 
 .trigger[data-popup-open] .chevron,
@@ -371,7 +412,7 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-md);
+  box-shadow: var(--ui-shadow-lg);
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -386,7 +427,7 @@
 .menu[data-starting-style],
 .menu[data-ending-style] {
   opacity: 0;
-  transform: translateY(-2px) scale(0.98);
+  transform: scale(0.98);
 }
 
 .menu::-webkit-scrollbar {
@@ -563,8 +604,10 @@
   cursor: pointer;
 }
 
-.selectAll:hover {
-  background: var(--ui-secondary);
+@media (hover: hover) {
+  .selectAll:hover {
+    background: var(--ui-secondary);
+  }
 }
 
 .selectAll:focus-visible {
@@ -611,12 +654,28 @@
 }
 
 .spinner {
-  animation: select-spin 0.8s linear infinite;
+  animation: select-spin var(--ok-duration-spin) linear infinite;
 }
 
 @keyframes select-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Windows High Contrast drops box-shadow, so restore an outline for keyboard focus. */
+@media (forced-colors: active) {
+  .root:not([data-disabled="true"]) .field:has(:focus-visible) {
+    outline: var(--ok-focus-ring-width) solid CanvasText;
+    outline-offset: var(--ok-focus-ring-offset);
+  }
+}
+
+/* iOS Safari zooms editable controls below 16px when they receive focus. */
+@media (pointer: coarse) {
+  .field[data-size="sm"],
+  .field[data-size="md"] {
+    --select-font-size: var(--ok-font-size-md);
   }
 }
 

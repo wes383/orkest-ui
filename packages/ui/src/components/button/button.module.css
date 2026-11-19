@@ -19,6 +19,7 @@
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     background-color var(--ok-duration-fast) var(--ok-ease-standard),
     border-color var(--ok-duration-fast) var(--ok-ease-standard),
@@ -28,6 +29,11 @@
 .button:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: var(--ok-focus-ring-offset);
+}
+
+/* A sub-pixel press shift gives tactile feedback without moving the layout. */
+.button:not([data-variant="link"]):active:not(:disabled) {
+  transform: translateY(0.5px);
 }
 
 .button[data-size="sm"] {
@@ -76,8 +82,10 @@
   color: var(--ui-primary-foreground);
 }
 
-.button[data-variant="primary"]:hover:not(:disabled) {
-  background: var(--ui-primary-hover);
+@media (hover: hover) {
+  .button[data-variant="primary"]:hover:not(:disabled) {
+    background: var(--ui-primary-hover);
+  }
 }
 
 .button[data-variant="primary"]:active:not(:disabled) {
@@ -89,8 +97,10 @@
   color: var(--ui-secondary-foreground);
 }
 
-.button[data-variant="secondary"]:hover:not(:disabled) {
-  background: var(--ui-secondary-hover);
+@media (hover: hover) {
+  .button[data-variant="secondary"]:hover:not(:disabled) {
+    background: var(--ui-secondary-hover);
+  }
 }
 
 .button[data-variant="secondary"]:active:not(:disabled) {
@@ -103,9 +113,11 @@
   color: var(--ui-foreground);
 }
 
-.button[data-variant="outline"]:hover:not(:disabled) {
-  background: var(--ui-secondary);
-  border-color: var(--ui-border-strong);
+@media (hover: hover) {
+  .button[data-variant="outline"]:hover:not(:disabled) {
+    background: var(--ui-secondary);
+    border-color: var(--ui-border-strong);
+  }
 }
 
 .button[data-variant="outline"]:active:not(:disabled) {
@@ -118,8 +130,10 @@
   color: var(--ui-foreground);
 }
 
-.button[data-variant="ghost"]:hover:not(:disabled) {
-  background: var(--ui-secondary);
+@media (hover: hover) {
+  .button[data-variant="ghost"]:hover:not(:disabled) {
+    background: var(--ui-secondary);
+  }
 }
 
 .button[data-variant="ghost"]:active:not(:disabled) {
@@ -131,8 +145,10 @@
   color: var(--ui-danger-solid-foreground);
 }
 
-.button[data-variant="destructive"]:hover:not(:disabled) {
-  background: var(--ui-danger-solid-hover);
+@media (hover: hover) {
+  .button[data-variant="destructive"]:hover:not(:disabled) {
+    background: var(--ui-danger-solid-hover);
+  }
 }
 
 .button[data-variant="destructive"]:active:not(:disabled) {
@@ -147,11 +163,13 @@
   color: var(--ui-accent);
 }
 
-.button[data-variant="link"]:hover:not(:disabled) {
-  color: var(--ui-accent-hover);
-  text-decoration: underline;
-  text-decoration-thickness: var(--ok-border-width);
-  text-underline-offset: var(--ok-space-1);
+@media (hover: hover) {
+  .button[data-variant="link"]:hover:not(:disabled) {
+    color: var(--ui-accent-hover);
+    text-decoration: underline;
+    text-decoration-thickness: var(--ok-border-width);
+    text-underline-offset: var(--ok-space-1);
+  }
 }
 
 .button[data-variant="link"]:active:not(:disabled) {
@@ -195,7 +213,7 @@
 /* Spinner */
 
 .spinner {
-  animation: button-spin 0.9s linear infinite;
+  animation: button-spin var(--ok-duration-spin) linear infinite;
 }
 
 @keyframes button-spin {

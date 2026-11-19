@@ -29,7 +29,7 @@
 }
 
 .root[data-animation='pulse'] {
-  animation: skeleton-pulse 1.6s var(--ok-ease-standard) infinite;
+  animation: skeleton-pulse var(--ok-duration-shimmer) var(--ok-ease-standard) infinite;
 }
 
 @keyframes skeleton-pulse {
@@ -54,7 +54,7 @@
     transparent
   );
   transform: translateX(-100%);
-  animation: skeleton-wave 1.6s var(--ok-ease-standard) infinite;
+  animation: skeleton-wave var(--ok-duration-shimmer) var(--ok-ease-standard) infinite;
   pointer-events: none;
 }
 

@@ -5,7 +5,9 @@
   --table-hover: color-mix(in srgb, var(--ui-foreground) 3%, transparent);
   --table-stripe: color-mix(in srgb, var(--ui-foreground) 2.5%, transparent);
   max-width: 100%;
+  border: var(--ok-border-width) solid var(--ui-border-subtle);
   border-radius: var(--ok-radius-lg);
+  background: var(--ui-surface);
   overflow-x: auto;
   scrollbar-color: var(--ui-subtle-foreground) transparent;
   scrollbar-width: thin;
@@ -50,7 +52,7 @@
 }
 
 .container[data-variant="bordered"] {
-  border: var(--ok-border-width) solid var(--ui-border);
+  border-color: var(--ui-border);
 }
 
 .table {
@@ -74,8 +76,9 @@
 .head {
   padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
   border-bottom: var(--ok-border-width) solid var(--ui-border);
+  background: var(--ui-surface-sunken);
   color: var(--ui-muted-foreground);
-  font-weight: var(--ok-font-weight-medium);
+  font-weight: var(--ok-font-weight-semibold);
   text-align: left;
   white-space: nowrap;
 }
@@ -116,8 +119,10 @@
   background: var(--table-stripe);
 }
 
-.container[data-hoverable] .body .row:hover {
-  background: var(--table-hover);
+@media (hover: hover) {
+  .container[data-hoverable] .body .row:hover {
+    background: var(--table-hover);
+  }
 }
 
 .container[data-variant="bordered"] .cell + .cell,

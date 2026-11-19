@@ -2,7 +2,7 @@
   --alert-accent: var(--ui-accent);
   --alert-surface: var(--ui-surface-raised);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--ok-space-3);
   box-sizing: border-box;
   padding: var(--ok-space-3) var(--ok-space-4);
@@ -18,7 +18,7 @@
 
 .alert[data-variant="info"] {
   --alert-accent: var(--ui-accent);
-  --alert-surface: var(--ui-surface-raised);
+  --alert-surface: var(--ui-accent-surface);
 }
 
 .alert[data-variant="success"] {
@@ -39,6 +39,7 @@
 .icon {
   display: inline-flex;
   flex: none;
+  margin-block-start: 0.125rem;
   color: var(--ui-muted-foreground);
 }
 
@@ -73,6 +74,7 @@
   font-weight: var(--ok-font-weight-semibold);
   line-height: var(--ok-line-height-snug);
   overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .description {
@@ -80,6 +82,7 @@
   color: var(--ui-muted-foreground);
   line-height: var(--ok-line-height-normal);
   overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 /* A description without a title is the primary message. */
@@ -114,9 +117,11 @@
     color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.close:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .close:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .close:focus-visible {

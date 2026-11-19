@@ -11,5 +11,7 @@
     --ok-duration-fast: 0ms;
     --ok-duration-normal: 0ms;
     --ok-duration-slow: 0ms;
+    --ok-duration-spin: 0ms;
+    --ok-duration-shimmer: 0ms;
   }
 }

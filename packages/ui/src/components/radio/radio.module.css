@@ -30,7 +30,7 @@
 
 .root:has([data-disabled]) {
   cursor: not-allowed;
-  opacity: var(--ok-opacity-disabled);
+  color: var(--ui-disabled-foreground);
 }
 
 .control {
@@ -52,8 +52,10 @@
     border-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.root:not(:has([data-disabled])):hover .control {
-  border-color: var(--ui-foreground);
+@media (hover: hover) {
+  .root:not(:has([data-disabled])):hover .control {
+    border-color: var(--ui-foreground);
+  }
 }
 
 .control:focus-visible {
@@ -63,6 +65,12 @@
 
 .control[data-checked] {
   border-color: var(--ui-primary);
+}
+
+.root:has([data-disabled]) .control {
+  border-color: var(--ui-border-subtle);
+  background: var(--ui-disabled-surface);
+  color: var(--ui-disabled-foreground);
 }
 
 .indicator {

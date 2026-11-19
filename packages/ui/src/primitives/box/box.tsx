@@ -148,7 +148,7 @@ function BoxImpl(
           borderColor,
         },
     radius === undefined ? undefined : { borderRadius: `var(--ok-radius-${radius})` },
-    shadow === undefined ? undefined : { boxShadow: `var(--ok-shadow-${shadow})` },
+    shadow === undefined ? undefined : { boxShadow: `var(--ui-shadow-${shadow})` },
     overflow === undefined ? undefined : { overflow },
     style,
   );

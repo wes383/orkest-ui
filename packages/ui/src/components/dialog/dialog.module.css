@@ -22,6 +22,7 @@
   height: 100dvh;
   z-index: var(--ok-z-overlay);
   background: var(--ui-overlay);
+  backdrop-filter: blur(4px);
   transition: opacity var(--ok-duration-normal) var(--ok-ease-standard);
 }
 
@@ -42,7 +43,7 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-2xl);
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-lg);
+  box-shadow: var(--ui-shadow-lg);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   outline: none;
@@ -112,6 +113,7 @@
   font-weight: var(--ok-font-weight-semibold);
   line-height: var(--ok-line-height-tight);
   letter-spacing: var(--ok-letter-spacing-tight);
+  text-wrap: balance;
 }
 
 .description {
@@ -119,6 +121,7 @@
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
   line-height: var(--ok-line-height-normal);
+  text-wrap: pretty;
 }
 
 .body {
@@ -181,9 +184,11 @@
   cursor: pointer;
 }
 
-.closeButton:hover {
-  background: var(--ui-secondary);
-  color: var(--ui-foreground);
+@media (hover: hover) {
+  .closeButton:hover {
+    background: var(--ui-secondary);
+    color: var(--ui-foreground);
+  }
 }
 
 .closeButton:focus-visible {

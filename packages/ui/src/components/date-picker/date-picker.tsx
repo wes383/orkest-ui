@@ -241,7 +241,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function D
         </PopoverTrigger>
         <PopoverPortal>
           <PopoverPositioner align="start" sideOffset={6}>
-            <PopoverContent width="auto" aria-label={mergedLabels.dialog} className={styles.popover}>
+            <PopoverContent width="auto" aria-label={mergedLabels.dialog}>
               <Calendar
                 value={currentValue}
                 onChange={handleSelect}

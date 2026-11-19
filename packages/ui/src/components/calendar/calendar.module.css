@@ -79,9 +79,14 @@
   transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
-.selectTrigger:not([data-disabled]):hover,
 .selectTrigger[data-popup-open] {
   background: var(--ui-surface-sunken);
+}
+
+@media (hover: hover) {
+  .selectTrigger:not([data-disabled]):hover {
+    background: var(--ui-surface-sunken);
+  }
 }
 
 .selectTrigger:focus-visible {
@@ -145,7 +150,7 @@
   border: var(--ok-border-width) solid var(--ui-border);
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface-raised);
-  box-shadow: var(--ok-shadow-md);
+  box-shadow: var(--ui-shadow-lg);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-sm);
@@ -172,7 +177,7 @@
 .selectPopup[data-starting-style],
 .selectPopup[data-ending-style] {
   opacity: 0;
-  transform: translateY(-2px) scale(0.98);
+  transform: scale(0.98);
 }
 
 .selectList {
@@ -293,9 +298,11 @@
   background: var(--ui-secondary);
 }
 
-.day[data-in-range]:hover::before,
-.day[data-range-preview]:hover::before {
-  background: var(--ui-secondary-hover);
+@media (hover: hover) {
+  .day[data-in-range]:hover::before,
+  .day[data-range-preview]:hover::before {
+    background: var(--ui-secondary-hover);
+  }
 }
 
 /* The day under the pointer while the span is still open. It reads as a soft
@@ -310,8 +317,10 @@
   background: var(--ui-secondary-active);
 }
 
-.day:hover:not([aria-disabled="true"]) {
-  background: var(--ui-surface-sunken);
+@media (hover: hover) {
+  .day:hover:not([aria-disabled="true"]) {
+    background: var(--ui-surface-sunken);
+  }
 }
 
 .day[data-outside] {
@@ -319,7 +328,8 @@
 }
 
 .day[data-today] {
-  border-color: var(--ui-border);
+  border-color: color-mix(in srgb, var(--ui-accent) 45%, transparent);
+  color: var(--ui-accent);
   font-weight: var(--ok-font-weight-semibold);
 }
 

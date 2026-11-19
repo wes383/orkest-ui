@@ -18,10 +18,10 @@
   color-scheme: light;
 
   /* Surfaces */
-  --ui-background: var(--ok-color-neutral-0);
+  --ui-background: var(--ok-color-neutral-50);
   --ui-surface: var(--ok-color-neutral-0);
   --ui-surface-raised: var(--ok-color-neutral-0);
-  --ui-surface-sunken: var(--ok-color-neutral-50);
+  --ui-surface-sunken: var(--ok-color-neutral-100);
   --ui-overlay: rgb(9 9 11 / 0.4);
 
   /* Text */
@@ -49,7 +49,7 @@
 
   /* Disabled state */
   --ui-disabled-surface: var(--ok-color-neutral-100);
-  --ui-disabled-foreground: var(--ok-color-neutral-400);
+  --ui-disabled-foreground: var(--ok-color-neutral-500);
 
   /* Accent — links, selection and subtle highlights */
   --ui-accent: var(--ok-color-accent-600);
@@ -64,6 +64,8 @@
 
   /* Focus */
   --ui-focus-ring: var(--ok-color-accent-500);
+  --ui-focus-halo: 0 0 0 3px
+    color-mix(in srgb, var(--ui-focus-ring) 32%, transparent);
 
   /* Status */
   --ui-success: var(--ok-color-green-600);
@@ -80,6 +82,12 @@
 
   /* Selection */
   --ui-selection-background: var(--ok-color-accent-200);
+
+  /* Elevation — adapted per theme so dark surfaces still lift */
+  --ui-shadow-xs: var(--ok-shadow-xs);
+  --ui-shadow-sm: var(--ok-shadow-sm);
+  --ui-shadow-md: var(--ok-shadow-md);
+  --ui-shadow-lg: var(--ok-shadow-lg);
 }
 
 [data-orkest-theme="dark"] {
@@ -117,7 +125,7 @@
 
   /* Disabled state */
   --ui-disabled-surface: var(--ok-color-neutral-850);
-  --ui-disabled-foreground: var(--ok-color-neutral-500);
+  --ui-disabled-foreground: var(--ok-color-neutral-450);
 
   /* Accent */
   --ui-accent: var(--ok-color-accent-300);
@@ -132,6 +140,8 @@
 
   /* Focus */
   --ui-focus-ring: var(--ok-color-accent-400);
+  --ui-focus-halo: 0 0 0 3px
+    color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
 
   /* Status */
   --ui-success: var(--ok-color-green-300);
@@ -148,6 +158,15 @@
 
   /* Selection */
   --ui-selection-background: var(--ok-color-accent-700);
+
+  /* Elevation — deeper shadows keep overlays legible on near-black surfaces */
+  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ui-shadow-sm:
+    0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --ui-shadow-md:
+    0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
+  --ui-shadow-lg:
+    0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
 }
 
 /* System preference applies only when the host has not forced a theme. */
@@ -202,6 +221,8 @@
 
     /* Focus */
     --ui-focus-ring: var(--ok-color-accent-400);
+    --ui-focus-halo: 0 0 0 3px
+      color-mix(in srgb, var(--ui-focus-ring) 40%, transparent);
 
     /* Status */
     --ui-success: var(--ok-color-green-300);
@@ -218,5 +239,14 @@
 
     /* Selection */
     --ui-selection-background: var(--ok-color-accent-700);
+
+    /* Elevation */
+    --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+    --ui-shadow-sm:
+      0 1px 3px 0 rgb(0 0 0 / 0.55), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --ui-shadow-md:
+      0 6px 18px -4px rgb(0 0 0 / 0.65), 0 2px 6px -2px rgb(0 0 0 / 0.45);
+    --ui-shadow-lg:
+      0 18px 44px -12px rgb(0 0 0 / 0.75), 0 6px 18px -6px rgb(0 0 0 / 0.5);
   }
 }

@@ -27,7 +27,12 @@ export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(
     return (
       <label className={cx(styles.root, className)} data-size={size}>
         <BaseCheckbox.Root ref={ref} {...rest} className={styles.control}>
-          <BaseCheckbox.Indicator keepMounted className={styles.indicator} />
+          <BaseCheckbox.Indicator keepMounted className={styles.indicator}>
+            <svg className={styles.check} viewBox="0 0 12 12" aria-hidden="true">
+              <path className={styles.checkPath} d="M2.5 6.5 5 9l4.5-6" />
+            </svg>
+            <span className={styles.dash} aria-hidden="true" />
+          </BaseCheckbox.Indicator>
         </BaseCheckbox.Root>
         {label ? <span className={styles.label}>{label}</span> : null}
       </label>

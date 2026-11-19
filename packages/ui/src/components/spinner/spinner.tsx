@@ -36,7 +36,12 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
       aria-hidden={decorative ? true : undefined}
       {...rest}
     >
-      <span className={styles.track} aria-hidden="true" />
+      <span className={styles.track} aria-hidden="true">
+        <svg className={styles.svg} viewBox="0 0 24 24" fill="none">
+          <circle className={styles.trackCircle} cx="12" cy="12" r="10" />
+          <circle className={styles.arc} cx="12" cy="12" r="10" />
+        </svg>
+      </span>
       {decorative ? null : <span className={styles.label}>{label}</span>}
     </span>
   );

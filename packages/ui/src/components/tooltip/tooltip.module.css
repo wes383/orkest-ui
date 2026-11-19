@@ -15,7 +15,7 @@
   font-family: var(--ok-font-sans);
   font-size: var(--ok-font-size-xs);
   line-height: var(--ok-line-height-snug);
-  box-shadow: var(--ok-shadow-md);
+  box-shadow: var(--ui-shadow-md);
   outline: none;
   overflow-wrap: anywhere;
   pointer-events: none;
