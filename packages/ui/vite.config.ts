@@ -11,7 +11,15 @@ export default defineConfig({
       include: ['src'],
       exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/test'],
       tsconfigPath: './tsconfig.json',
-      bundleTypes: true,
+      bundleTypes: {
+        invokeOptions: {
+          // unplugin-dts points this at the project's `typescript` package. With
+          // TypeScript 7 that package is the TS 6 API compatibility shim, which
+          // ships no standard lib files, so API Extractor must use its bundled
+          // compiler's libs instead.
+          typescriptCompilerFolder: undefined,
+        },
+      },
     }),
   ],
   build: {

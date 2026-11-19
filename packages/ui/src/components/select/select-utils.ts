@@ -52,11 +52,16 @@ export function excludeSelectValues(items: SelectItem[], values: Set<string>): S
   return filterSelectItems(items, (option) => !values.has(option.value));
 }
 
-export interface SelectRenderGroup {
+/**
+ * Base UI types grouped items as a record with an `items` array. A type alias
+ * (rather than an interface) lets TypeScript derive the implicit index
+ * signature Base UI's `Group` type requires.
+ */
+export type SelectRenderGroup = {
   key: string;
   label?: ReactNode;
   items: SelectOption[];
-}
+};
 
 /**
  * Base UI understands groups as objects with an `items` array. Standalone
