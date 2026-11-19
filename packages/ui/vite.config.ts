@@ -40,6 +40,10 @@ export default defineConfig({
     environment: 'jsdom',
     // Reuse one jsdom per worker rather than creating it per test file; setup cost dominates the run.
     pool: 'vmThreads',
+    // Base UI overlays plus jsdom are slow under full-suite parallelism. Keep a generous
+    // timeout so the run is deterministic without changing any assertions.
+    testTimeout: 15_000,
+    hookTimeout: 15_000,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
   },
