@@ -457,7 +457,11 @@ kbd {
   color: var(--ui-foreground);
 }
 
-.page-copy[data-state='copied'] {
+.page-copy > svg {
+  transition: color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.page-copy[data-state='copied'] > svg {
   color: var(--ui-success);
 }
 
