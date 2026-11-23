@@ -128,7 +128,16 @@ describe('Select', () => {
     combobox.focus();
 
     await user.keyboard('{ArrowDown}');
-    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    const listbox = await screen.findByRole('listbox');
+
+    // Opening aligns the highlight with the selected option in an effect, not during the key
+    // press. Wait for it so the next arrow key is a navigation step; otherwise it only performs
+    // the initial highlight and Enter commits the current value.
+    await waitFor(() => {
+      expect(within(listbox).getByRole('option', { name: 'Design' })).toHaveAttribute(
+        'data-highlighted',
+      );
+    });
 
     await user.keyboard('{ArrowDown}{Enter}');
 
