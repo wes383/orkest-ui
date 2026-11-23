@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
+import { Alert, AlertTitle } from '@orkest/ui/client';
 import { CircleAlert, Info, Lightbulb, TriangleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -29,7 +29,9 @@ export function Callout({
   return (
     <Alert variant={config.variant} icon={config.icon} className="callout">
       <AlertTitle>{title ?? config.label}</AlertTitle>
-      <AlertDescription>{children}</AlertDescription>
+      {/* MDX renders its own paragraphs, so the body cannot live in `AlertDescription`:
+          that slot is a `<p>` and would nest them. */}
+      <div className="callout-description">{children}</div>
     </Alert>
   );
 }

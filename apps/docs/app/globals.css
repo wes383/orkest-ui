@@ -981,6 +981,16 @@ samp {
   margin: 1.5rem 0;
 }
 
+/* Mirrors the alert description slot, which cannot host MDX paragraphs. */
+.callout-description {
+  color: var(--ui-muted-foreground);
+  line-height: var(--ok-line-height-normal);
+}
+
+.callout-description > * + * {
+  margin-top: var(--ok-space-2);
+}
+
 /* Token documentation */
 
 .token-table {
