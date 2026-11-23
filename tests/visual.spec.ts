@@ -1,24 +1,6 @@
-import { readdirSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import { expect, test, type Page } from '@playwright/test';
 
-const contentDirectory = fileURLToPath(
-  new URL('../apps/docs/content/components', import.meta.url),
-);
-
-// Every component ships a documentation page, so deriving the list from the content
-// directory keeps the visual suite in step with the library instead of drifting behind
-// a hand-written list.
-const pages = readdirSync(contentDirectory)
-  .filter((file) => file.endsWith('.mdx'))
-  .map((file) => {
-    const name = path.basename(file, '.mdx');
-
-    return { name, path: `/docs/components/${name}/` };
-  })
-  .sort((left, right) => left.name.localeCompare(right.name));
+import { componentPages } from './docs-pages';
 
 // Date and time examples render the current day, so the clock is pinned before the page
 // boots; otherwise the baselines would expire at the next month boundary.
@@ -41,7 +23,7 @@ async function waitForStableContent(page: Page) {
   });
 }
 
-for (const item of pages) {
+for (const item of componentPages) {
   for (const theme of ['light', 'dark'] as const) {
     test(`${item.name} ${theme}`, async ({ page }) => {
       await page.clock.setFixedTime(frozenTime);
