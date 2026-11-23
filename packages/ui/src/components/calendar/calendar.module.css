@@ -207,7 +207,7 @@
 
 .selectOption[data-selected] {
   background: var(--ui-secondary);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
 }
 
 .selectOption[data-selected][data-highlighted] {
