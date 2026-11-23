@@ -128,6 +128,11 @@
   composes: scrollbar from "../../styles/scrollbar.module.css";
   flex: 1;
   min-height: 0;
+  /* The scroll container clips at its padding box, so full-width controls need
+     room for their focus halo. The negative margin keeps content aligned with
+     the header and footer. */
+  margin-inline: calc(var(--ok-space-1) * -1);
+  padding-inline: var(--ok-space-1);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
