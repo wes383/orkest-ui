@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Audit production dependencies
+        run: pnpm check:audit
+
       - name: Lint
         run: pnpm lint
 
@@ -73,8 +76,43 @@ jobs:
       - name: Build library
         run: pnpm build
 
+      - name: Check package publishing metadata
+        run: pnpm exec publint packages/ui
+
       - name: Verify the packed package in a consumer
         run: node scripts/smoke-package.mjs
+
+  react:
+    name: React ${{ matrix.react }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        react: ['18', '19']
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.11.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # The peer range covers React 18 while the workspace installs 19, so the suite
+      # would otherwise never run against the older major.
+      - name: Pin React 18 for the compatibility leg
+        if: matrix.react == '18'
+        run: pnpm --filter @orkest/ui add -D react@^18.3.1 react-dom@^18.3.1
+
+      - name: Test
+        run: pnpm --filter @orkest/ui test
 
   playwright:
     name: Playwright
