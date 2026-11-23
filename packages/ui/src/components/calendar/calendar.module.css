@@ -83,6 +83,10 @@
   background: var(--ui-surface-sunken);
 }
 
+.selectTrigger[data-popup-open] .selectIcon {
+  transform: rotate(180deg);
+}
+
 @media (hover: hover) {
   .selectTrigger:not([data-disabled]):hover {
     background: var(--ui-surface-sunken);
@@ -132,6 +136,7 @@
   width: 0.75rem;
   height: 0.75rem;
   color: var(--ui-muted-foreground);
+  transition: transform var(--ok-duration-fast) var(--ok-ease-standard);
 }
 
 .selectPositioner {
@@ -367,7 +372,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .day,
-  .select {
+  .select,
+  .selectIcon {
     transition: none;
   }
 }
