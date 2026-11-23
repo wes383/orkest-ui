@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import {
   ActionsShowcase,
-  DisclosureShowcase,
+  BreadcrumbShowcase,
   DisplayShowcase,
   FeedbackShowcase,
   FieldsShowcase,
@@ -94,7 +94,7 @@ export default function HomePage() {
             <SheetShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <DisclosureShowcase />
+            <BreadcrumbShowcase />
           </div>
           <div className="landing-showcase-cell">
             <FeedbackShowcase />

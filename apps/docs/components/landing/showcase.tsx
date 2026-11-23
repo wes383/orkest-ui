@@ -2,14 +2,36 @@
 
 import { useState } from 'react';
 
-import { Bold, Copy, Italic, Pencil, Plus, Settings, Trash2, Underline } from 'lucide-react';
-
-import { Badge, Button, Icon, IconButton, Stack, Tag, Text } from '@orkest/ui';
 import {
-  Accordion,
-  AccordionItem,
-  AccordionPanel,
-  AccordionTrigger,
+  Bold,
+  Copy,
+  Italic,
+  Link2,
+  Mail,
+  Pencil,
+  Plus,
+  Settings,
+  Share2,
+  Trash2,
+  Underline,
+} from 'lucide-react';
+
+import {
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Button,
+  Icon,
+  IconButton,
+  Stack,
+  Tag,
+  Text,
+} from '@orkest/ui';
+import {
   Avatar,
   AvatarFallback,
   AvatarGroup,
@@ -32,6 +54,9 @@ import {
   DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   Input,
   Progress,
@@ -86,6 +111,27 @@ export function ActionsShowcase() {
           Active
         </Badge>
       </Stack>
+      <DropdownMenu>
+        <DropdownMenuTrigger variant="outline" size="sm">
+          More actions
+        </DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger leftIcon={Share2}>Share via</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
+                <DropdownMenuItem leftIcon={Link2}>Copy link</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
     </Stack>
   );
 }
@@ -314,19 +360,22 @@ export function SheetShowcase() {
   );
 }
 
-export function DisclosureShowcase() {
+export function BreadcrumbShowcase() {
   return (
-    <div style={{ width: '100%', maxWidth: '15rem' }}>
-      <Accordion defaultValue={['shipping']}>
-        <AccordionItem value="shipping">
-          <AccordionTrigger>Shipping</AccordionTrigger>
-          <AccordionPanel>Orders leave the warehouse within two business days.</AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="returns">
-          <AccordionTrigger>Returns</AccordionTrigger>
-          <AccordionPanel>Unused items can be returned within 30 days.</AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </div>
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/docs/components/">Components</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Sheet</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 }
