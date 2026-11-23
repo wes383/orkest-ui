@@ -1774,6 +1774,8 @@ kbd {
 
 .landing-hero-copy {
   max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .landing-title {
@@ -1800,6 +1802,7 @@ kbd {
 .landing-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
   margin-top: 2rem;
 }
@@ -1834,19 +1837,6 @@ kbd {
   background: var(--ui-secondary-hover);
 }
 
-.landing-explore {
-  margin-top: 6rem;
-  padding-top: 2rem;
-}
-
-.landing-explore-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
 .landing-kicker {
   margin: 0;
   color: var(--ui-accent);
@@ -1855,8 +1845,18 @@ kbd {
   letter-spacing: 0;
 }
 
-.landing-explore-title {
-  margin: 0;
+.landing-showcase {
+  margin-top: clamp(4rem, 8vw, 6rem);
+}
+
+.landing-showcase-heading {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.landing-showcase-title {
+  margin: 8px 0 10px;
   font-family: var(--ok-font-display);
   font-size: 2rem;
   font-weight: var(--ok-font-weight-semibold);
@@ -1864,64 +1864,151 @@ kbd {
   line-height: 1.1;
 }
 
-.landing-links {
-  display: grid;
-  gap: 2px;
-}
-
-.landing-link {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr) auto;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1.5rem 0.75rem;
-  border-radius: 0.75rem;
-  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
-}
-
-.landing-link:hover {
-  background: var(--ui-surface-sunken);
-}
-
-.landing-link-index {
-  color: var(--ui-accent);
-  font-size: 12px;
-  font-weight: var(--ok-font-weight-medium);
-  letter-spacing: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.landing-link-copy {
-  display: grid;
-  gap: 2px;
-}
-
-.landing-link-title {
-  font-size: var(--ok-font-size-md);
-  font-weight: var(--ok-font-weight-medium);
-}
-
-.landing-link-description {
+.landing-showcase-lede {
+  margin: 0;
   color: var(--ui-muted-foreground);
   font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-relaxed);
 }
 
-.landing-link-arrow {
+.landing-showcase-grid {
   display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-surface-sunken);
-  color: var(--ui-subtle-foreground);
-  transition:
-    background-color var(--ok-duration-fast) var(--ok-ease-standard),
-    color var(--ok-duration-fast) var(--ok-ease-standard);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 1rem;
 }
 
-.landing-link:hover .landing-link-arrow {
-  background: var(--ui-secondary-hover);
+.landing-showcase-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: 1rem;
+  background: var(--ui-surface);
+}
+
+.landing-showcase-calendar {
+  grid-row: span 2;
+}
+
+.landing-showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: var(--ok-border-width) solid var(--ui-border);
+}
+
+.landing-showcase-name {
+  font-size: var(--ok-font-size-sm);
+  font-weight: var(--ok-font-weight-medium);
+}
+
+.landing-showcase-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-2xs);
+  transition: color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.landing-showcase-link:hover {
   color: var(--ui-foreground);
+}
+
+.landing-showcase-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ok-space-3);
+  padding: 1.5rem;
+}
+
+.landing-footer {
+  margin-top: clamp(4rem, 8vw, 6rem);
+  padding-top: 2rem;
+  border-top: var(--ok-border-width) solid var(--ui-border);
+}
+
+.landing-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.landing-footer-brand {
+  display: grid;
+  gap: 6px;
+}
+
+.landing-footer-logo {
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-display);
+  font-size: var(--ok-font-size-md);
+  font-weight: var(--ok-font-weight-semibold);
+  letter-spacing: -0.02em;
+}
+
+.landing-footer-tagline {
+  max-width: 26rem;
+  margin: 0;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-sm);
+  line-height: var(--ok-line-height-relaxed);
+}
+
+.landing-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.landing-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-sm);
+  transition: color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.landing-footer-link:hover {
+  color: var(--ui-foreground);
+}
+
+.landing-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: var(--ok-border-width) solid var(--ui-border);
+  color: var(--ui-subtle-foreground);
+  font-size: var(--ok-font-size-2xs);
+}
+
+.landing-footer-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin: 0;
+}
+
+.landing-footer-facts span + span::before {
+  margin-inline: 0.75rem;
+  content: "·";
+}
+
+.landing-footer-copyright {
+  margin: 0;
 }
 
 /* Status pages */
@@ -2059,21 +2146,19 @@ kbd {
   .docs-main {
     padding: 2rem 1.5rem 4rem;
   }
+
+  .landing-showcase-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-showcase-calendar {
+    grid-row: auto;
+  }
 }
 
 @media (max-width: 760px) {
   .landing {
     padding: 3rem var(--ok-space-5) 4rem;
-  }
-
-  .landing-explore {
-    margin-top: 4rem;
-  }
-
-  .landing-explore-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
   }
 }
 
@@ -2104,12 +2189,6 @@ kbd {
 
   .search-footer {
     display: none;
-  }
-
-  .landing-link {
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: var(--ok-space-3);
-    padding: 1.25rem 0;
   }
 }
 
@@ -2279,8 +2358,6 @@ kbd {
   .page-nav-icon,
   .docs-index-card,
   .docs-index-card-action,
-  .landing-link,
-  .landing-link-arrow,
   .copy-button,
   .search-result-link,
   .color-swatch,
