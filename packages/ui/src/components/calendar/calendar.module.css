@@ -338,7 +338,7 @@
   border-color: var(--ui-primary);
   background: var(--ui-primary);
   color: var(--ui-primary-foreground);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
 }
 
 .day[data-selected][data-outside] {
