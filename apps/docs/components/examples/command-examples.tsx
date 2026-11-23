@@ -184,8 +184,8 @@ export function CommandDialogExample() {
 
 export function CommandShortcutExample() {
   const isMac = useIsMac();
-  const mod = isMac ? '⌘' : 'Ctrl+';
-  const shiftMod = isMac ? '⇧⌘' : 'Ctrl+Shift+';
+  const mod = isMac ? '⌘' : 'Ctrl';
+  const shift = isMac ? '⇧' : 'Shift';
 
   return (
     <Box border radius="xl" background="surface-raised" style={{ maxWidth: 440 }}>
@@ -197,17 +197,21 @@ export function CommandShortcutExample() {
             <Command.Item value="New project" keywords={['create']}>
               <Icon icon={Plus} size="sm" />
               New project
-              <Command.Shortcut>{mod}N</Command.Shortcut>
+              <Command.Shortcut>{mod}</Command.Shortcut>
+              <Command.Shortcut>N</Command.Shortcut>
             </Command.Item>
             <Command.Item value="Open settings" keywords={['preferences']}>
               <Icon icon={Settings} size="sm" />
               Open settings
-              <Command.Shortcut>{mod},</Command.Shortcut>
+              <Command.Shortcut>{mod}</Command.Shortcut>
+              <Command.Shortcut>,</Command.Shortcut>
             </Command.Item>
             <Command.Item value="Archive project" disabled>
               <Icon icon={FolderOpen} size="sm" />
               Archive project
-              <Command.Shortcut>{shiftMod}A</Command.Shortcut>
+              <Command.Shortcut>{shift}</Command.Shortcut>
+              <Command.Shortcut>{mod}</Command.Shortcut>
+              <Command.Shortcut>A</Command.Shortcut>
             </Command.Item>
           </Command.Group>
         </Command.List>

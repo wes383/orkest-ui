@@ -92,6 +92,11 @@
   margin-inline-start: auto;
 }
 
+/* Additional keys in a chord follow the first chip without re-pinning. */
+.shortcut + .shortcut {
+  margin-inline-start: 0;
+}
+
 .footer {
   display: flex;
   flex-wrap: wrap;

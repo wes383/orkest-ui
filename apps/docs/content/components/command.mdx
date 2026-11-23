@@ -141,8 +141,9 @@ Each `Item` needs a `value`: it is passed to `onSelect`, and it is the text the 
 
 ## Shortcuts and disabled commands
 
-`Command.Shortcut` renders the shared `Kbd` chip at the end of the row. It is decorative: screen
-readers announce the command name, not the keys.
+`Command.Shortcut` renders the shared `Kbd` chip at the end of the row. Render one chip per key so
+chords such as `Ctrl` + `Shift` + `A` read as separate keys. It is decorative: screen readers
+announce the command name, not the keys.
 
 
 export const shortcutCommandCode = `import { Command } from '@orkest/ui/client';
@@ -155,15 +156,19 @@ export function Example() {
         <Command.Group heading="Workspace">
           <Command.Item value="New project">
             New project
-            <Command.Shortcut>⌘N</Command.Shortcut>
+            <Command.Shortcut>⌘</Command.Shortcut>
+            <Command.Shortcut>N</Command.Shortcut>
           </Command.Item>
           <Command.Item value="Open settings">
             Open settings
-            <Command.Shortcut>⌘,</Command.Shortcut>
+            <Command.Shortcut>⌘</Command.Shortcut>
+            <Command.Shortcut>,</Command.Shortcut>
           </Command.Item>
           <Command.Item value="Archive project" disabled>
             Archive project
-            <Command.Shortcut>⇧⌘A</Command.Shortcut>
+            <Command.Shortcut>⇧</Command.Shortcut>
+            <Command.Shortcut>⌘</Command.Shortcut>
+            <Command.Shortcut>A</Command.Shortcut>
           </Command.Item>
         </Command.Group>
       </Command.List>

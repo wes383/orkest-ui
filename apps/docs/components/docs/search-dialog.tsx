@@ -102,9 +102,10 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
       >
         <Icon icon={Search} size="sm" />
         <span className="search-label">Search docs</span>
-        <Kbd size="sm" className="search-shortcut">
-          Ctrl K
-        </Kbd>
+        <span className="search-shortcut">
+          <Kbd size="sm">Ctrl</Kbd>
+          <Kbd size="sm">K</Kbd>
+        </span>
       </button>
 
       {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}

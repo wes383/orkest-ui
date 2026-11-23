@@ -227,7 +227,10 @@ samp {
 }
 
 .search-shortcut {
+  display: inline-flex;
   flex: none;
+  align-items: center;
+  gap: var(--ok-space-1);
 }
 
 /* Documentation shell */
