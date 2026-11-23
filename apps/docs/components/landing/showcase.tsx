@@ -35,7 +35,6 @@ import {
   Select,
   Switch,
   Tabs,
-  TabsContent,
   TabsIndicator,
   TabsList,
   TabsTrigger,
@@ -102,25 +101,13 @@ export function TogglesShowcase() {
 
 export function TabsShowcase() {
   return (
-    <Stack gap={4} style={{ width: '100%' }}>
+    <Stack gap={4} align="center">
       <Tabs defaultValue="overview">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="activity">Activity</TabsTrigger>
           <TabsIndicator />
         </TabsList>
-        <TabsContent value="overview">
-          <Stack direction="row" gap={2} wrap>
-            <Tag size="sm">Design</Tag>
-            <Tag size="sm">Engineering</Tag>
-          </Stack>
-        </TabsContent>
-        <TabsContent value="activity">
-          <Stack direction="row" gap={2} wrap>
-            <Tag size="sm">Commits</Tag>
-            <Tag size="sm">Reviews</Tag>
-          </Stack>
-        </TabsContent>
       </Tabs>
       <Tabs defaultValue="day">
         <TabsList variant="pills">
@@ -129,21 +116,6 @@ export function TabsShowcase() {
           <TabsTrigger value="month">Month</TabsTrigger>
           <TabsIndicator />
         </TabsList>
-        <TabsContent value="day">
-          <Badge size="sm" variant="info">
-            Today
-          </Badge>
-        </TabsContent>
-        <TabsContent value="week">
-          <Badge size="sm" variant="outline">
-            This week
-          </Badge>
-        </TabsContent>
-        <TabsContent value="month">
-          <Badge size="sm" variant="outline">
-            This month
-          </Badge>
-        </TabsContent>
       </Tabs>
     </Stack>
   );
