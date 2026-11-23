@@ -211,10 +211,21 @@ const CommandRoot = forwardRef<HTMLDivElement, CommandProps>(function CommandRoo
     }
 
     const active = document.getElementById(activeId);
+    const list = rootRef.current?.querySelector<HTMLElement>('[data-command-list]');
 
-    // jsdom and older engines do not implement scrollIntoView.
-    if (typeof active?.scrollIntoView === 'function') {
-      active.scrollIntoView({ block: 'nearest' });
+    if (!active || !list) {
+      return;
+    }
+
+    // Scroll the list itself instead of calling scrollIntoView, which would
+    // also move the page when the palette is embedded below the fold.
+    const listRect = list.getBoundingClientRect();
+    const itemRect = active.getBoundingClientRect();
+
+    if (itemRect.top < listRect.top) {
+      list.scrollTop -= listRect.top - itemRect.top;
+    } else if (itemRect.bottom > listRect.bottom) {
+      list.scrollTop += itemRect.bottom - listRect.bottom;
     }
   }, [activeId]);
 
@@ -345,6 +356,7 @@ export const CommandList = forwardRef<HTMLDivElement, CommandListProps>(function
       id={listId}
       role="listbox"
       aria-label={rest['aria-label'] ?? label}
+      data-command-list=""
       className={cx(styles.list, className)}
     />
   );

@@ -43,6 +43,25 @@ describe('Command', () => {
     expect(screen.getAllByRole('option')).toHaveLength(3);
   });
 
+  it('keeps the page still when the list mounts or the highlight moves', async () => {
+    const user = userEvent.setup();
+    const scrollIntoView = vi.fn();
+    const originalScrollIntoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = scrollIntoView;
+
+    try {
+      const { input } = renderCommand();
+      expect(scrollIntoView).not.toHaveBeenCalled();
+
+      await user.click(input);
+      await user.keyboard('{ArrowDown}');
+
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    } finally {
+      Element.prototype.scrollIntoView = originalScrollIntoView;
+    }
+  });
+
   it('filters commands as the user types', async () => {
     const user = userEvent.setup();
     const { input } = renderCommand();
