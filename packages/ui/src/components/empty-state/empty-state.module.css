@@ -73,7 +73,7 @@
 .title {
   margin: 0;
   font-size: var(--empty-state-title-size);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   line-height: var(--ok-line-height-snug);
   text-wrap: balance;
 }

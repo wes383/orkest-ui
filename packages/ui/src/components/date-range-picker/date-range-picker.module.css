@@ -35,7 +35,7 @@
   overflow: hidden;
   color: var(--ui-foreground);
   font-size: var(--ok-font-size-sm);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;

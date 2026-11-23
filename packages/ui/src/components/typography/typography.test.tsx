@@ -19,7 +19,7 @@ describe('Heading', () => {
     const heading = screen.getByRole('heading', { level: 2, name: 'Section' });
     expect(heading.tagName).toBe('H2');
     expect(heading).toHaveAttribute('data-size', '4xl');
-    expect(heading).toHaveAttribute('data-weight', 'semibold');
+    expect(heading).toHaveAttribute('data-weight', 'medium');
     expect(heading).toHaveAttribute('data-font', 'sans');
     expect(heading).toHaveAttribute('data-line-height', 'tight');
     expect(heading).toHaveAttribute('data-letter-spacing', 'tighter');

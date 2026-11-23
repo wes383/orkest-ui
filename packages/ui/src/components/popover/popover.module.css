@@ -59,7 +59,7 @@
   color: var(--ui-foreground);
   font-family: var(--ok-font-display);
   font-size: var(--ok-font-size-lg);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   line-height: var(--ok-line-height-tight);
   letter-spacing: var(--ok-letter-spacing-tight);
   text-wrap: balance;

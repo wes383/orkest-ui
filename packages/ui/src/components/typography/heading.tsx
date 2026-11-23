@@ -26,7 +26,7 @@ function HeadingImpl(
     as,
     level = 2,
     size,
-    weight = 'semibold',
+    weight = 'medium',
     font = 'sans',
     lineHeight = 'tight',
     letterSpacing = 'tighter',
