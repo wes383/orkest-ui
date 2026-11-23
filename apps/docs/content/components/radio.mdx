@@ -1,12 +1,12 @@
 ---
 title: Radio
-description: Base UI radios and a managed RadioGroup with keyboard navigation.
+description: Radios and a managed RadioGroup with keyboard navigation.
 section: components
 ---
 
-`Radio` is a Base UI radio. `RadioGroup` manages a set of radios with a shared name, controlled or
-uncontrolled value, orientation, disabled, required, and read-only states, plus Base UI keyboard
-navigation and form integration.
+`Radio` is a radio control. `RadioGroup` manages a set of radios with a shared name, controlled or
+uncontrolled value, orientation, disabled, required, and read-only states, plus arrow-key navigation
+and form integration.
 
 Render `Radio` inside a `RadioGroup`. Import both from `@orkest/ui/client`.
 
@@ -137,7 +137,7 @@ export function Example() {
     {
       name: 'inputRef',
       type: 'Ref<HTMLInputElement>',
-      description: 'Ref to the hidden native input used for form submission.',
+      description: 'Ref to the native input used for form submission.',
     },
     {
       name: 'native attributes',
@@ -219,13 +219,13 @@ export function Example() {
 
 ## Accessibility
 
-- `RadioGroup` renders `role="radiogroup"`; radios render `role="radio"` with hidden native inputs
-  for form submission.
+- `RadioGroup` exposes `role="radiogroup"`; each radio exposes `role="radio"` and submits with native
+  forms.
 - Give `RadioGroup` an accessible name with `aria-label`, `aria-labelledby`, or `FieldLabel`.
-- Base UI handles arrow-key navigation and selection within the group.
+- Arrow keys move between radios and select as they move.
 - A radio cannot be unchecked by clicking it again. The user must select another option.
 - `disabled`, `required`, and `readOnly` are exposed on the group and applied to each radio.
-- Focus is shown on the custom control with `:focus-visible`.
+- Keyboard focus is visible on the control.
 
 ## Related
 

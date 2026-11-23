@@ -1,10 +1,10 @@
 ---
 title: Checkbox
-description: Base UI checkboxes with token styling, labels, sizes, and an indeterminate state.
+description: Checkboxes with token styling, labels, sizes, and an indeterminate state.
 section: components
 ---
 
-`Checkbox` is a Base UI checkbox with token styling and an optional label. It supports controlled and
+`Checkbox` is a checkbox control with token styling and an optional label. It supports controlled and
 uncontrolled usage, native form submission, and an indeterminate state.
 
 Import it from `@orkest/ui/client`.
@@ -59,8 +59,8 @@ export function Example() {
 
 ## Indeterminate
 
-`indeterminate` is an independent visual and ARIA state managed by Base UI. It does not change the
-checkbox's checked value; update `checked` yourself after a selection changes.
+`indeterminate` is an independent visual and ARIA state. It does not change the checkbox's checked
+value; update `checked` yourself after a selection changes.
 
 export const selectAllCode = `import { useState } from 'react';
 import { Stack } from '@orkest/ui';
@@ -152,7 +152,7 @@ export function Example() {
     {
       name: 'inputRef',
       type: 'Ref<HTMLInputElement>',
-      description: 'Ref to the hidden native input used for form submission.',
+      description: 'Ref to the native input used for form submission.',
     },
     {
       name: 'size',
@@ -176,12 +176,12 @@ export function Example() {
 
 ## Accessibility
 
-- Renders a Base UI checkbox with `role="checkbox"` and a hidden native input, so Space toggles it
-  and `required` participates in form validation.
+- The control exposes `role="checkbox"`; Space toggles it while focused, and `required` participates
+  in form validation.
 - The optional `label` is an implicit label. When omitting it, provide `aria-label`, use
-  `FieldLabel`, or connect an external label through the Base UI field context.
-- `indeterminate` sets `aria-checked="mixed"` and the hidden input's indeterminate state.
-- Focus is shown on the custom control with `:focus-visible`.
+  `FieldLabel`, or place the control inside `Field`.
+- `indeterminate` sets `aria-checked="mixed"`.
+- Keyboard focus is visible on the control.
 - Disabled controls are removed from form submission and cannot be toggled.
 
 ## Related

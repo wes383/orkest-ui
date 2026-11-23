@@ -118,8 +118,8 @@ export function Example() {
   <DateRangePickerFieldExample />
 </ComponentPreview>
 
-Passing `name` renders two hidden inputs, `${name}-start` and `${name}-end`, so a native form submits
-both ends without extra wiring.
+Passing `name` submits the start and end values as `${name}-start` and `${name}-end` in a native
+form.
 
 ## Sizes
 
@@ -237,7 +237,7 @@ export function Example() {
     {
       name: 'name',
       type: 'string',
-      description: 'Form field name. Renders two hidden inputs, suffixed -start and -end.',
+      description: 'Form field name. The start and end values submit with -start and -end suffixes.',
     },
     {
       name: 'labels',

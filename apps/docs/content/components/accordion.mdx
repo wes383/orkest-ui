@@ -106,7 +106,7 @@ export function Example() {
 
 ## Anatomy
 
-- `Accordion` owns the open values and the single or multiple rule.
+- `Accordion` manages which items are open and whether one or several can be open.
 - `AccordionItem` pairs one trigger with one panel and needs a stable string `value`.
 - `AccordionTrigger` renders a heading and a button with `aria-expanded` and `aria-controls`.
 - `AccordionPanel` animates its height and holds the section content.
@@ -123,8 +123,8 @@ filtering.
 | `Tab`          | Move to the next trigger          |
 | `Shift` + `Tab` | Move to the previous trigger      |
 
-Triggers are regular buttons, so the browser handles focus order. Base UI does not add arrow-key
-navigation between sections.
+Triggers are regular buttons, so the browser handles focus order. Arrow keys do not move between
+sections.
 
 ## Accessibility
 
@@ -171,7 +171,7 @@ navigation between sections.
       name: 'keepMounted',
       type: 'boolean',
       default: 'false',
-      description: 'Keeps closed panels in the DOM.',
+      description: 'Keeps closed panels mounted so their content and state are preserved.',
     },
   ]}
 />
@@ -225,7 +225,7 @@ navigation between sections.
       name: 'keepMounted',
       type: 'boolean',
       default: 'false',
-      description: 'Keeps the panel in the DOM while closed.',
+      description: 'Keeps the panel mounted while closed so its content and state are preserved.',
     },
     {
       name: 'hiddenUntilFound',

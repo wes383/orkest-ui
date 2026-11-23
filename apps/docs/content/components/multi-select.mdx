@@ -308,7 +308,7 @@ function:
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Marks the field required and forwards it to Base UI hidden form inputs.',
+      description: 'Marks the field required and participates in native form validation.',
     },
     {
       name: 'invalid',
@@ -325,7 +325,7 @@ function:
     {
       name: 'name',
       type: 'string',
-      description: 'Form field name applied to one hidden input per value.',
+      description: 'Form field name for native form submission. One value is submitted per selection.',
     },
     {
       name: 'id',
@@ -357,16 +357,15 @@ function:
 
 ## Accessibility
 
-- Base UI renders the combobox input and the popup uses `role="listbox"` with
-  `aria-multiselectable="true"`. Selected options expose `aria-selected="true"`.
+- The field exposes combobox semantics and the popup is a `listbox` with `aria-multiselectable="true"`.
+  Selected options expose `aria-selected="true"`.
 - `ArrowDown` / `ArrowUp` browse options, `Enter` toggles the highlighted option, and `Escape` closes
   the popup and restores focus. `Tab` leaves the field.
 - When `searchable` is true, typing filters options and `Space` inserts a space. Without search, the
   input is read-only and the chevron trigger opens the popup.
-- Default chips include a labelled remove action, and Base UI handles Backspace/Delete removal while
-  a chip is focused. `renderValue` replaces the chip content; its wrapper stops click propagation so
-  custom controls do not toggle the popup.
-- `required` and `name` are forwarded to the hidden form inputs managed by Base UI.
+- Default chips include a labelled remove action, and Backspace or Delete removes the focused chip.
+  `renderValue` replaces the chip content; custom controls inside it do not toggle the popup.
+- `required` and `name` submit and validate the value with the surrounding form.
 - The input exposes the selected count through `aria-description`.
 - The select-all row is a `button` with `aria-pressed`, and the overflow counter is a `button` with
   an accessible name, so both are reachable without a pointer.

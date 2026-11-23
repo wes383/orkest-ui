@@ -66,7 +66,7 @@ export function Example() {
 
 - `Sheet` owns the open state, modal behavior, and dismissal.
 - `SheetTrigger` opens the sheet. It renders an outline Button by default.
-- `SheetContent` renders the portal, backdrop, and edge panel. It can render the built-in close action.
+- `SheetContent` renders the edge panel and backdrop, and can render the built-in close action.
 - `SheetHeader` groups `SheetTitle` and `SheetDescription`.
 - `SheetBody` scrolls when the content exceeds the available space.
 - `SheetFooter` aligns the actions.
@@ -306,8 +306,8 @@ it, or `closeLabel` to change its accessible name.
 
 ## Accessibility
 
-- Render `SheetTitle` for the accessible name and `SheetDescription` for supporting text. Base UI
-  wires `aria-labelledby` and `aria-describedby` automatically.
+- Render `SheetTitle` for the accessible name and `SheetDescription` for supporting text. Both are
+  connected to the sheet automatically.
 - Modal sheets trap focus, lock page scroll, and restore focus to the trigger or the previously
   focused element when closed.
 - Escape and backdrop press close the sheet by default. Disable them only when the task must not be

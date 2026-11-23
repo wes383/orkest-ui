@@ -135,7 +135,7 @@ export const trackingLineHeightItalicAndUnderlineCode = `<Stack gap={2}>
 ## Overflow
 
 `truncate` is single-line; `lineClamp` is multi-line and takes precedence when both are set. The full
-text stays in the DOM.
+text remains available to assistive technology.
 
 export const truncationCode = `<Box style={{ width: '22rem' }}>
   <Stack gap={2}>
@@ -252,7 +252,7 @@ export const truncationCode = `<Box style={{ width: '22rem' }}>
 - `Text` defaults to a span. Use `as` to render the correct semantic element.
 - Do not skip heading levels. A visual size does not determine the heading level; use
   [Heading](/docs/components/typography/) for headings.
-- Truncation and line clamping are visual; the full text remains in the DOM for assistive technology.
+- Truncation and line clamping are visual; the full text remains available to assistive technology.
 - Tone is not a substitute for context. Pair success or danger text with a clear label or icon.
 - Inherited native attributes such as `id`, `title`, and event handlers are forwarded.
 

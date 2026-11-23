@@ -291,7 +291,7 @@ the keyboard.
       name: 'required',
       type: 'boolean',
       default: 'false',
-      description: 'Marks the field required and forwards it to the hidden form input.',
+      description: 'Marks the field required and participates in native form validation.',
     },
     {
       name: 'invalid',
@@ -308,7 +308,7 @@ the keyboard.
     {
       name: 'name',
       type: 'string',
-      description: 'Form field name applied to the hidden input.',
+      description: 'Form field name for native form submission.',
     },
     {
       name: 'id',
@@ -346,8 +346,7 @@ the keyboard.
   commits, `Escape` closes and restores the chosen label.
 - Opening starts an empty query, so the first keystroke is never appended to the previous label.
 - Disabled rows are skipped by the keyboard and expose `aria-disabled="true"`.
-- `name` and `required` are forwarded to the hidden input Base UI renders, so the field submits with
-  the surrounding form.
+- `name` and `required` submit and validate the value with the surrounding form.
 - With `loading`, the status row is a polite live region and the listbox is marked busy.
 
 ## Related

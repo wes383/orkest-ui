@@ -188,8 +188,8 @@ keep their state; nothing about sorting or selection is lost when a column is hi
 
 ## Row actions
 
-Row actions are an ordinary column whose `cell` renders a menu. `DropdownMenu` portals its content,
-so the menu escapes the table's horizontal scroll container instead of being clipped by a cell.
+Row actions are an ordinary column whose `cell` renders a menu. The menu is never clipped by a cell
+or the table's horizontal scroll container.
 
 export const rowActionsColumnCode = `import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import { IconButton } from '@orkest/ui';

@@ -137,7 +137,7 @@ export function Example() {
   <DatePickerFieldExample />
 </ComponentPreview>
 
-Passing `name` also renders a hidden input, so the value is submitted with a native form.
+Passing `name` submits the value with a native form.
 
 ## Sizes
 
@@ -294,7 +294,7 @@ and works inside any [Dialog](/docs/components/dialog/).
     {
       name: 'name',
       type: 'string',
-      description: 'Form field name. Renders a hidden input carrying the value.',
+      description: 'Form field name for native form submission.',
     },
     {
       name: 'labels',

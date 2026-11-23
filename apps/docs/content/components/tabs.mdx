@@ -360,7 +360,7 @@ Disabled tabs are skipped.
 - Each `TabsContent` renders `role="tabpanel"` and is named by its tab.
 - Only the active panel is focusable and exposed; inactive panels are inert.
 - Disabled tabs use `aria-disabled` and cannot be activated.
-- Focus is always visible through the shared focus ring token.
+- Keyboard focus is always visible.
 - The indicator is decorative and does not affect the accessible name.
 - Motion respects `prefers-reduced-motion`.
 
@@ -494,7 +494,7 @@ Disabled tabs are skipped.
       type: 'boolean',
       default: 'false',
       description:
-        'Keeps the panel in the DOM while hidden. Use with care: it preserves form and component state but also costs runtime memory.',
+        'Keeps hidden panels mounted so their state is preserved. This also costs memory.',
     },
     {
       name: 'className',

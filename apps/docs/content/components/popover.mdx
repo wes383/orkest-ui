@@ -61,7 +61,7 @@ export function Example() {
 
 - `Popover` owns the open state.
 - `PopoverTrigger` toggles the popover. It renders a secondary Button by default.
-- `PopoverPortal` moves the popover to the document body.
+- `PopoverPortal` renders the popover outside the parent layout so it is not clipped.
 - `PopoverPositioner` positions the content and handles viewport collisions.
 - `PopoverContent` is the interactive surface. Its children scroll inside the surface.
 - `PopoverArrow` adds an optional arrow. Keep it as a direct child of `PopoverContent` so it stays

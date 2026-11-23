@@ -62,7 +62,7 @@ activated, and use a lower-emphasis foreground color.
 
 - `DropdownMenu` owns the open state and menu behavior.
 - `DropdownMenuTrigger` opens the menu. It renders a secondary Button by default.
-- `DropdownMenuPortal` moves the menu to the document body.
+- `DropdownMenuPortal` renders the menu outside the parent layout so it is not clipped.
 - `DropdownMenuContent` positions the surface, handles collisions, and scrolls long content.
 - `DropdownMenuItem` executes an action and closes the menu.
 - `DropdownMenuGroup` groups related items; `DropdownMenuLabel` names the group.
@@ -208,8 +208,7 @@ export function Example() {
   <DropdownMenuSubmenuExample />
 </ComponentPreview>
 
-`DropdownMenuSubContent` renders its own portal and positioner. Submenus open on hover, click, or the
-right arrow key, and close with Escape or the left arrow key.
+Submenus open on hover, click, or the right arrow key, and close with Escape or the left arrow key.
 
 ## Controlled state
 

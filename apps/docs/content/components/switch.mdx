@@ -1,10 +1,10 @@
 ---
 title: Switch
-description: Base UI on/off controls with accessible switch semantics and token styling.
+description: On/off controls with accessible switch semantics and token styling.
 section: components
 ---
 
-`Switch` is a Base UI switch with token styling. It supports controlled and uncontrolled state,
+`Switch` is an on/off control with token styling. It supports controlled and uncontrolled state,
 labels, sizes, form submission, and Space-key toggling.
 
 Import it from `@orkest/ui/client`.
@@ -102,7 +102,7 @@ export function Example() {
     {
       name: 'inputRef',
       type: 'Ref<HTMLInputElement>',
-      description: 'Ref to the hidden native input used for form submission.',
+      description: 'Ref to the native input used for form submission.',
     },
     {
       name: 'size',
@@ -126,11 +126,11 @@ export function Example() {
 
 ## Accessibility
 
-- Renders a Base UI switch with `role="switch"` and a hidden native input for form submission.
-- Space toggles the switch while focused; Base UI handles the keyboard interaction.
+- The switch exposes `role="switch"` and submits with native forms.
+- Space toggles the switch while focused.
 - The optional `label` is an implicit label. When omitting it, provide `aria-label`,
   `aria-labelledby`, or use `FieldLabel`.
-- Focus is shown on the track with `:focus-visible`.
+- Keyboard focus is visible on the track.
 - Inside an ancestor with `dir="rtl"`, the switch mirrors automatically.
 - The thumb transition is disabled when `prefers-reduced-motion: reduce` is active.
 

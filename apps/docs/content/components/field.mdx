@@ -30,11 +30,10 @@ export function Example() {
   <FieldBasicExample />
 </ComponentPreview>
 
-`FieldLabel` registers a label id that Base UI controls use for `aria-labelledby` and `htmlFor`.
-`FieldDescription` and `FieldMessage` register their ids so the control receives
-`aria-describedby` without manual wiring. Custom controls such as Checkbox and Switch receive the
-label id through `aria-labelledby`; pass `htmlFor` explicitly when you need native label-click
-behavior for a custom control.
+`FieldLabel`, `FieldDescription`, and `FieldMessage` connect to the control automatically through
+`aria-labelledby` and `aria-describedby`. Custom controls such as Checkbox and Switch receive the
+label through `aria-labelledby`; pass `htmlFor` explicitly when you need native label-click behavior
+for a custom control.
 
 ## Required and optional
 
@@ -355,7 +354,7 @@ export function Example() {
     {
       name: 'id',
       type: 'string',
-      description: 'Description id. Generated and registered with the field when omitted.',
+      description: 'Description id. Generated automatically when omitted.',
     },
     {
       name: 'native attributes',
@@ -389,7 +388,7 @@ export function Example() {
     {
       name: 'id',
       type: 'string',
-      description: 'Message id. Generated and registered with the field when omitted.',
+      description: 'Message id. Generated automatically when omitted.',
     },
     {
       name: 'native attributes',
@@ -420,9 +419,9 @@ export function Example() {
 
 ## Accessibility
 
-- `FieldLabel` registers a label id. Base UI controls use it for `htmlFor` and `aria-labelledby`;
-  custom controls such as Checkbox and Switch receive `aria-labelledby`. Pass `htmlFor` explicitly
-  when a custom control needs native label-click behavior.
+- `FieldLabel` is connected to the control for `htmlFor` and `aria-labelledby`; custom controls such
+  as Checkbox and Switch receive `aria-labelledby`. Pass `htmlFor` explicitly when a custom control
+  needs native label-click behavior.
 - Descriptions and messages are added to `aria-describedby`. Multiple ids are supported.
 - Invalid fields set `aria-invalid` on the control. Error messages use `role="alert"`; success,
   warning, and info messages use `role="status"`.
@@ -430,8 +429,8 @@ export function Example() {
 - `Fieldset` uses a native `<fieldset>` with a native `<legend>`, so the group has an accessible
   name and shared disabled state.
 - Disabled state uses native attributes and muted text, not color alone.
-- The horizontal layout uses a grid; DOM order remains label, control, description, message, so
-  keyboard and screen-reader order do not change.
+- The horizontal layout keeps the same reading and focus order as the stacked layout: label,
+  control, description, message.
 
 ## Related
 

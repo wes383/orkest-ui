@@ -521,8 +521,7 @@ export function Example() {
 ## Row actions
 
 Row actions are ordinary cells: render a `DropdownMenu` with an `IconButton` trigger inside a
-`TableCell`. The menu portals out of the table's horizontal scroll container, so it is never clipped
-by a cell.
+`TableCell`. The menu is never clipped by a cell or the table's horizontal scroll container.
 
 export const rowActionsMenuCode = `import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import { IconButton, TableCell } from '@orkest/ui';

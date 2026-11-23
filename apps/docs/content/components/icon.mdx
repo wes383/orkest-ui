@@ -117,9 +117,9 @@ export function Example() {
 
 ## Composition
 
-`Button` and `IconButton` render `Icon` internally for their icon slots, so sizing and color inherit
-from the control. The same rules make `Icon` ready for inputs and navigation items: use
-`size="inherit"` to match text, and leave the icon decorative when the control already has a name.
+`Button` and `IconButton` icon slots inherit sizing and color from the control. The same rules make
+`Icon` ready for inputs and navigation items: use `size="inherit"` to match text, and leave the icon
+decorative when the control already has a name.
 
 export const insideButtonsCode = `import { Button, IconButton, Stack } from '@orkest/ui';
 import { ArrowRight, Plus, Settings } from 'lucide-react';
@@ -182,8 +182,7 @@ export function Example() {
     {
       name: 'className / style',
       type: 'string / CSSProperties',
-      description:
-        'Merged with the internal class and inline style, including the stroke override.',
+      description: 'Additional class and inline style for the icon.',
     },
     {
       name: 'native SVG attributes',

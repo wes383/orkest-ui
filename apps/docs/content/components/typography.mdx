@@ -178,7 +178,8 @@ export function Example() {
 ## Overflow
 
 `truncate` limits text to one line. `lineClamp` limits it to a number of lines and takes precedence
-when both props are set. Both options are visual; the full text remains in the DOM.
+when both props are set. Both options are visual; the full text remains available to assistive
+technology.
 
 export const singleLineAndMultiLineOverflowCode = `import { Box, Stack, Text } from '@orkest/ui';
 
@@ -390,8 +391,8 @@ These options are shared by every typography component. Each component supplies 
 - Associate `Label` with its control through `htmlFor` or by wrapping the control.
 - `Link` is for navigation. Use `Button` for actions, including `variant="link"`.
 - Links use color and an underline, so meaning is not communicated by color alone.
-- Truncation and line clamping are visual. The full text stays in the DOM; provide a title or another
-  way to read critical content when necessary.
+- Truncation and line clamping are visual. The full text remains available to assistive technology;
+  provide a title or another way to read critical content when necessary.
 - `tone` is semantic color, not a replacement for context. Pair status tones with text or an icon.
 
 ## Related

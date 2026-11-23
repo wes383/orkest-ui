@@ -228,7 +228,7 @@ and `xl` keys. Values carry forward to larger breakpoints.
     {
       name: 'className',
       type: 'string',
-      description: 'Merged with the internal class name.',
+      description: 'Additional class for the root element.',
     },
     {
       name: 'native attributes',
@@ -244,7 +244,7 @@ components.
 ## Accessibility
 
 - `Grid` changes visual layout only. It adds no ARIA roles or keyboard behavior.
-- Reading order remains DOM order. Avoid visual reordering that contradicts the source order.
+- Reading order follows source order. Avoid visual reordering that contradicts the source order.
 - `autoFlow="dense"` can move items visually; use it only when the content order does not carry
   meaning.
 - Use `as` to render semantic elements such as `section`, `ul`, or `nav` when appropriate.

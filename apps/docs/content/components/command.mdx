@@ -92,12 +92,9 @@ export function Example() {
   <CommandDialogExample />
 </ComponentPreview>
 
-`Command.Footer` adds the hint bar below the list. It only provides the surface and layout, so the
-labels stay yours and can match the shortcuts the palette actually supports.
-
-The shortcut is registered once by the application, not by each palette. A listener per instance
-would fire every mounted palette at the same time, and it would fight with editors that already use
-the same combination.
+`Command.Footer` adds an optional hint bar below the list. Its labels are yours, so they can match
+the shortcuts your palette supports. Register the shortcut that opens the palette once in your
+application.
 
 ## Standalone
 
@@ -297,7 +294,7 @@ The highlight wraps by default. Set `loop={false}` to stop at the ends of the li
     {
       name: 'open',
       type: 'boolean',
-      description: 'Controlled open state. Omit it to use defaultOpen with internal state.',
+      description: 'Controlled open state. Omit it to use defaultOpen and let the component manage it.',
     },
     {
       name: 'defaultOpen',

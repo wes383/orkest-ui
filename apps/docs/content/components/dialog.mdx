@@ -70,7 +70,7 @@ export function Example() {
 
 - `Dialog` owns the open state and modal behavior.
 - `DialogTrigger` opens the dialog. It renders a primary Button by default.
-- `DialogPortal` moves the dialog to the document body.
+- `DialogPortal` renders the dialog outside the parent layout so it is not clipped.
 - `DialogOverlay` renders the backdrop.
 - `DialogContent` centers the dialog, limits its height, and can render the built-in close action.
 - `DialogHeader` groups `DialogTitle` and `DialogDescription`.
@@ -425,8 +425,8 @@ or `closeLabel` to change its accessible name.
 
 ## Accessibility
 
-- Render `DialogTitle` for the accessible name and `DialogDescription` for supporting text. Base UI
-  wires `aria-labelledby` and `aria-describedby` automatically.
+- Render `DialogTitle` for the accessible name and `DialogDescription` for supporting text. Both are
+  connected to the dialog automatically.
 - Modal dialogs trap focus, lock page scroll, and restore focus to the trigger or the previously
   focused element when closed.
 - Use `initialFocus` to focus a specific field when the dialog opens.
