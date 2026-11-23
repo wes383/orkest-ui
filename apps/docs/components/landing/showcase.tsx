@@ -5,6 +5,7 @@ import { useState } from 'react';
 import {
   Bold,
   Copy,
+  Ellipsis,
   Italic,
   Link2,
   Mail,
@@ -107,32 +108,32 @@ export function ActionsShowcase() {
       <Stack direction="row" gap={2} wrap align="center">
         <IconButton icon={Plus} label="Add" size="sm" />
         <IconButton icon={Settings} label="Settings" size="sm" variant="outline" />
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={<IconButton icon={Ellipsis} label="More actions" size="sm" variant="outline" />}
+          />
+          <DropdownMenuPortal>
+            <DropdownMenuContent>
+              <DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger leftIcon={Share2}>Share via</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
+                  <DropdownMenuItem leftIcon={Link2}>Copy link</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenuPortal>
+        </DropdownMenu>
         <Tag size="sm">Beta</Tag>
         <Badge size="sm" variant="success">
           Active
         </Badge>
       </Stack>
-      <DropdownMenu>
-        <DropdownMenuTrigger variant="outline" size="sm">
-          More actions
-        </DropdownMenuTrigger>
-        <DropdownMenuPortal>
-          <DropdownMenuContent>
-            <DropdownMenuItem leftIcon={Pencil}>Edit</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger leftIcon={Share2}>Share via</DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem leftIcon={Mail}>Email</DropdownMenuItem>
-                <DropdownMenuItem leftIcon={Link2}>Copy link</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenuPortal>
-      </DropdownMenu>
     </Stack>
   );
 }
