@@ -10,19 +10,19 @@ import { cx } from '../../utils/cx';
 import styles from './toggle-group.module.css';
 
 export type ToggleGroupSize = 'sm' | 'md' | 'lg';
-export type ToggleGroupVariant = 'segmented' | 'outline';
+export type ToggleGroupVariant = 'ghost' | 'segmented' | 'outline';
 
 export interface ToggleGroupProps extends Omit<BaseToggleGroupProps<string>, 'className'> {
   className?: string;
   /** Control size. Defaults to `md`. */
   size?: ToggleGroupSize;
-  /** Visual style. Defaults to `segmented`. */
+  /** Visual style. Defaults to `ghost`. */
   variant?: ToggleGroupVariant;
 }
 
 /** Group of toggle buttons that share a pressed value. */
 export const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(function ToggleGroup(
-  { className, size = 'md', variant = 'segmented', children, ...rest },
+  { className, size = 'md', variant = 'ghost', children, ...rest },
   ref,
 ) {
   return (

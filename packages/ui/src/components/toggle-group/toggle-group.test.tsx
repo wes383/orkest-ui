@@ -27,7 +27,7 @@ describe('ToggleGroup', () => {
     const left = screen.getByRole('button', { name: 'Left' });
     const center = screen.getByRole('button', { name: 'Center' });
 
-    expect(group).toHaveAttribute('data-variant', 'segmented');
+    expect(group).toHaveAttribute('data-variant', 'ghost');
     expect(group).toHaveAttribute('data-size', 'md');
     expect(left).toHaveAttribute('aria-pressed', 'false');
 
@@ -137,6 +137,22 @@ describe('ToggleGroup', () => {
     expect(center).toHaveFocus();
 
     await user.keyboard('{ArrowLeft}');
+    expect(left).toHaveFocus();
+  });
+
+  it('moves focus with vertical arrow keys', async () => {
+    const user = userEvent.setup();
+
+    render(<ExampleToggleGroup defaultValue={['left']} orientation="vertical" />);
+
+    const left = screen.getByRole('button', { name: 'Left' });
+    const center = screen.getByRole('button', { name: 'Center' });
+
+    left.focus();
+    await user.keyboard('{ArrowDown}');
+    expect(center).toHaveFocus();
+
+    await user.keyboard('{ArrowUp}');
     expect(left).toHaveFocus();
   });
 

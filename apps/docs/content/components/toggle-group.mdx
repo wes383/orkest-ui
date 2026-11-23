@@ -12,14 +12,38 @@ pressed independently.
 
 ## Basic usage
 
-export const toggleGroupBasicCode = `import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
+The default `ghost` variant renders borderless items on a transparent surface and fills the pressed
+item with a soft background. The example below is an icon-only formatting toolbar where exactly one
+style stays active: pressing the active item does not clear it.
+
+export const toggleGroupBasicCode = `import { useState } from 'react';
+import { Bold, Italic, Underline } from 'lucide-react';
+import { Icon } from '@orkest/ui';
+import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
 
 export function Example() {
+  const [value, setValue] = useState<string[]>(['italic']);
+
   return (
-    <ToggleGroup aria-label="Text alignment" defaultValue={['left']}>
-      <ToggleGroupItem value="left">Left</ToggleGroupItem>
-      <ToggleGroupItem value="center">Center</ToggleGroupItem>
-      <ToggleGroupItem value="right">Right</ToggleGroupItem>
+    <ToggleGroup
+      aria-label="Text style"
+      value={value}
+      onValueChange={(next) => {
+        // Keep exactly one style active: pressing the active item is ignored.
+        if (next.length > 0) {
+          setValue(next);
+        }
+      }}
+    >
+      <ToggleGroupItem value="bold" aria-label="Bold">
+        <Icon icon={Bold} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="italic" aria-label="Italic">
+        <Icon icon={Italic} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="underline" aria-label="Underline">
+        <Icon icon={Underline} size="md" />
+      </ToggleGroupItem>
     </ToggleGroup>
   );
 }`;
@@ -28,8 +52,9 @@ export function Example() {
   <ToggleGroupBasicExample />
 </ComponentPreview>
 
-By default only one item can be pressed. Clicking the pressed item again clears the selection. Pass
-`defaultValue` to start with a selection and `value` with `onValueChange` for controlled usage.
+By default only one item can be pressed, and clicking the pressed item again clears the selection.
+Control `value` with `onValueChange` and ignore an empty array when a selection is required. Pass
+`defaultValue` to start uncontrolled groups with a selection.
 
 ## Multiple selection
 
@@ -52,10 +77,32 @@ export function Example() {
   <ToggleGroupMultipleExample />
 </ComponentPreview>
 
+## Vertical orientation
+
+Set `orientation="vertical"` to stack the items. Focus navigation follows the vertical axis, so the
+up and down arrow keys move between items.
+
+export const toggleGroupVerticalCode = `import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <ToggleGroup aria-label="Text alignment" defaultValue={['left']} orientation="vertical">
+      <ToggleGroupItem value="left">Left</ToggleGroupItem>
+      <ToggleGroupItem value="center">Center</ToggleGroupItem>
+      <ToggleGroupItem value="right">Right</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}`;
+
+<ComponentPreview title="Vertical orientation" code={toggleGroupVerticalCode}>
+  <ToggleGroupVerticalExample />
+</ComponentPreview>
+
 ## Variants and sizes
 
-`variant="segmented"` (default) places the items inside a sunken container and lifts the pressed
-item onto a raised surface. `variant="outline"` renders a single bordered button group.
+`variant="ghost"` (default) renders borderless items on a transparent surface and fills the pressed
+item. `variant="segmented"` places the items inside a sunken container and lifts the pressed item
+onto a raised surface. `variant="outline"` renders a single bordered button group.
 
 `size` accepts `sm`, `md`, and `lg`. Every item in a group shares the same size.
 
@@ -63,6 +110,30 @@ item onto a raised surface. `variant="outline"` renders a single bordered button
 
 Disable a single item with `ToggleGroupItem disabled`, or the whole group with
 `ToggleGroup disabled`. Disabled items stay visible but cannot be focused or pressed.
+
+export const toggleGroupDisabledCode = `import { Bold, Italic, Underline } from 'lucide-react';
+import { Icon } from '@orkest/ui';
+import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <ToggleGroup aria-label="Text style" defaultValue={['bold']} disabled>
+      <ToggleGroupItem value="bold" aria-label="Bold">
+        <Icon icon={Bold} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="italic" aria-label="Italic">
+        <Icon icon={Italic} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="underline" aria-label="Underline">
+        <Icon icon={Underline} size="md" />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}`;
+
+<ComponentPreview title="Disabled" code={toggleGroupDisabledCode}>
+  <ToggleGroupDisabledExample />
+</ComponentPreview>
 
 ## Keyboard interaction
 
@@ -81,6 +152,7 @@ Focus wraps at the ends by default. Set `loopFocus={false}` to stop at the last 
 - The root renders `role="group"`, so give it an accessible name with `aria-label` or
   `aria-labelledby`.
 - Each item is a native button whose `aria-pressed` state matches the pressed surface.
+- Icon-only items need an accessible name through `aria-label`.
 - Disabled items are natively disabled and skipped by keyboard navigation.
 - Focus is always visible through the shared focus ring token.
 - State is not communicated by color alone.
@@ -140,8 +212,8 @@ Focus wraps at the ends by default. Set `loopFocus={false}` to stop at the last 
     },
     {
       name: 'variant',
-      type: `'segmented' | 'outline'`,
-      default: `'segmented'`,
+      type: `'ghost' | 'segmented' | 'outline'`,
+      default: `'ghost'`,
       description: 'Visual style of the group.',
     },
     {

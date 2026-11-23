@@ -81,7 +81,9 @@ import { SheetBasicExample, SheetSidesExample } from '../examples/sheet-examples
 import { OTPInputBasicExample, OTPInputMaskedExample } from '../examples/otp-input-examples';
 import {
   ToggleGroupBasicExample,
+  ToggleGroupDisabledExample,
   ToggleGroupMultipleExample,
+  ToggleGroupVerticalExample,
 } from '../examples/toggle-group-examples';
 import { BreadcrumbBasicExample, BreadcrumbEllipsisExample } from '../examples/breadcrumb-examples';
 import { KbdBasicExample } from '../examples/kbd-examples';
@@ -364,6 +366,8 @@ export const mdxComponents = {
   OTPInputMaskedExample,
   ToggleGroupBasicExample,
   ToggleGroupMultipleExample,
+  ToggleGroupVerticalExample,
+  ToggleGroupDisabledExample,
   BreadcrumbBasicExample,
   BreadcrumbEllipsisExample,
   KbdBasicExample,

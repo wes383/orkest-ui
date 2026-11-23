@@ -90,12 +90,35 @@
     background: var(--ui-surface-sunken);
     color: var(--ui-foreground);
   }
+
+  .root[data-variant="ghost"] .item:hover:not([data-pressed]):not([data-disabled]) {
+    background: var(--ui-surface-sunken);
+    color: var(--ui-foreground);
+  }
 }
 
 .root[data-variant="segmented"] .item[data-pressed] {
   background: var(--ui-surface-raised);
   box-shadow: var(--ui-shadow-xs);
   color: var(--ui-foreground);
+}
+
+.root[data-variant="ghost"] .item[data-pressed] {
+  background: var(--ui-secondary);
+  color: var(--ui-foreground);
+}
+
+.root[data-variant="ghost"] {
+  gap: var(--ok-space-1);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.root[data-variant="ghost"] .item {
+  min-width: var(--toggle-group-height);
+  min-height: var(--toggle-group-height);
+  padding: 0 var(--ok-space-2);
 }
 
 .root[data-variant="outline"] {
