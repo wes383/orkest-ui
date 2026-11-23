@@ -25,11 +25,6 @@
   cursor: pointer;
 }
 
-.trigger:hover .label {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
 .trigger:focus-visible {
   outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
   outline-offset: var(--ok-focus-ring-offset);
@@ -38,10 +33,6 @@
 .trigger[data-disabled] {
   opacity: var(--ok-opacity-disabled);
   cursor: not-allowed;
-}
-
-.trigger[data-disabled]:hover .label {
-  text-decoration: none;
 }
 
 .label {

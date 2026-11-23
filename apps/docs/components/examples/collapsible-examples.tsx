@@ -29,7 +29,7 @@ export function CollapsibleControlledExample() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: '100%' }}>
       <Collapsible open={open} onOpenChange={setOpen}>
         <CollapsibleTrigger>Advanced settings</CollapsibleTrigger>
         <CollapsiblePanel>Retries, timeouts, and proxy configuration.</CollapsiblePanel>
