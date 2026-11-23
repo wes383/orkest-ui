@@ -116,8 +116,10 @@ jobs:
 
   playwright:
     name: Playwright
-    # Visual baselines are generated on Windows; run the same platform in CI.
-    runs-on: windows-latest
+    # Visual baselines are generated on windows-2022 and must be compared on the same image:
+    # a different runner rounds subpixel layout differently, which fails every snapshot by
+    # one pixel. Regenerate them with the Visual baselines workflow.
+    runs-on: windows-2022
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7

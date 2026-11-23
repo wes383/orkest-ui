@@ -1,0 +1,45 @@
+name: Visual baselines
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Regenerate snapshots
+    # Must match the runner used by the Playwright job in ci.yml: subpixel layout rounding
+    # differs between images, and a mismatch shows up as one-pixel height changes.
+    runs-on: windows-2022
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.11.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm build
+
+      - name: Build documentation site
+        run: pnpm --filter @orkest/docs exec next build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install chromium
+
+      - name: Update snapshots
+        run: pnpm test:visual:update
+
+      - name: Upload snapshots
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-snapshots
+          path: tests/visual.spec.ts-snapshots/
+          retention-days: 7
