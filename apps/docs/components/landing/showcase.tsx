@@ -22,6 +22,7 @@ import {
   Switch,
   Tabs,
   TabsContent,
+  TabsIndicator,
   TabsList,
   TabsTrigger,
   toast,
@@ -68,6 +69,7 @@ export function TabsShowcase() {
       <TabsList>
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="activity">Activity</TabsTrigger>
+        <TabsIndicator />
       </TabsList>
       <TabsContent value="overview">
         <Text size="sm" tone="muted">
