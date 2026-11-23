@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 import { Button, Stack, Text } from '@orkest/ui';
 import {
-  Calendar,
+  Checkbox,
+  DatePicker,
   Dialog,
   DialogBody,
   DialogClose,
@@ -16,20 +17,82 @@ import {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  Input,
+  Select,
+  Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   toast,
+  type SelectItem,
 } from '@orkest/ui/client';
 
-export function CalendarShowcase() {
-  const [value, setValue] = useState('2026-11-18');
+const fruitOptions: SelectItem[] = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+];
+
+export function InputShowcase() {
+  const [value, setValue] = useState('');
 
   return (
-    <Stack gap={3} align="center">
-      <Calendar value={value} onChange={setValue} defaultMonth="2026-11" />
+    <Stack gap={2} align="center" style={{ width: '100%' }}>
+      <Input
+        aria-label="Your name"
+        placeholder="Type your name"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
       <Text size="sm" tone="muted">
-        Selected: {value}
+        Hello, {value || 'stranger'}
       </Text>
     </Stack>
   );
+}
+
+export function SelectShowcase() {
+  return <Select aria-label="Favorite fruit" options={fruitOptions} defaultValue="apple" />;
+}
+
+export function DatePickerShowcase() {
+  const [value, setValue] = useState<string | null>('2026-11-18');
+
+  return <DatePicker value={value} onChange={setValue} style={{ width: '100%' }} />;
+}
+
+export function TabsShowcase() {
+  return (
+    <Tabs defaultValue="overview" style={{ width: '100%' }}>
+      <TabsList>
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="activity">Activity</TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <Text size="sm" tone="muted">
+          All changes in one place.
+        </Text>
+      </TabsContent>
+      <TabsContent value="activity">
+        <Text size="sm" tone="muted">
+          Recent commits and reviews.
+        </Text>
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+export function SwitchShowcase() {
+  const [enabled, setEnabled] = useState(true);
+
+  return <Switch label="Notifications" checked={enabled} onCheckedChange={setEnabled} />;
+}
+
+export function CheckboxShowcase() {
+  const [checked, setChecked] = useState(true);
+
+  return <Checkbox label="Remember me" checked={checked} onCheckedChange={setChecked} />;
 }
 
 export function DialogShowcase() {

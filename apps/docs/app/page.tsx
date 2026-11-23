@@ -2,10 +2,19 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { Icon } from '@orkest/ui';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
-import { CalendarShowcase, DialogShowcase, ToastShowcase } from '@/components/landing/showcase';
+import {
+  CheckboxShowcase,
+  DatePickerShowcase,
+  DialogShowcase,
+  InputShowcase,
+  SelectShowcase,
+  SwitchShowcase,
+  TabsShowcase,
+  ToastShowcase,
+} from '@/components/landing/showcase';
 import { getNavigation } from '@/lib/docs-source';
 
 interface PackageMetadata {
@@ -48,97 +57,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="landing-showcase" aria-labelledby="landing-showcase">
-        <div className="landing-showcase-heading">
-          <p className="landing-kicker">Live preview</p>
-          <h2 className="landing-showcase-title" id="landing-showcase">
-            Real components, not screenshots.
-          </h2>
-          <p className="landing-showcase-lede">
-            Click, type, and open — every demo below runs the same code that ships in the package.
-          </p>
-        </div>
+      <section className="landing-showcase" aria-label="Live component previews">
         <div className="landing-showcase-grid">
-          <article className="landing-showcase-card landing-showcase-calendar">
-            <header className="landing-showcase-header">
-              <span className="landing-showcase-name">Calendar</span>
-              <Link className="landing-showcase-link" href="/docs/components/calendar/">
-                Docs
-                <Icon icon={ArrowUpRight} size="sm" />
-              </Link>
-            </header>
-            <div className="landing-showcase-body">
-              <CalendarShowcase />
-            </div>
-          </article>
-          <article className="landing-showcase-card">
-            <header className="landing-showcase-header">
-              <span className="landing-showcase-name">Dialog</span>
-              <Link className="landing-showcase-link" href="/docs/components/dialog/">
-                Docs
-                <Icon icon={ArrowUpRight} size="sm" />
-              </Link>
-            </header>
-            <div className="landing-showcase-body">
-              <DialogShowcase />
-            </div>
-          </article>
-          <article className="landing-showcase-card">
-            <header className="landing-showcase-header">
-              <span className="landing-showcase-name">Toast</span>
-              <Link className="landing-showcase-link" href="/docs/components/toast/">
-                Docs
-                <Icon icon={ArrowUpRight} size="sm" />
-              </Link>
-            </header>
-            <div className="landing-showcase-body">
-              <ToastShowcase />
-            </div>
-          </article>
+          <div className="landing-showcase-cell">
+            <InputShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <SelectShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <DatePickerShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <TabsShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <SwitchShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <CheckboxShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <DialogShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <ToastShowcase />
+          </div>
         </div>
       </section>
 
       <footer className="landing-footer">
-        <div className="landing-footer-top">
-          <div className="landing-footer-brand">
-            <span className="landing-footer-logo">
-              <span className="landing-title-accent">O</span>rkest UI
-            </span>
-            <p className="landing-footer-tagline">
-              Neutral-first React components with semantic design tokens, accessible behavior, and
-              light and dark themes.
-            </p>
-          </div>
-          <div className="landing-footer-links">
-            <a
-              className="landing-footer-link"
-              href="https://github.com/wes383/orkest-ui"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-              <Icon icon={ArrowUpRight} size="sm" />
-            </a>
-            <a
-              className="landing-footer-link"
-              href="https://www.npmjs.com/package/@orkest/ui"
-              target="_blank"
-              rel="noreferrer"
-            >
-              npm
-              <Icon icon={ArrowUpRight} size="sm" />
-            </a>
-          </div>
-        </div>
-        <div className="landing-footer-bottom">
-          <p className="landing-footer-facts">
-            <span>{componentCount} components</span>
-            <span>v{version}</span>
-            <span>{license}</span>
-            <span>Built on Base UI</span>
-          </p>
-          <p className="landing-footer-copyright">© {new Date().getFullYear()} Orkest UI</p>
-        </div>
+        <p className="landing-footer-facts">
+          <span>{componentCount} components</span>
+          <span>v{version}</span>
+          <span>{license}</span>
+        </p>
+        <p className="landing-footer-copyright">© {new Date().getFullYear()} Orkest UI</p>
       </footer>
     </div>
   );
