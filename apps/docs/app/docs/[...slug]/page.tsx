@@ -51,7 +51,6 @@ export default async function DocRoute({ params }: DocRouteProps) {
         </div>
 
         <header className="page-header">
-          <p className="page-eyebrow">{doc.sectionLabel}</p>
           <h1 className="page-title">{doc.title}</h1>
           <p className="page-description">{doc.description}</p>
           <p className="page-meta">
