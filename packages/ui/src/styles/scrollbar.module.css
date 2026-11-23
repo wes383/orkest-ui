@@ -1,7 +1,18 @@
 /* Shared scrollbar skin for scrollable component surfaces. */
 .scrollbar {
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
+  /* Restore the pseudo-element scrollbar when a host app themes scrollbars
+     globally, since scrollbar-color is inherited. */
+  scrollbar-color: auto;
+}
+
+/* Standard properties win over ::-webkit-scrollbar, and the native scrollbar
+   they paint on Windows brings back the arrow buttons. Only use them where the
+   pseudo-elements are unavailable. */
+@supports not selector(::-webkit-scrollbar) {
+  .scrollbar {
+    scrollbar-color: var(--ui-border-strong) transparent;
+    scrollbar-width: thin;
+  }
 }
 
 .scrollbar::-webkit-scrollbar {
