@@ -141,8 +141,9 @@ export function Example() {
 
 ## Custom color
 
-`color` creates a tinted badge while keeping the theme surface underneath. Check text contrast when
-using light or low-contrast colors.
+`color` creates a tinted badge while keeping the theme surface underneath. In a dark theme the label
+is mixed toward white so the tint stays readable; still check contrast when using light or
+low-contrast colors.
 
 export const customColorCode = `import { Badge } from '@orkest/ui';
 

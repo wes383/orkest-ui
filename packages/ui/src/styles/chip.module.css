@@ -90,7 +90,13 @@
   border-color: color-mix(in srgb, var(--chip-custom-color) 35%, transparent);
   background: var(--ui-secondary);
   background: color-mix(in srgb, var(--chip-custom-color) 12%, transparent);
-  color: var(--chip-custom-color);
+  /* A dark theme mixes the tint toward white, so the label keeps its hue without
+     sinking into the tinted surface. */
+  color: color-mix(
+    in oklab,
+    var(--chip-custom-color) var(--ui-custom-accent-text-weight),
+    var(--ui-custom-accent-text-blend)
+  );
 }
 
 .chip[data-dot-only="true"] {

@@ -57,6 +57,11 @@
   --ui-accent-surface: var(--ok-color-accent-50);
   --ui-accent-surface-foreground: var(--ok-color-accent-700);
 
+  /* Custom accent — a consumer-provided color is mixed toward the theme foreground so a
+     tint that reads on a light surface stays readable on a dark one. */
+  --ui-custom-accent-text-blend: var(--ok-color-black);
+  --ui-custom-accent-text-weight: 100%;
+
   /* Borders */
   --ui-border-subtle: var(--ok-color-neutral-150);
   --ui-border: var(--ok-color-neutral-200);
@@ -131,6 +136,10 @@
   --ui-accent-hover: var(--ok-color-accent-200);
   --ui-accent-surface: var(--ok-color-accent-950);
   --ui-accent-surface-foreground: var(--ok-color-accent-200);
+
+  /* Custom accent */
+  --ui-custom-accent-text-blend: var(--ok-color-white);
+  --ui-custom-accent-text-weight: 55%;
 
   /* Borders */
   --ui-border-subtle: var(--ok-color-neutral-900);
@@ -208,6 +217,10 @@
     --ui-accent-hover: var(--ok-color-accent-200);
     --ui-accent-surface: var(--ok-color-accent-950);
     --ui-accent-surface-foreground: var(--ok-color-accent-200);
+
+    /* Custom accent */
+    --ui-custom-accent-text-blend: var(--ok-color-white);
+    --ui-custom-accent-text-weight: 55%;
 
     /* Borders */
     --ui-border-subtle: var(--ok-color-neutral-900);
