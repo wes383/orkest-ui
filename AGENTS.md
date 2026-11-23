@@ -368,9 +368,15 @@ pnpm build
 pnpm smoke:package
 pnpm e2e:build
 pnpm test:e2e
-pnpm test:visual
+pnpm test:visual:docker
 pnpm check:docs-samples
 ```
+
+Visual snapshots are compared pixel for pixel, so they are only valid
+inside the Playwright image that generated them. Run them with
+`pnpm test:visual:docker` (after `pnpm e2e:build`), and regenerate them
+with `pnpm test:visual:docker:update`. The plain `pnpm test:visual`
+script runs on the host renderer and will not match those snapshots.
 
 If a script does not exist, do not silently invent it or claim it was
 run. Report that it is unavailable.
