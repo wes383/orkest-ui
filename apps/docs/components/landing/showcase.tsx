@@ -2,10 +2,14 @@
 
 import { useState } from 'react';
 
-import { Copy, Pencil, Plus, Settings, Trash2 } from 'lucide-react';
+import { Bold, Copy, Italic, Pencil, Plus, Settings, Trash2, Underline } from 'lucide-react';
 
-import { Badge, Button, IconButton, Stack, Tag } from '@orkest/ui';
+import { Badge, Button, Icon, IconButton, Stack, Tag, Text } from '@orkest/ui';
 import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
   Avatar,
   AvatarFallback,
   AvatarGroup,
@@ -30,15 +34,28 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   Input,
+  Progress,
   Radio,
   RadioGroup,
   Select,
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Slider,
   Switch,
   Tabs,
   TabsIndicator,
   TabsList,
   TabsTrigger,
   TimePicker,
+  ToggleGroup,
+  ToggleGroupItem,
   toast,
   type SelectItem,
 } from '@orkest/ui/client';
@@ -225,5 +242,91 @@ export function FeedbackShowcase() {
         </Button>
       </Stack>
     </Stack>
+  );
+}
+
+export function FormattingShowcase() {
+  const [value, setValue] = useState<string[]>(['italic']);
+
+  return (
+    <ToggleGroup
+      aria-label="Text style"
+      value={value}
+      onValueChange={(next) => {
+        if (next.length > 0) {
+          setValue(next);
+        }
+      }}
+    >
+      <ToggleGroupItem value="bold" aria-label="Bold">
+        <Icon icon={Bold} size="sm" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="italic" aria-label="Italic">
+        <Icon icon={Italic} size="sm" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="underline" aria-label="Underline">
+        <Icon icon={Underline} size="sm" />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+
+export function RangeShowcase() {
+  const [volume, setVolume] = useState(60);
+
+  return (
+    <Stack gap={3} style={{ width: '100%', maxWidth: '13rem' }}>
+      <Slider
+        label="Volume"
+        showValue
+        value={volume}
+        onValueChange={(next) => {
+          if (typeof next === 'number') {
+            setVolume(next);
+          }
+        }}
+      />
+      <Progress label="Upload" showValue value={68} />
+    </Stack>
+  );
+}
+
+export function SheetShowcase() {
+  return (
+    <Sheet>
+      <SheetTrigger>Open sheet</SheetTrigger>
+      <SheetContent side="right" size="sm">
+        <SheetHeader>
+          <SheetTitle>Filters</SheetTitle>
+          <SheetDescription>Refine the results shown in the table.</SheetDescription>
+        </SheetHeader>
+        <SheetBody>
+          <Text size="sm" tone="muted">
+            Choose a status, then apply the filters.
+          </Text>
+        </SheetBody>
+        <SheetFooter>
+          <SheetClose>Cancel</SheetClose>
+          <SheetClose render={<Button>Apply</Button>} />
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+export function DisclosureShowcase() {
+  return (
+    <div style={{ width: '100%', maxWidth: '15rem' }}>
+      <Accordion defaultValue={['shipping']}>
+        <AccordionItem value="shipping">
+          <AccordionTrigger>Shipping</AccordionTrigger>
+          <AccordionPanel>Orders leave the warehouse within two business days.</AccordionPanel>
+        </AccordionItem>
+        <AccordionItem value="returns">
+          <AccordionTrigger>Returns</AccordionTrigger>
+          <AccordionPanel>Unused items can be returned within 30 days.</AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 }

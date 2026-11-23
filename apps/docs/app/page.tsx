@@ -7,11 +7,15 @@ import Link from 'next/link';
 
 import {
   ActionsShowcase,
+  DisclosureShowcase,
   DisplayShowcase,
   FeedbackShowcase,
   FieldsShowcase,
+  FormattingShowcase,
   MenuShowcase,
   PickersShowcase,
+  RangeShowcase,
+  SheetShowcase,
   TabsShowcase,
   TogglesShowcase,
 } from '@/components/landing/showcase';
@@ -78,7 +82,19 @@ export default function HomePage() {
             <DisplayShowcase />
           </div>
           <div className="landing-showcase-cell">
+            <FormattingShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <RangeShowcase />
+          </div>
+          <div className="landing-showcase-cell">
             <MenuShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <SheetShowcase />
+          </div>
+          <div className="landing-showcase-cell">
+            <DisclosureShowcase />
           </div>
           <div className="landing-showcase-cell">
             <FeedbackShowcase />
