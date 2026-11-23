@@ -1,5 +1,17 @@
 # @orkest/ui
 
+## 0.7.0
+
+### Minor Changes
+
+- b7d2733: BREAKING: ship ESM only. The CommonJS build is gone, so `require('@orkest/ui')` no longer
+  resolves to a dedicated bundle. Bundlers and native ESM loaders are unaffected; CommonJS
+  scripts need `await import('@orkest/ui')` instead.
+
+### Patch Changes
+
+- 264d888: Keep a fully disabled tab list inert on React 18, where the boolean `inert` prop is dropped.
+
 ## 0.6.0
 
 ### Minor Changes
