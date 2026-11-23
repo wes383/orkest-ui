@@ -1,7 +1,7 @@
 .root {
   --otp-slot-size: var(--ok-control-height-md);
   --otp-font-size: var(--ok-font-size-md);
-  --otp-radius: var(--ok-radius-lg);
+  --otp-radius: var(--ok-radius-xl);
   display: inline-flex;
   align-items: center;
   gap: var(--ok-space-2);
@@ -12,19 +12,19 @@
 .root[data-size="sm"] {
   --otp-slot-size: var(--ok-control-height-sm);
   --otp-font-size: var(--ok-font-size-sm);
-  --otp-radius: var(--ok-radius-md);
+  --otp-radius: var(--ok-radius-lg);
 }
 
 .root[data-size="md"] {
   --otp-slot-size: var(--ok-control-height-md);
   --otp-font-size: var(--ok-font-size-md);
-  --otp-radius: var(--ok-radius-lg);
+  --otp-radius: var(--ok-radius-xl);
 }
 
 .root[data-size="lg"] {
   --otp-slot-size: var(--ok-control-height-lg);
   --otp-font-size: var(--ok-font-size-lg);
-  --otp-radius: var(--ok-radius-lg);
+  --otp-radius: var(--ok-radius-xl);
 }
 
 .input {
@@ -54,9 +54,14 @@
   border-color: var(--ui-focus-ring);
 }
 
+/* Match Input: focused slots use the border color plus a soft halo, not an outline. */
 .input:focus-visible {
-  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
-  outline-offset: var(--ok-focus-ring-offset);
+  box-shadow: var(--ui-focus-halo);
+}
+
+.root[data-invalid] .input:focus-visible,
+.input[data-invalid]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-danger) 24%, transparent);
 }
 
 .input[data-filled] {
@@ -102,6 +107,14 @@
   .root[data-size="sm"],
   .root[data-size="md"] {
     --otp-font-size: var(--ok-font-size-md);
+  }
+}
+
+/* Windows High Contrast drops box-shadow, so restore an outline for keyboard focus. */
+@media (forced-colors: active) {
+  .input:focus-visible {
+    outline: var(--ok-focus-ring-width) solid CanvasText;
+    outline-offset: var(--ok-focus-ring-offset);
   }
 }
 
