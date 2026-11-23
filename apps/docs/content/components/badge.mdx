@@ -221,7 +221,8 @@ export function Example() {
 
 - Badges render a `span` and are not interactive. Use [Tag](/docs/components/tag/) for removable or
   clickable chips.
-- A standalone dot needs an `aria-label` when its status is meaningful.
+- A standalone dot needs an `aria-label` when its status is meaningful; it is exposed with an
+  image role so the label reaches assistive technology.
 - Icons are decorative and hidden from assistive technology.
 - Do not communicate status with color alone. Pair variants and custom colors with text or a dot
   label.

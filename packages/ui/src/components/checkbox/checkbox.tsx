@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, type ReactNode } from 'react';
+import { forwardRef, useId, type ReactNode } from 'react';
 import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
 import type { CheckboxRootProps } from '@base-ui/react/checkbox';
 
@@ -25,9 +25,21 @@ export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox
   { size = 'md', label, className, ...rest },
   ref,
 ) {
+  const generatedId = useId().replace(/:/g, '');
+  const labelId = `checkbox-label-${generatedId}`;
+  // A span with a checkbox role is not labelable, so the visible label has to be
+  // referenced explicitly instead of relying on the wrapping element.
+  const labelledBy =
+    rest['aria-labelledby'] ?? (label && !rest['aria-label'] ? labelId : undefined);
+
   return (
     <label className={cx(styles.root, className)} data-size={size}>
-      <BaseCheckbox.Root ref={ref} {...rest} className={styles.control}>
+      <BaseCheckbox.Root
+        ref={ref}
+        {...rest}
+        aria-labelledby={labelledBy}
+        className={styles.control}
+      >
         <BaseCheckbox.Indicator keepMounted className={styles.indicator}>
           <svg className={styles.check} viewBox="0 0 12 12" aria-hidden="true">
             <path className={styles.checkPath} d="M2.5 6.5 5 9l4.5-6" />
@@ -35,7 +47,11 @@ export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox
           <span className={styles.dash} aria-hidden="true" />
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
-      {label ? <span className={styles.label}>{label}</span> : null}
+      {label ? (
+        <span id={labelId} className={styles.label}>
+          {label}
+        </span>
+      ) : null}
     </label>
   );
 });

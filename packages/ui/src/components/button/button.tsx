@@ -79,7 +79,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       data-full-width={fullWidth || undefined}
     >
       {iconOnly ? (
-        (leading ?? children)
+        <>
+          {leading}
+          {children}
+        </>
       ) : (
         <>
           {leading}

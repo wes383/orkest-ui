@@ -65,11 +65,17 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   const mergedStyle: BadgeStyle | undefined = color
     ? { ...style, '--chip-custom-color': color }
     : style;
+  // A dot-only badge renders no text, so an accessible name is only exposed when the
+  // element has a role that accepts one.
+  const hasAccessibleName =
+    rest['aria-label'] !== undefined || rest['aria-labelledby'] !== undefined;
+  const role = rest.role ?? (dotOnly && hasAccessibleName ? 'img' : undefined);
 
   return (
     <span
       ref={ref}
       {...rest}
+      role={role}
       className={cx(styles.chip, className)}
       style={mergedStyle}
       data-variant={variant}

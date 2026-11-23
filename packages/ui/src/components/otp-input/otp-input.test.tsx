@@ -22,6 +22,26 @@ describe('OTPInput', () => {
     expect(getSlots()).toHaveLength(6);
   });
 
+  it('names every slot so each field is distinguishable', () => {
+    render(<OTPInput length={4} aria-label="Verification code" />);
+
+    for (const position of [1, 2, 3, 4]) {
+      expect(screen.getByRole('textbox', { name: `Digit ${position} of 4` })).toBeInTheDocument();
+    }
+  });
+
+  it('uses a custom slot label when provided', () => {
+    render(
+      <OTPInput
+        length={2}
+        aria-label="Verification code"
+        slotLabel={(index) => `Position ${index + 1}`}
+      />,
+    );
+
+    expect(screen.getByRole('textbox', { name: 'Position 2' })).toBeInTheDocument();
+  });
+
   it('fills slots while typing and reports the value', async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

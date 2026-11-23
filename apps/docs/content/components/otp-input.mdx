@@ -99,7 +99,8 @@ slot.
 
 - The root renders `role="group"`. Give it an accessible name with `aria-label` or
   `aria-labelledby`, or use `FieldLabel` inside `Field`.
-- Each slot is a native input, so keyboard and screen-reader behavior follow the platform.
+- Each slot is a native input named `Digit 1 of 6`, `Digit 2 of 6`, and so on. Pass
+  `slotLabel` to change or localize that pattern.
 - `mask` renders password inputs without exposing the entered digits visually.
 - Disabled, read-only, and invalid states use native attributes and are exposed to assistive
   technology.
@@ -145,6 +146,12 @@ slot.
       name: 'separator',
       type: 'ReactNode',
       description: 'Content rendered between groups of three slots.',
+    },
+    {
+      name: 'slotLabel',
+      type: '(index: number, length: number) => string',
+      default: 'Digit {index} of {length}',
+      description: 'Accessible name for a single slot.',
     },
     {
       name: 'size',

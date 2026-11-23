@@ -17,7 +17,7 @@ import { Check, ChevronDown, X } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
-import { useFieldControl } from '../field/field-context';
+import { mergeIds, useFieldControl } from '../field/field-context';
 import { OptionList } from './option-list';
 import {
   excludeSelectValues,
@@ -438,8 +438,10 @@ function MultiSelectImpl({
                   autoComplete="off"
                   spellCheck={false}
                   aria-label={ariaLabel}
-                  aria-labelledby={ariaLabelledBy}
-                  aria-describedby={ariaDescribedBy}
+                  aria-labelledby={
+                    ariaLabel ? ariaLabelledBy : mergeIds(ariaLabelledBy, control.labelId)
+                  }
+                  aria-describedby={mergeIds(ariaDescribedBy, control.describedBy)}
                   aria-errormessage={ariaErrorMessage}
                   aria-invalid={control.invalid || undefined}
                   aria-description={

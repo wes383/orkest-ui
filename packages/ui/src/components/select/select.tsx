@@ -16,7 +16,7 @@ import { Check, ChevronDown, LoaderCircle, X } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
-import { useFieldControl } from '../field/field-context';
+import { mergeIds, useFieldControl } from '../field/field-context';
 import { SearchableSelect } from './searchable-select';
 import { SelectOptionContent } from './select-option';
 import {
@@ -220,8 +220,8 @@ function PlainSelect({
             id={comboboxId}
             className={styles.trigger}
             aria-label={ariaLabel}
-            aria-labelledby={ariaLabelledBy}
-            aria-describedby={ariaDescribedBy}
+            aria-labelledby={ariaLabel ? ariaLabelledBy : mergeIds(ariaLabelledBy, control.labelId)}
+            aria-describedby={mergeIds(ariaDescribedBy, control.describedBy)}
             aria-errormessage={ariaErrorMessage}
             aria-invalid={control.invalid || undefined}
           >

@@ -37,13 +37,23 @@ export const Radio = forwardRef<HTMLElement, RadioProps>(function Radio(
 ) {
   const group = useContext(RadioGroupUiContext);
   const size = sizeProp ?? group?.size ?? 'md';
+  const generatedId = useId().replace(/:/g, '');
+  const labelId = `radio-label-${generatedId}`;
+  // A span with a radio role is not labelable, so the visible label has to be
+  // referenced explicitly instead of relying on the wrapping element.
+  const labelledBy =
+    rest['aria-labelledby'] ?? (label && !rest['aria-label'] ? labelId : undefined);
 
   return (
     <label className={cx(styles.root, className)} data-size={size}>
-      <BaseRadio.Root ref={ref} {...rest} className={styles.control}>
+      <BaseRadio.Root ref={ref} {...rest} aria-labelledby={labelledBy} className={styles.control}>
         <BaseRadio.Indicator keepMounted className={styles.indicator} />
       </BaseRadio.Root>
-      {label ? <span className={styles.label}>{label}</span> : null}
+      {label ? (
+        <span id={labelId} className={styles.label}>
+          {label}
+        </span>
+      ) : null}
     </label>
   );
 });

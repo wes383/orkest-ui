@@ -77,6 +77,14 @@ describe('Badge', () => {
     const badge = container.querySelector('[data-dot-only="true"]');
     expect(badge).toHaveAttribute('aria-label', 'Online');
     expect(badge?.querySelector('[data-dot="true"]')).toBeInTheDocument();
+    // The label only reaches assistive technology when the element exposes a role.
+    expect(screen.getByRole('img', { name: 'Online' })).toBe(badge);
+  });
+
+  it('keeps the provided role on a labelled dot', () => {
+    render(<Badge dot aria-label="Online" role="status" />);
+
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'Online');
   });
 
   it('renders count values with a maximum', () => {

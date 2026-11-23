@@ -64,6 +64,8 @@ export interface FieldControlState {
   required: boolean;
   invalid: boolean;
   describedBy?: string;
+  /** Id of the field label, for controls that cannot rely on native label association. */
+  labelId?: string;
 }
 
 /** Merges a form control's own props with the surrounding Field context. */
@@ -78,6 +80,7 @@ export function useFieldControl(options: FieldControlOptions = {}): FieldControl
     required: Boolean(options.required || field?.required),
     invalid: Boolean(options.invalid || field?.invalid),
     describedBy: mergeIds(options.describedBy, field?.describedBy),
+    labelId: field?.labelId,
   };
 }
 
