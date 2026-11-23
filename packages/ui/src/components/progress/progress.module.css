@@ -61,9 +61,16 @@
 .indicator {
   width: 0;
   height: 100%;
-  border-radius: inherit;
+  border-start-start-radius: inherit;
+  border-end-start-radius: inherit;
   background: var(--ui-primary);
   transition: width var(--ok-duration-normal) var(--ok-ease-standard);
+}
+
+/* The growing edge stays square until the bar completes. */
+.indicator[data-complete] {
+  border-start-end-radius: inherit;
+  border-end-end-radius: inherit;
 }
 
 /*
@@ -75,6 +82,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   width: 40%;
+  border-radius: inherit;
   animation: progress-indeterminate var(--ok-duration-shimmer) var(--ok-ease-standard) infinite;
 }
 
