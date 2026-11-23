@@ -27,7 +27,11 @@ export function SemanticColorTable() {
                     </th>
                     <td>
                       <span
-                        className="semantic-swatch"
+                        className={
+                          token.value.toLowerCase() === '#ffffff'
+                            ? 'semantic-swatch semantic-swatch-outlined'
+                            : 'semantic-swatch'
+                        }
                         style={{ backgroundColor: `var(${token.name})` }}
                         aria-hidden="true"
                       />
