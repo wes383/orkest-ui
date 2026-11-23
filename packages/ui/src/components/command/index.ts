@@ -2,6 +2,7 @@ export {
   Command,
   CommandDialog,
   CommandEmpty,
+  CommandFooter,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -12,6 +13,7 @@ export {
 export type {
   CommandDialogProps,
   CommandEmptyProps,
+  CommandFooterProps,
   CommandGroupProps,
   CommandInputProps,
   CommandItemProps,

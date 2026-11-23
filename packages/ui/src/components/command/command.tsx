@@ -533,6 +533,20 @@ export const CommandShortcut = forwardRef<HTMLElement, CommandShortcutProps>(
   },
 );
 
+export type CommandFooterProps = HTMLAttributes<HTMLDivElement>;
+
+/**
+ * Hint bar below the list, typically for keyboard guidance. It only provides
+ * the surface and layout; the caller supplies the text so the component stays
+ * language-neutral.
+ */
+export const CommandFooter = forwardRef<HTMLDivElement, CommandFooterProps>(function CommandFooter(
+  { className, ...rest },
+  ref,
+) {
+  return <div {...rest} ref={ref} className={cx(styles.footer, className)} />;
+});
+
 export interface CommandDialogProps {
   open?: boolean;
   defaultOpen?: boolean;
@@ -598,4 +612,5 @@ export const Command = Object.assign(CommandRoot, {
   Empty: CommandEmpty,
   Separator: CommandSeparator,
   Shortcut: CommandShortcut,
+  Footer: CommandFooter,
 });

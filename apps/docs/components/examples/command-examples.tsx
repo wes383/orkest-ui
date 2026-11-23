@@ -134,6 +134,18 @@ export function CommandDialogExample() {
             ))}
           </Command.Group>
         </Command.List>
+        <Command.Footer>
+          <span>
+            <Command.Shortcut>↑</Command.Shortcut>
+            <Command.Shortcut>↓</Command.Shortcut> navigate
+          </span>
+          <span>
+            <Command.Shortcut>Enter</Command.Shortcut> run
+          </span>
+          <span>
+            <Command.Shortcut>Esc</Command.Shortcut> close
+          </span>
+        </Command.Footer>
       </Command.Dialog>
       <Text size="sm" tone="muted">
         Shortcut: {shortcut} · {status}

@@ -185,6 +185,26 @@ describe('Command', () => {
     expect(screen.getByRole('status')).toHaveTextContent('1 result');
   });
 
+  it('renders footer hints outside the listbox', () => {
+    render(
+      <Command label="Command menu">
+        <Command.Input placeholder="Type a command" />
+        <Command.List>
+          <Command.Item value="Home">Home</Command.Item>
+        </Command.List>
+        <Command.Footer>
+          <span>Press Enter</span>
+        </Command.Footer>
+      </Command>,
+    );
+
+    const listbox = screen.getByRole('listbox');
+    const footer = screen.getByText('Press Enter');
+
+    expect(footer).toBeVisible();
+    expect(listbox).not.toContainElement(footer);
+  });
+
   it('skips filtering when shouldFilter is false', async () => {
     const user = userEvent.setup();
 

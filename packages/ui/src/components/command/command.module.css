@@ -104,6 +104,25 @@
   letter-spacing: 0;
 }
 
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ok-space-2) var(--ok-space-4);
+  padding: var(--ok-space-2) var(--ok-space-4);
+  border-top: var(--ok-border-width) solid var(--ui-border);
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-2xs);
+  line-height: var(--ok-line-height-snug);
+}
+
+/* Hint groups read as one phrase: the keys sit next to their action. */
+.footer > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-1);
+}
+
 .empty {
   padding: var(--ok-space-6) var(--ok-space-3);
   color: var(--ui-muted-foreground);

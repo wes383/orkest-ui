@@ -57,6 +57,18 @@ export function Example() {
             </Command.Item>
           </Command.Group>
         </Command.List>
+        <Command.Footer>
+          <span>
+            <Command.Shortcut>↑</Command.Shortcut>
+            <Command.Shortcut>↓</Command.Shortcut> navigate
+          </span>
+          <span>
+            <Command.Shortcut>Enter</Command.Shortcut> run
+          </span>
+          <span>
+            <Command.Shortcut>Esc</Command.Shortcut> close
+          </span>
+        </Command.Footer>
       </Command.Dialog>
     </>
   );
@@ -65,6 +77,9 @@ export function Example() {
 <ComponentPreview title="Command dialog" code={dialogCommandCode}>
   <CommandDialogExample />
 </ComponentPreview>
+
+`Command.Footer` adds the hint bar below the list. It only provides the surface and layout, so the
+labels stay yours and can match the shortcuts the palette actually supports.
 
 The shortcut is registered once by the application, not by each palette. A listener per instance
 would fire every mounted palette at the same time, and it would fight with editors that already use
@@ -241,6 +256,18 @@ The highlight wraps by default. Set `loop={false}` to stop at the ends of the li
       name: 'onSelect',
       type: '(value: string) => void',
       description: 'Runs the command for pointer clicks and Enter, and receives the item value.',
+    },
+  ]}
+/>
+
+### Command.Footer
+
+<PropsTable
+  rows={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Hint content, typically Command.Shortcut chips next to their action.',
     },
   ]}
 />
