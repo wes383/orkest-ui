@@ -20,7 +20,12 @@
   height: 10px;
 }
 
-.scrollbar::-webkit-scrollbar-track,
+.scrollbar::-webkit-scrollbar-track {
+  /* Inset the thumb from the ends of the track on both axes. */
+  margin: 4px;
+  background: transparent;
+}
+
 .scrollbar::-webkit-scrollbar-corner {
   background: transparent;
 }
@@ -30,10 +35,6 @@
   border-radius: var(--ok-radius-full);
   background: var(--ui-border-strong);
   background-clip: content-box;
-}
-
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-subtle-foreground);
 }
 
 .scrollbar::-webkit-scrollbar-button {
