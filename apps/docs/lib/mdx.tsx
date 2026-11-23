@@ -16,6 +16,7 @@ import type { ShikiTransformer } from 'shiki';
 
 import { mdxComponents } from '@/components/mdx/mdx-components';
 import { collectExampleCode } from '@/lib/example-code';
+import { getHighlightThemes } from '@/lib/highlight';
 
 /**
  * Keeps the fence language on the element. The rendered DOM doubles as the
@@ -28,7 +29,11 @@ const fenceLanguage: ShikiTransformer = {
   },
 };
 
-export function MdxContent({ source }: { source: string }) {
+export async function MdxContent({ source }: { source: string }) {
+  // The fenced samples and the copy-ready blocks share one palette so both stay readable
+  // on the sunken code surface.
+  const { light, dark } = await getHighlightThemes();
+
   return (
     <MDXRemote
       source={source}
@@ -53,10 +58,7 @@ export function MdxContent({ source }: { source: string }) {
             [
               rehypeShiki,
               {
-                themes: {
-                  light: 'github-light',
-                  dark: 'github-dark',
-                },
+                themes: { light, dark },
                 defaultColor: 'light',
                 transformers: [fenceLanguage],
               },
