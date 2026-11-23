@@ -56,6 +56,7 @@
 
 /* Match Input: focused slots use the border color plus a soft halo, not an outline. */
 .input:focus-visible {
+  outline: none;
   box-shadow: var(--ui-focus-halo);
 }
 
