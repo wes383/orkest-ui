@@ -1,16 +1,30 @@
+// Chip colours within this distance of a theme surface disappear into it: white chips on
+// the white page, near-black chips on the near-black page.
 const lightChannelThreshold = 0xe8;
+const darkChannelThreshold = 0x1c;
 
-/** True for colours close enough to white that they need an outline to be visible. */
-export function isLightColor(value: string): boolean {
+function channels(value: string): number[] | null {
   const hex = value.trim().replace('#', '');
 
   if (hex.length !== 6) {
+    return null;
+  }
+
+  return [0, 2, 4].map((index) => Number.parseInt(hex.slice(index, index + 2), 16));
+}
+
+/** True when a chip needs a hairline to be distinguishable from either theme's surface. */
+export function needsSwatchOutline(value: string): boolean {
+  const rgb = channels(value);
+
+  if (!rgb) {
     return false;
   }
 
-  return [0, 2, 4].every(
-    (index) => Number.parseInt(hex.slice(index, index + 2), 16) >= lightChannelThreshold,
-  );
+  const isLight = rgb.every((channel) => channel >= lightChannelThreshold);
+  const isDark = rgb.every((channel) => channel <= darkChannelThreshold);
+
+  return isLight || isDark;
 }
 
 const colorValuePattern = /^(#|rgba?\(|hsla?\(|hwb\(|lab\(|lch\(|oklab\(|oklch\(|color\()/i;

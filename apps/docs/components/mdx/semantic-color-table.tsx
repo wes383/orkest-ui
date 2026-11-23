@@ -1,4 +1,4 @@
-import { isColorValue, isLightColor } from '@/lib/color';
+import { isColorValue, needsSwatchOutline } from '@/lib/color';
 import { getSemanticTokenGroups } from '@/lib/tokens';
 
 import { TableScroll } from './table-scroll';
@@ -33,7 +33,7 @@ export function SemanticColorTable() {
                       {isColorValue(token.value) ? (
                         <span
                           className={
-                            isLightColor(token.value)
+                            needsSwatchOutline(token.value)
                               ? 'semantic-swatch semantic-swatch-outlined'
                               : 'semantic-swatch'
                           }

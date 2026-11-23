@@ -1,4 +1,4 @@
-import { isLightColor } from '@/lib/color';
+import { needsSwatchOutline } from '@/lib/color';
 import { getPrimitiveColorGroups, type ColorFamily } from '@/lib/tokens';
 
 export function ColorPalette({ family }: { family: ColorFamily }) {
@@ -14,7 +14,7 @@ export function ColorPalette({ family }: { family: ColorFamily }) {
         <div className="color-swatch" key={token.name}>
           <span
             className={
-              isLightColor(token.value)
+              needsSwatchOutline(token.value)
                 ? 'color-swatch-chip color-swatch-chip-outlined'
                 : 'color-swatch-chip'
             }
