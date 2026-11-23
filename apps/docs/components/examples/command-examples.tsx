@@ -80,11 +80,11 @@ function useIsMac() {
 export function CommandDialogExample() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState('No command has run.');
-  const shortcut = useIsMac() ? '⌘ K' : 'Ctrl K';
+  const shortcut = useIsMac() ? '⌘ J' : 'Ctrl J';
 
   useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'j') {
         event.preventDefault();
         setOpen((current) => !current);
       }
