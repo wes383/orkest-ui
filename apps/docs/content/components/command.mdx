@@ -24,6 +24,21 @@ export const dialogCommandCode = `import { useEffect, useState } from 'react';
 import { Button } from '@orkest/ui';
 import { Command } from '@orkest/ui/client';
 
+const commands = [
+  'Open project',
+  'New note',
+  'Search documentation',
+  'Toggle theme',
+  'Invite member',
+  'Create template',
+  'Open settings',
+  'Change language',
+  'Export workspace',
+  'Import project',
+  'Archive project',
+  'Delete workspace',
+];
+
 export function Example() {
   const [open, setOpen] = useState(false);
 
@@ -48,13 +63,12 @@ export function Example() {
         <Command.Input placeholder="Type a command or search…" />
         <Command.List>
           <Command.Empty>No matching commands.</Command.Empty>
-          <Command.Group heading="Suggested">
-            <Command.Item value="Open project" onSelect={() => setOpen(false)}>
-              Open project
-            </Command.Item>
-            <Command.Item value="New note" onSelect={() => setOpen(false)}>
-              New note
-            </Command.Item>
+          <Command.Group heading="Commands">
+            {commands.map((command) => (
+              <Command.Item key={command} value={command} onSelect={() => setOpen(false)}>
+                {command}
+              </Command.Item>
+            ))}
           </Command.Group>
         </Command.List>
         <Command.Footer>

@@ -1,7 +1,23 @@
 'use client';
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
-import { FileText, FolderOpen, Moon, Plus, Settings, Trash2, User } from 'lucide-react';
+import {
+  Archive,
+  Download,
+  FileText,
+  FolderOpen,
+  History,
+  Languages,
+  Link,
+  Moon,
+  Plus,
+  Search,
+  Settings,
+  Share2,
+  Trash2,
+  Upload,
+  User,
+} from 'lucide-react';
 
 import { Box, Button, Icon, Stack, Text } from '@orkest/ui';
 import { Command } from '@orkest/ui/client';
@@ -60,7 +76,19 @@ export function CommandBasicExample() {
 const dialogs = [
   { value: 'Open project', icon: FolderOpen },
   { value: 'New note', icon: FileText },
+  { value: 'Search documentation', icon: Search },
   { value: 'Toggle theme', icon: Moon },
+  { value: 'Invite member', icon: User },
+  { value: 'Create template', icon: Plus },
+  { value: 'Open settings', icon: Settings },
+  { value: 'Change language', icon: Languages },
+  { value: 'Export workspace', icon: Download },
+  { value: 'Import project', icon: Upload },
+  { value: 'Archive project', icon: Archive },
+  { value: 'Share workspace', icon: Share2 },
+  { value: 'View activity', icon: History },
+  { value: 'Connect integration', icon: Link },
+  { value: 'Clear cache', icon: Trash2 },
   { value: 'Delete workspace', icon: Trash2 },
 ];
 
@@ -114,7 +142,7 @@ export function CommandDialogExample() {
         <Command.Input placeholder="Type a command or search…" />
         <Command.List>
           <Command.Empty>No matching commands.</Command.Empty>
-          <Command.Group heading="Suggested">
+          <Command.Group heading="Commands">
             {dialogs.map((item) => (
               <Command.Item
                 key={item.value}
