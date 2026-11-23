@@ -26,6 +26,7 @@ import {
   DialogPortal,
   DialogTitle,
 } from '../dialog';
+import { Kbd } from '../kbd';
 import styles from './command.module.css';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
@@ -538,9 +539,15 @@ export type CommandShortcutProps = HTMLAttributes<HTMLElement>;
 export const CommandShortcut = forwardRef<HTMLElement, CommandShortcutProps>(
   function CommandShortcut({ className, children, ...rest }, ref) {
     return (
-      <kbd {...rest} ref={ref} aria-hidden="true" className={cx(styles.shortcut, className)}>
+      <Kbd
+        {...rest}
+        ref={ref}
+        size="sm"
+        aria-hidden="true"
+        className={cx(styles.shortcut, className)}
+      >
         {children}
-      </kbd>
+      </Kbd>
     );
   },
 );

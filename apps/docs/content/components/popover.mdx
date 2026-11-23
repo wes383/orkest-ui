@@ -175,7 +175,7 @@ region or group for lightweight inline help.
 exceeds the available viewport height. Use `width`, `minWidth`, `maxWidth`, and `maxHeight` for
 specific layouts.
 
-export const regionSemanticsCode = `import { Stack, Text } from '@orkest/ui';
+export const regionSemanticsCode = `import { Kbd, Stack, Text } from '@orkest/ui';
 import {
   Popover,
   PopoverClose,
@@ -197,7 +197,7 @@ export function Example() {
                 Keyboard shortcuts
               </Text>
               <Text as="p" size="sm" tone="muted">
-                Press ⌘K to search. Use arrow keys to move between results.
+                Press <Kbd size="sm">⌘K</Kbd> to search. Use arrow keys to move between results.
               </Text>
               <PopoverClose>Got it</PopoverClose>
             </Stack>

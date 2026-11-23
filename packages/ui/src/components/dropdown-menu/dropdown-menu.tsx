@@ -33,6 +33,7 @@ import { Check, ChevronRight, type LucideIcon } from 'lucide-react';
 import { Icon } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
 import { Button, type ButtonProps } from '../button';
+import { Kbd } from '../kbd';
 import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuProps = MenuRootProps;
@@ -592,7 +593,13 @@ export interface DropdownMenuShortcutProps extends ComponentPropsWithoutRef<'kbd
 export const DropdownMenuShortcut = forwardRef<HTMLElement, DropdownMenuShortcutProps>(
   function DropdownMenuShortcut({ className, ...rest }, ref) {
     return (
-      <kbd ref={ref} {...rest} aria-hidden="true" className={cx(styles.shortcut, className)} />
+      <Kbd
+        ref={ref}
+        {...rest}
+        size="sm"
+        aria-hidden="true"
+        className={cx(styles.shortcut, className)}
+      />
     );
   },
 );

@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@orkest/ui';
+import { Icon, Kbd } from '@orkest/ui';
 import { Search, X } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
@@ -102,7 +102,9 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
       >
         <Icon icon={Search} size="sm" />
         <span className="search-label">Search docs</span>
-        <kbd className="search-shortcut">Ctrl K</kbd>
+        <Kbd size="sm" className="search-shortcut">
+          Ctrl K
+        </Kbd>
       </button>
 
       {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}
@@ -163,7 +165,7 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
           <div className="search-body" onKeyDown={handleResultsKeyDown}>
             {query.trim() === '' ? (
               <p className="search-empty">
-                Search page titles, headings, and content. Press <kbd>Esc</kbd> to close.
+                Search page titles, headings, and content. Press <Kbd size="sm">Esc</Kbd> to close.
               </p>
             ) : null}
 
@@ -206,14 +208,14 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
 
           <div className="search-footer">
             <span>
-              <kbd>↑</kbd>
-              <kbd>↓</kbd> navigate
+              <Kbd size="sm">↑</Kbd>
+              <Kbd size="sm">↓</Kbd> navigate
             </span>
             <span>
-              <kbd>Enter</kbd> open
+              <Kbd size="sm">Enter</Kbd> open
             </span>
             <span>
-              <kbd>Esc</kbd> close
+              <Kbd size="sm">Esc</Kbd> close
             </span>
           </div>
         </div>

@@ -68,10 +68,6 @@ samp {
   font-family: var(--ok-font-mono);
 }
 
-kbd {
-  font-family: var(--ok-font-sans);
-}
-
 ::selection {
   background: var(--ui-selection-background);
 }
@@ -231,27 +227,7 @@ kbd {
 }
 
 .search-shortcut {
-  display: inline-flex;
-  padding: 1px 5px;
-  border: 0;
-  border-radius: var(--ok-radius-sm);
-  background: var(--ui-background);
-  color: var(--ui-subtle-foreground);
-  font-size: 9px;
-  line-height: 1.5;
-}
-
-kbd {
-  display: inline-flex;
-  min-width: 1.25rem;
-  justify-content: center;
-  padding: 1px 4px;
-  border: 0;
-  border-radius: var(--ok-radius-sm);
-  background: var(--ui-secondary);
-  color: var(--ui-muted-foreground);
-  font-size: 10px;
-  line-height: 1.4;
+  flex: none;
 }
 
 /* Documentation shell */

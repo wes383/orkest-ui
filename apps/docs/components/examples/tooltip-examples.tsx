@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, Stack, Text } from '@orkest/ui';
+import { IconButton, Kbd, Stack } from '@orkest/ui';
 import {
   Tooltip,
   TooltipArrow,
@@ -38,10 +38,7 @@ export function TooltipBasicExample() {
           <TooltipTrigger render={<IconButton icon={Copy} label="Copy link" variant="outline" />} />
           <TooltipPortal>
             <TooltipContent>
-              Copy link{' '}
-              <Text as="span" size="xs">
-                ⌘C
-              </Text>
+              Copy link <Kbd size="sm">⌘C</Kbd>
             </TooltipContent>
           </TooltipPortal>
         </Tooltip>

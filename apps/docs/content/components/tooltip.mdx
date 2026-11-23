@@ -15,7 +15,7 @@ The component is built on Base UI Tooltip. Import it from `@orkest/ui/client`.
 Wrap tooltips in `TooltipProvider` to share the hover delay. The provider defaults to a `500ms` open
 delay and no close delay.
 
-export const iconButtonTooltipsCode = `import { IconButton, Stack } from '@orkest/ui';
+export const iconButtonTooltipsCode = `import { IconButton, Kbd, Stack } from '@orkest/ui';
 import {
   Tooltip,
   TooltipArrow,
@@ -52,7 +52,9 @@ export function Example() {
         <Tooltip>
           <TooltipTrigger render={<IconButton icon={Copy} label="Copy link" variant="outline" />} />
           <TooltipPortal>
-            <TooltipContent>Copy link ⌘C</TooltipContent>
+            <TooltipContent>
+              Copy link <Kbd size="sm">⌘C</Kbd>
+            </TooltipContent>
           </TooltipPortal>
         </Tooltip>
       </Stack>

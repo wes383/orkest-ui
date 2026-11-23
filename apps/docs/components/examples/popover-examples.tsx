@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Stack, Text } from '@orkest/ui';
+import { Kbd, Stack, Text } from '@orkest/ui';
 import {
   Field,
   FieldLabel,
@@ -104,11 +104,7 @@ export function PopoverRegionExample() {
                 Keyboard shortcuts
               </Text>
               <Text as="p" size="sm" tone="muted">
-                Press{' '}
-                <Text as="span" size="sm">
-                  ⌘K
-                </Text>{' '}
-                to search. Use arrow keys to move between results.
+                Press <Kbd size="sm">⌘K</Kbd> to search. Use arrow keys to move between results.
               </Text>
               <PopoverClose>Got it</PopoverClose>
             </Stack>

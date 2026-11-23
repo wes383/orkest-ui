@@ -113,21 +113,9 @@
   min-width: 0;
 }
 
-/* Mirrors the compact keyboard hint used by the documentation shell. */
+/* Pins the shared Kbd chip to the end of a menu row. */
 .shortcut {
-  display: inline-flex;
-  flex: none;
-  justify-content: center;
-  min-width: var(--ok-space-5);
   margin-inline-start: auto;
-  padding: 1px var(--ok-space-1);
-  border: 0;
-  border-radius: var(--ok-radius-sm);
-  background: var(--ui-secondary);
-  color: var(--ui-muted-foreground);
-  font-family: var(--ok-font-sans);
-  font-size: var(--ok-font-size-2xs);
-  line-height: var(--ok-line-height-snug);
 }
 
 .indicatorSlot {

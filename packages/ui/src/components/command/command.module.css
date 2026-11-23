@@ -87,22 +87,9 @@
   cursor: not-allowed;
 }
 
-/* Matches the keyboard hints used across the docs: a small filled chip, no
-   border, and the interface face rather than a monospace one. */
+/* Pins the shared Kbd chip to the end of a command row. */
 .shortcut {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.25rem;
   margin-inline-start: auto;
-  padding: 1px 5px;
-  border-radius: var(--ok-radius-sm);
-  background: color-mix(in srgb, var(--ui-foreground) 10%, transparent);
-  color: var(--ui-muted-foreground);
-  font-family: var(--ok-font-sans);
-  font-size: var(--ok-font-size-2xs);
-  line-height: 1.4;
-  letter-spacing: 0;
 }
 
 .footer {
