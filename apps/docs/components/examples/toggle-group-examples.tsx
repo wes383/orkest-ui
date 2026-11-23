@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Bold, Italic, Underline } from 'lucide-react';
+import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Underline } from 'lucide-react';
 
 import { Icon } from '@orkest/ui';
 import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
@@ -46,9 +46,15 @@ export function ToggleGroupMultipleExample() {
 export function ToggleGroupVerticalExample() {
   return (
     <ToggleGroup aria-label="Text alignment" defaultValue={['left']} orientation="vertical">
-      <ToggleGroupItem value="left">Left</ToggleGroupItem>
-      <ToggleGroupItem value="center">Center</ToggleGroupItem>
-      <ToggleGroupItem value="right">Right</ToggleGroupItem>
+      <ToggleGroupItem value="left" aria-label="Align left">
+        <Icon icon={AlignLeft} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="center" aria-label="Align center">
+        <Icon icon={AlignCenter} size="md" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="right" aria-label="Align right">
+        <Icon icon={AlignRight} size="md" />
+      </ToggleGroupItem>
     </ToggleGroup>
   );
 }
