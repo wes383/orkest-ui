@@ -1,3 +1,4 @@
+import { isLightColor } from '@/lib/color';
 import { getSemanticTokenGroups } from '@/lib/tokens';
 
 import { TableScroll } from './table-scroll';
@@ -26,13 +27,16 @@ export function SemanticColorTable() {
                       <code>{token.name}</code>
                     </th>
                     <td>
+                      {/* The chip shows the documented value rather than the live custom
+                          property: the docs site overrides a few tokens (page background),
+                          and a live chip would contradict the value printed beside it. */}
                       <span
                         className={
-                          token.value.toLowerCase() === '#ffffff'
+                          isLightColor(token.value)
                             ? 'semantic-swatch semantic-swatch-outlined'
                             : 'semantic-swatch'
                         }
-                        style={{ backgroundColor: `var(${token.name})` }}
+                        style={{ backgroundColor: token.value }}
                         aria-hidden="true"
                       />
                     </td>
