@@ -86,7 +86,7 @@ import {
   ToggleGroupVerticalExample,
 } from '../examples/toggle-group-examples';
 import { BreadcrumbBasicExample, BreadcrumbEllipsisExample } from '../examples/breadcrumb-examples';
-import { KbdBasicExample } from '../examples/kbd-examples';
+import { KbdBasicExample, KbdSpecialKeysExample } from '../examples/kbd-examples';
 import { VisuallyHiddenExample } from '../examples/visually-hidden-examples';
 import { AspectRatioExample } from '../examples/aspect-ratio-examples';
 import { ProgressIndeterminateExample, ProgressSizesExample } from '../examples/progress-examples';
@@ -371,6 +371,7 @@ export const mdxComponents = {
   BreadcrumbBasicExample,
   BreadcrumbEllipsisExample,
   KbdBasicExample,
+  KbdSpecialKeysExample,
   VisuallyHiddenExample,
   AspectRatioExample,
   ProgressIndeterminateExample,
