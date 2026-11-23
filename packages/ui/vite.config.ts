@@ -54,5 +54,29 @@ export default defineConfig({
     hookTimeout: 15_000,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'src/**/*.test.{ts,tsx}',
+        'src/test/**',
+        // Type-only modules compile to nothing, so they would always report zero.
+        'src/**/types.ts',
+        'src/**/*-types.ts',
+        // Barrel modules only re-export, so their coverage says nothing about the code.
+        'src/index.ts',
+        'src/client.ts',
+        'src/**/index.ts',
+      ],
+      // Held a few points under the current totals so a platform difference in v8
+      // branch counting does not fail the build, while a real regression still does.
+      thresholds: {
+        statements: 85,
+        branches: 80,
+        functions: 90,
+        lines: 85,
+      },
+    },
   },
 });

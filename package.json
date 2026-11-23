@@ -8,6 +8,7 @@
   "scripts": {
     "build": "pnpm --filter @orkest/ui build",
     "test": "pnpm --filter @orkest/ui test",
+    "test:coverage": "pnpm --filter @orkest/ui test:coverage",
     "test:watch": "pnpm --filter @orkest/ui test:watch",
     "typecheck": "pnpm -r --workspace-concurrency=1 --if-present typecheck",
     "lint": "eslint .",
