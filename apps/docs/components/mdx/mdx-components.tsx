@@ -84,6 +84,7 @@ import {
   ToggleGroupBasicExample,
   ToggleGroupDisabledExample,
   ToggleGroupMultipleExample,
+  ToggleGroupOutlineExample,
   ToggleGroupVerticalExample,
 } from '../examples/toggle-group-examples';
 import { BreadcrumbBasicExample, BreadcrumbEllipsisExample } from '../examples/breadcrumb-examples';
@@ -367,6 +368,7 @@ export const mdxComponents = {
   OTPInputMaskedExample,
   ToggleGroupBasicExample,
   ToggleGroupMultipleExample,
+  ToggleGroupOutlineExample,
   ToggleGroupVerticalExample,
   ToggleGroupDisabledExample,
   BreadcrumbBasicExample,

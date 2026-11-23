@@ -43,6 +43,16 @@ export function ToggleGroupMultipleExample() {
   );
 }
 
+export function ToggleGroupOutlineExample() {
+  return (
+    <ToggleGroup aria-label="Calendar view" defaultValue={['week']} variant="outline">
+      <ToggleGroupItem value="day">Day</ToggleGroupItem>
+      <ToggleGroupItem value="week">Week</ToggleGroupItem>
+      <ToggleGroupItem value="month">Month</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+
 export function ToggleGroupVerticalExample() {
   return (
     <ToggleGroup aria-label="Text alignment" defaultValue={['left']} orientation="vertical">
