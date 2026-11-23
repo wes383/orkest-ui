@@ -30,6 +30,16 @@ for (const item of componentPages) {
       await applyTheme(page, theme);
       await page.goto(item.path);
 
+      // Hydration can replace the server-rendered preview node, which detaches the locator
+      // mid-action. Wait for the client bundle to settle before touching it.
+      await page.waitForLoadState('networkidle');
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) => {
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+          }),
+      );
+
       const preview = page.locator('.component-preview').first();
       await preview.scrollIntoViewIfNeeded();
       await waitForStableContent(page);
