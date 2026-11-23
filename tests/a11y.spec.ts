@@ -17,10 +17,12 @@ for (const item of componentPages) {
         }),
     );
 
-    // Scan the rendered examples rather than the whole article: the surrounding page,
-    // including the syntax-highlighted samples, is owned by the docs site.
+    // Scan the rendered examples and the highlighted samples around them. Both are part of
+    // the reading experience: the examples come from the library, the samples from the site's
+    // own highlighter, whose palette has to stay readable on the sunken code surface.
     const results = await new AxeBuilder({ page })
       .include('.preview-canvas')
+      .include('.code-block')
       // Several examples of the same component share one page here, so their default
       // landmark labels repeat. Uniqueness is a page-authoring concern, not a component one.
       .disableRules(['landmark-unique'])
