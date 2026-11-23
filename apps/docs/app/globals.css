@@ -659,11 +659,9 @@ samp {
   text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
-/* The theme only paints backgrounds on tokens that carry one. Keeping it off the `pre`
-   lets every code surface show the same sunken panel instead of GitHub's editor color. */
-[data-orkest-theme="dark"] .shiki span {
-  background-color: var(--shiki-dark-bg) !important;
-}
+/* Backgrounds stay out of this block on purpose: `--shiki-dark-bg` is declared on the
+   `pre` and inherits into every token, so applying it to spans paints the editor color
+   behind each token. The surfaces come from `--ui-surface-sunken` instead. */
 
 /* Tables */
 
