@@ -11,9 +11,6 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:3100',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    // Glyph hinting rounds text metrics per machine, which shifts element heights by a pixel
-    // between a developer machine and CI. Pinning it off keeps screenshots comparable.
-    launchOptions: { args: ['--font-render-hinting=none'] },
   },
   expect: {
     toHaveScreenshot: {
