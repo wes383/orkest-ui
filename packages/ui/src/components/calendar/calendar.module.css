@@ -329,7 +329,6 @@
 
 .day[data-today] {
   border-color: color-mix(in srgb, var(--ui-accent) 45%, transparent);
-  color: var(--ui-accent);
   font-weight: var(--ok-font-weight-semibold);
 }
 
