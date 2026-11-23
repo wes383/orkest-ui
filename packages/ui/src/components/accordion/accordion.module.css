@@ -3,16 +3,8 @@
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
-  border: var(--ok-border-width) solid var(--ui-border);
-  border-radius: var(--ok-radius-xl);
-  background: var(--ui-surface);
   color: var(--ui-foreground);
   font-family: var(--ok-font-sans);
-}
-
-.item + .item {
-  border-top: var(--ok-border-width) solid var(--ui-border);
 }
 
 .header {
@@ -37,13 +29,6 @@
   line-height: var(--ok-line-height-snug);
   text-align: start;
   cursor: pointer;
-  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
-}
-
-@media (hover: hover) {
-  .trigger:hover:not([data-disabled]) {
-    background: var(--ui-surface-sunken);
-  }
 }
 
 .trigger:focus-visible {
