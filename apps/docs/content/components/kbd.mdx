@@ -14,12 +14,34 @@ export const kbdBasicCode = `import { Kbd, Stack, Text } from '@orkest/ui';
 
 export function Example() {
   return (
-    <Stack direction="row" gap={2} align="center">
-      <Text size="sm" tone="muted">
-        Open the command menu
-      </Text>
-      <Kbd size="sm">⌘</Kbd>
-      <Kbd size="sm">K</Kbd>
+    <Stack gap={2}>
+      <Stack direction="row" gap={2} align="center">
+        <Text size="sm" tone="muted">
+          Open the command menu
+        </Text>
+        <Kbd size="sm">⌘</Kbd>
+        <Kbd size="sm">K</Kbd>
+      </Stack>
+      <Stack direction="row" gap={2} align="center">
+        <Text size="sm" tone="muted">
+          Move between results
+        </Text>
+        <Kbd size="sm">↑</Kbd>
+        <Kbd size="sm">↓</Kbd>
+      </Stack>
+      <Stack direction="row" gap={2} align="center">
+        <Text size="sm" tone="muted">
+          Accept or dismiss
+        </Text>
+        <Kbd size="sm">Enter</Kbd>
+        <Kbd size="sm">Esc</Kbd>
+      </Stack>
+      <Stack direction="row" gap={2} align="center">
+        <Text size="sm" tone="muted">
+          Move focus
+        </Text>
+        <Kbd size="sm">Tab</Kbd>
+      </Stack>
     </Stack>
   );
 }`;
@@ -28,8 +50,10 @@ export function Example() {
   <KbdBasicExample />
 </ComponentPreview>
 
-The default size is `md`. Use `sm` when keys sit inline with small text, and keep the two sizes
-consistent within one surface.
+The preview shows modifier, navigation, and editing keys in one command-menu context: `⌘ K` opens
+the menu, the arrow keys move through results, `Enter` accepts, `Esc` dismisses, and `Tab` moves
+focus. The default size is `md`. Use `sm` when keys sit inline with small text, and keep the two
+sizes consistent within one surface.
 
 ## Usage
 
@@ -43,63 +67,6 @@ Place one key per `Kbd` and let the surrounding text describe the action:
 
 Avoid stretching a single key to cover a sequence of keys. Separate chips read more clearly and wrap
 naturally when space is tight.
-
-## Special keys
-
-Use symbols for modifier and arrow keys, and familiar names for editing and navigation keys. Every
-chip in one surface shares the same size.
-
-export const kbdSpecialKeysCode = `import { Kbd, Stack, Text } from '@orkest/ui';
-
-export function Example() {
-  return (
-    <Stack gap={3}>
-      <Stack gap={1}>
-        <Text size="sm" tone="muted">
-          Modifiers
-        </Text>
-        <Stack direction="row" gap={1} wrap>
-          <Kbd size="sm">⌘</Kbd>
-          <Kbd size="sm">⌥</Kbd>
-          <Kbd size="sm">⌃</Kbd>
-          <Kbd size="sm">⇧</Kbd>
-        </Stack>
-      </Stack>
-      <Stack gap={1}>
-        <Text size="sm" tone="muted">
-          Editing
-        </Text>
-        <Stack direction="row" gap={1} wrap>
-          <Kbd size="sm">Esc</Kbd>
-          <Kbd size="sm">Tab</Kbd>
-          <Kbd size="sm">Enter</Kbd>
-          <Kbd size="sm">Space</Kbd>
-          <Kbd size="sm">Backspace</Kbd>
-          <Kbd size="sm">Delete</Kbd>
-        </Stack>
-      </Stack>
-      <Stack gap={1}>
-        <Text size="sm" tone="muted">
-          Navigation
-        </Text>
-        <Stack direction="row" gap={1} wrap>
-          <Kbd size="sm">↑</Kbd>
-          <Kbd size="sm">↓</Kbd>
-          <Kbd size="sm">←</Kbd>
-          <Kbd size="sm">→</Kbd>
-          <Kbd size="sm">Home</Kbd>
-          <Kbd size="sm">End</Kbd>
-          <Kbd size="sm">Page Up</Kbd>
-          <Kbd size="sm">Page Down</Kbd>
-        </Stack>
-      </Stack>
-    </Stack>
-  );
-}`;
-
-<ComponentPreview title="Special keys" code={kbdSpecialKeysCode}>
-  <KbdSpecialKeysExample />
-</ComponentPreview>
 
 ## Props
 
