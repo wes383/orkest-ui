@@ -13,7 +13,7 @@ export function SliderRangeExample() {
   const [range, setRange] = useState<number[]>([20, 60]);
 
   return (
-    <Stack gap={2}>
+    <Stack gap={2} style={{ width: '100%', maxWidth: '28rem' }}>
       <Slider
         label="Price range"
         value={range}
@@ -32,5 +32,13 @@ export function SliderRangeExample() {
 }
 
 export function SliderVerticalExample() {
-  return <Slider label="Zoom" defaultValue={50} orientation="vertical" showValue />;
+  return (
+    <Slider
+      label="Zoom"
+      defaultValue={50}
+      orientation="vertical"
+      showValue
+      style={{ width: '9rem' }}
+    />
+  );
 }

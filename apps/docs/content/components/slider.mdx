@@ -39,7 +39,7 @@ export function Example() {
   const [range, setRange] = useState<number[]>([20, 60]);
 
   return (
-    <Stack gap={2}>
+    <Stack gap={2} style={{ width: '100%', maxWidth: '28rem' }}>
       <Slider
         label="Price range"
         value={range}
@@ -66,12 +66,21 @@ Use `minStepsBetweenValues` to keep a minimum distance between the thumbs.
 ## Vertical orientation
 
 Set `orientation="vertical"` to lay the track out top to bottom. Vertical sliders use a default
-length; wrap the slider in a sized container when you need a different height.
+length; wrap the slider in a sized container when you need a different height. Give the slider a
+width when the header should keep a fixed size.
 
 export const sliderVerticalCode = `import { Slider } from '@orkest/ui/client';
 
 export function Example() {
-  return <Slider label="Zoom" defaultValue={50} orientation="vertical" showValue />;
+  return (
+    <Slider
+      label="Zoom"
+      defaultValue={50}
+      orientation="vertical"
+      showValue
+      style={{ width: '9rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview title="Vertical slider" code={sliderVerticalCode}>
