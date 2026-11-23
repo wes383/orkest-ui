@@ -7,7 +7,7 @@ export function KbdBasicExample() {
         Open the command menu
       </Text>
       <Kbd size="sm">⌘</Kbd>
-      <Kbd>K</Kbd>
+      <Kbd size="sm">K</Kbd>
     </Stack>
   );
 }
