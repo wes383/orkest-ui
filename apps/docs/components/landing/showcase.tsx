@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import {
   Bold,
-  Copy,
   Ellipsis,
   Italic,
   Link2,
@@ -28,6 +27,7 @@ import {
   Button,
   Icon,
   IconButton,
+  Pagination,
   Stack,
   Tag,
   Text,
@@ -55,7 +55,6 @@ import {
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -236,24 +235,16 @@ export function DisplayShowcase() {
   );
 }
 
-export function MenuShowcase() {
+export function PaginationShowcase() {
+  const [page, setPage] = useState(1);
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
-      <DropdownMenuPortal>
-        <DropdownMenuContent>
-          <DropdownMenuItem leftIcon={Pencil}>
-            Edit
-            <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem leftIcon={Copy}>Duplicate</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" leftIcon={Trash2}>
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenuPortal>
-    </DropdownMenu>
+    <Stack gap={2} align="center">
+      <Pagination page={page} totalPages={5} label="Pagination preview" onPageChange={setPage} />
+      <Text size="sm" tone="muted">
+        Page {page} of 5
+      </Text>
+    </Stack>
   );
 }
 

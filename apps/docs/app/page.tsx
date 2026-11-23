@@ -12,7 +12,7 @@ import {
   FeedbackShowcase,
   FieldsShowcase,
   FormattingShowcase,
-  MenuShowcase,
+  PaginationShowcase,
   PickersShowcase,
   RangeShowcase,
   SheetShowcase,
@@ -88,7 +88,7 @@ export default function HomePage() {
             <RangeShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <MenuShowcase />
+            <PaginationShowcase />
           </div>
           <div className="landing-showcase-cell">
             <SheetShowcase />
