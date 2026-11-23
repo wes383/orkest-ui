@@ -21,7 +21,7 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--ui-subtle-foreground) transparent;
+  scrollbar-color: var(--ui-border-strong) transparent;
   scrollbar-width: thin;
   transform-origin: var(--transform-origin);
   transition:
@@ -57,12 +57,12 @@
 .content::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
   border-radius: var(--ok-radius-full);
-  background: var(--ui-subtle-foreground);
+  background: var(--ui-border-strong);
   background-clip: content-box;
 }
 
 .content::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-muted-foreground);
+  background: var(--ui-subtle-foreground);
   background-clip: content-box;
 }
 

@@ -9,7 +9,7 @@
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface);
   overflow-x: auto;
-  scrollbar-color: var(--ui-subtle-foreground) transparent;
+  scrollbar-color: var(--ui-border-strong) transparent;
   scrollbar-width: thin;
 }
 
@@ -26,12 +26,12 @@
 .container::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
   border-radius: var(--ok-radius-full);
-  background: var(--ui-subtle-foreground);
+  background: var(--ui-border-strong);
   background-clip: content-box;
 }
 
 .container::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-muted-foreground);
+  background: var(--ui-subtle-foreground);
   background-clip: content-box;
 }
 

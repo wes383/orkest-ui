@@ -158,7 +158,7 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--ui-subtle-foreground) transparent;
+  scrollbar-color: var(--ui-border-strong) transparent;
   scrollbar-width: thin;
   transform-origin: var(--transform-origin);
   transition:

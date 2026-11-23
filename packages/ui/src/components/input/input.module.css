@@ -234,7 +234,7 @@
   box-sizing: border-box;
   resize: vertical;
   scrollbar-width: thin;
-  scrollbar-color: var(--ui-subtle-foreground) transparent;
+  scrollbar-color: var(--ui-border-strong) transparent;
 }
 
 /* Keep the native scrollbar but remove arrow buttons and match the theme. */
@@ -251,12 +251,12 @@
 .textarea::-webkit-scrollbar-thumb {
   border: 2px solid transparent;
   border-radius: var(--ok-radius-full);
-  background: var(--ui-subtle-foreground);
+  background: var(--ui-border-strong);
   background-clip: content-box;
 }
 
 .textarea::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-muted-foreground);
+  background: var(--ui-subtle-foreground);
   background-clip: content-box;
 }
 
