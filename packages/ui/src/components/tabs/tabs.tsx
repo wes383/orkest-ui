@@ -1,6 +1,14 @@
 'use client';
 
-import { createContext, forwardRef, useContext, type ReactNode } from 'react';
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  type ReactNode,
+} from 'react';
 import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import type {
   TabsIndicatorProps as BaseTabsIndicatorProps,
@@ -12,6 +20,7 @@ import type {
 import type { LucideIcon } from 'lucide-react';
 
 import { Icon, type IconSize } from '../../primitives/icon';
+import { assignRef } from '../../utils/assign-ref';
 import { cx } from '../../utils/cx';
 import styles from './tabs.module.css';
 
@@ -124,6 +133,32 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(function TabsL
   ref,
 ) {
   const tabsDisabled = useContext(TabsDisabledContext);
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  const setListRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      listRef.current = node;
+      assignRef(ref, node);
+    },
+    [ref],
+  );
+
+  // React 18 drops `inert` when it is passed as a boolean, which would leave a disabled
+  // list focusable for consumers on the older major. Set the attribute directly instead.
+  useEffect(() => {
+    const node = listRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    if (tabsDisabled) {
+      node.setAttribute('inert', '');
+      return;
+    }
+
+    node.removeAttribute('inert');
+  }, [tabsDisabled]);
 
   function handleKeyDown(event: TabsListKeyDownEvent) {
     onKeyDown?.(event);
@@ -189,11 +224,10 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(function TabsL
 
   return (
     <BaseTabs.List
-      ref={ref}
+      ref={setListRef}
       {...rest}
       activateOnFocus={activationMode === 'automatic'}
       loopFocus={loop}
-      inert={tabsDisabled || undefined}
       aria-disabled={tabsDisabled || undefined}
       onKeyDown={handleKeyDown}
       className={cx(styles.list, className)}
