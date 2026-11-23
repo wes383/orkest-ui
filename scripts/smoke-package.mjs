@@ -146,6 +146,26 @@ createRoot(document.getElementById('root')!).render(<App />);
 
   run('npm install --no-audit --no-fund --loglevel=error', consumer);
   run('npm exec -- tsc --noEmit', consumer);
+
+  writeFileSync(
+    join(consumer, 'cjs-check.cjs'),
+    `const assert = require('node:assert');
+
+// The package ships a CJS build as well, so a CommonJS consumer must resolve the
+// same public surface without an ESM loader.
+const ui = require('@orkest/ui');
+const client = require('@orkest/ui/client');
+
+assert.ok(ui.Button, 'Button is missing from the CJS entry');
+assert.ok(ui.Table, 'Table is missing from the CJS entry');
+assert.ok(client.Dialog, 'Dialog is missing from the CJS client entry');
+assert.ok(client.Select, 'Select is missing from the CJS client entry');
+
+console.log('CJS entry resolved.');
+`,
+  );
+  run('node cjs-check.cjs', consumer);
+
   run('npm exec -- vite build', consumer);
 
   console.log('\nPackage smoke test passed.');

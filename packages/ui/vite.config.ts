@@ -29,8 +29,6 @@ export default defineConfig({
         index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
         client: fileURLToPath(new URL('./src/client.ts', import.meta.url)),
       },
-      formats: ['es'],
-      fileName: (_format, entryName) => `${entryName}.js`,
       cssFileName: 'style',
     },
     rollupOptions: {
@@ -41,6 +39,22 @@ export default defineConfig({
         'react/jsx-dev-runtime',
         'lucide-react',
         /^@base-ui\/react(\/.*)?$/,
+      ],
+      // Declaring both outputs explicitly keeps the CJS extension on every emitted file:
+      // the package is `"type": "module"`, so a shared chunk written as `.js` would be
+      // parsed as ESM and break `require()`.
+      output: [
+        {
+          format: 'es',
+          entryFileNames: '[name].js',
+          chunkFileNames: 'chunks/[name]-[hash].js',
+        },
+        {
+          format: 'cjs',
+          entryFileNames: '[name].cjs',
+          chunkFileNames: 'chunks/[name]-[hash].cjs',
+          exports: 'named',
+        },
       ],
     },
   },
