@@ -54,7 +54,7 @@
 .monthLabel {
   color: var(--ui-foreground);
   font-size: var(--calendar-caption-size);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   white-space: nowrap;
 }
 
@@ -72,7 +72,7 @@
   font-family: inherit;
   font-size: var(--calendar-caption-size);
   font-variant-numeric: tabular-nums;
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   line-height: var(--ok-line-height-snug);
   white-space: nowrap;
   cursor: pointer;

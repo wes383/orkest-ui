@@ -70,7 +70,7 @@
   margin: 0;
   color: var(--ui-foreground);
   font-size: var(--ok-font-size-sm);
-  font-weight: var(--ok-font-weight-semibold);
+  font-weight: var(--ok-font-weight-medium);
   line-height: var(--ok-line-height-snug);
   overflow-wrap: anywhere;
   text-wrap: balance;
