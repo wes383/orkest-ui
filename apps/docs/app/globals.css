@@ -1767,9 +1767,12 @@ kbd {
 /* Landing */
 
 .landing {
+  display: flex;
+  flex-direction: column;
   max-width: var(--docs-shell-width);
+  min-height: calc(100dvh - var(--docs-header-height));
   margin: 0 auto;
-  padding: clamp(3.5rem, 7vw, 5.5rem) var(--ok-space-6) 3rem;
+  padding: clamp(3.5rem, 7vw, 5.5rem) var(--ok-space-6) 0;
 }
 
 .landing-hero-copy {
@@ -1839,6 +1842,7 @@ kbd {
 
 .landing-showcase {
   margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .landing-showcase-grid {
@@ -1869,8 +1873,8 @@ kbd {
   align-items: center;
   justify-content: space-between;
   gap: 8px 1.5rem;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  padding-top: 1.5rem;
+  margin-top: auto;
+  padding: 1.5rem 0 2.5rem;
   border-top: var(--ok-border-width) solid var(--ui-border);
   color: var(--ui-subtle-foreground);
   font-size: var(--ok-font-size-2xs);
@@ -2035,7 +2039,11 @@ kbd {
 
 @media (max-width: 760px) {
   .landing {
-    padding: 3rem var(--ok-space-5) 2.5rem;
+    padding: 3rem var(--ok-space-5) 0;
+  }
+
+  .landing-footer {
+    padding-bottom: 2rem;
   }
 }
 
