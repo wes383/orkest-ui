@@ -10,7 +10,15 @@ export function ProgressSizesExample() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setValue((current) => (current >= 100 ? 0 : current + 10));
+      setValue((current) => {
+        const next = Math.min(current + 10, 100);
+
+        if (next === 100) {
+          window.clearInterval(timer);
+        }
+
+        return next;
+      });
     }, 800);
 
     return () => window.clearInterval(timer);
