@@ -296,25 +296,32 @@ export function FormattingShowcase() {
   const [value, setValue] = useState<string[]>(['italic']);
 
   return (
-    <ToggleGroup
-      aria-label="Text style"
-      value={value}
-      onValueChange={(next) => {
-        if (next.length > 0) {
-          setValue(next);
-        }
-      }}
-    >
-      <ToggleGroupItem value="bold" aria-label="Bold">
-        <Icon icon={Bold} size="sm" />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="italic" aria-label="Italic">
-        <Icon icon={Italic} size="sm" />
-      </ToggleGroupItem>
-      <ToggleGroupItem value="underline" aria-label="Underline">
-        <Icon icon={Underline} size="sm" />
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <Stack gap={2} align="center">
+      <ToggleGroup
+        aria-label="Text style"
+        value={value}
+        onValueChange={(next) => {
+          if (next.length > 0) {
+            setValue(next);
+          }
+        }}
+      >
+        <ToggleGroupItem value="bold" aria-label="Bold">
+          <Icon icon={Bold} size="sm" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="italic" aria-label="Italic">
+          <Icon icon={Italic} size="sm" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="underline" aria-label="Underline">
+          <Icon icon={Underline} size="sm" />
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <ToggleGroup aria-label="Calendar view" defaultValue={['week']} variant="outline">
+        <ToggleGroupItem value="day">Day</ToggleGroupItem>
+        <ToggleGroupItem value="week">Week</ToggleGroupItem>
+        <ToggleGroupItem value="month">Month</ToggleGroupItem>
+      </ToggleGroup>
+    </Stack>
   );
 }
 
