@@ -1067,6 +1067,13 @@ samp {
   min-width: 0;
 }
 
+/* Token names are identifiers: wrapping them across lines makes the table unreadable.
+   The scroll frame handles the case where a long name no longer fits. */
+.semantic-color-group table th:first-child,
+.semantic-color-group table td:first-child {
+  white-space: nowrap;
+}
+
 .semantic-swatch {
   display: block;
   width: 1.5rem;
