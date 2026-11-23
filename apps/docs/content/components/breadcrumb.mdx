@@ -51,13 +51,13 @@ Long trails can fold the middle entries into an ellipsis:
 
 export const breadcrumbEllipsisCode = `import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@orkest/ui';
+import { BreadcrumbEllipsisMenu } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -68,7 +68,12 @@ export function Example() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbEllipsis />
+          <BreadcrumbEllipsisMenu
+            items={[
+              { label: 'Documentation', href: '/docs' },
+              { label: 'Guides', href: '/docs/guides/theming/' },
+            ]}
+          />
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -87,8 +92,12 @@ export function Example() {
   <BreadcrumbEllipsisExample />
 </ComponentPreview>
 
-`BreadcrumbEllipsis` renders a span, so place it inside `BreadcrumbItem`. Its icon is decorative, and
-its `label` (default `More`) is announced by screen readers.
+`BreadcrumbEllipsisMenu` renders a button that opens a menu with the folded entries. Each item
+becomes a link when it has an `href`; items without one call `onSelect`. The trigger is labelled
+`More` by default, and the menu is exported from `@orkest/ui/client`.
+
+`BreadcrumbEllipsis` remains available from `@orkest/ui` for a non-interactive ellipsis inside
+`BreadcrumbItem`.
 
 ## Composition
 
@@ -100,6 +109,7 @@ its `label` (default `More`) is announced by screen readers.
 - `BreadcrumbSeparator` is a decorative divider with a chevron by default. Pass children to replace
   the icon.
 - `BreadcrumbEllipsis` stands in for collapsed entries.
+- `BreadcrumbEllipsisMenu` turns the collapsed entries into a menu trigger.
 
 ## Props
 
@@ -126,6 +136,17 @@ its `label` (default `More`) is announced by screen readers.
       type: 'string',
       default: `'More'`,
       description: 'Text announced in place of the ellipsis icon.',
+    },
+    {
+      name: 'items (BreadcrumbEllipsisMenu)',
+      type: 'BreadcrumbEllipsisMenuItem[]',
+      description: 'Folded entries. Items with href render links; others call onSelect.',
+    },
+    {
+      name: 'label (BreadcrumbEllipsisMenu)',
+      type: 'string',
+      default: `'More'`,
+      description: 'Accessible name for the menu trigger.',
     },
     {
       name: 'native attributes',

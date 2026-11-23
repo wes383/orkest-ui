@@ -34,8 +34,6 @@
 @media (hover: hover) {
   .link:hover {
     color: var(--ui-foreground);
-    text-decoration: underline;
-    text-underline-offset: var(--ok-space-1);
   }
 }
 
@@ -60,6 +58,11 @@
 .ellipsis {
   display: inline-flex;
   align-items: center;
+  color: var(--ui-muted-foreground);
+}
+
+.ellipsisTrigger {
+  flex: none;
   color: var(--ui-muted-foreground);
 }
 

@@ -273,6 +273,12 @@ export type {
   CollapsibleTriggerProps,
 } from './components/collapsible';
 
+export { BreadcrumbEllipsisMenu } from './components/breadcrumb/breadcrumb-ellipsis-menu';
+export type {
+  BreadcrumbEllipsisMenuItem,
+  BreadcrumbEllipsisMenuProps,
+} from './components/breadcrumb/breadcrumb-ellipsis-menu';
+
 export { Combobox } from './components/combobox';
 export type { ComboboxProps } from './components/combobox';
 

@@ -1,12 +1,12 @@
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@orkest/ui';
+import { BreadcrumbEllipsisMenu } from '@orkest/ui/client';
 
 export function BreadcrumbBasicExample() {
   return (
@@ -37,7 +37,12 @@ export function BreadcrumbEllipsisExample() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbEllipsis />
+          <BreadcrumbEllipsisMenu
+            items={[
+              { label: 'Documentation', href: '/docs' },
+              { label: 'Guides', href: '/docs/guides/theming/' },
+            ]}
+          />
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
