@@ -1,0 +1,14 @@
+# Keep one line-ending policy across platforms: LF in the repository and in the
+# working tree, so Windows checkouts match CI and Prettier's `endOfLine: lf`.
+* text=auto eol=lf
+
+# Binary assets must never be normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
