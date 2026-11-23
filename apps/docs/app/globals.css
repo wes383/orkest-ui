@@ -1084,6 +1084,11 @@ samp {
   box-shadow: inset 0 0 0 var(--ok-border-width) var(--ui-border);
 }
 
+/* Gives the semi-transparent ring in a shadow token something to sit on. */
+.semantic-swatch-shadow {
+  background: var(--ui-background);
+}
+
 .spacing-scale {
   display: grid;
   gap: var(--ok-space-3);

@@ -12,3 +12,10 @@ export function isLightColor(value: string): boolean {
     (index) => Number.parseInt(hex.slice(index, index + 2), 16) >= lightChannelThreshold,
   );
 }
+
+const colorValuePattern = /^(#|rgba?\(|hsla?\(|hwb\(|lab\(|lch\(|oklab\(|oklch\(|color\()/i;
+
+/** Tokens such as `--ui-focus-halo` hold a shadow shorthand, not a colour. */
+export function isColorValue(value: string): boolean {
+  return colorValuePattern.test(value.trim());
+}
