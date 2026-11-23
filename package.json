@@ -24,6 +24,8 @@
     "test:e2e": "playwright test tests/smoke.spec.ts",
     "test:visual": "playwright test tests/visual.spec.ts",
     "test:visual:update": "playwright test tests/visual.spec.ts --update-snapshots",
+    "test:visual:docker": "node scripts/visual-docker.mjs",
+    "test:visual:docker:update": "node scripts/visual-docker.mjs --update-snapshots",
     "docs:dev": "pnpm --filter @orkest/docs dev",
     "docs:build": "pnpm --filter @orkest/docs build",
     "changeset": "changeset",

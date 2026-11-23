@@ -6,9 +6,11 @@ on:
 jobs:
   update:
     name: Regenerate snapshots
-    # Must match the runner used by the Playwright job in ci.yml: subpixel layout rounding
-    # differs between images, and a mismatch shows up as one-pixel height changes.
-    runs-on: windows-2022
+    # Same image as the Playwright job in ci.yml: snapshots are only comparable when the
+    # renderer, fonts and system libraries are identical.
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
@@ -30,9 +32,6 @@ jobs:
 
       - name: Build documentation site
         run: pnpm --filter @orkest/docs exec next build
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install chromium
 
       - name: Update snapshots
         run: pnpm test:visual:update

@@ -116,10 +116,11 @@ jobs:
 
   playwright:
     name: Playwright
-    # Visual baselines are generated on windows-2022 and must be compared on the same image:
-    # a different runner rounds subpixel layout differently, which fails every snapshot by
-    # one pixel. Regenerate them with the Visual baselines workflow.
-    runs-on: windows-2022
+    # Snapshots are generated in the Playwright image and compared in the same image; running
+    # outside it rounds subpixel layout differently and fails every snapshot by one pixel.
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
@@ -141,9 +142,6 @@ jobs:
 
       - name: Build documentation site
         run: pnpm --filter @orkest/docs exec next build
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install chromium
 
       - name: Run Playwright
         run: pnpm exec playwright test
