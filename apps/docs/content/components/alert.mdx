@@ -14,20 +14,14 @@ Import the components from `@orkest/ui/client`.
 ## Variants
 
 export const variantsCode = `import { Stack } from '@orkest/ui';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
 
 export function Example() {
   return (
     <Stack gap={3}>
       <Alert variant="info">
         <AlertTitle>New version available</AlertTitle>
-        <AlertDescription>
-          Orkest UI 0.2 adds updated theme tokens.
-        </AlertDescription>
+        <AlertDescription>Orkest UI 0.2 adds updated theme tokens.</AlertDescription>
       </Alert>
       <Alert variant="success">
         <AlertTitle>Changes saved</AlertTitle>
@@ -35,15 +29,11 @@ export function Example() {
       </Alert>
       <Alert variant="warning">
         <AlertTitle>Unsaved changes</AlertTitle>
-        <AlertDescription>
-          Leaving this page will discard your draft.
-        </AlertDescription>
+        <AlertDescription>Leaving this page will discard your draft.</AlertDescription>
       </Alert>
       <Alert variant="error">
         <AlertTitle>Upload failed</AlertTitle>
-        <AlertDescription>
-          Check your connection and try again.
-        </AlertDescription>
+        <AlertDescription>Check your connection and try again.</AlertDescription>
       </Alert>
     </Stack>
   );
@@ -73,19 +63,13 @@ A description alone can be enough for short statuses. Use `icon={null}` when the
 need a status glyph.
 
 export const withoutTitleOrIconCode = `import { Stack } from '@orkest/ui';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
 
 export function Example() {
   return (
     <Stack gap={3}>
       <Alert variant="info">
-        <AlertDescription>
-          Two-factor authentication is enabled for this account.
-        </AlertDescription>
+        <AlertDescription>Two-factor authentication is enabled for this account.</AlertDescription>
       </Alert>
       <Alert variant="warning" icon={null}>
         <AlertTitle>Maintenance window</AlertTitle>
@@ -109,20 +93,14 @@ one.
 Pass a Lucide icon to `icon` when a more specific glyph communicates the message better. The color
 still follows the variant.
 
-export const customIconCode = `import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+export const customIconCode = `import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
 import { Rocket } from 'lucide-react';
 
 export function Example() {
   return (
     <Alert variant="info" icon={Rocket}>
       <AlertTitle>Early access</AlertTitle>
-      <AlertDescription>
-        This workspace is enrolled in the preview program.
-      </AlertDescription>
+      <AlertDescription>This workspace is enrolled in the preview program.</AlertDescription>
     </Alert>
   );
 }`;
@@ -138,33 +116,27 @@ alert does not remove itself. Hide it in the parent so the same state can be res
 
 export const dismissibleAlertCode = `import { useState } from 'react';
 import { Button } from '@orkest/ui';
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
 
 export function Example() {
   const [visible, setVisible] = useState(true);
 
-if (!visible) {
-return (
+  if (!visible) {
+    return (
+      <Button variant="outline" onClick={() => setVisible(true)}>
+        Show alert again
+      </Button>
+    );
+  }
 
-<Button variant="outline" onClick={() => setVisible(true)}>
-Show alert again
-</Button>
-);
-}
-
-return (
-
-<Alert variant="warning" closable onClose={() => setVisible(false)}>
-<AlertTitle>Verify your email</AlertTitle>
-<AlertDescription>
-Some features stay limited until the address is confirmed.
-</AlertDescription>
-</Alert>
-);
+  return (
+    <Alert variant="warning" closable onClose={() => setVisible(false)}>
+      <AlertTitle>Verify your email</AlertTitle>
+      <AlertDescription>
+        Some features stay limited until the address is confirmed.
+      </AlertDescription>
+    </Alert>
+  );
 }`;
 
 <ComponentPreview title="Dismissible alert" code={dismissibleAlertCode}>
@@ -177,20 +149,13 @@ Some features stay limited until the address is confirmed.
 the message; do not turn the alert into a form.
 
 export const retryActionCode = `import { Button } from '@orkest/ui';
-import {
-  Alert,
-  AlertAction,
-  AlertDescription,
-  AlertTitle,
-} from '@orkest/ui/client';
+import { Alert, AlertAction, AlertDescription, AlertTitle } from '@orkest/ui/client';
 
 export function Example() {
   return (
     <Alert variant="error">
       <AlertTitle>Could not load billing data</AlertTitle>
-      <AlertDescription>
-        The payment provider did not respond in time.
-      </AlertDescription>
+      <AlertDescription>The payment provider did not respond in time.</AlertDescription>
       <AlertAction>
         <Button size="sm" variant="outline">
           Retry

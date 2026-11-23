@@ -21,15 +21,14 @@ export function Example() {
     end: '2026-11-22',
   });
 
-return (
-
-<Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
-<DateRangePicker value={value} onChange={setValue} />
-<Text size="sm" tone="muted">
-Value: {value ? value.start + ' → ' + value.end : 'none'}
-</Text>
-</Stack>
-);
+  return (
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '20rem' }}>
+      <DateRangePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ? value.start + ' → ' + value.end : 'none'}
+      </Text>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Basic date range picker" code={basicDateRangePickerCode}>
@@ -52,17 +51,16 @@ import type { DateRange } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<DateRange | null>(null);
 
-return (
-
-<DateRangePicker
-value={value}
-onChange={setValue}
-minDate="2026-11-10"
-maxDate="2026-12-20"
-disabledDates={(date) => date.endsWith('-15') || date.endsWith('-16')}
-style={{ width: '100%', maxWidth: '20rem' }}
-/>
-);
+  return (
+    <DateRangePicker
+      value={value}
+      onChange={setValue}
+      minDate="2026-11-10"
+      maxDate="2026-12-20"
+      disabledDates={(date) => date.endsWith('-15') || date.endsWith('-16')}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview title="Bounded range" code={boundedRangeCode}>
@@ -81,15 +79,14 @@ import type { DateRange } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<DateRange | null>(null);
 
-return (
-
-<DateRangePicker
-value={value}
-onChange={setValue}
-months={1}
-style={{ width: '100%', maxWidth: '20rem' }}
-/>
-);
+  return (
+    <DateRangePicker
+      value={value}
+      onChange={setValue}
+      months={1}
+      style={{ width: '100%', maxWidth: '20rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview title="Single month" code={singleMonthCode}>
@@ -108,14 +105,13 @@ import type { DateRange } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<DateRange | null>(null);
 
-return (
-
-<Field required style={{ width: '100%', maxWidth: '20rem' }}>
-<FieldLabel>Stay</FieldLabel>
-<DateRangePicker value={value} onChange={setValue} placeholder="Check in – Check out" />
-<FieldDescription>Both ends are submitted with the form.</FieldDescription>
-</Field>
-);
+  return (
+    <Field required style={{ width: '100%', maxWidth: '20rem' }}>
+      <FieldLabel>Stay</FieldLabel>
+      <DateRangePicker value={value} onChange={setValue} placeholder="Check in – Check out" />
+      <FieldDescription>Both ends are submitted with the form.</FieldDescription>
+    </Field>
+  );
 }`;
 
 <ComponentPreview title="With a label and description" code={withALabelAndDescriptionCode}>

@@ -19,15 +19,14 @@ import { Calendar } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState('2026-11-18');
 
-return (
-
-<Stack gap={3} align="start">
-<Calendar value={value} onChange={setValue} defaultMonth="2026-11" />
-<Text size="sm" tone="muted">
-Selected: {value}
-</Text>
-</Stack>
-);
+  return (
+    <Stack gap={3} align="start">
+      <Calendar value={value} onChange={setValue} defaultMonth="2026-11" />
+      <Text size="sm" tone="muted">
+        Selected: {value}
+      </Text>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Basic calendar" code={basicCalendarCode}>
@@ -44,15 +43,9 @@ import { Calendar } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState('2026-11-18');
 
-return (
-
-<Calendar
-      value={value}
-      onChange={setValue}
-      defaultMonth="2026-11"
-      captionLayout="select"
-    />
-);
+  return (
+    <Calendar value={value} onChange={setValue} defaultMonth="2026-11" captionLayout="select" />
+  );
 }`;
 
 <ComponentPreview title="Caption selects" code={captionSelectsCode}>
@@ -72,17 +65,16 @@ import { Calendar } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState('2026-11-16');
 
-return (
-
-<Calendar
-value={value}
-onChange={setValue}
-defaultMonth="2026-11"
-minDate="2026-11-10"
-maxDate="2026-11-24"
-disabledDates={['2026-11-13', '2026-11-20']}
-/>
-);
+  return (
+    <Calendar
+      value={value}
+      onChange={setValue}
+      defaultMonth="2026-11"
+      minDate="2026-11-10"
+      maxDate="2026-11-24"
+      disabledDates={['2026-11-13', '2026-11-20']}
+    />
+  );
 }`;
 
 <ComponentPreview title="Bounded range" code={boundedRangeCode}>

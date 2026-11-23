@@ -18,19 +18,13 @@ import { Radio, RadioGroup } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState('standard');
 
-return (
-
-<RadioGroup
-      aria-label="Plan"
-      value={value}
-      onValueChange={setValue}
-      orientation="horizontal"
-    >
-<Radio value="standard" label="Standard" />
-<Radio value="pro" label="Pro" />
-<Radio value="enterprise" label="Enterprise" />
-</RadioGroup>
-);
+  return (
+    <RadioGroup aria-label="Plan" value={value} onValueChange={setValue} orientation="horizontal">
+      <Radio value="standard" label="Standard" />
+      <Radio value="pro" label="Pro" />
+      <Radio value="enterprise" label="Enterprise" />
+    </RadioGroup>
+  );
 }`;
 
 <ComponentPreview title="Radio group" code={radioGroupCode}>

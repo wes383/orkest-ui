@@ -14,11 +14,11 @@ Import it from `@orkest/ui/client`.
 export const basicSelectCode = `import { Select } from '@orkest/ui/client';
 
 const fruits = [
-{ value: 'apple', label: 'Apple' },
-{ value: 'banana', label: 'Banana' },
-{ value: 'cherry', label: 'Cherry' },
-{ value: 'grape', label: 'Grape' },
-{ value: 'mango', label: 'Mango' },
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'grape', label: 'Grape' },
+  { value: 'mango', label: 'Mango' },
 ];
 
 export function Example() {
@@ -43,12 +43,12 @@ accepts `renderItem` / `loadingMessage`.
 export const searchableSelectCode = `import { Select } from '@orkest/ui/client';
 
 const languages = [
-{ value: 'javascript', label: 'JavaScript' },
-{ value: 'typescript', label: 'TypeScript' },
-{ value: 'python', label: 'Python' },
-{ value: 'go', label: 'Go' },
-{ value: 'rust', label: 'Rust' },
-{ value: 'swift', label: 'Swift' },
+  { value: 'javascript', label: 'JavaScript' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'python', label: 'Python' },
+  { value: 'go', label: 'Go' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'swift', label: 'Swift' },
 ];
 
 export function Example() {
@@ -106,42 +106,42 @@ export const groupsDescriptionsAndIconsCode = `import { Briefcase, Code, Layers,
 import { Select } from '@orkest/ui/client';
 
 const teams = [
-{
-label: 'Product',
-options: [
-{
-value: 'design',
-label: 'Design',
-description: 'Product design and research',
-icon: Palette,
-},
-{
-value: 'product',
-label: 'Product',
-description: 'Planning and strategy',
-icon: Briefcase,
-},
-{
-value: 'marketing',
-label: 'Marketing',
-description: 'Campaigns and brand',
-icon: Megaphone,
-},
-],
-},
-{
-label: 'Engineering',
-options: [
-{ value: 'frontend', label: 'Frontend', description: 'Web interfaces', icon: Code },
-{ value: 'backend', label: 'Backend', description: 'APIs and services', icon: Server },
-{
-value: 'platform',
-label: 'Platform',
-description: 'Infrastructure and tooling',
-icon: Layers,
-},
-],
-},
+  {
+    label: 'Product',
+    options: [
+      {
+        value: 'design',
+        label: 'Design',
+        description: 'Product design and research',
+        icon: Palette,
+      },
+      {
+        value: 'product',
+        label: 'Product',
+        description: 'Planning and strategy',
+        icon: Briefcase,
+      },
+      {
+        value: 'marketing',
+        label: 'Marketing',
+        description: 'Campaigns and brand',
+        icon: Megaphone,
+      },
+    ],
+  },
+  {
+    label: 'Engineering',
+    options: [
+      { value: 'frontend', label: 'Frontend', description: 'Web interfaces', icon: Code },
+      { value: 'backend', label: 'Backend', description: 'APIs and services', icon: Server },
+      {
+        value: 'platform',
+        label: 'Platform',
+        description: 'Infrastructure and tooling',
+        icon: Layers,
+      },
+    ],
+  },
 ];
 
 export function Example() {
@@ -160,9 +160,9 @@ export const smallMediumAndLargeCode = `import { Stack } from '@orkest/ui';
 import { Select } from '@orkest/ui/client';
 
 const priorities = [
-{ value: 'low', label: 'Low' },
-{ value: 'medium', label: 'Medium' },
-{ value: 'high', label: 'High' },
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
 ];
 
 export function Example() {
@@ -188,16 +188,21 @@ export const disabledInvalidAndClearableCode = `import { Stack } from '@orkest/u
 import { Select } from '@orkest/ui/client';
 
 const statuses = [
-{ value: 'active', label: 'Active' },
-{ value: 'paused', label: 'Paused' },
-{ value: 'archived', label: 'Archived' },
+  { value: 'active', label: 'Active' },
+  { value: 'paused', label: 'Paused' },
+  { value: 'archived', label: 'Archived' },
 ];
 
 export function Example() {
   return (
     <Stack gap={3}>
       <Select aria-label="Disabled status" options={statuses} defaultValue="active" disabled />
-      <Select aria-label="Invalid status" options={statuses} placeholder="Choose a status" invalid />
+      <Select
+        aria-label="Invalid status"
+        options={statuses}
+        placeholder="Choose a status"
+        invalid
+      />
       <Select aria-label="Clearable status" options={statuses} defaultValue="paused" clearable />
     </Stack>
   );

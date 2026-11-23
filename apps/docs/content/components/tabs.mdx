@@ -13,13 +13,7 @@ The component is built on Base UI Tabs and exported from `@orkest/ui/client`.
 ## Basic usage
 
 export const underlineTabsCode = `import { Stack, Text } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -70,13 +64,7 @@ String values keep state stable when tabs are added, removed, or reordered. Avoi
 
 `pills` uses a filled active tab and works well for compact view switching.
 
-export const pillsCode = `import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+export const pillsCode = `import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -101,13 +89,7 @@ export function Example() {
 `enclosed` places the tabs in a sunken segmented container, which suits settings and layout
 switchers.
 
-export const enclosedCode = `import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+export const enclosedCode = `import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -135,13 +117,7 @@ Set `orientation="vertical"` on `Tabs`. The root lays the list beside the active
 and the arrow keys switch to ArrowUp and ArrowDown.
 
 export const verticalSettingsNavigationCode = `import { Stack, Text } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 import { Bell, Settings, User } from 'lucide-react';
 
 export function Example() {
@@ -160,13 +136,19 @@ export function Example() {
         <TabsIndicator />
       </TabsList>
       <TabsContent value="profile">
-        <Text size="sm" tone="muted">Name, avatar, and contact details.</Text>
+        <Text size="sm" tone="muted">
+          Name, avatar, and contact details.
+        </Text>
       </TabsContent>
       <TabsContent value="notifications">
-        <Text size="sm" tone="muted">Two unread notifications.</Text>
+        <Text size="sm" tone="muted">
+          Two unread notifications.
+        </Text>
       </TabsContent>
       <TabsContent value="preferences">
-        <Text size="sm" tone="muted">Language, time zone, and keyboard shortcuts.</Text>
+        <Text size="sm" tone="muted">
+          Language, time zone, and keyboard shortcuts.
+        </Text>
       </TabsContent>
     </Tabs>
   );
@@ -182,13 +164,7 @@ export function Example() {
 evenly between the tabs.
 
 export const sizesCode = `import { Stack } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -228,13 +204,7 @@ export function Example() {
   <TabsSizesExample />
 </ComponentPreview>
 
-export const fullWidthCode = `import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+export const fullWidthCode = `import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -266,13 +236,7 @@ export function Example() {
   work such as a network request.
 
 export const manualActivationCode = `import { Stack, Text } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -310,32 +274,27 @@ export function Example() {
 
 export const controlledTabsCode = `import { useState } from 'react';
 import { Stack, Text } from '@orkest/ui';
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   const [value, setValue] = useState('overview');
 
-return (
-
-<Stack gap={2}>
-<Tabs value={value} onValueChange={setValue}>
-<TabsList>
-<TabsTrigger value="overview">Overview</TabsTrigger>
-<TabsTrigger value="activity">Activity</TabsTrigger>
-<TabsIndicator />
-</TabsList>
-<TabsContent value="overview">Overview panel.</TabsContent>
-<TabsContent value="activity">Activity panel.</TabsContent>
-</Tabs>
-<Text size="sm" tone="muted">Active tab: {value}</Text>
-</Stack>
-);
+  return (
+    <Stack gap={2}>
+      <Tabs value={value} onValueChange={setValue}>
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="activity">Activity</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="overview">Overview panel.</TabsContent>
+        <TabsContent value="activity">Activity panel.</TabsContent>
+      </Tabs>
+      <Text size="sm" tone="muted">
+        Active tab: {value}
+      </Text>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Controlled tabs" code={controlledTabsCode}>
@@ -351,41 +310,29 @@ Disabled tabs are skipped by arrow-key navigation, Home, and End.
 
 export const disabledStatesCode = `import { useState } from 'react';
 import { Stack } from '@orkest/ui';
-import {
-  Switch,
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from '@orkest/ui/client';
+import { Switch, Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from '@orkest/ui/client';
 
 export function Example() {
   const [disabled, setDisabled] = useState(false);
 
-return (
-
-<Stack gap={3}>
-<Switch
-        label="Disable the whole tab list"
-        checked={disabled}
-        onCheckedChange={setDisabled}
-      />
-<Tabs defaultValue="general" disabled={disabled}>
-<TabsList>
-<TabsTrigger value="general">General</TabsTrigger>
-<TabsTrigger value="billing" disabled>
-Billing
-</TabsTrigger>
-<TabsTrigger value="advanced">Advanced</TabsTrigger>
-<TabsIndicator />
-</TabsList>
-<TabsContent value="general">General settings.</TabsContent>
-<TabsContent value="billing">Billing settings.</TabsContent>
-<TabsContent value="advanced">Advanced settings.</TabsContent>
-</Tabs>
-</Stack>
-);
+  return (
+    <Stack gap={3}>
+      <Switch label="Disable the whole tab list" checked={disabled} onCheckedChange={setDisabled} />
+      <Tabs defaultValue="general" disabled={disabled}>
+        <TabsList>
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="billing" disabled>
+            Billing
+          </TabsTrigger>
+          <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          <TabsIndicator />
+        </TabsList>
+        <TabsContent value="general">General settings.</TabsContent>
+        <TabsContent value="billing">Billing settings.</TabsContent>
+        <TabsContent value="advanced">Advanced settings.</TabsContent>
+      </Tabs>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Disabled states" code={disabledStatesCode}>

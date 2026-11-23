@@ -48,8 +48,7 @@ export function Example() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete project?</AlertDialogTitle>
             <AlertDialogDescription>
-              This permanently deletes the project and its data. This action
-              cannot be undone.
+              This permanently deletes the project and its data. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -92,45 +91,39 @@ export function Example() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-async function handleDelete() {
-setLoading(true);
-await new Promise((resolve) => setTimeout(resolve, 600));
-setLoading(false);
-setOpen(false);
-}
+  async function handleDelete() {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    setLoading(false);
+    setOpen(false);
+  }
 
-return (
-
-<>
-<Button variant="destructive" onClick={() => setOpen(true)}>
-Delete account
-</Button>
-<AlertDialog open={open} onOpenChange={setOpen}>
-<AlertDialogPortal>
-<AlertDialogOverlay />
-<AlertDialogContent>
-<AlertDialogHeader>
-<AlertDialogTitle>Delete account?</AlertDialogTitle>
-<AlertDialogDescription>
-All projects and data will be removed. This action cannot be
-undone.
-</AlertDialogDescription>
-</AlertDialogHeader>
-<AlertDialogFooter>
-<AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-<Button
-                variant="destructive"
-                loading={loading}
-                onClick={handleDelete}
-              >
-Delete account
-</Button>
-</AlertDialogFooter>
-</AlertDialogContent>
-</AlertDialogPortal>
-</AlertDialog>
-</>
-);
+  return (
+    <>
+      <Button variant="destructive" onClick={() => setOpen(true)}>
+        Delete account
+      </Button>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogPortal>
+          <AlertDialogOverlay />
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete account?</AlertDialogTitle>
+              <AlertDialogDescription>
+                All projects and data will be removed. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+              <Button variant="destructive" loading={loading} onClick={handleDelete}>
+                Delete account
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogPortal>
+      </AlertDialog>
+    </>
+  );
 }`;
 
 <ComponentPreview title="Async confirmation" code={asyncConfirmationCode}>

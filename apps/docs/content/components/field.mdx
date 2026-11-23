@@ -102,9 +102,7 @@ export function Example() {
   return (
     <Box width="100%" maxWidth="22rem">
       <Field
-        validate={(value) =>
-          value === 'admin' ? 'This workspace name is reserved.' : null
-        }
+        validate={(value) => (value === 'admin' ? 'This workspace name is reserved.' : null)}
         validationMode="onChange"
       >
         <FieldLabel>Workspace URL</FieldLabel>

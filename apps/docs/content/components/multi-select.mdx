@@ -18,31 +18,30 @@ export const searchableMultiSelectCode = `import { useState } from 'react';
 import { MultiSelect } from '@orkest/ui/client';
 
 const skills = [
-{ value: 'react', label: 'React' },
-{ value: 'typescript', label: 'TypeScript' },
-{ value: 'node', label: 'Node.js' },
-{ value: 'css', label: 'CSS' },
-{ value: 'testing', label: 'Testing' },
-{ value: 'accessibility', label: 'Accessibility' },
+  { value: 'react', label: 'React' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'node', label: 'Node.js' },
+  { value: 'css', label: 'CSS' },
+  { value: 'testing', label: 'Testing' },
+  { value: 'accessibility', label: 'Accessibility' },
 ];
 
 export function Example() {
   const [selected, setSelected] = useState(['react', 'typescript']);
 
-return (
-
-<MultiSelect
-aria-label="Skills"
-options={skills}
-value={selected}
-onChange={(nextValues) => setSelected(nextValues)}
-searchable
-hideSelected
-clearable
-maxSelected={3}
-placeholder="Select skills"
-/>
-);
+  return (
+    <MultiSelect
+      aria-label="Skills"
+      options={skills}
+      value={selected}
+      onChange={(nextValues) => setSelected(nextValues)}
+      searchable
+      hideSelected
+      clearable
+      maxSelected={3}
+      placeholder="Select skills"
+    />
+  );
 }`;
 
 <ComponentPreview title="Searchable multi-select" code={searchableMultiSelectCode}>

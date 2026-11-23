@@ -16,21 +16,20 @@ export const searchableSelectCode = `import { useState } from 'react';
 import { Combobox } from '@orkest/ui/client';
 
 const fruits = [
-{ value: 'apple', label: 'Apple' },
-{ value: 'apricot', label: 'Apricot' },
-{ value: 'banana', label: 'Banana' },
-{ value: 'blueberry', label: 'Blueberry' },
-{ value: 'cherry', label: 'Cherry' },
-{ value: 'grape', label: 'Grape' },
-{ value: 'mango', label: 'Mango' },
+  { value: 'apple', label: 'Apple' },
+  { value: 'apricot', label: 'Apricot' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'blueberry', label: 'Blueberry' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'grape', label: 'Grape' },
+  { value: 'mango', label: 'Mango' },
 ];
 
 export function Example() {
   const [value, setValue] = useState<string | null>('apple');
 
-return (
-
-<Combobox
+  return (
+    <Combobox
       aria-label="Fruit"
       options={fruits}
       value={value}
@@ -39,7 +38,7 @@ return (
       placeholder="Pick a fruit"
       searchPlaceholder="Search fruit"
     />
-);
+  );
 }`;
 
 <ComponentPreview title="Searchable select" code={searchableSelectCode}>
@@ -86,17 +85,17 @@ listbox and is not selectable itself.
 export const groupedOptionsCode = `import { Combobox } from '@orkest/ui/client';
 
 const projects = [
-{
-label: 'Engineering',
-options: [
-{ value: 'frontend', label: 'Frontend', description: 'Web interfaces' },
-{ value: 'backend', label: 'Backend', description: 'APIs and services' },
-],
-},
-{
-label: 'Marketing',
-options: [{ value: 'website', label: 'Website', description: 'Public site' }],
-},
+  {
+    label: 'Engineering',
+    options: [
+      { value: 'frontend', label: 'Frontend', description: 'Web interfaces' },
+      { value: 'backend', label: 'Backend', description: 'APIs and services' },
+    ],
+  },
+  {
+    label: 'Marketing',
+    options: [{ value: 'website', label: 'Website', description: 'Public site' }],
+  },
 ];
 
 export function Example() {

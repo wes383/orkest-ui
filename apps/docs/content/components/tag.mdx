@@ -125,19 +125,19 @@ import { Stack, Tag } from '@orkest/ui';
 export function Example() {
   const [tags, setTags] = useState(['Design', 'Engineering']);
 
-return (
-
-<Stack direction="row" gap={2} wrap>
-{tags.map((tag) => (
-<Tag
-key={tag}
-removable
-onRemove={() => setTags((current) => current.filter((item) => item !== tag))} >
-{tag}
-</Tag>
-))}
-</Stack>
-);
+  return (
+    <Stack direction="row" gap={2} wrap>
+      {tags.map((tag) => (
+        <Tag
+          key={tag}
+          removable
+          onRemove={() => setTags((current) => current.filter((item) => item !== tag))}
+        >
+          {tag}
+        </Tag>
+      ))}
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Removable tags" code={removableTagsCode}>
@@ -152,15 +152,15 @@ import { Tag } from '@orkest/ui';
 export function Example() {
   const [active, setActive] = useState(false);
 
-return (
-
-<Tag
-interactive
-variant={active ? 'success' : 'outline'}
-onClick={() => setActive((value) => !value)} >
-{active ? 'Selected' : 'Select tag'}
-</Tag>
-);
+  return (
+    <Tag
+      interactive
+      variant={active ? 'success' : 'outline'}
+      onClick={() => setActive((value) => !value)}
+    >
+      {active ? 'Selected' : 'Select tag'}
+    </Tag>
+  );
 }`;
 
 <ComponentPreview title="Clickable tag" code={clickableTagCode}>

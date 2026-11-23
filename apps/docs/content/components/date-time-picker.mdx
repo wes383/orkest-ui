@@ -17,15 +17,14 @@ import { DateTimePicker } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<string | null>('2026-11-18T09:30');
 
-return (
-
-<Stack gap={2} align="start" style={{ width: '100%', maxWidth: '16rem' }}>
-<DateTimePicker value={value} onChange={setValue} />
-<Text size="sm" tone="muted">
-Value: {value ?? 'none'}
-</Text>
-</Stack>
-);
+  return (
+    <Stack gap={2} align="start" style={{ width: '100%', maxWidth: '16rem' }}>
+      <DateTimePicker value={value} onChange={setValue} />
+      <Text size="sm" tone="muted">
+        Value: {value ?? 'none'}
+      </Text>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Basic date and time picker" code={basicDateAndTimePickerCode}>
@@ -47,16 +46,15 @@ import { DateTimePicker } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<string | null>('2026-11-18T14:45');
 
-return (
-
-<DateTimePicker
-value={value}
-onChange={setValue}
-timeFormat="12h"
-minuteStep={15}
-style={{ width: '100%', maxWidth: '16rem' }}
-/>
-);
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      timeFormat="12h"
+      minuteStep={15}
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview
@@ -76,15 +74,14 @@ import { DateTimePicker } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<string | null>('2026-11-18T09:30:15');
 
-return (
-
-<DateTimePicker
-value={value}
-onChange={setValue}
-showSeconds
-style={{ width: '100%', maxWidth: '16rem' }}
-/>
-);
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      showSeconds
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview title="With seconds" code={withSecondsCode}>
@@ -105,15 +102,14 @@ import { DateTimePicker } from '@orkest/ui/client';
 export function Example() {
   const [value, setValue] = useState<string | null>('2026-11-18T09:30');
 
-return (
-
-<DateTimePicker
-value={value}
-onChange={setValue}
-timeMode="menu"
-style={{ width: '100%', maxWidth: '16rem' }}
-/>
-);
+  return (
+    <DateTimePicker
+      value={value}
+      onChange={setValue}
+      timeMode="menu"
+      style={{ width: '100%', maxWidth: '16rem' }}
+    />
+  );
 }`;
 
 <ComponentPreview title="Time picked from columns" code={timePickedFromColumnsCode}>
@@ -131,14 +127,13 @@ import { DateTimePicker, Field, FieldDescription, FieldLabel } from '@orkest/ui/
 export function Example() {
   const [value, setValue] = useState<string | null>(null);
 
-return (
-
-<Field style={{ width: '100%', maxWidth: '16rem' }}>
-<FieldLabel>Publish at</FieldLabel>
-<DateTimePicker value={value} onChange={setValue} />
-<FieldDescription>Stored as local wall-clock time.</FieldDescription>
-</Field>
-);
+  return (
+    <Field style={{ width: '100%', maxWidth: '16rem' }}>
+      <FieldLabel>Publish at</FieldLabel>
+      <DateTimePicker value={value} onChange={setValue} />
+      <FieldDescription>Stored as local wall-clock time.</FieldDescription>
+    </Field>
+  );
 }`;
 
 <ComponentPreview title="With a label and description" code={withALabelAndDescriptionCode}>

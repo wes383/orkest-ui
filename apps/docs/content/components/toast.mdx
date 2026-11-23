@@ -38,28 +38,16 @@ import { toast } from '@orkest/ui/client';
 export function Example() {
   return (
     <Stack direction="row" gap={2} wrap>
-      <Button
-        variant="outline"
-        onClick={() => toast.success('Changes saved')}
-      >
+      <Button variant="outline" onClick={() => toast.success('Changes saved')}>
         Success
       </Button>
-      <Button
-        variant="outline"
-        onClick={() => toast.error('Could not save')}
-      >
+      <Button variant="outline" onClick={() => toast.error('Could not save')}>
         Error
       </Button>
-      <Button
-        variant="outline"
-        onClick={() => toast.warning('Unsaved changes')}
-      >
+      <Button variant="outline" onClick={() => toast.warning('Unsaved changes')}>
         Warning
       </Button>
-      <Button
-        variant="outline"
-        onClick={() => toast.info('Copied to clipboard')}
-      >
+      <Button variant="outline" onClick={() => toast.info('Copied to clipboard')}>
         Info
       </Button>
     </Stack>
@@ -110,15 +98,13 @@ export function Example() {
         onClick: () => toast.dismiss(toastId),
       },
     });
+  }
 
-}
-
-return (
-
-<Button variant="outline" onClick={deleteTask}>
-Delete task
-</Button>
-);
+  return (
+    <Button variant="outline" onClick={deleteTask}>
+      Delete task
+    </Button>
+  );
 }`;
 
 <ComponentPreview title="Undo action" code={undoActionCode}>
@@ -135,9 +121,9 @@ export const uploadStateCode = `import { Button } from '@orkest/ui';
 import { toast } from '@orkest/ui/client';
 
 function simulateUpload() {
-return new Promise<void>((resolve) => {
-window.setTimeout(resolve, 1600);
-});
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, 1600);
+  });
 }
 
 export function Example() {
@@ -178,51 +164,46 @@ keeps a toast open until it is closed.
 
 export const viewportPositionsCode = `import { useState } from 'react';
 import { Button, Stack, Text } from '@orkest/ui';
-import {
-  createToast,
-  ToastProvider,
-  ToastViewport,
-  type ToastPosition,
-} from '@orkest/ui/client';
+import { createToast, ToastProvider, ToastViewport, type ToastPosition } from '@orkest/ui/client';
 
 const positions: ToastPosition[] = [
-'top-left',
-'top-center',
-'top-right',
-'bottom-left',
-'bottom-center',
-'bottom-right',
+  'top-left',
+  'top-center',
+  'top-right',
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
 ];
 
 export function Example() {
   const [host] = useState(() => createToast());
   const [position, setPosition] = useState<ToastPosition>('bottom-right');
 
-return (
-
-<ToastProvider toastManager={host.manager}>
-<Stack gap={3}>
-<Stack direction="row" gap={2} wrap>
-{positions.map((item) => (
-<Button
-key={item}
-size="sm"
-variant={position === item ? 'primary' : 'outline'}
-onClick={() => {
-setPosition(item);
-host.toast.info('Position: ' + item);
-}} >
-{item}
-</Button>
-))}
-</Stack>
-<Text size="sm" tone="muted">
-A local viewport opens in the selected corner.
-</Text>
-</Stack>
-<ToastViewport position={position} />
-</ToastProvider>
-);
+  return (
+    <ToastProvider toastManager={host.manager}>
+      <Stack gap={3}>
+        <Stack direction="row" gap={2} wrap>
+          {positions.map((item) => (
+            <Button
+              key={item}
+              size="sm"
+              variant={position === item ? 'primary' : 'outline'}
+              onClick={() => {
+                setPosition(item);
+                host.toast.info('Position: ' + item);
+              }}
+            >
+              {item}
+            </Button>
+          ))}
+        </Stack>
+        <Text size="sm" tone="muted">
+          A local viewport opens in the selected corner.
+        </Text>
+      </Stack>
+      <ToastViewport position={position} />
+    </ToastProvider>
+  );
 }`;
 
 <ComponentPreview title="Viewport positions" code={viewportPositionsCode}>
@@ -236,36 +217,32 @@ sets the default auto-dismiss delay in milliseconds (default `5000`).
 
 export const limitedQueueCode = `import { useState } from 'react';
 import { Button, Stack } from '@orkest/ui';
-import {
-  createToast,
-  ToastProvider,
-  ToastViewport,
-} from '@orkest/ui/client';
+import { createToast, ToastProvider, ToastViewport } from '@orkest/ui/client';
 
 export function Example() {
   const [host] = useState(() => createToast());
   const [count, setCount] = useState(0);
 
-return (
-
-<ToastProvider toastManager={host.manager} limit={2}>
-<Stack direction="row" gap={2} wrap>
-<Button
-variant="outline"
-onClick={() => {
-const next = count + 1;
-setCount(next);
-host.toast.info('Notification ' + next);
-}} >
-Add notification
-</Button>
-<Button variant="ghost" onClick={() => host.toast.dismissAll()}>
-Dismiss all
-</Button>
-</Stack>
-<ToastViewport position="bottom-left" />
-</ToastProvider>
-);
+  return (
+    <ToastProvider toastManager={host.manager} limit={2}>
+      <Stack direction="row" gap={2} wrap>
+        <Button
+          variant="outline"
+          onClick={() => {
+            const next = count + 1;
+            setCount(next);
+            host.toast.info('Notification ' + next);
+          }}
+        >
+          Add notification
+        </Button>
+        <Button variant="ghost" onClick={() => host.toast.dismissAll()}>
+          Dismiss all
+        </Button>
+      </Stack>
+      <ToastViewport position="bottom-left" />
+    </ToastProvider>
+  );
 }`;
 
 <ComponentPreview title="Limited queue" code={limitedQueueCode}>

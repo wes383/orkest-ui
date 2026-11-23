@@ -12,11 +12,7 @@ and fallback timing. Import the components from `@orkest/ui/client`.
 
 ## Live preview
 
-export const avatarWithStatusCode = `import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@orkest/ui/client';
+export const avatarWithStatusCode = `import { Avatar, AvatarFallback, AvatarImage } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -40,11 +36,7 @@ export function Example() {
 failure. By default the image stays mounted while loading or failed, but is hidden from assistive
 technology until it loads, so the fallback remains the accessible content.
 
-export const imageFailedImageAndInitialsCode = `import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@orkest/ui/client';
+export const imageFailedImageAndInitialsCode = `import { Avatar, AvatarFallback, AvatarImage } from '@orkest/ui/client';
 
 export function Example() {
   return (
@@ -80,11 +72,21 @@ export const initialsCode = `import { Avatar, AvatarFallback } from '@orkest/ui/
 export function Example() {
   return (
     <>
-      <Avatar size="xs"><AvatarFallback>{'XS'}</AvatarFallback></Avatar>
-      <Avatar size="sm"><AvatarFallback>{'SM'}</AvatarFallback></Avatar>
-      <Avatar size="md"><AvatarFallback>{'MD'}</AvatarFallback></Avatar>
-      <Avatar size="lg"><AvatarFallback>{'LG'}</AvatarFallback></Avatar>
-      <Avatar size="xl"><AvatarFallback>{'XL'}</AvatarFallback></Avatar>
+      <Avatar size="xs">
+        <AvatarFallback>{'XS'}</AvatarFallback>
+      </Avatar>
+      <Avatar size="sm">
+        <AvatarFallback>{'SM'}</AvatarFallback>
+      </Avatar>
+      <Avatar size="md">
+        <AvatarFallback>{'MD'}</AvatarFallback>
+      </Avatar>
+      <Avatar size="lg">
+        <AvatarFallback>{'LG'}</AvatarFallback>
+      </Avatar>
+      <Avatar size="xl">
+        <AvatarFallback>{'XL'}</AvatarFallback>
+      </Avatar>
     </>
   );
 }`;
@@ -218,10 +220,18 @@ export const overlappingAvatarsCode = `import { Avatar, AvatarFallback, AvatarGr
 export function Example() {
   return (
     <AvatarGroup size="md" spacing={2}>
-      <Avatar><AvatarFallback>{'AM'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'JL'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'SK'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'TW'}</AvatarFallback></Avatar>
+      <Avatar>
+        <AvatarFallback>{'AM'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'JL'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'SK'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'TW'}</AvatarFallback>
+      </Avatar>
     </AvatarGroup>
   );
 }`;
@@ -254,11 +264,21 @@ export const overflowCountCode = `import { Avatar, AvatarFallback, AvatarGroup }
 export function Example() {
   return (
     <AvatarGroup max={3} size="md">
-      <Avatar><AvatarFallback>{'AM'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'JL'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'SK'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'TW'}</AvatarFallback></Avatar>
-      <Avatar><AvatarFallback>{'RB'}</AvatarFallback></Avatar>
+      <Avatar>
+        <AvatarFallback>{'AM'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'JL'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'SK'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'TW'}</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>{'RB'}</AvatarFallback>
+      </Avatar>
     </AvatarGroup>
   );
 }`;

@@ -105,18 +105,11 @@ export function Example() {
 
 ## Variants
 
-export const defaultAndBorderedCode = `import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@orkest/ui';
+export const defaultAndBorderedCode = `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@orkest/ui';
 
 const rows = [
-['Design', '12'],
-['Engineering', '28'],
+  ['Design', '12'],
+  ['Engineering', '28'],
 ];
 
 export function Example() {
@@ -204,14 +197,7 @@ vertical rules between cells for tables that need clearer cell boundaries.
 
 ## Sizes
 
-export const smMdAndLgCode = `import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@orkest/ui';
+export const smMdAndLgCode = `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -273,14 +259,7 @@ export function Example() {
 
 ## Striped rows and hover
 
-export const stripedAndHoverableCode = `import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@orkest/ui';
+export const stripedAndHoverableCode = `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -295,7 +274,9 @@ export function Example() {
         {['Production', 'Staging', 'Preview', 'Local'].map((environment, index) => (
           <TableRow key={environment}>
             <TableCell>{environment}</TableCell>
-            <TableCell align="right">{new Intl.NumberFormat('en').format((index + 1) * 12500)}</TableCell>
+            <TableCell align="right">
+              {new Intl.NumberFormat('en').format((index + 1) * 12500)}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -337,14 +318,7 @@ reduced motion.
 
 ## Alignment and widths
 
-export const numericColumnCode = `import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@orkest/ui';
+export const numericColumnCode = `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@orkest/ui';
 
 export function Example() {
   return (
@@ -409,14 +383,7 @@ and `minWidth` to stop narrow columns from collapsing; numbers are pixels, strin
 
 ## Merged cells
 
-export const rowAndColumnSpansCode = `import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@orkest/ui';
+export const rowAndColumnSpansCode = `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@orkest/ui';
 
 export function Example() {
   return (

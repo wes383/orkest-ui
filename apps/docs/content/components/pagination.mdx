@@ -18,15 +18,14 @@ import { Pagination, Stack, Text } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(1);
 
-return (
-
-<Stack gap={2} align="center">
-<Pagination page={page} totalPages={5} onPageChange={setPage} />
-<Text size="sm" tone="muted">
-Page {page} of 5
-</Text>
-</Stack>
-);
+  return (
+    <Stack gap={2} align="center">
+      <Pagination page={page} totalPages={5} onPageChange={setPage} />
+      <Text size="sm" tone="muted">
+        Page {page} of 5
+      </Text>
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Basic pagination" code={basicPaginationCode}>
@@ -41,14 +40,13 @@ import { Pagination, Stack } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(2);
 
-return (
-
-<Stack gap={3} align="start">
-<Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
-<Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
-<Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
-</Stack>
-);
+  return (
+    <Stack gap={3} align="start">
+      <Pagination size="sm" page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination size="md" page={page} totalPages={5} onPageChange={setPage} />
+      <Pagination size="lg" page={page} totalPages={5} onPageChange={setPage} />
+    </Stack>
+  );
 }`;
 
 <ComponentPreview title="Small, medium, and large" code={smallMediumAndLargeCode}>
@@ -65,7 +63,7 @@ import { Pagination } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(1);
 
-return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
+  return <Pagination page={page} totalPages={20} onPageChange={setPage} />;
 }`;
 
 <ComponentPreview title="Twenty pages" code={twentyPagesCode}>
@@ -84,7 +82,7 @@ import { Pagination } from '@orkest/ui';
 export function Example() {
   const [page, setPage] = useState(10);
 
-return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
+  return <Pagination page={page} totalPages={20} showFirstLast onPageChange={setPage} />;
 }`;
 
 <ComponentPreview title="First and last jumps" code={firstAndLastJumpsCode}>
