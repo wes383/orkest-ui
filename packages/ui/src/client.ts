@@ -195,8 +195,14 @@ export type { DataColumn, DataTableProps } from './components/data-table';
 export { Radio, RadioGroup } from './components/radio';
 export type { RadioGroupProps, RadioOrientation, RadioProps, RadioSize } from './components/radio';
 
+export { Progress } from './components/progress';
+export type { ProgressProps, ProgressSize } from './components/progress';
+
 export { Switch } from './components/switch';
 export type { SwitchProps, SwitchSize } from './components/switch';
+
+export { OTPInput } from './components/otp-input';
+export type { OTPInputProps, OTPInputSize } from './components/otp-input';
 
 export { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from './components/tabs';
 export type {
@@ -210,6 +216,14 @@ export type {
   TabsTriggerProps,
   TabsVariant,
 } from './components/tabs';
+
+export { ToggleGroup, ToggleGroupItem } from './components/toggle-group';
+export type {
+  ToggleGroupItemProps,
+  ToggleGroupProps,
+  ToggleGroupSize,
+  ToggleGroupVariant,
+} from './components/toggle-group';
 
 export {
   createToast,
@@ -243,6 +257,21 @@ export type {
   ToastType,
   ToastViewportProps,
 } from './components/toast';
+
+export { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from './components/accordion';
+export type {
+  AccordionItemProps,
+  AccordionPanelProps,
+  AccordionProps,
+  AccordionTriggerProps,
+} from './components/accordion';
+
+export { Collapsible, CollapsiblePanel, CollapsibleTrigger } from './components/collapsible';
+export type {
+  CollapsiblePanelProps,
+  CollapsibleProps,
+  CollapsibleTriggerProps,
+} from './components/collapsible';
 
 export { Combobox } from './components/combobox';
 export type { ComboboxProps } from './components/combobox';
@@ -281,6 +310,34 @@ export type {
   SelectProps,
   SelectSize,
 } from './components/select';
+
+export {
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './components/sheet';
+export type {
+  SheetBodyProps,
+  SheetCloseProps,
+  SheetContentProps,
+  SheetDescriptionProps,
+  SheetFooterProps,
+  SheetHeaderProps,
+  SheetProps,
+  SheetSide,
+  SheetSize,
+  SheetTitleProps,
+  SheetTriggerProps,
+} from './components/sheet';
+
+export { Slider } from './components/slider';
+export type { SliderProps, SliderSize } from './components/slider';
 
 export {
   Calendar,

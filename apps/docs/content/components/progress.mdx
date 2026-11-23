@@ -1,0 +1,136 @@
+---
+title: Progress
+description: Show how much of a task has completed.
+section: components
+---
+
+`Progress` reports the completion of a task. Use it for determinate work where a percentage is
+known, and set `value` to `null` when the remaining work cannot be measured.
+
+The component is built on Base UI Progress and exported from `@orkest/ui/client`.
+
+## Basic usage
+
+Pass the current `value` and an optional `label`. Set `showValue` to display the formatted value at
+the end of the header.
+
+export const progressSizesCode = `import { Stack } from '@orkest/ui';
+import { Progress } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={4}>
+      <Progress label="Small" value={35} size="sm" showValue />
+      <Progress label="Medium" value={60} size="md" showValue />
+      <Progress label="Large" value={85} size="lg" showValue />
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Sizes" code={progressSizesCode}>
+  <ProgressSizesExample />
+</ComponentPreview>
+
+`size` accepts `sm`, `md`, and `lg` and only changes the track height. The label and value keep
+their place in the header at every size.
+
+## Indeterminate progress
+
+When `value` is `null`, the bar becomes indeterminate and animates a segment across the track. Use
+it while work is starting or while the total amount is still unknown.
+
+export const progressIndeterminateCode = `import { Stack, Text } from '@orkest/ui';
+import { Progress } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Stack gap={2}>
+      <Progress label="Preparing export" value={null} />
+      <Text size="sm" tone="muted">
+        The value stays unknown until the archive is ready.
+      </Text>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Indeterminate" code={progressIndeterminateCode}>
+  <ProgressIndeterminateExample />
+</ComponentPreview>
+
+Prefer a determinate value whenever one is available, because it gives people a way to estimate the
+remaining time.
+
+## Custom ranges
+
+`min` and `max` default to `0` and `100`. The visible value and `aria-valuetext` are derived from
+the current percentage, so a bar with `max={5}` and `value={3}` reads as `60%`. Use `format` or
+`getAriaValueText` when the value represents something other than a percentage, such as files or
+steps.
+
+## Accessibility
+
+- The root exposes `role="progressbar"` with `aria-valuemin` and `aria-valuemax`.
+- `aria-valuenow` is present only while a value is known. Indeterminate bars omit it and announce
+  "indeterminate progress".
+- `label` names the bar through `aria-labelledby`. Use `aria-label` instead when there is no visible
+  label.
+- `aria-valuetext` and `getAriaValueText` let you describe values in domain terms for screen
+  readers.
+- The indicator animation is disabled when the user prefers reduced motion.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'number | null',
+      description:
+        'Current value. Required. Pass null to render an indeterminate bar.',
+    },
+    {
+      name: 'min',
+      type: 'number',
+      default: '0',
+      description: 'Lower bound of the range.',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '100',
+      description: 'Upper bound of the range.',
+    },
+    {
+      name: 'label',
+      type: 'ReactNode',
+      description: 'Label shown above the track. It also names the bar for assistive technology.',
+    },
+    {
+      name: 'showValue',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows the formatted value at the end of the header.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Track height.',
+    },
+    {
+      name: 'format',
+      type: 'Intl.NumberFormatOptions',
+      description: 'Formats the value shown in the header and read by assistive technology.',
+    },
+    {
+      name: 'getAriaValueText',
+      type: '(formattedValue, value) => string',
+      description: 'Returns a custom text alternative for the current value.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the root element.',
+    },
+  ]}
+/>

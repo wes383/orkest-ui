@@ -1,0 +1,201 @@
+---
+title: OTP Input
+description: One-time-code input with equally sized slots and accessible group semantics.
+section: components
+---
+
+`OTPInput` renders one input slot per digit. It supports controlled and uncontrolled values,
+masked entry, validation, completion callbacks, and form submission through Base UI OTP Field.
+
+`OTPInput` is exported from `@orkest/ui/client`.
+
+## Basic usage
+
+export const otpInputBasicCode = `import { OTPInput } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <OTPInput
+      aria-label="Verification code"
+      length={6}
+      separator={<span aria-hidden="true">·</span>}
+    />
+  );
+}`;
+
+<ComponentPreview title="Six-digit code" code={otpInputBasicCode}>
+  <OTPInputBasicExample />
+</ComponentPreview>
+
+`length` is required and must match the number of slots you expect the user to fill.
+
+## Masked and controlled
+
+Pass `mask` to render password inputs. Use `value` and `onValueChange` to keep the code in your own
+state, and `onValueComplete` to react when every slot is filled.
+
+export const otpInputMaskedCode = `import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { OTPInput } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState('');
+  const [complete, setComplete] = useState(false);
+
+  return (
+    <Stack gap={2}>
+      <OTPInput
+        aria-label="One-time password"
+        length={6}
+        mask
+        value={value}
+        onValueChange={(nextValue) => {
+          setValue(nextValue);
+          setComplete(false);
+        }}
+        onValueComplete={() => setComplete(true)}
+      />
+      <Text size="sm" tone="muted">
+        {complete ? 'Code complete.' : \`\${value.length} of 6 digits entered.\`}
+      </Text>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Masked and controlled" code={otpInputMaskedCode}>
+  <OTPInputMaskedExample />
+</ComponentPreview>
+
+## Separators
+
+Set `separator` to render content between groups of three slots. No separator is rendered after the
+final slot, so a six-digit code shows one separator and a nine-digit code shows two. The example
+above uses a centered dot between the two groups.
+
+## Sizes
+
+`size` accepts `sm`, `md`, and `lg`. Slots stay square at every size, and the text scales with the
+slot.
+
+## States
+
+- `disabled` disables every slot and dims the surface.
+- `readOnly` keeps the value visible and focusable while preventing edits.
+- Wrap the field in `Field` to show validation messages; the invalid state is reflected on the
+  group and its slots.
+- `required`, `name`, and `autoSubmit` integrate with native forms.
+
+## Keyboard interaction
+
+| Key                    | Behavior                              |
+| ---------------------- | ------------------------------------- |
+| ArrowLeft / ArrowRight | Move focus between slots              |
+| Backspace / Delete     | Clear the current or previous slot    |
+| Home / End             | Move focus to the first or last slot  |
+| Paste                  | Fill the remaining slots from the text |
+| Tab                    | Move focus into or out of the field   |
+
+## Accessibility
+
+- The root renders `role="group"`. Give it an accessible name with `aria-label` or
+  `aria-labelledby`, or use `FieldLabel` inside `Field`.
+- Each slot is a native input, so keyboard and screen-reader behavior follow the platform.
+- `mask` renders password inputs without exposing the entered digits visually.
+- Disabled, read-only, and invalid states use native attributes and are exposed to assistive
+  technology.
+- Focus is always visible through the shared focus ring token.
+- Motion respects `prefers-reduced-motion`.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'length',
+      type: 'number',
+      description: 'Number of input slots. Required.',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Controlled code value.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial code value for uncontrolled usage.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string, eventDetails) => void',
+      description: 'Called when the code changes.',
+    },
+    {
+      name: 'onValueComplete',
+      type: '(value: string, eventDetails) => void',
+      description: 'Called when every slot is filled.',
+    },
+    {
+      name: 'mask',
+      type: 'boolean',
+      default: 'false',
+      description: 'Masks entered characters with password inputs.',
+    },
+    {
+      name: 'separator',
+      type: 'ReactNode',
+      description: 'Content rendered between groups of three slots.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Slot size and text size.',
+    },
+    {
+      name: 'validationType',
+      type: `'numeric' | 'alpha' | 'alphanumeric' | 'none'`,
+      default: `'numeric'`,
+      description: 'Characters accepted by the field.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables every slot.',
+    },
+    {
+      name: 'readOnly',
+      type: 'boolean',
+      default: 'false',
+      description: 'Keeps the value visible but prevents edits.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'Requires a complete value for form submission.',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      description: 'Form field name for the hidden validation input.',
+    },
+    {
+      name: 'autoSubmit',
+      type: 'boolean',
+      default: 'false',
+      description: 'Submits the owning form when the code becomes complete.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the group element.',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible name for the group.',
+    },
+  ]}
+/>

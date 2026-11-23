@@ -1,0 +1,181 @@
+---
+title: Collapsible
+description: Show and hide one region of content from a single trigger.
+section: components
+---
+
+`Collapsible` reveals one region from one trigger. Use it for "show more" text, advanced settings,
+logs, or any detail that should stay out of the way until it is needed.
+
+The component is built on Base UI Collapsible and exported from `@orkest/ui/client`. For a group of
+related sections with shared open rules, use [Accordion](/docs/components/accordion/).
+
+## Basic usage
+
+export const basicCollapsibleCode = `import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Collapsible>
+      <CollapsibleTrigger>Show details</CollapsibleTrigger>
+      <CollapsiblePanel>
+        Retries, timeouts, and proxy settings stay hidden until they are needed.
+      </CollapsiblePanel>
+    </Collapsible>
+  );
+}`;
+
+<ComponentPreview title="Show more" code={basicCollapsibleCode}>
+  <CollapsibleBasicExample />
+</ComponentPreview>
+
+## Custom trigger
+
+Pass a `render` element to replace the default trigger, for example a `Button`. The rendered
+element keeps the trigger behavior, including keyboard activation and `aria-expanded`.
+
+export const customTriggerCollapsibleCode = `import { Button } from '@orkest/ui';
+import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Collapsible>
+      <CollapsibleTrigger render={<Button variant="outline">Toggle advanced settings</Button>} />
+      <CollapsiblePanel>Retries, timeouts, and proxy configuration.</CollapsiblePanel>
+    </Collapsible>
+  );
+}`;
+
+<ComponentPreview title="Button trigger" code={customTriggerCollapsibleCode}>
+  <CollapsibleCustomTriggerExample />
+</ComponentPreview>
+
+## Controlled
+
+Use `open` and `onOpenChange` when the surrounding state owns the panel.
+
+export const controlledCollapsibleCode = `import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Stack gap={3}>
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <CollapsibleTrigger>Advanced settings</CollapsibleTrigger>
+        <CollapsiblePanel>Retries, timeouts, and proxy configuration.</CollapsiblePanel>
+      </Collapsible>
+      <Text size="sm" tone="muted">
+        {open ? 'Open' : 'Closed'}
+      </Text>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Controlled panel" code={controlledCollapsibleCode}>
+  <CollapsibleControlledExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `Collapsible` owns the open state.
+- `CollapsibleTrigger` toggles the panel and exposes `aria-expanded`.
+- `CollapsiblePanel` animates its height and holds the content.
+
+The default trigger is a text button with a chevron. Pass `icon` to change the chevron, `icon={null}`
+to hide it, or `render` to use your own element.
+
+## Keyboard
+
+| Key             | Action                     |
+| --------------- | -------------------------- |
+| `Enter`         | Toggle the panel           |
+| `Space`         | Toggle the panel           |
+| `Tab`           | Move focus into the panel  |
+
+## Accessibility
+
+- The trigger is a button with `aria-expanded` and `aria-controls`.
+- Closed content is removed from assistive technology unless `keepMounted` is set.
+- `disabled` removes interaction from the trigger.
+- The chevron rotation is decorative and respects `prefers-reduced-motion`.
+
+## Props
+
+### Collapsible
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Called when the panel opens or closes.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables the trigger and the panel toggle.',
+    },
+  ]}
+/>
+
+### Collapsible.Trigger
+
+<PropsTable
+  rows={[
+    {
+      name: 'icon',
+      type: 'LucideIcon | null',
+      default: 'ChevronDown',
+      description: 'Icon after the label. Pass null to hide it.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default trigger element.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Trigger label when no render element is provided.',
+    },
+  ]}
+/>
+
+### Collapsible.Panel
+
+<PropsTable
+  rows={[
+    {
+      name: 'keepMounted',
+      type: 'boolean',
+      default: 'false',
+      description: 'Keeps the panel in the DOM while closed.',
+    },
+    {
+      name: 'hiddenUntilFound',
+      type: 'boolean',
+      default: 'false',
+      description: 'Lets browser page search reveal closed content.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Content shown while the panel is open.',
+    },
+  ]}
+/>

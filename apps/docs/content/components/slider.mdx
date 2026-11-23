@@ -1,0 +1,200 @@
+---
+title: Slider
+description: Pick a number or a range by moving a thumb along a track.
+section: components
+---
+
+`Slider` selects a value from a continuous or stepped range. Use it when the exact number matters
+less than its position between bounds, such as volume, zoom, or a price range.
+
+The component is built on Base UI Slider and exported from `@orkest/ui/client`.
+
+## Basic usage
+
+Provide a `label` so every thumb has an accessible name. `showValue` displays the current value in
+the header.
+
+export const sliderBasicCode = `import { Slider } from '@orkest/ui/client';
+
+export function Example() {
+  return <Slider label="Volume" defaultValue={40} showValue />;
+}`;
+
+<ComponentPreview title="Basic slider" code={sliderBasicCode}>
+  <SliderBasicExample />
+</ComponentPreview>
+
+Use `value` with `onValueChange` for a controlled slider, or `defaultValue` for an uncontrolled one.
+
+## Range sliders
+
+Pass an array to `value` or `defaultValue` to render one thumb per entry. The slider keeps the
+thumbs ordered and reports every change as an array.
+
+export const sliderRangeCode = `import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { Slider } from '@orkest/ui/client';
+
+export function Example() {
+  const [range, setRange] = useState<number[]>([20, 60]);
+
+  return (
+    <Stack gap={2}>
+      <Slider
+        label="Price range"
+        value={range}
+        onValueChange={(value) => {
+          if (Array.isArray(value)) {
+            setRange([...value]);
+          }
+        }}
+        showValue
+      />
+      <Text size="sm" tone="muted">
+        Selected: {range.join(' – ')}
+      </Text>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Range slider" code={sliderRangeCode}>
+  <SliderRangeExample />
+</ComponentPreview>
+
+Use `minStepsBetweenValues` to keep a minimum distance between the thumbs.
+
+## Vertical orientation
+
+Set `orientation="vertical"` to lay the track out top to bottom. Vertical sliders use a default
+length; wrap the slider in a sized container when you need a different height.
+
+export const sliderVerticalCode = `import { Slider } from '@orkest/ui/client';
+
+export function Example() {
+  return <Slider label="Zoom" defaultValue={50} orientation="vertical" showValue />;
+}`;
+
+<ComponentPreview title="Vertical slider" code={sliderVerticalCode}>
+  <SliderVerticalExample />
+</ComponentPreview>
+
+## Steps and bounds
+
+`min` and `max` default to `0` and `100`, and `step` defaults to `1`. The thumb snaps to multiples of
+`step` from `min`, so choose a range that divides evenly by the step. `largeStep` controls the
+increment used by Page Up, Page Down, and Shift plus an arrow key, and defaults to `10`.
+
+## Disabled state
+
+Set `disabled` to stop pointer and keyboard interaction. The slider dims and each thumb is exposed
+as a disabled form control.
+
+## Keyboard interaction
+
+| Key                 | Behavior                                      |
+| ------------------- | --------------------------------------------- |
+| ArrowRight / ArrowUp | Increase the focused thumb by `step`         |
+| ArrowLeft / ArrowDown | Decrease the focused thumb by `step`        |
+| Page Up / Page Down | Increase or decrease by `largeStep`           |
+| Shift + Arrow       | Increase or decrease by `largeStep`           |
+| Home / End          | Move the focused thumb to the minimum or maximum |
+| Tab                 | Move focus into or out of the slider          |
+
+In a range slider, each thumb is a separate focus target.
+
+## Accessibility
+
+- Every thumb renders a native range input with an accessible name from `label`.
+- The current value is exposed with `aria-valuenow`, and the orientation with `aria-orientation`.
+- For range sliders, each thumb announces whether it controls the start or the end of the range.
+- Keyboard focus draws the shared focus ring around the thumb.
+- Disabled sliders expose disabled inputs that cannot be changed.
+- Hover and drag states are communicated with more than color, including cursor and shadow
+  changes. Motion respects `prefers-reduced-motion`.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'number | readonly number[]',
+      description:
+        'Controlled value. Pass an array with one entry per thumb for a range slider.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'number | readonly number[]',
+      description: 'Initial value for uncontrolled usage.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value, eventDetails) => void',
+      description: 'Called whenever the value changes.',
+    },
+    {
+      name: 'min',
+      type: 'number',
+      default: '0',
+      description: 'Lower bound of the range.',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '100',
+      description: 'Upper bound of the range.',
+    },
+    {
+      name: 'step',
+      type: 'number',
+      default: '1',
+      description: 'Increment applied by arrow keys and pointer movement.',
+    },
+    {
+      name: 'largeStep',
+      type: 'number',
+      default: '10',
+      description: 'Increment applied by Page Up, Page Down, and Shift plus an arrow key.',
+    },
+    {
+      name: 'minStepsBetweenValues',
+      type: 'number',
+      default: '0',
+      description: 'Minimum distance between thumbs in a range slider.',
+    },
+    {
+      name: 'orientation',
+      type: `'horizontal' | 'vertical'`,
+      default: `'horizontal'`,
+      description: 'Layout and keyboard axis of the slider.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables pointer and keyboard interaction.',
+    },
+    {
+      name: 'label',
+      type: 'ReactNode',
+      description: 'Label shown above the control and associated with every thumb.',
+    },
+    {
+      name: 'showValue',
+      type: 'boolean',
+      default: 'false',
+      description: 'Shows the formatted value or range at the end of the header.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Thumb and track size.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the root element.',
+    },
+  ]}
+/>

@@ -1,0 +1,112 @@
+.root {
+  --otp-slot-size: var(--ok-control-height-md);
+  --otp-font-size: var(--ok-font-size-md);
+  --otp-radius: var(--ok-radius-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --otp-slot-size: var(--ok-control-height-sm);
+  --otp-font-size: var(--ok-font-size-sm);
+  --otp-radius: var(--ok-radius-md);
+}
+
+.root[data-size="md"] {
+  --otp-slot-size: var(--ok-control-height-md);
+  --otp-font-size: var(--ok-font-size-md);
+  --otp-radius: var(--ok-radius-lg);
+}
+
+.root[data-size="lg"] {
+  --otp-slot-size: var(--ok-control-height-lg);
+  --otp-font-size: var(--ok-font-size-lg);
+  --otp-radius: var(--ok-radius-lg);
+}
+
+.input {
+  display: block;
+  box-sizing: border-box;
+  width: var(--otp-slot-size);
+  height: var(--otp-slot-size);
+  margin: 0;
+  padding: 0;
+  border: var(--ok-border-width) solid var(--ui-border);
+  border-radius: var(--otp-radius);
+  appearance: none;
+  background: var(--ui-surface);
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--otp-font-size);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: 1;
+  text-align: center;
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+.input:focus {
+  border-color: var(--ui-focus-ring);
+}
+
+.input:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.input[data-filled] {
+  background: var(--ui-secondary);
+  color: var(--ui-secondary-foreground);
+}
+
+@media (hover: hover) {
+  .input:hover:not(:focus):not([data-disabled]):not([data-readonly]) {
+    border-color: var(--ui-border-strong);
+  }
+}
+
+.root[data-invalid] .input {
+  border-color: var(--ui-danger);
+}
+
+.root[data-readonly]:not([data-disabled]) .input {
+  background: var(--ui-surface-sunken);
+  cursor: default;
+}
+
+.root[data-disabled] .input {
+  background: var(--ui-disabled-surface);
+  border-color: var(--ui-border-subtle);
+  color: var(--ui-disabled-foreground);
+  cursor: not-allowed;
+}
+
+.separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--ui-subtle-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--otp-font-size);
+  line-height: 1;
+}
+
+/* iOS Safari zooms editable controls below 16px when they receive focus. */
+@media (pointer: coarse) {
+  .root[data-size="sm"],
+  .root[data-size="md"] {
+    --otp-font-size: var(--ok-font-size-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input {
+    transition: none;
+  }
+}

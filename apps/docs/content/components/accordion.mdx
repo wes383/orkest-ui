@@ -1,0 +1,242 @@
+---
+title: Accordion
+description: Stack related sections that expand one at a time or independently.
+section: components
+---
+
+`Accordion` groups related sections and reveals one or more panels on demand. Use the default
+single-open mode for FAQs and settings, or set `multiple` when several sections should stay open
+together.
+
+The component is built on Base UI Accordion and exported from `@orkest/ui/client`. For a single
+region without group rules, use [Collapsible](/docs/components/collapsible/).
+
+## Basic usage
+
+export const basicAccordionCode = `import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Accordion defaultValue={['shipping']}>
+      <AccordionItem value="shipping">
+        <AccordionTrigger>Shipping</AccordionTrigger>
+        <AccordionPanel>Orders leave the warehouse within two business days.</AccordionPanel>
+      </AccordionItem>
+      <AccordionItem value="returns">
+        <AccordionTrigger>Returns</AccordionTrigger>
+        <AccordionPanel>Unused items can be returned within 30 days of delivery.</AccordionPanel>
+      </AccordionItem>
+      <AccordionItem value="support">
+        <AccordionTrigger>Support</AccordionTrigger>
+        <AccordionPanel>Reach the team from the help panel in your account.</AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  );
+}`;
+
+<ComponentPreview title="Single-open accordion" code={basicAccordionCode}>
+  <AccordionBasicExample />
+</ComponentPreview>
+
+## Multiple sections
+
+Set `multiple` to keep several panels open. Each trigger shows a chevron by default; pass a Lucide
+icon through `icon`, or `icon={null}` to hide it.
+
+export const multipleAccordionCode = `import { Plus } from 'lucide-react';
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Accordion multiple defaultValue={['account']}>
+      <AccordionItem value="account">
+        <AccordionTrigger icon={Plus}>Account</AccordionTrigger>
+        <AccordionPanel>Update your name, email, and password.</AccordionPanel>
+      </AccordionItem>
+      <AccordionItem value="billing">
+        <AccordionTrigger>Billing</AccordionTrigger>
+        <AccordionPanel>Manage invoices and payment methods.</AccordionPanel>
+      </AccordionItem>
+      <AccordionItem value="notifications">
+        <AccordionTrigger>Notifications</AccordionTrigger>
+        <AccordionPanel>Choose which activity sends an email.</AccordionPanel>
+      </AccordionItem>
+    </Accordion>
+  );
+}`;
+
+<ComponentPreview title="Multiple open sections" code={multipleAccordionCode}>
+  <AccordionMultipleExample />
+</ComponentPreview>
+
+## Controlled
+
+`value` and `defaultValue` are arrays of item values. With `value`, the open items follow your
+state; `onValueChange` receives the next array.
+
+export const controlledAccordionCode = `import { useState } from 'react';
+import { Stack, Text } from '@orkest/ui';
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from '@orkest/ui/client';
+
+export function Example() {
+  const [value, setValue] = useState<string[]>(['account']);
+
+  return (
+    <Stack gap={3}>
+      <Accordion value={value} onValueChange={setValue}>
+        <AccordionItem value="account">
+          <AccordionTrigger>Account</AccordionTrigger>
+          <AccordionPanel>Update your name, email, and password.</AccordionPanel>
+        </AccordionItem>
+        <AccordionItem value="billing">
+          <AccordionTrigger>Billing</AccordionTrigger>
+          <AccordionPanel>Manage invoices and payment methods.</AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+      <Text size="sm" tone="muted">
+        Open: {value.join(', ') || 'none'}
+      </Text>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Controlled accordion" code={controlledAccordionCode}>
+  <AccordionControlledExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `Accordion` owns the open values and the single or multiple rule.
+- `AccordionItem` pairs one trigger with one panel and needs a stable string `value`.
+- `AccordionTrigger` renders a heading and a button with `aria-expanded` and `aria-controls`.
+- `AccordionPanel` animates its height and holds the section content.
+
+Item values should be stable strings rather than array indexes, so state survives reordering and
+filtering.
+
+## Keyboard
+
+| Key            | Action                            |
+| -------------- | --------------------------------- |
+| `Enter`        | Toggle the focused section        |
+| `Space`        | Toggle the focused section        |
+| `Tab`          | Move to the next trigger          |
+| `Shift` + `Tab` | Move to the previous trigger      |
+
+Triggers are regular buttons, so the browser handles focus order. Base UI does not add arrow-key
+navigation between sections.
+
+## Accessibility
+
+- Every trigger is a button inside a heading, with `aria-expanded` and `aria-controls`.
+- The panel is labelled by the trigger and hidden from assistive technology while closed.
+- `disabled` on the root or on one item removes it from interaction.
+- The chevron rotation is decorative and respects `prefers-reduced-motion`.
+
+## Props
+
+### Accordion
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string[]',
+      description: 'Controlled list of open item values.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string[]',
+      default: '[]',
+      description: 'Open items for uncontrolled usage.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string[]) => void',
+      description: 'Called when the set of open items changes.',
+    },
+    {
+      name: 'multiple',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows several sections to stay open at the same time.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables every section.',
+    },
+    {
+      name: 'keepMounted',
+      type: 'boolean',
+      default: 'false',
+      description: 'Keeps closed panels in the DOM.',
+    },
+  ]}
+/>
+
+### Accordion.Item
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Stable value used by the root value array.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables this section only.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Called when this section opens or closes.',
+    },
+  ]}
+/>
+
+### Accordion.Trigger
+
+<PropsTable
+  rows={[
+    {
+      name: 'icon',
+      type: 'LucideIcon | null',
+      default: 'ChevronDown',
+      description: 'Icon after the label. Pass null to hide it.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Section title, also the button accessible name.',
+    },
+  ]}
+/>
+
+### Accordion.Panel
+
+<PropsTable
+  rows={[
+    {
+      name: 'keepMounted',
+      type: 'boolean',
+      default: 'false',
+      description: 'Keeps the panel in the DOM while closed.',
+    },
+    {
+      name: 'hiddenUntilFound',
+      type: 'boolean',
+      default: 'false',
+      description: 'Lets browser page search reveal closed content.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Panel content shown when the section is open.',
+    },
+  ]}
+/>

@@ -68,6 +68,32 @@ import {
   AlertWithoutTitleExample,
 } from '../examples/alert-examples';
 import {
+  AccordionBasicExample,
+  AccordionControlledExample,
+  AccordionMultipleExample,
+} from '../examples/accordion-examples';
+import {
+  CollapsibleBasicExample,
+  CollapsibleControlledExample,
+  CollapsibleCustomTriggerExample,
+} from '../examples/collapsible-examples';
+import { SheetBasicExample, SheetSidesExample } from '../examples/sheet-examples';
+import { OTPInputBasicExample, OTPInputMaskedExample } from '../examples/otp-input-examples';
+import {
+  ToggleGroupBasicExample,
+  ToggleGroupMultipleExample,
+} from '../examples/toggle-group-examples';
+import { BreadcrumbBasicExample, BreadcrumbEllipsisExample } from '../examples/breadcrumb-examples';
+import { KbdBasicExample } from '../examples/kbd-examples';
+import { VisuallyHiddenExample } from '../examples/visually-hidden-examples';
+import { AspectRatioExample } from '../examples/aspect-ratio-examples';
+import { ProgressIndeterminateExample, ProgressSizesExample } from '../examples/progress-examples';
+import {
+  SliderBasicExample,
+  SliderRangeExample,
+  SliderVerticalExample,
+} from '../examples/slider-examples';
+import {
   DataTableActionsExample,
   DataTableExample,
   DataTableExpandableExample,
@@ -326,6 +352,28 @@ export const mdxComponents = {
   CalendarCaptionSelectExample,
   CalendarRangeExample,
   CalendarSizesExample,
+  AccordionBasicExample,
+  AccordionControlledExample,
+  AccordionMultipleExample,
+  CollapsibleBasicExample,
+  CollapsibleControlledExample,
+  CollapsibleCustomTriggerExample,
+  SheetBasicExample,
+  SheetSidesExample,
+  OTPInputBasicExample,
+  OTPInputMaskedExample,
+  ToggleGroupBasicExample,
+  ToggleGroupMultipleExample,
+  BreadcrumbBasicExample,
+  BreadcrumbEllipsisExample,
+  KbdBasicExample,
+  VisuallyHiddenExample,
+  AspectRatioExample,
+  ProgressIndeterminateExample,
+  ProgressSizesExample,
+  SliderBasicExample,
+  SliderRangeExample,
+  SliderVerticalExample,
   Combobox,
   ComboboxAsyncExample,
   ComboboxBasicExample,

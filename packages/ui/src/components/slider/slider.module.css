@@ -1,0 +1,146 @@
+.root {
+  --slider-thumb-size: 1rem;
+  --slider-track-height: calc(var(--ok-space-1) * 1.5);
+  --slider-label-font-size: var(--ok-font-size-sm);
+  /* Vertical sliders have no content-derived length, so they need a default. */
+  --slider-length: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  width: 100%;
+  min-width: 0;
+  color: var(--ui-foreground);
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --slider-thumb-size: 0.875rem;
+  --slider-track-height: var(--ok-space-1);
+  --slider-label-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="md"] {
+  --slider-thumb-size: 1rem;
+  --slider-track-height: calc(var(--ok-space-1) * 1.5);
+  --slider-label-font-size: var(--ok-font-size-sm);
+}
+
+.root[data-size="lg"] {
+  --slider-thumb-size: 1.25rem;
+  --slider-track-height: var(--ok-space-2);
+  --slider-label-font-size: var(--ok-font-size-md);
+}
+
+.root[data-orientation="vertical"] {
+  width: fit-content;
+  align-items: flex-start;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  min-width: 0;
+}
+
+.label {
+  min-width: 0;
+  font-size: var(--slider-label-font-size);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: var(--ok-line-height-snug);
+}
+
+.value {
+  margin-inline-start: auto;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--ok-line-height-snug);
+  white-space: nowrap;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.root[data-orientation="vertical"] .control {
+  align-items: stretch;
+  width: auto;
+  height: var(--slider-length);
+}
+
+.track {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  height: var(--slider-track-height);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-surface-sunken);
+}
+
+.root[data-orientation="vertical"] .track {
+  flex: none;
+  width: var(--slider-track-height);
+  height: 100%;
+}
+
+.indicator {
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-primary);
+}
+
+.thumb {
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border: var(--ok-border-width-strong) solid var(--ui-primary);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-surface);
+  box-shadow: var(--ui-shadow-xs);
+  cursor: grab;
+  outline: none;
+  transition:
+    box-shadow var(--ok-duration-fast) var(--ok-ease-standard),
+    border-color var(--ok-duration-fast) var(--ok-ease-standard),
+    background-color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+/* The native range input covers the thumb and receives focus and keyboard input. */
+.thumb:has(input:focus-visible) {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+@media (hover: hover) {
+  .thumb:hover:not([data-disabled]) {
+    border-color: var(--ui-foreground);
+  }
+}
+
+.thumb[data-dragging] {
+  border-color: var(--ui-foreground);
+  box-shadow: var(--ui-shadow-sm);
+  cursor: grabbing;
+}
+
+.root[data-disabled] {
+  opacity: var(--ok-opacity-disabled);
+}
+
+.root[data-disabled] .control,
+.root[data-disabled] .thumb {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb {
+    transition: none;
+  }
+}

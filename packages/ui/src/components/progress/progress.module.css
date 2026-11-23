@@ -1,0 +1,99 @@
+.root {
+  --progress-height: var(--ok-space-2);
+  --progress-label-font-size: var(--ok-font-size-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  width: 100%;
+  min-width: 0;
+  font-family: var(--ok-font-sans);
+}
+
+.root[data-size="sm"] {
+  --progress-height: var(--ok-space-1);
+  --progress-label-font-size: var(--ok-font-size-xs);
+}
+
+.root[data-size="md"] {
+  --progress-height: var(--ok-space-2);
+  --progress-label-font-size: var(--ok-font-size-sm);
+}
+
+.root[data-size="lg"] {
+  --progress-height: var(--ok-space-3);
+  --progress-label-font-size: var(--ok-font-size-md);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  min-width: 0;
+}
+
+.label {
+  min-width: 0;
+  color: var(--ui-foreground);
+  font-size: var(--progress-label-font-size);
+  font-weight: var(--ok-font-weight-medium);
+  line-height: var(--ok-line-height-snug);
+}
+
+.value {
+  margin-inline-start: auto;
+  color: var(--ui-muted-foreground);
+  font-size: var(--ok-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--ok-line-height-snug);
+  white-space: nowrap;
+}
+
+.track {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: var(--progress-height);
+  border-radius: var(--ok-radius-full);
+  background: var(--ui-surface-sunken);
+}
+
+.indicator {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ui-primary);
+  transition: width var(--ok-duration-normal) var(--ok-ease-standard);
+}
+
+/*
+ * Base UI leaves the indicator without an inline width while the value is
+ * indeterminate, so a fixed segment can travel across the track.
+ */
+.indicator[data-indeterminate] {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 40%;
+  animation: progress-indeterminate var(--ok-duration-shimmer) var(--ok-ease-standard) infinite;
+}
+
+@keyframes progress-indeterminate {
+  from {
+    inset-inline-start: -40%;
+  }
+
+  to {
+    inset-inline-start: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    transition: none;
+  }
+
+  .indicator[data-indeterminate] {
+    animation: none;
+  }
+}

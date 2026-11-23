@@ -1,0 +1,153 @@
+---
+title: Breadcrumb
+description: A hierarchical trail that shows the current page and its ancestors.
+section: components
+---
+
+`Breadcrumb` shows where the current page sits in the hierarchy and gives readers a way back to
+parent pages. Use it on nested pages; for flat navigation use tabs or a menu instead.
+
+## Basic trail
+
+export const breadcrumbBasicCode = `import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}`;
+
+<ComponentPreview title="Basic trail" code={breadcrumbBasicCode}>
+  <BreadcrumbBasicExample />
+</ComponentPreview>
+
+Every entry except the last is a link. The last entry uses `BreadcrumbPage`, which renders the
+current page as text with `aria-current="page"` instead of a link.
+
+## Collapsed entries
+
+Long trails can fold the middle entries into an ellipsis:
+
+export const breadcrumbEllipsisCode = `import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis />
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}`;
+
+<ComponentPreview title="Collapsed entries" code={breadcrumbEllipsisCode}>
+  <BreadcrumbEllipsisExample />
+</ComponentPreview>
+
+`BreadcrumbEllipsis` renders a span, so place it inside `BreadcrumbItem`. Its icon is decorative, and
+its `label` (default `More`) is announced by screen readers.
+
+## Composition
+
+- `Breadcrumb` is the navigation landmark. It is labelled `Breadcrumb` by default.
+- `BreadcrumbList` is the ordered list that holds the entries.
+- `BreadcrumbItem` wraps one entry.
+- `BreadcrumbLink` is an ancestor link. It forwards `href` and other anchor attributes.
+- `BreadcrumbPage` marks the current page and is never a link.
+- `BreadcrumbSeparator` is a decorative divider with a chevron by default. Pass children to replace
+  the icon.
+- `BreadcrumbEllipsis` stands in for collapsed entries.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'label',
+      type: 'string',
+      default: `'Breadcrumb'`,
+      description: 'Accessible name for the Breadcrumb navigation landmark.',
+    },
+    {
+      name: 'href',
+      type: 'string',
+      description: 'Target of a BreadcrumbLink. All other anchor attributes are forwarded too.',
+    },
+    {
+      name: 'children (BreadcrumbSeparator)',
+      type: 'ReactNode',
+      description: 'Custom divider content. Defaults to a chevron icon.',
+    },
+    {
+      name: 'label (BreadcrumbEllipsis)',
+      type: 'string',
+      default: `'More'`,
+      description: 'Text announced in place of the ellipsis icon.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes',
+      description:
+        'ARIA attributes, event handlers, className, style, and ref are forwarded by every part.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The trail is a `nav` landmark with an accessible name. Change the name with `label` when a page
+  contains more than one breadcrumb trail.
+- Entries form a real ordered list, so assistive technology can report the position of each entry.
+- The current page is plain text with `aria-current="page"`; it never looks or behaves like a link.
+- Separators and ellipsis icons are decorative and hidden from assistive technology. The ellipsis
+  label is still announced.
+- Links show a visible focus ring and a hover underline. Wrapping keeps long trails usable at narrow
+  widths.
+
+## Related
+
+- [Pagination](/docs/components/pagination/) for moving through a flat sequence of pages.
+- [Text](/docs/components/text/) for the typographic scale used around the trail.

@@ -6,6 +6,34 @@ export type { BadgeProps, BadgeShape, BadgeSize, BadgeVariant } from './componen
 export { Tag } from './components/tag';
 export type { TagProps, TagShape, TagSize, TagVariant } from './components/tag';
 
+export { AspectRatio } from './components/aspect-ratio';
+export type { AspectRatioProps } from './components/aspect-ratio';
+
+export {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from './components/breadcrumb';
+export type {
+  BreadcrumbEllipsisProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbListProps,
+  BreadcrumbPageProps,
+  BreadcrumbProps,
+  BreadcrumbSeparatorProps,
+} from './components/breadcrumb';
+
+export { Kbd } from './components/kbd';
+export type { KbdProps, KbdSize } from './components/kbd';
+
+export { VisuallyHidden } from './components/visually-hidden';
+export type { VisuallyHiddenProps } from './components/visually-hidden';
+
 export { Box } from './primitives/box';
 export type {
   BoxBackground,

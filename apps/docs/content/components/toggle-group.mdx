@@ -1,0 +1,181 @@
+---
+title: Toggle Group
+description: Group related toggle buttons into one keyboard-navigable control.
+section: components
+---
+
+`ToggleGroup` keeps a set of two-state buttons in sync. Use it for compact option sets such as text
+alignment, formatting, or view switching where one option stays active or several options can be
+pressed independently.
+
+`ToggleGroup` and `ToggleGroupItem` are exported from `@orkest/ui/client`.
+
+## Basic usage
+
+export const toggleGroupBasicCode = `import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <ToggleGroup aria-label="Text alignment" defaultValue={['left']}>
+      <ToggleGroupItem value="left">Left</ToggleGroupItem>
+      <ToggleGroupItem value="center">Center</ToggleGroupItem>
+      <ToggleGroupItem value="right">Right</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}`;
+
+<ComponentPreview title="Single selection" code={toggleGroupBasicCode}>
+  <ToggleGroupBasicExample />
+</ComponentPreview>
+
+By default only one item can be pressed. Clicking the pressed item again clears the selection. Pass
+`defaultValue` to start with a selection and `value` with `onValueChange` for controlled usage.
+
+## Multiple selection
+
+Set `multiple` to let every item keep its own pressed state. The example below also uses the
+`outline` variant.
+
+export const toggleGroupMultipleCode = `import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <ToggleGroup aria-label="Text formatting" defaultValue={['bold']} multiple variant="outline">
+      <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
+      <ToggleGroupItem value="italic">Italic</ToggleGroupItem>
+      <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}`;
+
+<ComponentPreview title="Multiple selection" code={toggleGroupMultipleCode}>
+  <ToggleGroupMultipleExample />
+</ComponentPreview>
+
+## Variants and sizes
+
+`variant="segmented"` (default) places the items inside a sunken container and lifts the pressed
+item onto a raised surface. `variant="outline"` renders a single bordered button group.
+
+`size` accepts `sm`, `md`, and `lg`. Every item in a group shares the same size.
+
+## Disabled items
+
+Disable a single item with `ToggleGroupItem disabled`, or the whole group with
+`ToggleGroup disabled`. Disabled items stay visible but cannot be focused or pressed.
+
+## Keyboard interaction
+
+| Key                    | Behavior                                       |
+| ---------------------- | ---------------------------------------------- |
+| ArrowLeft / ArrowRight | Move focus between items in a horizontal group |
+| ArrowUp / ArrowDown    | Move focus between items in a vertical group   |
+| Home / End             | Move focus to the first or last item           |
+| Space / Enter          | Toggle the focused item                        |
+| Tab                    | Move focus into or out of the group            |
+
+Focus wraps at the ends by default. Set `loopFocus={false}` to stop at the last item.
+
+## Accessibility
+
+- The root renders `role="group"`, so give it an accessible name with `aria-label` or
+  `aria-labelledby`.
+- Each item is a native button whose `aria-pressed` state matches the pressed surface.
+- Disabled items are natively disabled and skipped by keyboard navigation.
+- Focus is always visible through the shared focus ring token.
+- State is not communicated by color alone.
+- Motion respects `prefers-reduced-motion`.
+
+## Props
+
+### ToggleGroup
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'readonly string[]',
+      description: 'Controlled values of the pressed items.',
+    },
+    {
+      name: 'defaultValue',
+      type: 'readonly string[]',
+      default: '[]',
+      description: 'Initial pressed values for uncontrolled usage.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string[], eventDetails) => void',
+      description: 'Called when the pressed values change.',
+    },
+    {
+      name: 'multiple',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allows more than one item to be pressed at a time.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables every item in the group.',
+    },
+    {
+      name: 'orientation',
+      type: `'horizontal' | 'vertical'`,
+      default: `'horizontal'`,
+      description: 'Layout and keyboard axis of the group.',
+    },
+    {
+      name: 'loopFocus',
+      type: 'boolean',
+      default: 'true',
+      description: 'Wraps keyboard focus at the ends of the group.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Item height, padding, and text size.',
+    },
+    {
+      name: 'variant',
+      type: `'segmented' | 'outline'`,
+      default: `'segmented'`,
+      description: 'Visual style of the group.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the root element.',
+    },
+  ]}
+/>
+
+### ToggleGroupItem
+
+<PropsTable
+  rows={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Value that identifies this item inside the group. Required.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disables this item.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description: 'Visible label or icon content. Required.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional class for the item.',
+    },
+  ]}
+/>

@@ -1,0 +1,26 @@
+.root {
+  --kbd-height: var(--ok-space-5);
+  --kbd-min-width: var(--ok-space-5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: none;
+  min-width: var(--kbd-min-width);
+  height: var(--kbd-height);
+  padding: 0 var(--ok-space-1);
+  border-radius: var(--ok-radius-sm);
+  /* A foreground tint stays legible on the page, on cards, and in both themes. */
+  background: color-mix(in srgb, var(--ui-foreground) 10%, transparent);
+  color: var(--ui-muted-foreground);
+  font-family: var(--ok-font-sans);
+  font-size: var(--ok-font-size-2xs);
+  line-height: var(--ok-line-height-tight);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.root[data-size="sm"] {
+  --kbd-height: var(--ok-space-4);
+  --kbd-min-width: var(--ok-space-4);
+}

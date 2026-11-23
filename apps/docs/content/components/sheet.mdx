@@ -1,0 +1,324 @@
+---
+title: Sheet
+description: Edge-anchored panels for navigation, filters, and contextual tasks.
+section: components
+---
+
+`Sheet` is a modal surface anchored to an edge of the viewport. Use it for navigation, filters,
+settings, and detail panels that should keep the page context visible while the user works.
+
+It shares the Dialog focus trap, scroll lock, Escape handling, and overlay dismissal, and is exported
+from `@orkest/ui/client`.
+
+## Basic usage
+
+export const sheetBasicCode = `import { Button, Stack } from '@orkest/ui';
+import {
+  Field,
+  FieldLabel,
+  Input,
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@orkest/ui/client';
+
+export function Example() {
+  return (
+    <Sheet>
+      <SheetTrigger>Edit profile</SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+          <SheetDescription>Update the details shown on your account.</SheetDescription>
+        </SheetHeader>
+        <SheetBody>
+          <Stack gap={4}>
+            <Field>
+              <FieldLabel>Display name</FieldLabel>
+              <Input defaultValue="Ada Lovelace" />
+            </Field>
+            <Field>
+              <FieldLabel>Email</FieldLabel>
+              <Input type="email" defaultValue="ada@example.com" />
+            </Field>
+          </Stack>
+        </SheetBody>
+        <SheetFooter>
+          <SheetClose>Cancel</SheetClose>
+          <SheetClose render={<Button>Save changes</Button>} />
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+}`;
+
+<ComponentPreview title="Edit profile" code={sheetBasicCode}>
+  <SheetBasicExample />
+</ComponentPreview>
+
+## Anatomy
+
+- `Sheet` owns the open state, modal behavior, and dismissal.
+- `SheetTrigger` opens the sheet. It renders an outline Button by default.
+- `SheetContent` renders the portal, backdrop, and edge panel. It can render the built-in close action.
+- `SheetHeader` groups `SheetTitle` and `SheetDescription`.
+- `SheetBody` scrolls when the content exceeds the available space.
+- `SheetFooter` aligns the actions.
+- `SheetClose` closes the sheet and renders a secondary Button by default.
+
+Pass `render` to `SheetTrigger` or `SheetClose` when you need a different Button variant or a custom
+element.
+
+## Sides
+
+`SheetContent` accepts `side` values of `right`, `left`, `top`, and `bottom`. The default is `right`.
+
+export const sheetSidesCode = `import { Stack, Text } from '@orkest/ui';
+import {
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@orkest/ui/client';
+
+const sides = [
+  { side: 'right', label: 'Right' },
+  { side: 'left', label: 'Left' },
+  { side: 'top', label: 'Top' },
+  { side: 'bottom', label: 'Bottom' },
+] as const;
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} wrap>
+      {sides.map(({ side, label }) => (
+        <Sheet key={side}>
+          <SheetTrigger>{label}</SheetTrigger>
+          <SheetContent side={side} size="sm">
+            <SheetHeader>
+              <SheetTitle>{label} sheet</SheetTitle>
+              <SheetDescription>
+                This panel is anchored to the {side} edge of the viewport.
+              </SheetDescription>
+            </SheetHeader>
+            <SheetBody>
+              <Text as="p" size="sm" tone="muted">
+                Resize the browser window to see how the panel keeps a safe size.
+              </Text>
+            </SheetBody>
+            <SheetFooter>
+              <SheetClose>Close</SheetClose>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      ))}
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Sheet sides" code={sheetSidesCode}>
+  <SheetSidesExample />
+</ComponentPreview>
+
+## Sizes
+
+`SheetContent` supports `sm`, `md`, and `lg`. The preset controls the width for left and right
+sheets and the height for top and bottom sheets. `md` is the default. Panels never exceed the
+viewport: a wide preset shrinks on small screens instead of overflowing.
+
+## Scrolling content
+
+Place long content in `SheetBody`. The body scrolls inside the panel while the header and footer stay
+in place, so actions remain reachable on every screen size.
+
+## Close behavior
+
+The sheet closes on Escape and on backdrop press by default. Disable either path when the content
+should not be dismissed accidentally:
+
+```tsx
+<Sheet closeOnEscape={false} closeOnOverlayClick={false}>
+```
+
+`SheetContent` renders a labeled icon close action by default. Use `showCloseButton={false}` to hide
+it, or `closeLabel` to change its accessible name.
+
+## Props
+
+### Sheet
+
+<PropsTable
+  rows={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state.',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage.',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open, eventDetails) => void',
+      description: 'Called when the sheet requests an open state change.',
+    },
+    {
+      name: 'modal',
+      type: `boolean | 'trap-focus'`,
+      default: 'true',
+      description: 'Traps focus, locks page scroll, and blocks outside interaction.',
+    },
+    {
+      name: 'closeOnOverlayClick',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the sheet when the backdrop is pressed.',
+    },
+    {
+      name: 'closeOnEscape',
+      type: 'boolean',
+      default: 'true',
+      description: 'Closes the sheet when Escape is pressed.',
+    },
+  ]}
+/>
+
+### SheetContent
+
+<PropsTable
+  rows={[
+    {
+      name: 'side',
+      type: `'right' | 'left' | 'top' | 'bottom'`,
+      default: `'right'`,
+      description: 'Viewport edge the panel is anchored to.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Width preset for left and right sheets, height preset for top and bottom sheets.',
+    },
+    {
+      name: 'showCloseButton',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the built-in icon close action.',
+    },
+    {
+      name: 'closeLabel',
+      type: 'string',
+      default: `'Close'`,
+      description: 'Accessible name for the built-in close action.',
+    },
+    {
+      name: 'initialFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the sheet opens.',
+    },
+    {
+      name: 'finalFocus',
+      type: 'boolean | RefObject<HTMLElement> | function',
+      description: 'Element focused when the sheet closes.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Class names, data attributes, and refs are forwarded to the panel.',
+    },
+  ]}
+/>
+
+### SheetTrigger and SheetClose
+
+<PropsTable
+  rows={[
+    {
+      name: 'variant',
+      type: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'`,
+      default: `Trigger: 'outline'; Close: 'secondary'`,
+      description: 'Visual Button variant used by the default button.',
+    },
+    {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg' | 'xl'`,
+      default: `'md'`,
+      description: 'Button size.',
+    },
+    {
+      name: 'render',
+      type: 'ReactElement',
+      description: 'Replaces the default Button, for example with a custom Button variant.',
+    },
+    {
+      name: 'native attributes',
+      type: 'ButtonHTMLAttributes<HTMLButtonElement>',
+      description: 'Disabled, type, click handlers, and refs are forwarded.',
+    },
+  ]}
+/>
+
+### Layout parts
+
+<PropsTable
+  rows={[
+    {
+      name: 'SheetHeader',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Groups the title and description.',
+    },
+    {
+      name: 'SheetTitle',
+      type: 'Base UI Dialog Title props',
+      description: 'Accessible title. Use render to change the heading level.',
+    },
+    {
+      name: 'SheetDescription',
+      type: 'Base UI Dialog Description props',
+      description: 'Supporting text associated through aria-describedby.',
+    },
+    {
+      name: 'SheetBody',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Scrollable content region between the header and footer.',
+    },
+    {
+      name: 'SheetFooter',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Action row aligned to the end of the sheet.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Render `SheetTitle` for the accessible name and `SheetDescription` for supporting text. Base UI
+  wires `aria-labelledby` and `aria-describedby` automatically.
+- Modal sheets trap focus, lock page scroll, and restore focus to the trigger or the previously
+  focused element when closed.
+- Escape and backdrop press close the sheet by default. Disable them only when the task must not be
+  dismissed accidentally.
+- The built-in close action is a labeled button (`closeLabel`). Provide an accessible name when
+  composing `SheetClose` with a custom icon button.
+- Use `SheetBody` for long content so the header and footer remain reachable.
+- The slide transition is skipped when the user prefers reduced motion.
+
+## Related
+
+- [Dialog](/docs/components/dialog/) for centered modal tasks.
+- [Field](/docs/components/field/) for sheet forms.
+- [Button](/docs/components/button/) for trigger and action styling.

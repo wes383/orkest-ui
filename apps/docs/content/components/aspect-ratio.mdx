@@ -1,0 +1,83 @@
+---
+title: Aspect Ratio
+description: Reserves a fixed width-to-height ratio for images, video, and embedded content.
+section: components
+---
+
+`AspectRatio` keeps its content at a fixed width-to-height ratio while the available width changes.
+Use it for images, video, maps, and embeds so the layout does not jump when the content loads.
+
+## Live preview
+
+export const aspectRatioCode = `import { AspectRatio, Box, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Box maxWidth={320}>
+      <AspectRatio>
+        <Box height="100%" background="surface-sunken" radius="xl" border>
+          <Stack align="center" justify="center" style={{ height: '100%' }}>
+            <Text tone="muted">16 : 9</Text>
+          </Stack>
+        </Box>
+      </AspectRatio>
+    </Box>
+  );
+}`;
+
+<ComponentPreview title="16 : 9 frame" code={aspectRatioCode}>
+  <AspectRatioExample />
+</ComponentPreview>
+
+The default ratio is `16 / 9`, the common frame for video and wide imagery. The component fills the
+width of its parent, so give the parent a width, as `Box` does above.
+
+## Custom ratios
+
+Pass a CSS ratio string or a number:
+
+```tsx
+<AspectRatio ratio="4 / 3">{children}</AspectRatio>
+<AspectRatio ratio={1.5}>{children}</AspectRatio>
+```
+
+A number is treated as width divided by height, so `1.5` and `"3 / 2"` are the same ratio. A
+caller-provided `style` is applied after the ratio, which means `style={{ aspectRatio: '2 / 1' }}`
+wins over the `ratio` prop.
+
+## Filling the frame
+
+`AspectRatio` only establishes the box. Give the child a height of `100%` so it fills the frame:
+
+```tsx
+<AspectRatio ratio="16 / 9">
+  <img src="/cover.jpg" alt="Team at the offsite" style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+</AspectRatio>
+```
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'ratio',
+      type: 'number | string',
+      default: `'16 / 9'`,
+      description:
+        'Width-to-height ratio. Numbers are treated as width divided by height; strings use CSS aspect-ratio syntax, such as `16 / 9`.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The component is presentational and adds no role or accessible name.
+- Always provide an accessible name for the media inside the frame, such as `alt` text on an image
+  or a `title` on an iframe.
+- The ratio only affects layout. It does not crop content, so combine it with `overflow: hidden` or
+  `object-fit` when the content should be clipped.

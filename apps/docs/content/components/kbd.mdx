@@ -1,0 +1,74 @@
+---
+title: Kbd
+description: Styled keyboard keys for shortcuts, command menus, and help text.
+section: components
+---
+
+`Kbd` renders a native `kbd` element with a small chip that matches the shortcut hints used in
+[Command](/docs/components/command/). Use it for single keys or groups of keys in documentation,
+tooltips, and command menus.
+
+## Live preview
+
+export const kbdBasicCode = `import { Kbd, Stack, Text } from '@orkest/ui';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={2} align="center">
+      <Text size="sm" tone="muted">
+        Open the command menu
+      </Text>
+      <Kbd size="sm">⌘</Kbd>
+      <Kbd>K</Kbd>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Key hints" code={kbdBasicCode}>
+  <KbdBasicExample />
+</ComponentPreview>
+
+The default size is `md`. Use `sm` when keys sit inline with small text, and keep the two sizes
+consistent within one surface.
+
+## Usage
+
+Place one key per `Kbd` and let the surrounding text describe the action:
+
+```tsx
+<Text size="sm">
+  Press <Kbd>K</Kbd> to open the command menu.
+</Text>
+```
+
+Avoid stretching a single key to cover a sequence of keys. Separate chips read more clearly and wrap
+naturally when space is tight.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'size',
+      type: `'sm' | 'md'`,
+      default: `'md'`,
+      description: 'Chip size. `sm` fits inline with small text.',
+    },
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `Kbd` renders the semantic `kbd` element, so assistive technology reads the key as keyboard input
+  rather than as an abbreviation or decoration.
+- The key text stays exposed; do not hide it with `aria-hidden`. Pair a symbolic key such as `⌘`
+  with text that explains the action.
+- Keys are not interactive and never receive focus. Trigger the shortcut from the surrounding
+  control or application.
+- The chip uses the interface font rather than a monospace face, matching the rest of the shortcut
+  hints in the library.

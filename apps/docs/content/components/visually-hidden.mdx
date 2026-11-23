@@ -1,0 +1,71 @@
+---
+title: Visually Hidden
+description: Content that stays available to assistive technology without occupying visual space.
+section: components
+---
+
+`VisuallyHidden` removes its content from the visual layout while keeping it in the accessibility
+tree. Use it to give an icon-only control a readable name or to add context that would be redundant
+on screen.
+
+## Live preview
+
+export const visuallyHiddenCode = `import { Button, Stack, VisuallyHidden } from '@orkest/ui';
+import { Search } from 'lucide-react';
+
+export function Example() {
+  return (
+    <Stack direction="row" gap={3} align="center">
+      <Button iconOnly leftIcon={Search}>
+        <VisuallyHidden>Search</VisuallyHidden>
+      </Button>
+      <Button variant="outline">
+        Read the guide
+        <VisuallyHidden> on keyboard navigation</VisuallyHidden>
+      </Button>
+    </Stack>
+  );
+}`;
+
+<ComponentPreview title="Accessible labels" code={visuallyHiddenCode}>
+  <VisuallyHiddenExample />
+</ComponentPreview>
+
+The first button looks like a plain search icon but is announced as "Search". The second button
+reads as "Read the guide on keyboard navigation" while the extra words stay out of the layout.
+
+## Usage
+
+Reach for `VisuallyHidden` when the visible content is complete for sighted readers but incomplete
+for assistive technology:
+
+- Name an icon-only control when a component does not accept `aria-label`.
+- Add a qualifier to repeated actions, such as "Delete invoice" versus "Delete receipt".
+- Provide instructions that only matter in a non-visual context.
+- Hide a skip link until it receives focus by combining it with focus styles.
+
+Prefer a component's built-in `aria-label` when it has one. Use visible text when the information
+benefits every reader. `VisuallyHidden` is a last resort for content that must stay in the
+accessibility tree but not on screen.
+
+## Props
+
+<PropsTable
+  rows={[
+    {
+      name: 'native attributes',
+      type: 'HTMLAttributes<HTMLSpanElement>',
+      description: 'ARIA attributes, event handlers, className, style, and ref are forwarded.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The content is clipped to a single pixel rather than removed with `display: none`, so screen
+  readers still announce it.
+- Do not wrap focusable elements. A keyboard user can focus them, but the focus ring would be
+  invisible. Hide focusable controls visually only when they become visible on focus.
+- Do not combine `VisuallyHidden` with `aria-hidden`; that would remove the content from the
+  accessibility tree as well.
+- Keep the hidden text short and specific, and avoid duplicating nearby visible text.
