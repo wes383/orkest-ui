@@ -29,6 +29,9 @@ export default defineConfig({
         index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
         client: fileURLToPath(new URL('./src/client.ts', import.meta.url)),
       },
+      // Without an explicit format list Vite builds each entry separately, and the losing
+      // pass leaves its shared chunk behind as an orphan in `dist`.
+      formats: ['es'],
       cssFileName: 'style',
     },
     rollupOptions: {
