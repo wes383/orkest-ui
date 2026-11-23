@@ -1011,6 +1011,13 @@ samp {
   letter-spacing: 0;
 }
 
+/* Token names are the primary content of a two-column token table, so they get most of
+   the row width instead of wrapping against short values. */
+.token-table-pair table th:first-child,
+.token-table-pair table td:first-child {
+  width: 56%;
+}
+
 .color-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
