@@ -21,6 +21,7 @@ import { Icon } from '../../primitives/icon';
 import { cx } from '../../utils/cx';
 import { Button, type ButtonProps } from '../button';
 import { Dialog, type DialogProps } from '../dialog';
+import { useModalScrollbarCompensation } from '../dialog/dialog-surface';
 import styles from './sheet.module.css';
 
 export type SheetSide = 'right' | 'left' | 'top' | 'bottom';
@@ -88,6 +89,7 @@ export const SheetContent = forwardRef<HTMLDivElement, SheetContentProps>(functi
   ref,
 ) {
   const isModal = useContext(SheetModalContext);
+  useModalScrollbarCompensation(isModal);
 
   return (
     <BaseDialog.Portal>

@@ -22,9 +22,9 @@ const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayout
  * Base UI's modal scroll lock reserves a stable scrollbar gutter. Remove the
  * gutter while the lock is active and compensate with padding so the page
  * width stays the same. Restore both as soon as Base UI releases the lock so
- * closing the dialog does not shift the page.
+ * closing the modal does not shift the page.
  */
-function useDialogScrollbarCompensation(enabled: boolean): void {
+export function useModalScrollbarCompensation(enabled: boolean): void {
   useIsoLayoutEffect(() => {
     if (!enabled) {
       return undefined;
@@ -118,7 +118,7 @@ export const DialogSurface = forwardRef<HTMLDivElement, DialogSurfaceProps>(func
   ref,
 ) {
   const isModal = useContext(DialogModalContext);
-  useDialogScrollbarCompensation(isModal);
+  useModalScrollbarCompensation(isModal);
 
   return (
     <BaseDialog.Viewport className={styles.viewport} data-size={size}>
