@@ -1859,7 +1859,7 @@ kbd {
   gap: var(--ok-space-3);
   min-width: 0;
   min-height: 9.5rem;
-  padding: var(--ok-space-5);
+  padding: var(--ok-space-4);
   background: var(--ui-surface);
 }
 

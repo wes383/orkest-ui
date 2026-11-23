@@ -6,14 +6,14 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 import {
-  CheckboxShowcase,
-  DatePickerShowcase,
-  DialogShowcase,
-  InputShowcase,
-  SelectShowcase,
-  SwitchShowcase,
+  ActionsShowcase,
+  DisplayShowcase,
+  FeedbackShowcase,
+  FieldsShowcase,
+  MenuShowcase,
+  PickersShowcase,
   TabsShowcase,
-  ToastShowcase,
+  TogglesShowcase,
 } from '@/components/landing/showcase';
 import { getNavigation } from '@/lib/docs-source';
 
@@ -60,28 +60,28 @@ export default function HomePage() {
       <section className="landing-showcase" aria-label="Live component previews">
         <div className="landing-showcase-grid">
           <div className="landing-showcase-cell">
-            <InputShowcase />
+            <ActionsShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <SelectShowcase />
+            <FieldsShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <DatePickerShowcase />
+            <TogglesShowcase />
           </div>
           <div className="landing-showcase-cell">
             <TabsShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <SwitchShowcase />
+            <PickersShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <CheckboxShowcase />
+            <DisplayShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <DialogShowcase />
+            <MenuShowcase />
           </div>
           <div className="landing-showcase-cell">
-            <ToastShowcase />
+            <FeedbackShowcase />
           </div>
         </div>
       </section>
