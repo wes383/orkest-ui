@@ -28,6 +28,7 @@
 }
 
 .list {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   display: flex;
   flex-direction: column;
   gap: 2px;
