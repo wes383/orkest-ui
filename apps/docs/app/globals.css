@@ -18,6 +18,12 @@
   --docs-table-divider: var(--ok-color-neutral-800);
 }
 
+/* The docs page is pure white; the library default sits one neutral step lower. The
+   `:not()` keeps the system-preference fallback working when the theme script cannot run. */
+:root:not([data-orkest-theme="dark"]) {
+  --ui-background: var(--ok-color-white);
+}
+
 *,
 *::before,
 *::after {
