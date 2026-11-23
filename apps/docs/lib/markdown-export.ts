@@ -271,6 +271,12 @@ function block(element: Element): string | null {
     return listBlock(element, 0);
   }
 
+  if (element.classList.contains('install-block')) {
+    const command = element.querySelector('.install-command code')?.textContent ?? '';
+
+    return command.trim() ? fence(command, 'bash') : null;
+  }
+
   if (element.classList.contains('code-block')) {
     const code = element.querySelector('pre');
     const language =

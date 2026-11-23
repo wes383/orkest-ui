@@ -42,6 +42,7 @@ import { Check, Circle } from 'lucide-react';
 
 import { ColorPalette } from './color-palette';
 import { Callout } from './callout';
+import { InstallCommand } from './install-command';
 import { PropsTable } from './props-table';
 import { SemanticColorTable } from './semantic-color-table';
 import { SemanticTokenTable } from './semantic-token-table';
@@ -491,6 +492,7 @@ export const mdxComponents = {
   ComponentPreview,
   CodeBlock,
   Callout,
+  InstallCommand,
   PropsTable,
   TokenTable,
   ColorPalette,
