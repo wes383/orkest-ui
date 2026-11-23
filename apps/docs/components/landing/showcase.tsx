@@ -35,6 +35,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarGroup,
+  BreadcrumbEllipsisMenu,
   Checkbox,
   DatePicker,
   Dialog,
@@ -369,11 +370,16 @@ export function BreadcrumbShowcase() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/docs/components/">Components</BreadcrumbLink>
+          <BreadcrumbEllipsisMenu
+            items={[
+              { label: 'Documentation', href: '/docs/' },
+              { label: 'Theming', href: '/docs/guides/theming/' },
+            ]}
+          />
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Sheet</BreadcrumbPage>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
