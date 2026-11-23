@@ -4,7 +4,7 @@ const repositoryUrl = 'https://github.com/wes383/orkest-ui';
 export function GithubLink() {
   return (
     <a
-      className="icon-button"
+      className="header-icon github-link"
       href={repositoryUrl}
       target="_blank"
       rel="noreferrer"

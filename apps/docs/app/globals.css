@@ -170,8 +170,43 @@ samp {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--ok-space-2);
   margin-left: auto;
+}
+
+/* The GitHub mark is an outbound link, so it renders as an anchor. It borrows the ghost
+   icon-button tokens so it lines up with the buttons beside it. */
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ok-control-height-sm);
+  height: var(--ok-control-height-sm);
+  border-radius: var(--ok-radius-lg);
+  color: var(--ui-foreground);
+  transition:
+    background-color var(--ok-duration-fast) var(--ok-ease-standard),
+    color var(--ok-duration-fast) var(--ok-ease-standard);
+}
+
+@media (hover: hover) {
+  .github-link:hover {
+    background: var(--ui-secondary);
+  }
+}
+
+.github-link:active {
+  background: var(--ui-secondary-active);
+}
+
+.github-link:focus-visible {
+  outline: var(--ok-focus-ring-width) solid var(--ui-focus-ring);
+  outline-offset: var(--ok-focus-ring-offset);
+}
+
+.github-link svg {
+  width: var(--ok-icon-size-sm);
+  height: var(--ok-icon-size-sm);
 }
 
 .mobile-menu {
@@ -1874,8 +1909,10 @@ samp {
 }
 
 @media (max-width: 960px) {
-  .header-icon,
-  .mobile-menu {
+  /* Keep the header controls at a comfortable touch size; the selector outranks the
+     button's own square sizing without reaching for `!important`. */
+  .header-actions .header-icon,
+  .header-actions .mobile-menu {
     width: 2.75rem;
     height: 2.75rem;
   }
