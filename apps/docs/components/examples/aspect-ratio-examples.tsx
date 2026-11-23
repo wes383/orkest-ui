@@ -2,7 +2,7 @@ import { AspectRatio, Box, Stack, Text } from '@orkest/ui';
 
 export function AspectRatioExample() {
   return (
-    <Box maxWidth={320}>
+    <Box width="100%" maxWidth={320}>
       <AspectRatio>
         <Box height="100%" background="surface-sunken" radius="xl" border>
           <Stack align="center" justify="center" style={{ height: '100%' }}>
