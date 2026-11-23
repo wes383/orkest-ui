@@ -20,7 +20,7 @@ export function TokenTable({
     : getPrimitiveTokensByPrefix(prefix ?? '');
 
   return (
-    <div className="token-table token-table-pair">
+    <div className="token-table">
       {title ? <p className="token-table-title">{title}</p> : null}
       <TableScroll>
         <table>
