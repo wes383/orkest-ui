@@ -320,7 +320,9 @@ immediately before its `<ComponentPreview>` and pass `code={<name>Code}`.
 flattens the example code shown on the page and in "Copy as Markdown".
 `apps/docs/content` is excluded from Prettier for the same reason:
 its MDX printer rewrites the braces inside those template literals and
-destroys the indentation of the samples.
+destroys the indentation of the samples. Keep the sample strings
+formatted with `pnpm check:docs-samples`; `--fix` rewrites them in
+place.
 
 Update relevant documentation when changing:
 
@@ -367,6 +369,7 @@ pnpm smoke:package
 pnpm e2e:build
 pnpm test:e2e
 pnpm test:visual
+pnpm check:docs-samples
 ```
 
 If a script does not exist, do not silently invent it or claim it was

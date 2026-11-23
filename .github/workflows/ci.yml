@@ -35,6 +35,9 @@ jobs:
       - name: Format check
         run: pnpm format:check
 
+      - name: Check docs samples
+        run: pnpm check:docs-samples
+
       - name: Type-check
         run: pnpm typecheck
 

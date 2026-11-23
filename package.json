@@ -14,6 +14,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "check:docs-samples": "node scripts/check-docs-samples.mjs",
     "smoke:package": "pnpm --filter @orkest/ui build && node scripts/smoke-package.mjs",
     "e2e:build": "pnpm --filter @orkest/ui build && pnpm --filter @orkest/docs exec next build",
     "test:e2e": "playwright test tests/smoke.spec.ts",

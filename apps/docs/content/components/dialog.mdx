@@ -205,7 +205,7 @@ import {
 
 const clauses = Array.from(
   { length: 40 },
-  (\_, index) =>
+  (_, index) =>
     \`Clause \${index + 1}. This section is long enough to demonstrate a scrollable dialog body while the header and footer stay visible. It includes additional wording so the example overflows on large screens as well.\`,
 );
 
@@ -218,9 +218,7 @@ export function Example() {
         <DialogContent size="lg">
           <DialogHeader>
             <DialogTitle>Service terms</DialogTitle>
-            <DialogDescription>
-              Review the full text before accepting.
-            </DialogDescription>
+            <DialogDescription>Review the full text before accepting.</DialogDescription>
           </DialogHeader>
           <DialogBody>
             <Stack gap={3}>
