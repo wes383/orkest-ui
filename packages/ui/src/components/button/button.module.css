@@ -31,6 +31,12 @@
   outline-offset: var(--ok-focus-ring-offset);
 }
 
+/* For focus restored programmatically, e.g. after a menu or command
+   selection. The ring returns with the next keyboard navigation. */
+.button[data-focus-ring="none"]:focus-visible {
+  outline: none;
+}
+
 /* A sub-pixel press shift gives tactile feedback without moving the layout. */
 .button:not([data-variant="link"]):active:not(:disabled) {
   transform: translateY(0.5px);

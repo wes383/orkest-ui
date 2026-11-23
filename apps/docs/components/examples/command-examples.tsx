@@ -80,6 +80,7 @@ function useIsMac() {
 export function CommandDialogExample() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState('No command has run.');
+  const [suppressFocusRing, setSuppressFocusRing] = useState(false);
   const shortcut = useIsMac() ? '⌘ J' : 'Ctrl J';
 
   useEffect(() => {
@@ -96,7 +97,17 @@ export function CommandDialogExample() {
 
   return (
     <Stack gap={3}>
-      <Button variant="outline" onClick={() => setOpen(true)}>
+      <Button
+        variant="outline"
+        data-focus-ring={suppressFocusRing ? 'none' : undefined}
+        onClick={() => setOpen(true)}
+        onKeyDown={(event) => {
+          if (event.key === 'Tab') {
+            setSuppressFocusRing(false);
+          }
+        }}
+        onPointerDown={() => setSuppressFocusRing(false)}
+      >
         Open command menu
       </Button>
       <Command.Dialog open={open} onOpenChange={setOpen} title="Command menu">
@@ -109,6 +120,10 @@ export function CommandDialogExample() {
                 key={item.value}
                 value={item.value}
                 onSelect={(value) => {
+                  // Focus returns to the trigger after the dialog closes; keep
+                  // the ring hidden until the user navigates with the keyboard
+                  // or pointer again.
+                  setSuppressFocusRing(true);
                   setStatus(`Ran ${value.toLowerCase()}`);
                   setOpen(false);
                 }}
