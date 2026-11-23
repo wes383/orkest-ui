@@ -1028,12 +1028,7 @@ samp {
 .color-swatch-chip {
   display: block;
   height: 3.5rem;
-}
-
-.color-swatch-chip-outlined {
-  border: var(--ok-border-width) solid var(--ui-border);
-  border-bottom: 0;
-  border-radius: 0.75rem 0.75rem 0 0;
+  box-shadow: inset 0 0 0 var(--ok-border-width) var(--ui-border);
 }
 
 .color-swatch-meta {
@@ -1078,9 +1073,6 @@ samp {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 0.375rem;
-}
-
-.semantic-swatch-outlined {
   box-shadow: inset 0 0 0 var(--ok-border-width) var(--ui-border);
 }
 
