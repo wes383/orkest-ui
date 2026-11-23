@@ -48,7 +48,7 @@ export function AccordionControlledExample() {
   const [value, setValue] = useState<string[]>(['account']);
 
   return (
-    <Stack gap={3}>
+    <Stack gap={3} style={{ width: '100%' }}>
       <Accordion value={value} onValueChange={setValue}>
         <AccordionItem value="account">
           <AccordionTrigger>Account</AccordionTrigger>

@@ -7,6 +7,14 @@
   font-family: var(--ok-font-sans);
 }
 
+.item + .item::before {
+  display: block;
+  height: var(--ok-border-width);
+  margin-inline: var(--ok-space-4);
+  background: var(--ui-border);
+  content: "";
+}
+
 .header {
   margin: 0;
   font: inherit;
