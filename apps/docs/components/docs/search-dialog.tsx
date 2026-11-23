@@ -1,18 +1,25 @@
 'use client';
 
 import { Icon, Kbd } from '@orkest/ui';
-import { Search, X } from 'lucide-react';
-import Link from 'next/link';
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandFooter,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@orkest/ui/client';
+import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import type { SearchIndexItem } from '@/lib/docs-types';
 import { searchDocs } from '@/lib/search';
 
 export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const backdropPointerDownRef = useRef(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const resultsRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const results = searchDocs(index, query);
 
@@ -20,7 +27,7 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
     function handleShortcut(event: globalThis.KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        openDialog();
+        setOpen(true);
       }
     }
 
@@ -28,67 +35,17 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
     return () => window.removeEventListener('keydown', handleShortcut);
   }, []);
 
-  function openDialog() {
-    if (dialogRef.current?.open) {
-      inputRef.current?.focus();
-      return;
-    }
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
 
-    dialogRef.current?.showModal();
-    requestAnimationFrame(() => inputRef.current?.focus());
-  }
-
-  function closeDialog() {
-    dialogRef.current?.close();
-  }
-
-  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      closeDialog();
-      return;
-    }
-
-    if (event.key === 'ArrowDown' && results.length > 0) {
-      event.preventDefault();
-      resultsRef.current?.querySelector<HTMLAnchorElement>('a[data-search-result]')?.focus();
+    if (!nextOpen) {
+      setQuery('');
     }
   }
 
-  function handleDialogKeyDown(event: KeyboardEvent<HTMLDialogElement>) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      closeDialog();
-    }
-  }
-
-  function handleResultsKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
-      return;
-    }
-
-    const links = Array.from(
-      event.currentTarget.querySelectorAll<HTMLAnchorElement>('a[data-search-result]'),
-    );
-    const currentIndex = links.indexOf(document.activeElement as HTMLAnchorElement);
-
-    if (currentIndex === -1) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (event.key === 'ArrowUp' && currentIndex === 0) {
-      inputRef.current?.focus();
-      return;
-    }
-
-    const nextIndex =
-      event.key === 'ArrowDown'
-        ? Math.min(currentIndex + 1, links.length - 1)
-        : Math.max(currentIndex - 1, 0);
-
-    links[nextIndex]?.focus();
+  function handleSelect(href: string) {
+    handleOpenChange(false);
+    router.push(href);
   }
 
   return (
@@ -96,7 +53,7 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
       <button
         type="button"
         className="search-trigger"
-        onClick={openDialog}
+        onClick={() => setOpen(true)}
         aria-label="Search documentation"
         aria-keyshortcuts="Control+K Meta+K"
       >
@@ -108,119 +65,55 @@ export function SearchDialog({ index }: { index: SearchIndexItem[] }) {
         </span>
       </button>
 
-      {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <dialog
-        ref={dialogRef}
-        className="search-dialog"
-        aria-labelledby="search-dialog-title"
-        onClose={() => setQuery('')}
-        onKeyDown={handleDialogKeyDown}
-        onPointerDown={(event) => {
-          backdropPointerDownRef.current = event.target === dialogRef.current;
-        }}
-        onClick={(event) => {
-          // A drag from the dialog onto the backdrop also produces a click
-          // whose target is the dialog. Only close when the press started on
-          // the backdrop itself.
-          const clickedBackdrop =
-            event.target === dialogRef.current && backdropPointerDownRef.current;
-
-          backdropPointerDownRef.current = false;
-
-          if (clickedBackdrop) {
-            closeDialog();
-          }
-        }}
+      <CommandDialog
+        open={open}
+        onOpenChange={handleOpenChange}
+        title="Search documentation"
+        description="Search page titles, headings, and content."
+        shouldFilter={false}
       >
-        <div className="search-dialog-inner">
-          <div className="search-dialog-header">
-            <Icon icon={Search} size="sm" />
-            <h2 className="sr-only" id="search-dialog-title">
-              Search documentation
-            </h2>
-            <input
-              ref={inputRef}
-              className="search-input"
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={handleInputKeyDown}
-              placeholder="Search documentation..."
-              aria-label="Search documentation"
-              autoComplete="off"
-              spellCheck={false}
-            />
-            <button
-              type="button"
-              className="icon-button"
-              onClick={closeDialog}
-              aria-label="Close search"
-            >
-              <Icon icon={X} size="sm" />
-            </button>
-          </div>
-
-          {/* Arrow key handling is delegated from the focusable input and result links inside this region. */}
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <div className="search-body" onKeyDown={handleResultsKeyDown}>
-            {query.trim() === '' ? (
-              <p className="search-empty">
-                Search page titles, headings, and content. Press <Kbd size="sm">Esc</Kbd> to close.
-              </p>
-            ) : null}
-
-            {query.trim() !== '' && results.length === 0 ? (
-              <p className="search-empty" role="status">
-                No results for “{query}”.
-              </p>
-            ) : null}
-
-            {results.length > 0 ? (
-              <div ref={resultsRef}>
-                <p className="sr-only" role="status">
-                  {results.length} results
-                </p>
-                <ul className="search-results">
-                  {results.map((result) => (
-                    <li key={result.href}>
-                      <Link
-                        href={result.href}
-                        className="search-result-link"
-                        data-search-result
-                        onMouseMove={(event) => {
-                          if (document.activeElement !== event.currentTarget) {
-                            event.currentTarget.focus({ preventScroll: true });
-                          }
-                        }}
-                        onClick={closeDialog}
-                      >
-                        <span className="search-result-section">{result.sectionLabel}</span>
-                        <span className="search-result-title">{result.title}</span>
-                        <span className="search-result-description">{result.description}</span>
-                        <span className="search-result-excerpt">{result.excerpt}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
-
-          <div className="search-footer">
-            <span>
-              <Kbd size="sm">↑</Kbd>
-              <Kbd size="sm">↓</Kbd> navigate
-            </span>
-            <span>
-              <Kbd size="sm">Enter</Kbd> open
-            </span>
-            <span>
-              <Kbd size="sm">Esc</Kbd> close
-            </span>
-          </div>
-        </div>
-      </dialog>
+        <CommandInput
+          value={query}
+          onValueChange={setQuery}
+          placeholder="Search documentation..."
+          aria-label="Search documentation"
+        />
+        <CommandList>
+          {query.trim() === '' ? (
+            <CommandEmpty>
+              Search page titles, headings, and content. Press <Kbd size="sm">Esc</Kbd> to close.
+            </CommandEmpty>
+          ) : results.length === 0 ? (
+            <CommandEmpty>No results for “{query}”.</CommandEmpty>
+          ) : (
+            <CommandGroup heading={`${results.length} result${results.length === 1 ? '' : 's'}`}>
+              {results.map((result) => (
+                <CommandItem key={result.href} value={result.href} onSelect={handleSelect}>
+                  <span className="search-result">
+                    <span className="search-result-heading">
+                      {result.title}
+                      <span className="search-result-section">{result.sectionLabel}</span>
+                    </span>
+                    <span className="search-result-description">{result.description}</span>
+                  </span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
+        </CommandList>
+        <CommandFooter>
+          <span>
+            <Kbd size="sm">↑</Kbd>
+            <Kbd size="sm">↓</Kbd> navigate
+          </span>
+          <span>
+            <Kbd size="sm">Enter</Kbd> open
+          </span>
+          <span>
+            <Kbd size="sm">Esc</Kbd> close
+          </span>
+        </CommandFooter>
+      </CommandDialog>
     </>
   );
 }

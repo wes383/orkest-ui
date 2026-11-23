@@ -174,27 +174,6 @@ samp {
   margin-left: auto;
 }
 
-.icon-button {
-  display: inline-grid;
-  place-items: center;
-  width: 2.125rem;
-  height: 2.125rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0.625rem;
-  background: transparent;
-  color: var(--ui-muted-foreground);
-  cursor: pointer;
-  transition:
-    background-color var(--ok-duration-fast) var(--ok-ease-standard),
-    color var(--ok-duration-fast) var(--ok-ease-standard);
-}
-
-.icon-button:hover {
-  background: var(--ui-surface-sunken);
-  color: var(--ui-foreground);
-}
-
 .mobile-menu {
   display: none;
 }
@@ -374,31 +353,6 @@ samp {
   margin-bottom: 1.5rem;
 }
 
-.breadcrumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ok-space-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--ui-subtle-foreground);
-  font-size: var(--ok-font-size-xs);
-}
-
-.breadcrumbs li:not(:last-child)::after {
-  margin-left: var(--ok-space-2);
-  color: var(--ui-border-strong);
-  content: "/";
-}
-
-.breadcrumbs a {
-  transition: color var(--ok-duration-fast) var(--ok-ease-standard);
-}
-
-.breadcrumbs a:hover {
-  color: var(--ui-foreground);
-}
-
 .page-topbar {
   display: flex;
   flex-wrap: wrap;
@@ -415,29 +369,9 @@ samp {
 }
 
 .page-copy {
-  display: inline-flex;
   flex: none;
-  align-items: center;
-  gap: 6px;
-  height: 1.875rem;
   margin-inline-start: auto;
-  padding: 0 10px;
-  border: 0;
-  border-radius: 0.625rem;
-  background: var(--ui-surface-sunken);
-  color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-xs);
-  font-weight: var(--ok-font-weight-medium);
   white-space: nowrap;
-  cursor: pointer;
-  transition:
-    background-color var(--ok-duration-fast) var(--ok-ease-standard),
-    color var(--ok-duration-fast) var(--ok-ease-standard);
-}
-
-.page-copy:hover {
-  background: var(--ui-secondary-hover);
-  color: var(--ui-foreground);
 }
 
 .page-copy > svg {
@@ -1000,73 +934,10 @@ samp {
   max-width: 100%;
 }
 
-/* Callouts */
+/* Callouts use the library Alert; only the page rhythm is local. */
 
 .callout {
-  display: flex;
-  gap: var(--ok-space-3);
   margin: 1.5rem 0;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  background: var(--ui-accent-surface);
-}
-
-.callout-tip {
-  background: var(--ui-success-surface);
-}
-
-.callout-warning {
-  background: var(--ui-warning-surface);
-}
-
-.callout-important {
-  background: var(--ui-danger-surface);
-}
-
-.callout-icon {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-background);
-  color: var(--ui-accent);
-}
-
-.callout-tip .callout-icon {
-  color: var(--ui-success);
-}
-
-.callout-warning .callout-icon {
-  color: var(--ui-warning);
-}
-
-.callout-important .callout-icon {
-  color: var(--ui-danger);
-}
-
-.callout-content {
-  min-width: 0;
-}
-
-.callout-title {
-  margin: 0 0 4px;
-  font-size: var(--ok-font-size-xs);
-  font-weight: var(--ok-font-weight-semibold);
-}
-
-.callout-body {
-  font-size: var(--ok-font-size-sm);
-  line-height: 1.65;
-}
-
-.callout-body > * + * {
-  margin-top: var(--ok-space-2);
-}
-
-.callout-body p {
-  margin: 0;
 }
 
 /* Token documentation */
@@ -1520,152 +1391,33 @@ samp {
   color: var(--ui-foreground);
 }
 
-/* Search dialog */
+/* Search results inside the command palette */
 
-.search-dialog {
-  position: fixed;
-  top: 12vh;
-  left: 50%;
-  width: min(42rem, calc(100vw - 2rem));
-  max-height: 70vh;
-  margin: 0;
-  padding: 0;
-  border: var(--ok-border-width) solid var(--ui-border);
-  border-radius: 1rem;
-  background: var(--ui-surface);
-  color: var(--ui-foreground);
-  box-shadow: var(--ok-shadow-lg);
-  transform: translateX(-50%);
-  overflow: hidden;
-}
-
-.search-dialog::backdrop {
-  background: transparent;
-}
-
-.search-dialog-inner {
-  display: flex;
-  flex-direction: column;
-  max-height: 70vh;
-}
-
-.search-dialog-header {
-  display: flex;
-  align-items: center;
-  gap: var(--ok-space-3);
-  padding: 14px 18px;
-  border-bottom: var(--ok-border-width) solid var(--ui-border);
-}
-
-.search-input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font-size: var(--ok-font-size-md);
-  outline: none;
-}
-
-.search-input::placeholder {
-  color: var(--ui-subtle-foreground);
-}
-
-.search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.search-body {
-  flex: 1;
-  padding: 12px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 12px,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
-}
-
-.search-body::-webkit-scrollbar {
-  display: none;
-}
-
-.search-results {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.search-result-link {
+.search-result {
   display: grid;
   gap: 2px;
-  padding: 12px;
-  border-radius: 0.625rem;
-  transition: background-color var(--ok-duration-fast) var(--ok-ease-standard);
+  min-width: 0;
 }
 
-.search-result-link:hover,
-.search-result-link:focus-visible {
-  background: var(--ui-secondary);
-}
-
-.search-result-link:focus-visible {
-  outline: none;
+.search-result-heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ok-space-2);
+  min-width: 0;
 }
 
 .search-result-section {
   color: var(--ui-subtle-foreground);
   font-size: 10px;
-  letter-spacing: 0;
-}
-
-.search-result-title {
-  color: var(--ui-foreground);
-  font-size: var(--ok-font-size-sm);
   font-weight: var(--ok-font-weight-medium);
 }
 
 .search-result-description {
-  color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-xs);
-}
-
-.search-result-excerpt {
-  display: -webkit-box;
   overflow: hidden;
-  color: var(--ui-subtle-foreground);
-  font-size: var(--ok-font-size-xs);
-  line-height: 1.5;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.search-empty {
-  margin: 0;
-  padding: 3rem 1rem;
   color: var(--ui-muted-foreground);
-  font-size: var(--ok-font-size-sm);
-  text-align: center;
-}
-
-.search-footer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ok-space-4);
-  padding: 10px 18px;
-  color: var(--ui-subtle-foreground);
-  font-size: 10px;
-}
-
-.search-footer span {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  font-size: var(--ok-font-size-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Mobile navigation */
@@ -1999,7 +1751,7 @@ samp {
   }
 
   .mobile-menu {
-    display: inline-grid;
+    display: inline-flex;
   }
 
   .docs-shell {
@@ -2053,10 +1805,6 @@ samp {
   .prev-next {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  .search-footer {
-    display: none;
-  }
 }
 
 @media (max-width: 640px) {
@@ -2069,7 +1817,6 @@ samp {
   }
 
   .page-copy {
-    padding: 0;
     width: 1.875rem;
     justify-content: center;
   }
@@ -2127,36 +1874,18 @@ samp {
 }
 
 @media (max-width: 960px) {
-  .icon-button {
+  .header-icon,
+  .mobile-menu {
     width: 2.75rem;
     height: 2.75rem;
   }
 
-  .search-dialog {
-    inset: 0;
-    width: auto;
-    max-width: none;
-    height: auto;
-    max-height: none;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    transform: none;
-  }
-
-  .search-dialog-inner {
-    height: 100%;
-    max-height: none;
-  }
-
-  .icon-button svg,
   .search-trigger svg,
   .copy-button svg {
     width: 1.25rem;
     height: 1.25rem;
   }
 
-  .icon-button svg,
   .search-trigger svg {
     stroke-width: 2.25;
   }
@@ -2193,8 +1922,7 @@ samp {
     font-weight: var(--ok-font-weight-medium);
   }
 
-  .docs-index-card,
-  .search-result-link {
+  .docs-index-card {
     min-height: 2.75rem;
   }
 
@@ -2230,10 +1958,8 @@ samp {
   .docs-index-card,
   .docs-index-card-action,
   .copy-button,
-  .search-result-link,
   .color-swatch,
   .button-link,
-  .icon-button,
   .search-trigger {
     transition: none;
   }

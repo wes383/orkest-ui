@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@orkest/ui';
+import { IconButton } from '@orkest/ui';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useRef } from 'react';
@@ -39,14 +39,14 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
 
   return (
     <>
-      <button
-        type="button"
-        className="icon-button mobile-menu"
+      <IconButton
+        className="mobile-menu"
+        icon={Menu}
+        label="Open documentation navigation"
+        variant="ghost"
+        size="sm"
         onClick={open}
-        aria-label="Open documentation navigation"
-      >
-        <Icon icon={Menu} size="sm" />
-      </button>
+      />
       {/* Native dialog backdrops only receive pointer events on the dialog element itself. */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
@@ -60,14 +60,13 @@ export function MobileNav({ navigation }: { navigation: NavGroup[] }) {
         }}
       >
         <div className="mobile-nav-header">
-          <button
-            type="button"
-            className="icon-button"
+          <IconButton
+            icon={X}
+            label="Close documentation navigation"
+            variant="ghost"
+            size="sm"
             onClick={close}
-            aria-label="Close documentation navigation"
-          >
-            <Icon icon={X} size="sm" />
-          </button>
+          />
         </div>
         <div className={bodyClassName}>
           <div ref={scrollRef} className="mobile-nav-scroll">

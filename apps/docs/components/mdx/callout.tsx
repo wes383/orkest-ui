@@ -1,12 +1,16 @@
-import { Icon } from '@orkest/ui';
+'use client';
+
+import { Alert, AlertDescription, AlertTitle } from '@orkest/ui/client';
 import { CircleAlert, Info, Lightbulb, TriangleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
 
+// The callout vocabulary maps onto alert tones: notes and tips are informational, warnings
+// and important notices carry the louder treatments.
 const calloutTypes = {
-  note: { label: 'Note', icon: Info },
-  tip: { label: 'Tip', icon: Lightbulb },
-  warning: { label: 'Warning', icon: TriangleAlert },
-  important: { label: 'Important', icon: CircleAlert },
+  note: { label: 'Note', variant: 'info', icon: Info },
+  tip: { label: 'Tip', variant: 'success', icon: Lightbulb },
+  warning: { label: 'Warning', variant: 'warning', icon: TriangleAlert },
+  important: { label: 'Important', variant: 'error', icon: CircleAlert },
 } as const;
 
 export type CalloutType = keyof typeof calloutTypes;
@@ -23,14 +27,9 @@ export function Callout({
   const config = calloutTypes[type];
 
   return (
-    <div className={`callout callout-${type}`}>
-      <span className="callout-icon">
-        <Icon icon={config.icon} size="sm" />
-      </span>
-      <div className="callout-content">
-        <p className="callout-title">{title ?? config.label}</p>
-        <div className="callout-body">{children}</div>
-      </div>
-    </div>
+    <Alert variant={config.variant} icon={config.icon} className="callout">
+      <AlertTitle>{title ?? config.label}</AlertTitle>
+      <AlertDescription>{children}</AlertDescription>
+    </Alert>
   );
 }

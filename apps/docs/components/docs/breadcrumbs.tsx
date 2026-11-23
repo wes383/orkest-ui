@@ -1,4 +1,11 @@
-import Link from 'next/link';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@orkest/ui';
 
 import type { DocsSectionId } from '@/lib/docs-navigation';
 
@@ -12,16 +19,20 @@ export function Breadcrumbs({
   title: string;
 }) {
   return (
-    <nav className="breadcrumbs" aria-label="Breadcrumb">
-      <ol>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href={`/docs/#${sectionId}`}>{sectionLabel}</Link>
-        </li>
-        <li aria-current="page">{title}</li>
-      </ol>
-    </nav>
+    <Breadcrumb className="breadcrumbs">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href={`/docs/#${sectionId}`}>{sectionLabel}</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{title}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 }

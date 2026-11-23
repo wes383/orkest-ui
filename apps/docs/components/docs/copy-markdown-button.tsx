@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@orkest/ui';
+import { Button } from '@orkest/ui';
 import { Check, CircleAlert, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -44,16 +44,16 @@ export function CopyMarkdownButton() {
 
   return (
     <>
-      <button
-        type="button"
+      <Button
         className="page-copy"
         data-state={state}
+        leftIcon={icons[state]}
+        variant="ghost"
+        size="sm"
         onClick={copyMarkdown}
-        aria-label="Copy the page as Markdown"
       >
-        <Icon icon={icons[state]} size="sm" />
         <span className="page-copy-label">Copy as Markdown</span>
-      </button>
+      </Button>
       <span className="sr-only" role="status" aria-live="polite">
         {state === 'copied'
           ? 'Page copied to clipboard as Markdown.'

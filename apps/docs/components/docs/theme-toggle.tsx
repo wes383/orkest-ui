@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@orkest/ui';
+import { IconButton } from '@orkest/ui';
 import { Moon, Sun } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 
@@ -54,13 +54,13 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
-      type="button"
-      className="icon-button"
+    <IconButton
+      className="header-icon"
+      icon={isDark ? Sun : Moon}
+      label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      variant="ghost"
+      size="sm"
       onClick={toggleTheme}
-      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-    >
-      <Icon icon={isDark ? Sun : Moon} size="sm" />
-    </button>
+    />
   );
 }
