@@ -77,26 +77,6 @@ export function Example() {
   <ToggleGroupMultipleExample />
 </ComponentPreview>
 
-## Outline
-
-Use `variant="outline"` for a connected group with visible item borders.
-
-export const toggleGroupOutlineCode = `import { ToggleGroup, ToggleGroupItem } from '@orkest/ui/client';
-
-export function Example() {
-  return (
-    <ToggleGroup aria-label="Calendar view" defaultValue={['week']} variant="outline">
-      <ToggleGroupItem value="day">Day</ToggleGroupItem>
-      <ToggleGroupItem value="week">Week</ToggleGroupItem>
-      <ToggleGroupItem value="month">Month</ToggleGroupItem>
-    </ToggleGroup>
-  );
-}`;
-
-<ComponentPreview title="Outline" code={toggleGroupOutlineCode}>
-  <ToggleGroupOutlineExample />
-</ComponentPreview>
-
 ## Vertical orientation
 
 Set `orientation="vertical"` to stack the items. Focus navigation follows the vertical axis, so the
