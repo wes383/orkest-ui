@@ -21,7 +21,6 @@ pnpm typecheck
 pnpm lint
 pnpm docs:dev
 pnpm docs:build
-pnpm playground:dev
 ```
 
 ## Install
