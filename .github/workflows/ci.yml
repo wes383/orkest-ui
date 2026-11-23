@@ -77,7 +77,7 @@ jobs:
         run: pnpm build
 
       - name: Check package publishing metadata and types
-        run: pnpm exec publint packages/ui && pnpm exec attw --pack packages/ui
+        run: pnpm check:published
 
       - name: Verify the packed package in a consumer
         run: node scripts/smoke-package.mjs
