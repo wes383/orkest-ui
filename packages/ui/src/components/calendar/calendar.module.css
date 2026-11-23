@@ -141,6 +141,7 @@
 
 /* The popup is portaled, so it cannot inherit the calendar's type scale. */
 .selectPopup {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   box-sizing: border-box;
   min-width: var(--anchor-width);
   max-width: min(16rem, var(--available-width));
@@ -158,8 +159,6 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
   transform-origin: var(--transform-origin);
   transition:
     opacity var(--ok-duration-fast) var(--ok-ease-standard),

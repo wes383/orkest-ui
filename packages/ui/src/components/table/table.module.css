@@ -1,4 +1,5 @@
 .container {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   --table-cell-padding-y: var(--ok-space-3);
   --table-cell-padding-x: var(--ok-space-4);
   --table-font-size: var(--ok-font-size-sm);
@@ -9,34 +10,6 @@
   border-radius: var(--ok-radius-xl);
   background: var(--ui-surface);
   overflow-x: auto;
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
-}
-
-.container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.container::-webkit-scrollbar-track,
-.container::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-.container::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-border-strong);
-  background-clip: content-box;
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-subtle-foreground);
-  background-clip: content-box;
-}
-
-.container::-webkit-scrollbar-button {
-  display: none;
 }
 
 .container[data-size="sm"] {

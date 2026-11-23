@@ -403,6 +403,7 @@
 }
 
 .menu {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   box-sizing: border-box;
   min-width: var(--anchor-width);
   max-width: min(26rem, var(--available-width));
@@ -416,8 +417,6 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
   transform-origin: var(--transform-origin);
   transition:
     opacity var(--ok-duration-fast) var(--ok-ease-standard),
@@ -428,27 +427,6 @@
 .menu[data-ending-style] {
   opacity: 0;
   transform: scale(0.98);
-}
-
-.menu::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.menu::-webkit-scrollbar-track,
-.menu::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-.menu::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-border-strong);
-  background-clip: content-box;
-}
-
-.menu::-webkit-scrollbar-button {
-  display: none;
 }
 
 .list {

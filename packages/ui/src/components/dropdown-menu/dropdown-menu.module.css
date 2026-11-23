@@ -4,6 +4,7 @@
 }
 
 .content {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   box-sizing: border-box;
   min-width: 12rem;
   max-width: min(24rem, var(--available-width, 100vw));
@@ -21,8 +22,6 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
   transform-origin: var(--transform-origin);
   transition:
     opacity var(--ok-duration-fast) var(--ok-ease-standard),
@@ -42,32 +41,6 @@
 
 .trigger[data-focus-ring="none"]:focus-visible {
   outline: none;
-}
-
-.content::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.content::-webkit-scrollbar-track,
-.content::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-.content::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-border-strong);
-  background-clip: content-box;
-}
-
-.content::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-subtle-foreground);
-  background-clip: content-box;
-}
-
-.content::-webkit-scrollbar-button {
-  display: none;
 }
 
 .item {

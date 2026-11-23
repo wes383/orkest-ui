@@ -125,38 +125,11 @@
 }
 
 .body {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ui-border-strong) transparent;
-}
-
-.body::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.body::-webkit-scrollbar-track,
-.body::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-.body::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-border-strong);
-  background-clip: content-box;
-}
-
-.body::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-subtle-foreground);
-  background-clip: content-box;
-}
-
-.body::-webkit-scrollbar-button {
-  display: none;
 }
 
 .footer {

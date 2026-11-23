@@ -130,6 +130,7 @@
 }
 
 .column {
+  composes: scrollbar from "../../styles/scrollbar.module.css";
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -140,27 +141,6 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   scroll-snap-type: y proximity;
-  scrollbar-color: var(--ui-border-strong) transparent;
-  scrollbar-width: thin;
-}
-
-.column::-webkit-scrollbar {
-  width: 8px;
-}
-
-.column::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.column::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: var(--ok-radius-full);
-  background: var(--ui-border-strong);
-  background-clip: content-box;
-}
-
-.column::-webkit-scrollbar-button {
-  display: none;
 }
 
 .column:focus {
