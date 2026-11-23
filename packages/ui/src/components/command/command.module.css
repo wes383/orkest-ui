@@ -92,9 +92,10 @@
   margin-inline-start: auto;
 }
 
-/* Additional keys in a chord follow the first chip without re-pinning. */
+/* Additional keys in a chord follow the first chip without re-pinning, with a
+   tighter gap than the row's own spacing. */
 .shortcut + .shortcut {
-  margin-inline-start: 0;
+  margin-inline-start: calc(var(--ok-space-1) - var(--ok-space-2));
 }
 
 .footer {
